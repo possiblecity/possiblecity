@@ -1,0 +1,52 @@
+{% extends "projects/projects_base.html" %}
+
+{% block main %}
+<section class="project-list">
+<header><h1>All Projects</h1></header>
+{% for project in project_list %}
+     <article class="project">
+        <header><h1>{{ project.name }}</h1></header>
+        <section class="image">
+            {% for image in project.projectimage_set.all %}
+                {% if image.is_main %}
+                    <a href="{{ project.get_absolute_url }}">
+                        <img src="{{ image.list.url }}"
+                             height="{{ image.list.height }}"
+                             width="{{ image.list.width }}"
+                             alt="{{ image.caption }}"/>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </section>
+        <section class="description">
+            <p>{{ project.short_description }}</p>
+            {% if project.date_start %}<p>{{ project.date_start }}</p>{% endif %}
+            {% if project.date_end %}<p>{{ project.date_end }}</p>{% endif %}
+            {% if external_url %}<p>{{ project.external_url }}</p>{% endif %}
+            <p>{{ project.area|floatformat }} {{ project.get_unit_display }} </p>
+        </section>
+
+         {% if project.tags.all or project.categories.all %}
+        <section class="classification">
+            {% if project.tags.all %}
+            <ul>
+                {% for tag in project.tags.all %}
+                <li> {{ tag.name }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if project.categories.all %}
+            <ul>
+                {% for category in project.categories.all %}
+                <li> {{ category.name }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+        {% endif %}
+        <p><a href="{{ project.get_absolute_url }}">View project</a> </p>
+    </article>
+{% endfor %}
+</section>
+
+{% endblock main %}
