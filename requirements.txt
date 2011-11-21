@@ -18,4 +18,4 @@ django-generic-flatblocks
 django-taggit
 
 # backbeat apps
--e git+git://github.com/dmeehan/django-backbeat-blog.git#egg=django-backbeat-blog
+-e git+git://github.com/dmeehan/django-backbeat-blog.git#egg=django-backbeat-inlines
