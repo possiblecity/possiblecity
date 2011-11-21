@@ -17,7 +17,5 @@ south
 django-generic-flatblocks
 django-taggit
 
--e git+git://github.com/phuihock/django-livefyre.git#egg=django-livefyre
-
 # backbeat apps
 -e git+git://github.com/dmeehan/django-backbeat-blog.git#egg=django-backbeat-blog
