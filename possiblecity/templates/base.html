@@ -8,7 +8,7 @@
 {% block head %}
     <meta charset="utf-8">
     <title>
-        {% block site_title %}Future Green{% endblock site_title %}
+        {% block site_title %}Possible City{% endblock site_title %}
         {% block section_title %}{% endblock section_title %}
         {% block page_title %}{% endblock page_title %}
     </title>
@@ -42,34 +42,28 @@
 {% endblock head %}
 </head>
 
-<body>
+<body class="{% block body_class %}default{% endblock body_class %}"
+      {% block body_id %}{% endblock body_id %}>
 {% block body %}
-    <div id="page">
-        {% block header %}
+    {% block header %}
         <header>
-            <h1>Future Green Studio</h1>
+            <h1>Possible City</h1>
             <nav>
                 <ul>
-                    <li>Portfolio</li>
-                    <li>Studio</li>
+                    <li>About</li>
                     <li>Blog</li>
+                    <li>Contact</li>
                 </ul>
             </nav>
         </header>
-        {% endblock header %}
-
-
-        <div id="main" role="main">
-        {% block main %}{% endblock main %}
-        </div>
-
-
-        {% block footer %}
+    {% endblock header %}
+    {% block content %}
+    {% endblock content %}
+    {% block footer %}
         <footer>
-
+            @copy; {{ now }} Possible City
         </footer>
-        {% endblock footer %}
-    </div>
+     {% endblock footer %}
 
     <!-- JavaScript at the bottom for fast page loading -->
 
