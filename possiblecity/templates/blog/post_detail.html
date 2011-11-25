@@ -9,7 +9,7 @@
         <p class="author">Posted by: {{ post.author }}</p>
     </header>
     <section class="body">
-        {% load oembed_tags inlines %}
+        {% load oembed_tags blog inlines %}
         {% oembed %}
             {{ post.body_html|render_inlines|safe}}
         {% endoembed %}
