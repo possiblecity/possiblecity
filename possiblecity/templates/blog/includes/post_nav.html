@@ -1,0 +1,10 @@
+<nav class="post-nav">
+    {% if object.get_previous_by_date_published %}
+    <a class="previous" href="{{ post.get_previous_post.get_absolute_url }}">
+        &laquo; {{ post.get_previous_post }}</a>
+    {% endif %}
+    {% if object.get_next_by_date_published %}
+    | <a class="next" href="{{ post.get_next_post.get_absolute_url }}">
+        {{ post.get_next_post }} &raquo;</a>
+    {% endif %}
+</nav>

@@ -1,0 +1,9 @@
+<section class="post list">
+    {% for post in post_list %}
+    <article class="post-excerpt" id="{{ post.date_published }}_{{ post.slug }}">
+      <h1 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+      <p class="date">{{ post.date_published|date:"Y F d" }}</p>
+      <p class="tease">{{ post.excerpt_html|safe }}</p>
+    </article>
+    {% endfor %}
+</section>

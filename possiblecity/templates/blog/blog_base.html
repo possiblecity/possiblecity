@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block section_title %}: Blog{% endblock section_title %}
+{% block body_class %}blog{% endblock body_class %}
+{% block content %}
+    {% block main %}
+    {% endblock main %}
+    {% block aside %}
+        {% load blog_tags %}
+        <section class="latest-posts">
+            <h2>Latest Posts</h2>
+            <ul>
+            {% get_latest_posts 5 as latest_post_list %}
+            {% for post in latest_post_list %}
+                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </section>
+        <section class="popular-posts">
+            <h2>Popular Posts</h2>
+            <ul>
+            {% get_popular_posts 5 as popular_post_list %}
+            {% for post in popular_post_list %}
+                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </section>
+    {% endblock aside %}
+{% endblock content %}

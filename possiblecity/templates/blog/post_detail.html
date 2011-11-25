@@ -1,0 +1,31 @@
+{% extends "blog/blog_base.html" %}
+{% block page_title %}: {{ post.title }} {% endblock page_title %}
+{% block body_class %}{{ block.super }} post{% endblock body_class %}
+{% block post %}
+<article class="post detail" id="{{ post.date_published }}_{{ post.slug }}">
+    <header>
+        <h1>{{ post.title }}</h1>
+        <p class="date">{{ post.date_published|date:"M d" }}</p>
+        <p class="author">Posted by: {{ post.author }}</p>
+    </header>
+    <section class="body">
+        {% load oembed_tags %}
+        {% oembed %}
+            {{ post.body_html|render_inlines|safe}}
+        {% endoembed %}
+    </section>
+</article>
+{% endblock post %}
+{% block comments %}{% endblock comments %}
+{% block nav %}
+    <nav class="post-nav">
+        {% if object.get_previous_by_date_published %}
+        <a class="previous" href="{{ post.get_previous_post.get_absolute_url }}">
+        &laquo; {{ post.get_previous_post }}</a>
+        {% endif %}
+        {% if object.get_next_by_date_published %}
+        | <a class="next" href="{{ post.get_next_post.get_absolute_url }}">
+        {{ post.get_next_post }} &raquo;</a>
+        {% endif %}
+    </nav>
+{% endblock nav %}

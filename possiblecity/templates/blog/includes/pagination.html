@@ -1,0 +1,11 @@
+{% if is_paginated %}
+      <nav class="pagination">
+        {% if has_next %}
+        <a class="older" href="?page={{ next }}">Older</a>
+        {% endif %}
+        {% if has_next and has_previous %} | {% endif %}
+        {% if has_previous %}
+        <a class="newer" href="?page={{ previous }}">Newer</a>
+        {% endif %}
+      </nav>
+{% endif %}

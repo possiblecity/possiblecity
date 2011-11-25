@@ -1,0 +1,13 @@
+<article class="post detail" id="{{ post.date_published }}_{{ post.slug }}">
+    <header>
+        <h1>{{ post.title }}</h1>
+        <p class="date">{{ post.date_published|date:"M d" }}</p>
+        <p class="author">Posted by: {{ post.author }}</p>
+    </header>
+    <section class="body">
+        {% load oembed_tags %}
+        {% oembed %}
+            {{ post.body_html|render_inlines|safe}}
+        {% endoembed %}
+    </section>
+</article>
