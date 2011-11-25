@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'taggit',
     'django_generic_flatblocks',
     'django_markup',
+    'oembed',
 
     # backbeat apps
     'blog',
