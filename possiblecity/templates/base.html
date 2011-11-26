@@ -51,7 +51,7 @@
             <nav>
                 <ul>
                     <li>About</li>
-                    <li>Blog</li>
+                    <li><a href="{% url blog_post_index %}">Blog</a></li>
                     <li>Contact</li>
                 </ul>
             </nav>
@@ -61,7 +61,7 @@
     {% endblock content %}
     {% block footer %}
         <footer>
-            @copy; {{ now }} Possible City
+            &copy; {% now "Y" %} Possible City
         </footer>
      {% endblock footer %}
 

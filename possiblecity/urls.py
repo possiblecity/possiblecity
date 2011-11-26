@@ -1,8 +1,10 @@
 # urls.py
 
+from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic import TemplateView
 from django.contrib import admin
+from django.views.generic import TemplateView
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -18,6 +20,5 @@ urlpatterns = patterns('',
 
     # about
     #url(r'^$', TemplateView.as_view(), template_name = "about.html", name = 'about'),
-
 
 )

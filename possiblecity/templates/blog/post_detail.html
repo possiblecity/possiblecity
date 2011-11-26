@@ -1,6 +1,7 @@
 {% extends "blog/blog_base.html" %}
 {% block page_title %}: {{ post.title }} {% endblock page_title %}
 {% block body_class %}{{ block.super }} post{% endblock body_class %}
+{% block main %}
 {% block post %}
 <article class="post detail" id="{{ post.date_published }}_{{ post.slug }}">
     <header>
@@ -29,3 +30,4 @@
         {% endif %}
     </nav>
 {% endblock nav %}
+{% endblock main %}

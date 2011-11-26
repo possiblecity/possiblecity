@@ -5,7 +5,7 @@
     {% block main %}
     {% endblock main %}
     {% block aside %}
-        {% load blog_tags %}
+        {% load blog_tags archive_tags %}
         <section class="latest-posts">
             <h2>Latest Posts</h2>
             <ul>
@@ -22,6 +22,15 @@
             {% for post in popular_post_list %}
                 <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
             {% endfor %}
+            </ul>
+        </section>
+        <section class="archive"></section>
+        {% get_post_archive as dates %}
+            <h2>Archive</h4>
+            <ul>
+                {% for date in dates %}
+                <li><a href="" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
+                {% endfor %}
             </ul>
         </section>
     {% endblock aside %}
