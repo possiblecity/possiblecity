@@ -29,7 +29,7 @@
             <h2>Archive</h4>
             <ul>
                 {% for date in dates %}
-                <li><a href="" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
+                <li><a href="{% url blog_archive_month year=date|date:"Y", month=date|date:"M" %}" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
                 {% endfor %}
             </ul>
         </section>

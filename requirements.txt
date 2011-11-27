@@ -20,3 +20,4 @@ django-debug-toolbar
 # backbeat apps
 -e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-blog
 -e git+git://github.com/dmeehan/django-backbeat-blog.git#egg=django-backbeat-inlines
+-e git+git://github.com/dmeehan/django-backbeat-twitter.git#egg=django-backbeat-twitter
