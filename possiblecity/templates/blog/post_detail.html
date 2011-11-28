@@ -6,7 +6,6 @@
 <article class="post detail" id="{{ post.date_published }}_{{ post.slug }}">
     <header>
         <h1>{{ post.title }}</h1>
-        <p>{{ post.visits }}</p>
         <p class="date">
             <time datetime={{ post.date_published|date:"c" }}>
                 {{ post.date_published|date:"M d" }}
