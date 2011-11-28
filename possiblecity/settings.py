@@ -114,15 +114,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # third party apps
-    'south',
-    'taggit',
     'django_generic_flatblocks',
     'django_markup',
+    'haystack',
     'oembed',
+    'south',
+    'taggit',
 
     # backbeat apps
     'blog',
     'inlines',
+    'twittools',
 
     # local apps
 
@@ -163,6 +165,8 @@ LOGGING = {
 #==============================================================================
 
 # django-markup
+
+HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
 #==============================================================================
 # local app settings

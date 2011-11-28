@@ -13,9 +13,11 @@ PIL
 django==1.3.1
 
 # django third party modules
-south
 django-generic-flatblocks
 django-debug-toolbar
+django-haystack
+south
+
 
 # backbeat apps
 -e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-blog

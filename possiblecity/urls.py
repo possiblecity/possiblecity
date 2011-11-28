@@ -21,4 +21,7 @@ urlpatterns = patterns('',
     # about
     #url(r'^$', TemplateView.as_view(), template_name = "about.html", name = 'about'),
 
+    # search
+    (r'^search/', include('haystack.urls')),
+
 )

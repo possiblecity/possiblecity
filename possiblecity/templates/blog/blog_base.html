@@ -5,7 +5,21 @@
     {% block main %}
     {% endblock main %}
     {% block aside %}
-        {% load blog_tags archive_tags %}
+        {% load blog_tags archive_tags twitter_tags %}
+        <section class="twitter"></section>
+        {% get_friends_timeline as timeline %}
+            <h2>Twitter Feed</h2>
+            <ul>
+                {% for status in timeline %}
+                <li>
+                    <img src="{{ status.user.profile_image_url }}" />
+                    <a href="{{ status.user.url }}">{{ status.user.name }}</a>
+                    <span>{{ status.text|parse_tweet }}</span>
+                    <time datetime="{{ status.created_at }}">{{ status.relative_created_at }}</time>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
         <section class="latest-posts">
             <h2>Latest Posts</h2>
             <ul>
@@ -26,7 +40,7 @@
         </section>
         <section class="archive"></section>
         {% get_post_archive as dates %}
-            <h2>Archive</h4>
+            <h2>Archive</h2>
             <ul>
                 {% for date in dates %}
                 <li><a href="{% url blog_archive_month year=date|date:"Y", month=date|date:"M" %}" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>

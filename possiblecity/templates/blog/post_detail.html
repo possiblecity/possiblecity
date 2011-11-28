@@ -7,8 +7,12 @@
     <header>
         <h1>{{ post.title }}</h1>
         <p>{{ post.visits }}</p>
-        <p class="date">{{ post.date_published|date:"M d" }}</p>
-        <p class="author">Posted by: {{ post.author }}</p>
+        <p class="date">
+            <time datetime={{ post.date_published|date:"c" }}>
+                {{ post.date_published|date:"M d" }}
+            </time>
+        </p>
+        <p class="author">Posted by: {{ post.author.first_name }} {{ post.author.last_name }}</p>
     </header>
     <section class="body">
         {% load oembed_tags blog_tags inline_tags %}
