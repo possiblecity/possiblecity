@@ -2,20 +2,18 @@
 {% block page_title %}: Posts {% endblock page_title %}
 {% block body_class %}{{ block.super }} post-list{% endblock %}
 {% block main %}
-  {% block content_header %}
-      <header>
-        {%  block content_title %}
-        <h1>Post archive</h1>
-        {%  endblock content_title %}
-      </header>
-  {% endblock content_header %}
   {% block post_list %}
         <section class="post list">
         {% for post in post_list %}
-            <article class="post-excerpt" id="{{ post.date_published }}_{{ post.slug }}">
-              <h1 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
-              <p class="date">{{ post.date_published|date:"Y F d" }}</p>
-              <p class="tease">{{ post.excerpt_html|safe }}</p>
+            <article class="post excerpt" id="{{ post.date_published }}_{{ post.slug }}">
+                <aside class="box quarter" style="text-align: right;">
+                    <p class="date">{{ post.date_published|date:"Y F d" }}</p>
+                    <p class="author">{{ post.author.get_full_name }}</p>
+                </aside>
+                <section class="box three-quarters">
+                <h1 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+                <p class="excerpt">{{ post.excerpt_html|safe }}</p>
+                </section>
             </article>
         {% endfor %}
         </section>

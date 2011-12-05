@@ -26,7 +26,7 @@
     {% endblock favicons %}
 
     {% block css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/ggs.css">
     <!-- Uncomment if you are specifically targeting less enabled mobile browsers
     <link rel="stylesheet" media="handheld" href="css/handheld.css">  -->
     {% endblock css %}
@@ -57,8 +57,10 @@
             </nav>
         </header>
     {% endblock header %}
+    <div class="content">
     {% block content %}
     {% endblock content %}
+    </div>
     {% block footer %}
         <footer>
             &copy; {% now "Y" %} Possible City

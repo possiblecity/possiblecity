@@ -1,0 +1,17 @@
+# project.txt is a pip requirements file which describes the distributions
+# required by your project to run.
+
+--requirement=base.txt
+
+# Put project-specific requirements here.
+# See http://pip-installer.org/requirement-format.html for more information.
+
+# django third party modules
+django-generic-flatblocks
+django-haystack
+south
+
+# backbeat apps
+-e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-blog
+-e git+git://github.com/dmeehan/django-backbeat-blog.git#egg=django-backbeat-inlines
+-e git+git://github.com/dmeehan/django-backbeat-twitter.git#egg=django-backbeat-twitter

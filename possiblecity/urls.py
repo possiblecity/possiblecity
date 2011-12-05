@@ -2,24 +2,34 @@
 
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
-from django.contrib import admin
 from django.views.generic import TemplateView
+from django.views.generic.simple import direct_to_template
 
+from django.contrib import admin
 admin.autodiscover()
+
+from pinax.apps.account.openid_consumer import PinaxConsumer
+
+handler500 = "pinax.views.server_error"
 
 urlpatterns = patterns('',
     # admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    # homepage
-    #url(r'^$', 'possiblecity.views.index', name = 'home'),
+    url(r"^$", direct_to_template, {
+        "template": "homepage.html",
+    }, name="home"),
+    url(r"^admin/invite_user/$", "pinax.apps.signup_codes.views.admin_invite_user",
+        name="admin_invite_user"),
+    url(r"^admin/", include(admin.site.urls)),
+    url(r"^about/", include("about.urls")),
+    url(r"^account/", include("pinax.apps.account.urls")),
+    url(r"^openid/", include(PinaxConsumer().urls)),
 
     # blog
     (r'^blog/', include('blog.urls')),
 
-    # about
-    #url(r'^$', TemplateView.as_view(), template_name = "about.html", name = 'about'),
 
     # search
     (r'^search/', include('haystack.urls')),
