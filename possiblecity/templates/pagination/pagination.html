@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if is_paginated %}
-<div class="pagination">
+<nav class="pagination">
     <ul>
         {% if page_obj.has_previous %}
             <li class="prev">
@@ -23,5 +23,5 @@
             <li class="next disabled"><a>{% trans "Next" %} →</a></li>
         {% endif %}
     </ul>
-</div>
+</nav>
 {% endif %}

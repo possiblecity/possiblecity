@@ -7,9 +7,11 @@
 # See http://pip-installer.org/requirement-format.html for more information.
 
 # django third party modules
-django-generic-flatblocks
-django-haystack
 south
+django-haystack
+django-generic-flatblocks
+django-imagekit
+
 
 # backbeat apps
 -e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-blog

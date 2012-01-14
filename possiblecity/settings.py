@@ -137,13 +137,14 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 INSTALLED_APPS = (
     # django
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.sites",
-    "django.contrib.messages",
-    "django.contrib.humanize",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.humanize',
+    #'django.contrib.gis',
 
     # third party apps
     "staticfiles",
@@ -160,14 +161,16 @@ INSTALLED_APPS = (
     'oembed',
     'south',
     'taggit',
+    'imagekit',
+     #'notification',
 
     # Pinax
-    "pinax.templatetags",
-    "pinax.apps.account",
-    "pinax.apps.signup_codes",
+    #"pinax.templatetags",
+    #"pinax.apps.account",
+    #"pinax.apps.signup_codes",
 
     # theme
-    #"pinax_theme_bootstrap",
+    "pinax_theme_bootstrap",
 
     # backbeat apps
     'blog',
@@ -228,10 +231,10 @@ EMAIL_DEBUG = DEBUG
 
 # Account
 ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = False
+ACCOUNT_USE_OPENID = True
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
+ACCOUNT_EMAIL_AUTHENTICATION = True
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [
