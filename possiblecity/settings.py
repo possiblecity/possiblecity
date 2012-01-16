@@ -146,31 +146,33 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     #'django.contrib.gis',
 
-    # third party apps
+    # third party backend apps
     "staticfiles",
     "compressor",
     "debug_toolbar",
     "mailer",
     "django_openid",
+    'haystack', # search
+    'south', # database migrations
     "timezones",
-    "emailconfirmation",
-    "metron",
+    "metron", # analytics and metrics
+
+    # third party frontend apps
     'django_generic_flatblocks',
-    'django_markup',
-    'haystack',
+    'emailconfirmation',
     'oembed',
-    'south',
-    'taggit',
     'imagekit',
+    'django_markup', # required for blog
+    'taggit', # required for blog, float, & lotxlot
      #'notification',
 
-    # Pinax
-    #"pinax.templatetags",
-    #"pinax.apps.account",
-    #"pinax.apps.signup_codes",
+    # Third party Pinax apps
+    #'pinax.templatetags',
+    #'pinax.apps.account',
+    #'pinax.apps.signup_codes',
 
-    # theme
-    "pinax_theme_bootstrap",
+    # Pinax theme
+    #"pinax_theme_bootstrap",
 
     # backbeat apps
     'blog',
@@ -178,7 +180,9 @@ INSTALLED_APPS = (
     'twittools',
 
     # local apps
-    "about",
+    #'about',
+    #'float',
+    #'lotxlot',
 
 )
 
