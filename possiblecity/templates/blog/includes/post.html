@@ -1,7 +1,7 @@
-<article class="post detail" id="{{ post.date_published }}_{{ post.slug }}">
+<article class="post detail" id="{{ post.published }}_{{ post.slug }}">
     <header>
         <h1>{{ post.title }}</h1>
-        <p class="date">{{ post.date_published|date:"M d" }}</p>
+        <p class="date">{{ post.published|date:"M d" }}</p>
         <p class="author">Posted by: {{ post.author }}</p>
     </header>
     <section class="body">

@@ -3,12 +3,12 @@
 {% block body_class %}{{ block.super }} post{% endblock body_class %}
 {% block main %}
 {% block post %}
-<article class="post detail" id="{{ post.date_published }}_{{ post.slug }}">
+<article class="post detail" id="{{ post.published }}_{{ post.slug }}">
     <header>
         <h1>{{ post.title }}</h1>
         <p class="date">
-            <time datetime={{ post.date_published|date:"c" }}>
-                {{ post.date_published|date:"M d" }}
+            <time datetime={{ post.published|date:"c" }}>
+                {{ post.published|date:"M d" }}
             </time>
         </p>
         <p class="author">Posted by: {{ post.author.first_name }} {{ post.author.last_name }}</p>
@@ -24,11 +24,11 @@
 {% block comments %}{% endblock comments %}
 {% block nav %}
     <nav class="post-nav">
-        {% if object.get_previous_by_date_published %}
+        {% if object.get_previous_by_published %}
         <a class="previous" href="{{ post.get_previous_post.get_absolute_url }}">
         &laquo; {{ post.get_previous_post }}</a>
         {% endif %}
-        {% if object.get_next_by_date_published %}
+        {% if object.get_next_by_published %}
         | <a class="next" href="{{ post.get_next_post.get_absolute_url }}">
         {{ post.get_next_post }} &raquo;</a>
         {% endif %}

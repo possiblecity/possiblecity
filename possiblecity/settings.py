@@ -92,6 +92,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax.core.context_processors.pinax_settings",
 
     "pinax.apps.account.context_processors.account",
+
+    "notification.context_processors.notification",
+    "announcements.context_processors.site_wide_announcements",
 ]
 
 
@@ -113,6 +116,7 @@ MIDDLEWARE_CLASSES = [
     "django_openid.consumer.SessionConsumer",
     "django.contrib.messages.middleware.MessageMiddleware",
     "pinax.apps.account.middleware.LocaleMiddleware",
+    "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
@@ -158,21 +162,24 @@ INSTALLED_APPS = (
     "metron", # analytics and metrics
 
     # third party frontend apps
-    #'django_generic_flatblocks',
-    #'emailconfirmation',
-    #'oembed',
-    #'imagekit',
+    'django_generic_flatblocks',
+    'emailconfirmation',
+    'announcements',
+    'pagination',
+    'idios',
+    'oembed',
+    'imagekit',
     'django_markup', # required for blog
     'taggit', # required for blog, float, & lotxlot
      #'notification',
 
     # Third party Pinax apps
-    #'pinax.templatetags',
-    #'pinax.apps.account',
-    #'pinax.apps.signup_codes',
+    'pinax.templatetags',
+    'pinax.apps.account',
+    'pinax.apps.signup_codes',
 
     # Pinax theme
-    #"pinax_theme_bootstrap",
+    "pinax_theme_bootstrap",
 
     # backbeat apps
     'blog',
@@ -180,7 +187,8 @@ INSTALLED_APPS = (
     'twittools',
 
     # local apps
-    #'about',
+    'about',
+    'profiles',
     #'float',
     #'lotxlot',
 
@@ -234,11 +242,18 @@ EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
 
 # Account
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
+    }
+
+AUTH_PROFILE_MODULE = "profiles.Profile"
+NOTIFICATION_LANGUAGE_MODULE = "account.Account"
+
 ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = True
+ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = True
+ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 
 AUTHENTICATION_BACKENDS = [

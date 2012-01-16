@@ -5,9 +5,9 @@
   {% block post_list %}
         <section class="post list">
         {% for post in post_list %}
-            <article class="post excerpt" id="{{ post.date_published }}_{{ post.slug }}">
+            <article class="post excerpt" id="{{ post.published }}_{{ post.slug }}">
                 <aside class="box quarter" style="text-align: right;">
-                    <p class="date">{{ post.date_published|date:"Y F d" }}</p>
+                    <p class="date">{{ post.published|date:"Y F d" }}</p>
                     <p class="author">{{ post.author.get_full_name }}</p>
                 </aside>
                 <section class="box three-quarters">

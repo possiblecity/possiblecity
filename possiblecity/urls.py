@@ -26,6 +26,9 @@ urlpatterns = patterns('',
     url(r"^about/", include("about.urls")),
     url(r"^account/", include("pinax.apps.account.urls")),
     url(r"^openid/", include(PinaxConsumer().urls)),
+    url(r"^profiles/", include("idios.urls")),
+    url(r"^notices/", include("notification.urls")),
+    url(r"^announcements/", include("announcements.urls")),
 
     # blog
     (r'^blog/', include('blog.urls')),
@@ -35,3 +38,8 @@ urlpatterns = patterns('',
     (r'^search/', include('haystack.urls')),
 
 )
+
+if settings.SERVE_MEDIA:
+    urlpatterns += patterns("",
+        url(r"", include("staticfiles.urls")),
+    )
