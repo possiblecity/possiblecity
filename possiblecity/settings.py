@@ -158,10 +158,10 @@ INSTALLED_APPS = (
     "metron", # analytics and metrics
 
     # third party frontend apps
-    'django_generic_flatblocks',
-    'emailconfirmation',
-    'oembed',
-    'imagekit',
+    #'django_generic_flatblocks',
+    #'emailconfirmation',
+    #'oembed',
+    #'imagekit',
     'django_markup', # required for blog
     'taggit', # required for blog, float, & lotxlot
      #'notification',
