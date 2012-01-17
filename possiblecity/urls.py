@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r"^announcements/", include("announcements.urls")),
+    url(r'', include('social_auth.urls')),
 
     # blog
     (r'^blog/', include('blog.urls')),

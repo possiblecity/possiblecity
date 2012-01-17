@@ -23,7 +23,17 @@
             <a href="{% url acct_passwd_reset %}">{% trans "Forgot password?" %}</a>
         </p>
     {% endif %}
-    
+    <div>
+        <h3>Login using</h3>
+        <ul>
+            {% for name in social_auth.backends.oauth %}
+                <li><a rel="nofollow" href="{% url socialauth_begin name %}">{{ name|title }}</a></li>
+            {% endfor %}
+            {% for name in social_auth.backends.oauth2 %}
+                <li><a rel="nofollow" href="{% url socialauth_begin name %}">{{ name|title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
     <form method="POST" action="{% url acct_login %}" autocapitalize="off">
         {% csrf_token %}
         <fieldset>

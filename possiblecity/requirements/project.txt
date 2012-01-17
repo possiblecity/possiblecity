@@ -6,12 +6,15 @@
 # Put project-specific requirements here.
 # See http://pip-installer.org/requirement-format.html for more information.
 
+# python modules
+oauth2
+
 # django third party modules
 south
 django-haystack
 django-generic-flatblocks
 django-imagekit
-
+django-social-auth
 
 # backbeat apps
 -e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-blog

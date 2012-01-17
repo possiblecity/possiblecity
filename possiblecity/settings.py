@@ -6,20 +6,32 @@ import posixpath
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
     ('Douglas Meehan', 'dmeehan@gmail.com'),
-)
+    )
 
 MANAGERS = ADMINS
 
 SITE_ID = 1
 
+#==============================================================================
+# Debugging
+#==============================================================================
+
+DEBUG_TOOLBAR_CONFIG = {
+    "INTERCEPT_REDIRECTS": False,
+    }
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+#==============================================================================
+# Databases
+#==============================================================================
 
 DATABASES = {
     "default": {
@@ -70,6 +82,10 @@ STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 
+# django-compressor is turned off by default due to deployment overhead for
+# most users.
+COMPRESS = False
+COMPRESS_OUTPUT_DIR = "cache"
 
 #==============================================================================
 # Templates
@@ -95,6 +111,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
+    "social_auth.context_processors.social_auth_by_type_backends",
 ]
 
 
@@ -135,6 +152,60 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
+
+#==============================================================================
+# Authentication
+#==============================================================================
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    #'social_auth.backends.yahoo.YahooBackend',
+    #'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    #'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    #'social_auth.backends.contrib.orkut.OrkutBackend',
+    #'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    #'social_auth.backends.contrib.github.GithubBackend',
+    #'social_auth.backends.OpenIDBackend',
+    #'django.contrib.auth.backends.ModelBackend',
+    'pinax.apps.account.auth_backends.AuthenticationBackend',
+    )
+
+# django-social-auth
+SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook', 'twitter', 'googleoauth2')
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/about/what_next'
+# SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new-association-redirect-url/'
+# SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/account-disconnected-redirect-url/'
+# SOCIAL_AUTH_ERROR_KEY = 'social_errors'
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+SOCIAL_AUTH_EXPIRATION = 'expires'
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+
+# Account
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_USE_OPENID = False
+ACCOUNT_REQUIRED_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = False
+ACCOUNT_EMAIL_AUTHENTICATION = False
+ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
+    }
+
+AUTH_PROFILE_MODULE = "profiles.Profile"
+
+LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
+LOGIN_REDIRECT_URLNAME = "what_next"
+LOGOUT_REDIRECT_URLNAME = "home"
+
+
 #==============================================================================
 # Installed Apps
 #==============================================================================
@@ -151,15 +222,16 @@ INSTALLED_APPS = (
     #'django.contrib.gis',
 
     # third party backend apps
-    "staticfiles",
-    "compressor",
-    "debug_toolbar",
-    "mailer",
-    "django_openid",
+    'staticfiles',
+    'compressor',
+    'debug_toolbar',
+    'mailer',
+    'django_openid',
     'haystack', # search
     'south', # database migrations
-    "timezones",
-    "metron", # analytics and metrics
+    'timezones',
+    'metron', # analytics and metrics
+    'social_auth',
 
     # third party frontend apps
     'django_generic_flatblocks',
@@ -171,7 +243,7 @@ INSTALLED_APPS = (
     'imagekit',
     'django_markup', # required for blog
     'taggit', # required for blog, float, & lotxlot
-     #'notification',
+    'notification',
 
     # Third party Pinax apps
     'pinax.templatetags',
@@ -179,7 +251,7 @@ INSTALLED_APPS = (
     'pinax.apps.signup_codes',
 
     # Pinax theme
-    "pinax_theme_bootstrap",
+    'pinax_theme_bootstrap',
 
     # backbeat apps
     'blog',
@@ -223,57 +295,29 @@ LOGGING = {
 }
 
 
-
 #==============================================================================
-# Third party app settings
+# Email
 #==============================================================================
-
-# django-compressor is turned off by default due to deployment overhead for
-# most users.
-COMPRESS = False
-COMPRESS_OUTPUT_DIR = "cache"
-
-# django-haystack
-HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
 # django-mailer
 EMAIL_BACKEND = "mailer.backend.DbBackend"
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
 
-# Account
-ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
-    }
+#==============================================================================
+# Search
+#==============================================================================
 
-AUTH_PROFILE_MODULE = "profiles.Profile"
+# django-haystack
+HAYSTACK_SITECONF = 'possiblecity.search_sites'
+
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
-
-ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = False
-ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
-
-AUTHENTICATION_BACKENDS = [
-    "pinax.apps.account.auth_backends.AuthenticationBackend",
-]
-
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "what_next"
-LOGOUT_REDIRECT_URLNAME = "home"
-
-DEBUG_TOOLBAR_CONFIG = {
-    "INTERCEPT_REDIRECTS": False,
-}
 
 #==============================================================================
 # local app settings
 #==============================================================================
 
 BLOG_MARKUP_DEFAULT = 'markdown'
-
 
 #==============================================================================
 # local environment settings
