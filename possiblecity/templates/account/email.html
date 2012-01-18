@@ -1,11 +1,11 @@
-{% extends "account/base.html" %}
+{% extends "account/account_base.html" %}
 
 {% load i18n %}
 {% load bootstrap_tags %}
 
-{% block head_title %}{% trans "Account" %}{% endblock %}
+{% block page_title %}{% trans "Account" %}{% endblock page_title %}
 
-{% block body %}
+{% block main %}
     <h2>{% trans "Email Addresses" %}</h2>
     
     {% if user.emailaddress_set.all %}
@@ -73,4 +73,4 @@
         </div>
     </form>
     
-{% endblock %}
+{% endblock main %}

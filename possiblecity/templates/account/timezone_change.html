@@ -1,11 +1,11 @@
-{% extends "account/base.html" %}
+{% extends "account/account_base.html" %}
 
 {% load i18n %}
 {% load bootstrap_tags %}
 
-{% block head_title %}{% trans "Timezone" %}{% endblock %}
+{% block page_title %}{% trans "Timezone" %}{% endblock page_title %}
 
-{% block body %}
+{% block main %}
     <h2>{% trans "Timezone" %}</h2>
     
     <p>{% trans "This site can localize all times into your preferred timezone. Change your timezone below." %}</p>
@@ -19,4 +19,4 @@
             <button type="submit" class="btn primary">{% trans "Change my timezone" %}</button>
         </div>
     </form>
-{% endblock %}
+{% endblock main %}

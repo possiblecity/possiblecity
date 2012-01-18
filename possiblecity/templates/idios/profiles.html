@@ -1,12 +1,12 @@
-{% extends "idios/base.html" %}
+{% extends "idios/idios_base.html" %}
 
 {% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
 
-{% block head_title %}{% trans "All Profiles" %}{% endblock %}
+{% block page_title %}{% trans "All Profiles" %}{% endblock page_title %}
 
-{% block body %}
+{% block main %}
     <h1>{% trans "All Profiles" %}</h1>
     
     {% autopaginate profiles %}
@@ -17,4 +17,4 @@
     
     {% paginate %}
     
-{% endblock %}
+{% endblock main %}

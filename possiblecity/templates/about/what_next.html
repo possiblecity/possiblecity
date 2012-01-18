@@ -1,11 +1,13 @@
-{% extends "site_base.html" %}
+{% extends "base.html" %}
 
 {% load i18n %}
 {% load ifsetting_tag %}
 
-{% block head_title %}{% trans "What Next?" %}{% endblock %}
 
-{% block body %}
+{% block section_title %}{% trans "About" %}{% endblock %}
+{% block page_title %}{% trans "What Next?" %}{% endblock %}
+
+{% block content %}
     <h1>{% trans "What Next?" %}</h1>
     
     {% if user.is_authenticated %}

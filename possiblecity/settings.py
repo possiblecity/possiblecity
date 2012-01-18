@@ -158,11 +158,11 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 #==============================================================================
 
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
+    "social_auth.backends.twitter.TwitterBackend",
+    "social_auth.backends.facebook.FacebookBackend",
+    "social_auth.backends.google.GoogleOAuthBackend",
+    "social_auth.backends.google.GoogleOAuth2Backend",
+    "social_auth.backends.google.GoogleBackend",
     #'social_auth.backends.yahoo.YahooBackend',
     #'social_auth.backends.contrib.linkedin.LinkedinBackend',
     #'social_auth.backends.contrib.livejournal.LiveJournalBackend',
@@ -175,7 +175,7 @@ AUTHENTICATION_BACKENDS = (
     )
 
 # django-social-auth
-SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook', 'twitter', 'googleoauth2')
+SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook', 'twitter', 'google-oauth2', 'google')
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/about/what_next'
 # SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new-association-redirect-url/'
@@ -186,6 +186,7 @@ SOCIAL_AUTH_EXPIRATION = 'expires'
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 
 # Account
 ACCOUNT_OPEN_SIGNUP = True
@@ -312,6 +313,16 @@ EMAIL_DEBUG = DEBUG
 HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
+
+#==============================================================================
+# analytics
+#==============================================================================
+
+METRON_SETTINGS = {
+    "google": {
+        "1": "UA-28417563-1", # production
+    }
+}
 
 #==============================================================================
 # local app settings

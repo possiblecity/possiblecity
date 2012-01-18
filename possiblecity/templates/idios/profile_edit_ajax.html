@@ -1,10 +1,10 @@
 {% load bootstrap_tags %}
 {% load i18n %}
 
-<div class="modal-header">
+<header class="modal-header">
     <h3>{% trans "Edit Profile" %}</h3>
     <a href="#" class="close modal-close">&times;</a>
-</div>
+</header>
 
 <form class="ajax" method="POST" action="{% url profile_edit %}">
     {% csrf_token %}
@@ -15,8 +15,8 @@
         </fieldset>
     </div>
     
-    <div class="modal-footer">
+    <footer class="modal-footer">
         <button type="submit" class="btn primary">Update</button>
         <a href="#" class="btn modal-close">Cancel</a>
-    </div>
+    </footer>
 </form>

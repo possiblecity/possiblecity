@@ -1,13 +1,13 @@
-{% extends "notification/base.html" %}
+{% extends "notification/notification_base.html" %}
 
 {% load humanize %}
 {% load i18n %}
 {% load pagination_tags %}
 {% load timezone_filters %}
 
-{% block head_title %}{% trans "Notices" %}{% endblock %}
+{% block page_title %}{% trans "Notices" %}{% endblock %}
 
-{% block body %}
+{% block main %}
     
     {% autopaginate notices %}
     
@@ -26,10 +26,10 @@
                 {% else %}
                     <div class="notice">
                 {% endif %}
-                    <span class="notice_type">[{% trans notice.notice_type.display %}]</span>
-                    <span class="notice_message">{{ notice.message|safe }}</span>
-                    <span class="notice_time">{{ notice.added|localtime:account.timezone|time:"P" }}</span>
-                </div>
+                        <span class="notice_type">[{% trans notice.notice_type.display %}]</span>
+                        <span class="notice_message">{{ notice.message|safe }}</span>
+                        å<span class="notice_time">{{ notice.added|localtime:account.timezone|time:"P" }}</span>
+                    </div>
             {% endfor %}
         {% endfor %}
         
@@ -39,4 +39,4 @@
         <p>{% trans "No notices." %}</p>
     {% endif %}
     
-{% endblock %}
+{% endblock page_title %}

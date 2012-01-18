@@ -26,7 +26,7 @@
     {% endblock favicons %}
 
     {% block css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/ggs.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}">
     <!-- Uncomment if you are specifically targeting less enabled mobile browsers
     <link rel="stylesheet" media="handheld" href="css/handheld.css">  -->
     {% endblock css %}
@@ -41,56 +41,101 @@
     {% endblock extra_head %}
 {% endblock head %}
 </head>
-
+{% load i18n %}
 <body class="{% block body_class %}default{% endblock body_class %}"
       {% block body_id %}{% endblock body_id %}>
 {% block body %}
-    {% block header %}
+    {% block header_container %}
         <header>
-            <h1>Possible City</h1>
-            <nav>
+            {% block header %}
+            <h1 class="logo"><a href="{% url home %}">Possible City</a></h1>
+            {% block site_nav %}
+            <nav class="site-nav">
                 <ul>
                     <li>About</li>
                     <li><a href="{% url blog_post_index %}">Blog</a></li>
                     <li>Contact</li>
                 </ul>
             </nav>
+            {% endblock site_nav %}
+            {% block user_nav %}
+            <nav class="user-nav">
+                {% load ifsetting_tag %}
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
+                        <li><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
+                        <li>
+                            <a href="#" class="menu">{{ user }}</a>
+                            <ul class="account">
+                                <li><a href="{% url acct_email %}">Account</a></li>
+                                {% if user.is_staff %}
+                                    <li><a href="{% url admin:index %}">Admin</a></li>
+                                {% endif %}
+                                <li><a href="{% url acct_logout %}">Log Out</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url acct_login %}">Log In</a></li>
+                        {% ifsetting ACCOUNT_OPEN_SIGNUP %}
+                            <li><p>or</p></li>
+                            <li><a href="{% url acct_signup %}">Sign Up</a></li>
+                        {% endifsetting %}
+                    {% endif %}
+                </ul>
+            {% endblock user_nav %}
+            </nav>
+        {% endblock header %}
         </header>
-    {% endblock header %}
-    <div class="content">
-    {% block content %}
-    {% endblock content %}
-    </div>
-    {% block footer %}
+    {% endblock header_container %}
+    {% block content_container %}
+        {% include "_messages.html" %}
+        <div class="content">
+        {% block content %}
+        {% endblock content %}
+        </div>
+    {% endblock content_container %}
+    {% block footer_container %}
         <footer>
+            {% block footer %}
             &copy; {% now "Y" %} Possible City
+            {% endblock footer %}
         </footer>
-     {% endblock footer %}
+     {% endblock footer_container %}
 
     <!-- JavaScript at the bottom for fast page loading -->
 
     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
-    {% block js-frameworks %}
+    {% block js_frameworks %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.6.2.min.js">\x3C/script>')</script>
-    {% endblock js-frameworks %}
+    {% endblock js_frameworks %}
 
-    {% block js-global %}
+    {% block js_global %}
     <!-- <script defer src="js/script.js"></script> -->
-    {% endblock js-global %}
+    {% endblock js_global %}
 
-    {% block js-local %}
+    {% block js_local %}
     <!-- <script defer src="js/script.js"></script> -->
-    {% endblock js-local %}
+    {% endblock js_local %}
 
-    {% block google-analytics %}
-    <script>
-    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-    {% endblock google-analytics %}
+    {% block analytics %}
+        {% load metron_tags %}
+        {% analytics %}
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-28417563-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    {% endblock analytics %}
 
     {% block browser-prompt %}
     <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.

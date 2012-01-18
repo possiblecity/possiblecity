@@ -1,7 +1,7 @@
-{% extends "site_base.html" %}
-{% block head_title %}: Blog{% endblock head_title %}
+{% extends "base.html" %}
+{% block section_title %}: Blog{% endblock section_title %}
 {% block body_class %}blog{% endblock body_class %}
-{% block body %}
+{% block content %}
     <div class="main">
     {% block main %}
     {% endblock main %}
@@ -39,4 +39,4 @@
         </aside>
 
     {% endblock aside %}
-{% endblock body %}
+{% endblock content %}

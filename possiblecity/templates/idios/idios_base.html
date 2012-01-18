@@ -2,8 +2,8 @@
 
 {% load i18n %}
 
+{% block section_title %}Profile{% endblock section_title %}
 {% block body_class %}profile{% endblock %}
-
 {% block subnav %}
     {% if user.is_authenticated %}
         <ul>
@@ -13,4 +13,4 @@
     {% else %}
         &nbsp;
     {% endif %}
-{% endblock %}
+{% endblock subnav %}

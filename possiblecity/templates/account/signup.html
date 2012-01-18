@@ -1,12 +1,12 @@
-{% extends "site_base.html" %}
+{% extends "base.html" %}
 
 {% load i18n %}
 {% load bootstrap_tags %}
 {% load ifsetting_tag %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block page_title %}{% trans "Signup" %}{% endblock page_title %}
 
-{% block body %}
+{% block content %}
     <h1>{% trans "Sign Up" %}</h1>
     
     {% if user.is_authenticated %}
@@ -26,33 +26,6 @@
                 <button type="submit" class="btn primary">{% trans "Sign Up" %}</button>
             </div>
         </form>
-
-        {% ifsetting ACCOUNT_USE_OPENID %}
-        <h2>{% trans "Or sign in with your OpenID" %}:</h2>
-        <form action="/openid/register/" method="POST" autocapitalize="off">
-            {% csrf_token %}
-            <fieldset>
-                {% if url_required %}
-                    <div class="clearfix">
-                        <label for="id_username">* OpenID Identifier</label>
-                        <div class="input">
-                            <input class="openid" type="text" name="openid_url" />
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="clearfix">
-                        <label for="id_username">* OpenID Identifier</label>
-                        <div class="input">
-                            <input class="openid" type="text" name="openid_url" />
-                        </div>
-                    </div>
-                {% endif %}
-                <div class="actions">
-                    <input type="submit" value="{% trans "Log in" %}" class="btn primary" />
-                </div>
-            </fieldset>
-        </form>
-        {% endifsetting %}
         
         {% url terms as terms_url %}
         {% url privacy as privacy_url %}
@@ -61,12 +34,12 @@
         <p>{% blocktrans %}If you have any trouble creating your account, contact us at <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a>.{% endblocktrans %}</p>
         
     {% endif %}
-{% endblock %}
+{% endblock content %}
 
-{% block extra_body %}
+{% block js_local %}
     <script type="text/javascript">
         $(function(){
             $("#id_username").focus();
         });
     </script>
-{% endblock %}
+{% endblock js_local %}

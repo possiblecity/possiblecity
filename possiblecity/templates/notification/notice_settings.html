@@ -1,11 +1,11 @@
-{% extends "notification/base.html" %}
+{% extends "notification/notification_base.html" %}
 
 {% load i18n %}
 {% load bootstrap_tags %}
 
-{% block head_title %}{% trans "Notification Settings" %}{% endblock %}
+{% block page_title %}{% trans "Notification Settings" %}{% endblock %}
 
-{% block body %}
+{% block main %}
     <h2>{% trans "Settings" %}</h2>
     
     <div class="notice_settings">
@@ -52,4 +52,4 @@
             </table>
         </form>
     </div>
-{% endblock %}
+{% endblock main %}
