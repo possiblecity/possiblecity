@@ -13,7 +13,17 @@
         <p>{% trans "You are already logged in." %}</p>
     {% else %}
         <p>{% trans "Already have an account?" %} <a href="{% url acct_login %}">{% trans "Log In" %}</a>!</p>
-        
+        <div class="social-login">
+            <h3>Login using</h3>
+            <ul>
+                {% for name in social_auth.backends.oauth %}
+                    <li class="login {{ name|title }}"><a rel="nofollow" href="{% url socialauth_begin name %}">{{ name|title }}</a></li>
+                {% endfor %}
+                {% for name in social_auth.backends.oauth2 %}
+                    <li class="login {{ name|title }}"><a rel="nofollow" href="{% url socialauth_begin name %}">{{ name|title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
         <form id="signup_form" method="post" action="{% url acct_signup %}" autocapitalize="off">
             {% csrf_token %}
             <fieldset>

@@ -18,12 +18,12 @@ SITE_ID = 1
 # Debugging
 #==============================================================================
 
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
     }
-
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -63,11 +63,11 @@ SERVE_MEDIA = DEBUG
 
 ROOT_URLCONF = 'possiblecity.urls'
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
-MEDIA_URL = "/site_media/media/"
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media", "uploads")
+MEDIA_URL = "/media/uploads"
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "site_media", "static")
-STATIC_URL = "/site_media/static/"
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "media", "static")
+STATIC_URL = "/media/static/"
 
 ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 
@@ -222,7 +222,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     #'django.contrib.gis',
 
-    # third party backend apps
+    # third party apps
     'staticfiles',
     'compressor',
     'debug_toolbar',
@@ -232,9 +232,7 @@ INSTALLED_APPS = (
     'south', # database migrations
     'timezones',
     'metron', # analytics and metrics
-    'social_auth',
-
-    # third party frontend apps
+    'social_auth', # registration via social networks
     'django_generic_flatblocks',
     'emailconfirmation',
     'announcements',
@@ -312,10 +310,15 @@ EMAIL_DEBUG = DEBUG
 # django-haystack
 HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
+
+#==============================================================================
+# Notifications
+#==============================================================================
+
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 #==============================================================================
-# analytics
+# Analytics
 #==============================================================================
 
 METRON_SETTINGS = {

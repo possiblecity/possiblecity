@@ -63,6 +63,7 @@
                 {% load ifsetting_tag %}
                 <ul>
                     {% if user.is_authenticated %}
+                        <li><img src="{{ user.profile.image }}" /></li>
                         <li><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
                         <li><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
                         <li>
