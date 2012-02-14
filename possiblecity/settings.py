@@ -175,7 +175,7 @@ AUTHENTICATION_BACKENDS = (
     )
 
 # django-social-auth
-SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook', 'twitter', 'google-oauth2', 'google')
+SOCIAL_AUTH_ENABLED_BACKENDS = ('facebook', 'twitter', 'google-oauth2')
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/about/what_next'
 # SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new-association-redirect-url/'
@@ -189,7 +189,7 @@ SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 
 # Account
-ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_OPEN_SIGNUP = False
 ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = False

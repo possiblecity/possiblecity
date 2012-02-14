@@ -4,16 +4,18 @@
 {% block main %}
 {% block post %}
 <article class="post detail" id="{{ post.published }}_{{ post.slug }}">
-    <header>
-        <h1>{{ post.title }}</h1>
+    <aside class="meta">
         <p class="date">
             <time datetime={{ post.published|date:"c" }}>
-                {{ post.published|date:"M d" }}
+                <span class="month">{{ post.published|date:"F" }}</span>
+                <span class="day">{{ post.published|date:"d" }}</span>
             </time>
         </p>
-        <p class="author">Posted by: {{ post.author.first_name }} {{ post.author.last_name }}</p>
-    </header>
-    <section class="body">
+    </aside>
+    <section>
+        <header>
+            <h2>{{ post.title }}</h2>
+        </header>
         {% load oembed_tags blog_tags inline_tags %}
         {% oembed %}
             {{ post.body_html|render_inlines|safe}}

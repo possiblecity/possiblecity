@@ -13,8 +13,8 @@
 
 {% block subnav %}
     <h1>{% trans "Account" %}</h1>
-    <ul>
-        <li><a href="{% url acct_email %}">{% trans "Email Addresses" %}</a></li>
+    <ul class="nav nav-pills">
+        <li class="active"><a href="{% url acct_email %}">{% trans "Email Addresses" %}</a></li>
         {% ifsetting ACCOUNT_USE_OPENID %}
             <li><a href="/openid/associations/">{% trans "OpenID Associations" %}</a></li>
         {% endifsetting %}

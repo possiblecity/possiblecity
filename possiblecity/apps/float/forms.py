@@ -8,16 +8,12 @@ class ProjectForm(forms.ModelForm):
         exclude = ['user', 'slug', 'status',
                    'enable_comments',
                    'moderate_comments',
-                   'featured', 'location',
-                   'location_name', 'zip_code',
-                   'address',
-                   'website', 'copyright',
-                   'tags', 'categories']
+                   'website', 'featured',
+                   'tags',]
 
 
 class ProjectImageForm(forms.ModelForm):
     class Meta:
         model = ProjectImage
-        exclude = ['user', 'author', 'public',
-                   'order', 'copyright', 'slug',
-                   'content_type', 'object_id',]
+        exclude = ['user', 'public',
+                   'order', 'slug']

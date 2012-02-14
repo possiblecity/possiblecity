@@ -1,47 +1,54 @@
 {% extends "base.html" %}
 
-{% load blog twitter %}
+{% load blog_tags twitter_tags %}
 
 {% block section_title %}: Blog{% endblock section_title %}
 {% block body_class %}blog{% endblock body_class %}
 {% block content %}
-    <div class="main">
+    {% block content_header %}
+        <header class="page-header">
+            {%  block content_title %}
+                <h1>Possible City Blog</h1>
+            {%  endblock content_title %}
+        </header>
+    {% endblock content_header %}
+    <section class="main">
     {% block main %}
     {% endblock main %}
-    </div>
+    </section>
     {% block aside %}
         <aside class="archive">
             <section class="latest-posts">
-                <h2>Latest Posts</h2>
+                <h3>Latest Posts</h3>
                 <ul>
-                {% get_latest_posts 5 as latest_post_list %}
-                {% for post in latest_post_list %}
-                    <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                {% endfor %}
+                    {% get_latest_posts 5 as latest_post_list %}
+                    {% for latest in latest_post_list %}
+                        <li><a href="{{ latest.get_absolute_url }}">{{ latest.title }}</a></li>
+                    {% endfor %}
                 </ul>
             </section>
             <section class="popular-posts">
-                <h2>Popular Posts</h2>
+                <h3>Popular Posts</h3>
                 <ul>
-                {% get_popular_posts 5 as popular_post_list %}
-                {% for post in popular_post_list %}
-                    <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                {% endfor %}
+                    {% get_popular_posts 5 as popular_post_list %}
+                    {% for popular in popular_post_list %}
+                        <li><a href="{{ popular.get_absolute_url }}">{{ popular.title }}</a></li>
+                    {% endfor %}
                 </ul>
             </section>
-            <section class="dates"></section>
-            {% get_post_archive as dates %}
-                <h2>Archive</h2>
+            <section class="dates">
+                {% get_post_archive as dates %}
+                <h3>Archive</h3>
                 <ul>
                     {% for date in dates %}
-                    <li><a href="{% url blog_archive_month year=date|date:"Y", month=date|date:"M" %}" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
+                        <li><a href="{% url blog_archive_month year=date|date:"Y", month=date|date:"M" %}" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
                     {% endfor %}
                 </ul>
             </section>
         </aside>
         <aside class="twitter">
             {% get_friends_timeline as timeline %}
-            <h2>Twitter Feed</h2>
+            <h3>Around Town</h3>
             {% for status in timeline %}
                 <article class="tweet">
                     <section class="tweet-image">
@@ -49,7 +56,6 @@
                     </section>
                     <section class="tweet-content">
                         <a href="{{ status.user.url }}">{{ status.user.name }}</a>
-                        <span>{{ status.user.screen_name }}</span>
                         <p>{{ status.text|parse_tweet }}</p>
                         <time datetime="{{ status.created_at }}">{{ status.relative_created_at }}</time>
                     </section>

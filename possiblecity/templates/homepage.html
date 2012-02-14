@@ -1,25 +1,14 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load ifsetting_tag %}
 
 {% block page_title %}{% trans "Welcome" %}{% endblock page_title %}
 
 {% block body_class %}home{% endblock body_class %}
 
 {% block content %}
-    <h1>{% trans "Welcome to Possible City" %}</h1>
-
-    {% if user.is_authenticated %}
-        {% url what_next as what_next_url %}
-        <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}" class="btn primary large">What Next</a>?{% endblocktrans %}</p>
-    {% else %}
-        {% url acct_login as login_url %}
-        {% ifsetting ACCOUNT_OPEN_SIGNUP %}
-            {% url acct_signup as signup_url %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
-        {% else %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn primary large">Log In</a> to try out the site.{% endblocktrans %}</p>
-        {% endifsetting %}
-    {% endif %}
+    <div class="banner">
+        <h1>{% trans "Welcome to the" %}</h1>
+        <p class="logo"><img src="{{ STATIC_URL }}/img/logo_lg.png" /></p>
+    </div>
 {% endblock content %}

@@ -14,7 +14,7 @@
     </title>
     {% block metadata %}
     <meta name="description" content="">
-    <meta name="author" content="PossibleCity">
+    <meta name="author" content="Possible City">
     {% endblock metadata %}
 
     {% block mobile-viewport %}
@@ -26,15 +26,18 @@
     {% endblock favicons %}
 
     {% block css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}">
+    <link rel="stylesheet/less" type="text/css" href="{{ STATIC_URL }}less/possiblecity.less" media="all">
     <!-- Uncomment if you are specifically targeting less enabled mobile browsers
     <link rel="stylesheet" media="handheld" href="css/handheld.css">  -->
     {% endblock css %}
 
     {% block js_head %}
-    <!-- All JavaScript at the bottom, except for Modernizr / Respond. -->
-    <script src="{{ STATIC_URL }}js/libs/modernizr-2.0.min.js"></script>
+    <!-- All JavaScript at the bottom, except for: -->
+    <script type="text/javascript" src="http://use.typekit.com/rna3gum.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script src="{{ STATIC_URL }}js/libs/modernizr.dev.js"></script>
     <script src="{{ STATIC_URL }}js/libs/respond.min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/less-1.1.5.min.js"></script>
     {% endblock js_head %}
 
     {% block extra_head %}
@@ -48,53 +51,57 @@
     {% block header_container %}
         <header>
             {% block header %}
-            <h1 class="logo"><a href="{% url home %}">Possible City</a></h1>
-            {% block site_nav %}
             <nav class="site-nav">
-                <ul>
-                    <li>About</li>
-                    <li><a href="{% url blog_post_index %}">Blog</a></li>
-                    <li>Contact</li>
-                </ul>
-            </nav>
-            {% endblock site_nav %}
-            {% block user_nav %}
-            <nav class="user-nav">
-                {% load ifsetting_tag %}
-                <ul>
-                    {% if user.is_authenticated %}
-                        <li><img src="{{ user.profile.image }}" /></li>
-                        <li><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
-                        <li><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
-                        <li>
-                            <a href="#" class="menu">{{ user }}</a>
-                            <ul class="account">
-                                <li><a href="{% url acct_email %}">Account</a></li>
-                                {% if user.is_staff %}
-                                    <li><a href="{% url admin:index %}">Admin</a></li>
-                                {% endif %}
-                                <li><a href="{% url acct_logout %}">Log Out</a></li>
-                            </ul>
-                        </li>
-                    {% else %}
-                        <li><a href="{% url acct_login %}">Log In</a></li>
-                        {% ifsetting ACCOUNT_OPEN_SIGNUP %}
-                            <li><p>or</p></li>
-                            <li><a href="{% url acct_signup %}">Sign Up</a></li>
-                        {% endifsetting %}
-                    {% endif %}
-                </ul>
-            {% endblock user_nav %}
+                <a href="{% url home %}"><img src="{{ STATIC_URL }}img/logo_xs.png" /></a>
+                {% block site_nav %}
+                    <ul class="sections">
+                        <li id="about"><a href="{%  url about %}">About</a></li>
+                        <li id="blog"><a href="{% url blog_post_index %}">Blog</a></li>
+                        <li id="contact"><a href="#">Contact</a></li>
+                    </ul>
+                {% endblock site_nav %}
+                {% block user_nav %}
+                    {% load ifsetting_tag %}
+                    <ul class="user">
+                        {% if user.is_authenticated %}
+                            <li class="notices">
+                                <a href="{% url notification_notices %}">{% if notice_unseen_count %}<span class="active">{{ notice_unseen_count }}</span>{% else %}<span>0</span>{% endif %}</a></li>
+                            <li class="account">
+                                <a href="#">
+                                    {% if user.profile.image %}<img src="{{ user.profile.image }}" />{%  endif %}
+                                    {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</a>
+                                <ul>
+                                    <li><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
+                                    <li><a href="{% url acct_email %}">Settings</a></li>
+                                    {% if user.is_staff %}
+                                        <li><a href="{% url admin:index %}">Admin</a></li>
+                                    {% endif %}
+                                    <li><a href="{% url acct_logout %}">Log Out</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url acct_login %}">Log In</a></li>
+                            {% ifsetting ACCOUNT_OPEN_SIGNUP %}
+                                <li><a href="{% url acct_signup %}">Sign Up</a></li>
+                            {% endifsetting %}
+                        {% endif %}
+                    </ul>
+                {% endblock user_nav %}
+                {% block search_nav %}
+                    <form method="get" action="/search/">
+                        <input class="search-query" type="text" name="q" id="searchinput" placeholder="Search" results=5>
+                    </form>
+                {% endblock %}
             </nav>
         {% endblock header %}
         </header>
     {% endblock header_container %}
     {% block content_container %}
         {% include "_messages.html" %}
-        <div class="content">
+        <section class="content">
         {% block content %}
         {% endblock content %}
-        </div>
+        </section>
     {% endblock content_container %}
     {% block footer_container %}
         <footer>
@@ -113,7 +120,7 @@
     {% endblock js_frameworks %}
 
     {% block js_global %}
-    <!-- <script defer src="js/script.js"></script> -->
+    <script src="{{ STATIC_URL }}js/libs/bootstrap-dropdown.js"></script>
     {% endblock js_global %}
 
     {% block js_local %}
