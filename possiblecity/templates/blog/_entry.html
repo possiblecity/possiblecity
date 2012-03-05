@@ -6,6 +6,11 @@
                 <span class="day">{{ entry.published|date:"d" }}</span>
             </time>
         </p>
+        <ul class="tags">
+            {% for tag in entry.tags.all %}
+            <li>{{ tag.name }}</li>
+            {% endfor %}
+        </ul>
     </aside>
     <section>
         <header>
@@ -15,5 +20,16 @@
         {% oembed 480x270 %}
             {{ entry.text_html|render_inlines|safe}}
         {% endoembed %}
+        <footer>
+            <ul>
+                <li>
+                    <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </li>
+                <li>
+                    <div class="fb-like" data-href="{{ entry.get_absolute_url }}" data-send="false" data-layout="button_count" data-show-faces="true"></div>
+                </li>
+            </ul>
+        </footer>
     </section>
 </article>

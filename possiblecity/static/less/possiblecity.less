@@ -204,6 +204,14 @@ article.entry {
         color:@grayLight;
         .span(2);
         .firstColumn();
+
+        ul.tags {
+            margin:20px 0 0 0;
+            li {
+                list-style: none;
+                text-align: right;
+            }
+        }
     }
     > section {
         .span(7);
@@ -219,14 +227,21 @@ article.entry {
     span.month {
         display:block;
         font-size:.75;
-        text-align:center;
     }
 
     span.day {
         display:block;
         font-size:4em;
-        text-align:center;
         line-height: .75em;
+    }
+
+    footer {
+        margin:0 10px;
+        ul {
+            .horizontal-list();
+            padding:0;
+            margin:10px 0;
+        }
     }
 }
 

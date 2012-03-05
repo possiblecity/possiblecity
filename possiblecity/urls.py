@@ -2,7 +2,7 @@
 
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.views.generic.simple import direct_to_template
 
 from django.contrib import admin
@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r"^$", direct_to_template, {
+    url(r"^$", RedirectView.as_view(url="/blog"), {
         "template": "homepage.html",
     }, name="home"),
     url(r"^admin/invite_user/$", "pinax.apps.signup_codes.views.admin_invite_user",

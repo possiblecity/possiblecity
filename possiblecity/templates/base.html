@@ -47,17 +47,19 @@
 {% load i18n %}
 <body class="{% block body_class %}default{% endblock body_class %}"
       {% block body_id %}{% endblock body_id %}>
+{% block js_facebook %}
+{% endblock js_facebook %}
 {% block body %}
     {% block header_container %}
         <header>
             {% block header %}
             <nav class="site-nav">
-                <a href="{% url home %}"><img src="{{ STATIC_URL }}img/logo_xs.png" /></a>
+                <a href="{% url blog_entry_index %}"><img src="{{ STATIC_URL }}img/logo_xs.png" /></a>
                 {% block site_nav %}
                     <ul class="sections">
-                        <li id="about"><a href="{%  url about %}">About</a></li>
+                        <!--<li id="about"><a href="{%  url about %}">About</a></li>-->
                         <li id="blog"><a href="{% url blog_entry_index %}">Blog</a></li>
-                        <li id="contact"><a href="#">Contact</a></li>
+                        <!--<li id="contact"><a href="#">Contact</a></li>-->
                     </ul>
                 {% endblock site_nav %}
                 {% block user_nav %}

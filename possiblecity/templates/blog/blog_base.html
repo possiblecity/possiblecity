@@ -1,9 +1,19 @@
 {% extends "base.html" %}
-
 {% load blog_tags twitter_tags %}
 
 {% block section_title %}: Blog{% endblock section_title %}
 {% block body_class %}blog{% endblock body_class %}
+{% block js_facebook %}
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=352353678125899";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+{% endblock js_facebook %}
 {% block content %}
     {% block content_header %}
         <header class="page-header">
