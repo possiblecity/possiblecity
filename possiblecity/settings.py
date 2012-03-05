@@ -253,11 +253,13 @@ INSTALLED_APPS = (
     'pinax_theme_bootstrap',
 
     # backbeat apps
-    'blog',
     'inlines',
     'twittools',
+    'images',
+    'text',
 
     # local apps
+    'blog',
     'about',
     'profiles',
     #'float',

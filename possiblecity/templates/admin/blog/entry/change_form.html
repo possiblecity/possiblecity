@@ -1,11 +1,11 @@
 {% extends "admin/change_form.html" %}
 
 {% block extrahead %}
-    {% load adminmedia inlines %}
+    {% load adminmedia inline_tags %}
     {{ block.super }}
     <script type="text/javascript">
         function InlineInit() {
-            var body_div = document.getElementById('id_body').parentNode;
+            var body_div = document.getElementById('id_text').parentNode;
             var content = ''
             content += '{% get_inline_types as inline_list %}'
             content += '<label>Body inlines:</label>'
@@ -34,19 +34,19 @@
             content += '</select>'
 
             content += '<input type="button" value="Add" style="margin-left:10px;" onclick="return insertInline(document.getElementById(\'id_inline_content_type\').value, document.getElementById(\'id_inline\').value, document.getElementById(\'id_inline_class\').value)" />'
-            content += '<p class="help">Insert inlines into your body by choosing an inline type, then an object, then a class.</p>'
+            content += '<p class="help">Insert inlines into your text by choosing an inline type, then an object, then a class.</p>'
 
             var div = document.createElement('div');
             div.setAttribute('style', 'margin-top:10px;');
             div.innerHTML = content;
 
-            body_div.insertBefore(div, document.getElementById('id_body').nextSibling);
+            body_div.insertBefore(div, document.getElementById('id_text').nextSibling);
         }
 
         function insertInline(type, id, classname) {
             if (type != '----------' && id != '') {
                 inline = '<inline type="'+type.replace('/', '.')+'" id="'+id+'" class="'+classname+'" />';
-                body = document.getElementById('id_body');
+                body = document.getElementById('id_text');
                 body.value = body.value + inline + '\n';
             }
         }

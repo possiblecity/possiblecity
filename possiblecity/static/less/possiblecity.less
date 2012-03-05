@@ -50,7 +50,32 @@ body {
         margin-bottom: @baseLineHeight;
         border-top: 1px solid @grayLight;
       }
+}
 
+figure {
+    margin:0;
+    padding:0;
+
+    img {
+        width:100%;
+    }
+
+    .caption {
+        font-size:.75em;
+        font-style:italic;
+    }
+
+    &.video {
+        postion:relative;
+
+        iframe, object, embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
 }
 
 /********** GLOBAL SITE HEADER **********/
@@ -172,7 +197,7 @@ body.blog {
       }
 }
 
-article.post {
+article.entry {
     margin-bottom:20px;
     .clearfix();
     > aside {

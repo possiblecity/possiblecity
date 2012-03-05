@@ -8,6 +8,9 @@
 
 # python modules
 oauth2
+markdown
+textile
+pillow
 
 # django third party modules
 south
@@ -15,8 +18,12 @@ django-haystack
 django-generic-flatblocks
 django-imagekit
 django-social-auth
+django-taggit
+django-markup
+django-oembed
 
 # backbeat apps
--e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-text
--e git+git://github.com/dmeehan/django-backbeat-blog.git#egg=django-backbeat-inlines
+-e git+git://github.com/dmeehan/django-backbeat-text.git#egg=django-backbeat-text
+-e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-inlines
 -e git+git://github.com/dmeehan/django-backbeat-twittools.git#egg=django-backbeat-twittools
+-e git+git://github.com/dmeehan/django-backbeat-images.git#egg=django-backbeat-images

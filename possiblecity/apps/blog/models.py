@@ -10,7 +10,7 @@ from django_markup.markup import formatter
 from taggit.managers import TaggableManager
 
 from text.models import EntryBase
-from images.models import RelatedImageBase
+from images.models import ImageBase, RelatedImageBase
 
 
 class Entry(EntryBase):
@@ -24,7 +24,7 @@ class Entry(EntryBase):
 
     # Fields to store generated HTML. For use with a markup syntax such as Markdown or Textile
     excerpt_html = models.TextField(editable=False, blank=True)
-    body_html = models.TextField(editable=False, blank=True)
+    text_html = models.TextField(editable=False, blank=True)
 
     # autocreated fields
     visits = models.IntegerField(default=0, editable=False) #to keep track of most popular posts
@@ -41,10 +41,10 @@ class Entry(EntryBase):
     def render_markup(self):
         if settings.BLOG_MARKUP_DEFAULT == 'wysiwyg':
             self.markup = "none"
-            self.body_html = self.body
+            self.text_html = self.text
             self.excerpt_html = self.excerpt
         else:
-            self.body_html = mark_safe(formatter(self.body, filter_name=self.markup))
+            self.text_html = mark_safe(formatter(self.text, filter_name=self.markup))
             self.excerpt_html = mark_safe(formatter(self.excerpt, filter_name=self.markup))
 
     def get_main_image(self):
@@ -53,7 +53,7 @@ class Entry(EntryBase):
 
     def save(self, force_insert=False, force_update=False):
         self.render_markup()
-        super(Post, self).save(force_insert, force_update)
+        super(Entry, self).save(force_insert, force_update)
 
 class EntryImage(RelatedImageBase):
     """
@@ -62,3 +62,11 @@ class EntryImage(RelatedImageBase):
     """
     image = models.ImageField(upload_to='images/entries/')
     entry = models.ForeignKey(Entry)
+
+class InlineImage(ImageBase):
+    """
+        An image attached to a blog entry.
+        Inherits basic fields and behavior from images.models.ImageBase
+    """
+    image = models.ImageField(upload_to='images/entries/')
+

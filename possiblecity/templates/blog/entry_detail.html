@@ -1,0 +1,21 @@
+{% extends "blog/blog_base.html" %}
+{% block page_title %}: {{ entry.title }} {% endblock page_title %}
+{% block body_class %}{{ block.super }} entry{% endblock body_class %}
+{% block main %}
+{% block entry %}
+    {% include "blog/_entry.html" %}
+{% endblock entry %}
+{% block comments %}{% endblock comments %}
+{% block nav %}
+    <nav class="entry-nav">
+        {% if object.get_previous_by_published %}
+        <a class="previous" href="{{ entry.get_previous.get_absolute_url }}">
+        &laquo; {{ entry.get_previous }}</a>
+        {% endif %}
+        {% if object.get_next_by_published %}
+        | <a class="next" href="{{ entry.get_next.get_absolute_url }}">
+        {{ entry.get_next }} &raquo;</a>
+        {% endif %}
+    </nav>
+{% endblock nav %}
+{% endblock main %}

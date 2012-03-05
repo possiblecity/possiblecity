@@ -8,12 +8,12 @@ from blog.models import Entry
 
 class EntryDetailView(DateDetailView):
     queryset = Entry.objects.live()
-    context_object_name = "post"
+    context_object_name = "entry"
     date_field="published"
 
     def get_object(self):
         # Call the superclass
-        object = super(PostDetailView, self).get_object()
+        object = super(EntryDetailView, self).get_object()
         # Record this visit
         if not self.request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS:
             object.visits = F('visits') + 1

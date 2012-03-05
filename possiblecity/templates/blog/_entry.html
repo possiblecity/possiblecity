@@ -1,0 +1,19 @@
+<article class="entry detail" id="{{ entry.published|date:"c" }}_{{ entry.slug }}">
+    <aside class="meta">
+        <p class="date">
+            <time datetime={{ entry.published|date:"c" }}>
+                <span class="month">{{ entry.published|date:"F" }}</span>
+                <span class="day">{{ entry.published|date:"d" }}</span>
+            </time>
+        </p>
+    </aside>
+    <section>
+        <header>
+            <h2>{{ entry.title }}</h2>
+        </header>
+        {% load oembed_tags blog_tags inline_tags %}
+        {% oembed 480x270 %}
+            {{ entry.text_html|render_inlines|safe}}
+        {% endoembed %}
+    </section>
+</article>

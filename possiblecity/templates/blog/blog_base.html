@@ -18,26 +18,26 @@
     </section>
     {% block aside %}
         <aside class="archive">
-            <section class="latest-posts">
+            <section class="latest-entries">
                 <h3>Latest Posts</h3>
                 <ul>
-                    {% get_latest_posts 5 as latest_post_list %}
-                    {% for latest in latest_post_list %}
+                    {% get_latest_entries 5 as latest_entry_list %}
+                    {% for latest in latest_entry_list %}
                         <li><a href="{{ latest.get_absolute_url }}">{{ latest.title }}</a></li>
                     {% endfor %}
                 </ul>
             </section>
-            <section class="popular-posts">
+            <section class="popular-entries">
                 <h3>Popular Posts</h3>
                 <ul>
-                    {% get_popular_posts 5 as popular_post_list %}
-                    {% for popular in popular_post_list %}
+                    {% get_popular_entries 5 as popular_entry_list %}
+                    {% for popular in popular_entry_list %}
                         <li><a href="{{ popular.get_absolute_url }}">{{ popular.title }}</a></li>
                     {% endfor %}
                 </ul>
             </section>
             <section class="dates">
-                {% get_post_archive as dates %}
+                {% get_entry_archive as dates %}
                 <h3>Archive</h3>
                 <ul>
                     {% for date in dates %}
