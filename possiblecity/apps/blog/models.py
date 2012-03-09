@@ -11,6 +11,7 @@ from taggit.managers import TaggableManager
 
 from text.models import EntryBase
 from images.models import ImageBase, RelatedImageBase
+from twittools.signals import post_to_twitter
 
 
 class Entry(EntryBase):
@@ -47,9 +48,13 @@ class Entry(EntryBase):
             self.text_html = mark_safe(formatter(self.text, filter_name=self.markup))
             self.excerpt_html = mark_safe(formatter(self.excerpt, filter_name=self.markup))
 
+    # the following method is optional
+    def get_twitter_message(self):
+        return u'%s - %s'\
+        % (self.title, self.excerpt)
+
     def get_main_image(self):
         pass
-
 
     def save(self, force_insert=False, force_update=False):
         self.render_markup()
@@ -70,3 +75,5 @@ class InlineImage(ImageBase):
     """
     image = models.ImageField(upload_to='images/entries/')
 
+
+models.signals.post_save.connect(post_to_twitter, sender=Entry)
