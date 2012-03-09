@@ -49,7 +49,7 @@ SERVE_MEDIA = DEBUG
 ROOT_URLCONF = 'possiblecity.urls'
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media", "uploads")
-MEDIA_URL = "/media/uploads"
+MEDIA_URL = "/media/uploads/"
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "media", "static")
 STATIC_URL = "/media/static/"
