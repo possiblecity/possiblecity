@@ -207,28 +207,6 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     #'django.contrib.gis',
 
-    # third party apps
-    'staticfiles',
-    'compressor',
-    'debug_toolbar',
-    'mailer',
-    'django_openid',
-    'haystack', # search
-    'south', # database migrations
-    'timezones',
-    'metron', # analytics and metrics
-    'social_auth', # registration via social networks
-    'django_generic_flatblocks',
-    'emailconfirmation',
-    'announcements',
-    'pagination',
-    'idios',
-    'oembed',
-    'imagekit',
-    'django_markup', # required for blog
-    'taggit', # required for blog, float, & lotxlot
-    'notification',
-
     # Third party Pinax apps
     'pinax.templatetags',
     'pinax.apps.account',
@@ -236,6 +214,30 @@ INSTALLED_APPS = (
 
     # Pinax theme
     'pinax_theme_bootstrap',
+
+    # third party apps
+    'notification',
+    'staticfiles',
+    'compressor',
+    'debug_toolbar',
+    'mailer',
+    'django_openid',
+    'timezones',
+    'metron', # analytics and metrics
+    'announcements',
+    'pagination',
+    'idios',
+    'emailconfirmation',
+
+    'haystack', # search
+    'south', # database migrations
+    'oembed',
+    'imagekit',
+    'django_markup', # required for blog
+    'taggit', # required for blog, float, & lotxlot
+    'social_auth', # registration via social networks
+    'django_generic_flatblocks',
+
 
     # backbeat apps
     'inlines',
