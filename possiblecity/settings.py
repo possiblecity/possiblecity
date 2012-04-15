@@ -221,7 +221,6 @@ INSTALLED_APPS = (
     'compressor',
     'debug_toolbar',
     'mailer',
-    'django_openid',
     'timezones',
     'metron', # analytics and metrics
     'announcements',
