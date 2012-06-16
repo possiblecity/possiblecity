@@ -82,6 +82,11 @@ TEMPLATE_DIRS = [
     os.path.join(PACKAGE_ROOT, "templates"),
 ]
 
+TEMPLATE_LOADERS = [
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
+    ]
+
 TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
@@ -93,12 +98,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.messages.context_processors.messages",
     "pinax_utils.context_processors.settings",
     "account.context_processors.account",
-]
-
-
-TEMPLATE_LOADERS = [
-    "django.template.loaders.app_directories.Loader",
-    "django.template.loaders.filesystem.Loader",
+    'social_auth.context_processors.social_auth_by_name_backends',
 ]
 
 #==============================================================================
@@ -137,10 +137,13 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 # Account
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = False
+ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+
 
 #ABSOLUTE_URL_OVERRIDES = {
 #    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
@@ -151,6 +154,16 @@ ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
 LOGOUT_REDIRECT_URLNAME = "home"
+
+AUTHENTICATION_BACKENDS = (
+    "social_auth.backends.twitter.TwitterBackend",
+    "social_auth.backends.facebook.FacebookBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = "socialauth_complete"
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = "socialauth_associate_complete"
+
 
 
 #==============================================================================
@@ -177,6 +190,7 @@ INSTALLED_APPS = (
     "account",
     "timezones",
     "metron",
+    "social_auth", # registration via social networks
 
     #"haystack", # search
     #"south", # database migrations
@@ -184,7 +198,7 @@ INSTALLED_APPS = (
     #"imagekit",
     #"django_markup", # required for blog
     #"taggit", # required for blog, float, & lotxlot
-    #"social_auth", # registration via social networks
+
 
     # backbeat apps
     #'inlines',
@@ -193,6 +207,7 @@ INSTALLED_APPS = (
     #'text',
 
     # local apps
+    "possiblecity.auth_utils",
     #'blog',
     #'about',
     #'profiles',
