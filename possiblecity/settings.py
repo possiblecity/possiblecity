@@ -145,11 +145,11 @@ ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
 
 
-#ABSOLUTE_URL_OVERRIDES = {
-#    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
-#    }
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
+}
 
-#AUTH_PROFILE_MODULE = "profiles.Profile"
+AUTH_PROFILE_MODULE = "profiles.Profile"
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
 LOGIN_REDIRECT_URLNAME = "what_next"
@@ -187,10 +187,11 @@ INSTALLED_APPS = (
     "django_forms_bootstrap",
 
     # third party apps
-    "account",
+    "account", #registration
     "timezones",
-    "metron",
+    "metron", # analytics
     "social_auth", # registration via social networks
+    "idios", # profiles
 
     #"haystack", # search
     #"south", # database migrations
@@ -208,11 +209,13 @@ INSTALLED_APPS = (
 
     # local apps
     "possiblecity.auth_utils",
+    "possiblecity.lotxlot",
+    "possiblecity.float",
+    "possiblecity.philadelphia",
+    "possiblecity.profiles",
     #'blog',
     #'about',
     #'profiles',
-    #'float',
-    #'lotxlot',
 
 )
 

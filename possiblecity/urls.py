@@ -15,22 +15,24 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
+    # homepage
     url(r"^$", TemplateView.as_view(template_name="homepage.html"),name="home"),
 
-
-
-    url(r"^admin/", include(admin.site.urls)),
-
-
+    # people
     url(r"^account/social/", login_required(TemplateView.as_view(template_name="account/social.html")),
         name="social_settings"),
     url(r"^social/", include('social_auth.urls')),
     url(r"^account/", include("account.urls")),
+    url(r"^profiles/", include("idios.urls")),
 
+    #projects
+    #url(r"^float/", include("float.urls")),
+
+    #places
+    #url(r"^lotxlot/", include("lotxlot.urls")),
 
     # blog
     #(r'^blog/', include('blog.urls')),
-
 
     # search
     #(r'^search/', include('haystack.urls')),

@@ -1,8 +1,8 @@
 # portfolio/views/share.py
 
-from django.views.generic import CreateView, UpdateView, DeleteView
-
 from markdown import markdown
+
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -68,26 +68,6 @@ class ProjectUpdateView(UpdateView):
         context_data.update({'create': False})
         return context_data
 
-@login_required
-def edit_project(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    if request.project.id != project.user.id:
-        return HttpResponseForbidden()
-    if request.method == 'POST':
-        form = ProjectForm(instance=project, data=request.POST)
-        if form.is_valid():
-            project.status = Idea.STATUS_PENDING
-            project = form.save()
-            if project.status == idea.STATUS_PUBLISHED:
-                return HttpResponseRedirect(project.get_absolute_url())
-            else:
-                return HttpResponseRedirect(reverse('profiles_profile_detail', args=[request.user]))
-    else:
-        form = ProjectForm(instance=project)
-    context = {'project': project, 'form': form, 'add': False}
-    return render_to_response('portfolio/project_form.html',
-        context,
-        context_instance=RequestContext(request))
 
 class ProjectImageCreateView(CreateView):
     form_class = ProjectImageForm
