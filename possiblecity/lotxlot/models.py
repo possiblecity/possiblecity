@@ -18,9 +18,32 @@ class LotBase(models.Model):
 
     is_vacant = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False)
+    is_visible = models.BooleanField(default=True)
 
     # spatial fields
-    coordinates = models.PointField(blank=True, null=True)
+    coord = models.PointField(blank=True, null=True)
+    # should geom live here? or in concrete models? 
+    # geom =  
 
     class Meta:
         abstract = True
+
+    def __unicode__(self):
+        return u'%s' % (self.address)
+
+    #@models.permalink
+    #def get_absolute_url(self):
+       #return ('', [)])
+
+    def save(self, *args, **kwargs):
+        """
+           Make sure the model has coordinates and an address.
+           If there are no coordinates, first try to get them from
+           the geom field. If there is no geom field, get the coordinates
+           by reverse geocoding the address. If there are coordinates and no
+           address, geocode the coordinates.
+
+           If the address, geometry, or coordinates change, make sure they are 
+           all in sync. 
+        """
+        pass
