@@ -3,13 +3,20 @@ from django.contrib.gis.db import models
 
 from lotxlot.models import LotBase
 
-class PhlLot(LotBase):
-    pass
+class Lot(LotBase):
+    # spatial queryset manager
+    objects = models.GeoManager()
+    
 
-class PhlParcel(models.Model):
+class Parcel(models.Model):
     """
         Fields mapped to the Philadelphia parcel shapefile
     """
+    # spatial queryset manager
+    objects = models.GeoManager()
+
+    lot = models.OneToOneField(Lot)
+
     objectid = models.IntegerField()
     recsub = models.CharField(max_length=2, null=True, blank=True,
                               help_text="Submap to a registry map")
@@ -48,10 +55,12 @@ class PhlParcel(models.Model):
     shape_len = models.FloatField(null=True, blank=True)
     geom = models.MultiPolygonField(srid=4326, geography=True)
 
-class PhlLand(models.Model):
+class LandUnit(models.Model):
     """
      Fields mapped to Philadelphia land use shape file
     """
+    lot = models.ForeignKey(Lot)
+
     # spatial queryset manager
     objects = models.GeoManager()
 
