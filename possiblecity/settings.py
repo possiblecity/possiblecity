@@ -191,14 +191,14 @@ INSTALLED_APPS = (
     "timezones",
     "metron", # analytics
     "social_auth", # registration via social networks
-    "idios", # profiles
+    #"idios", # profiles
 
     #"haystack", # search
     #"south", # database migrations
     #"oembed",
     #"imagekit",
     #"django_markup", # required for blog
-    #"taggit", # required for blog, float, & lotxlot
+    "taggit", # required for blog, float, & lotxlot
 
 
     # backbeat apps
@@ -210,9 +210,9 @@ INSTALLED_APPS = (
     # local apps
     "possiblecity.auth_utils",
     "possiblecity.lotxlot",
-    "possiblecity.float",
+    #"possiblecity.float",
     "possiblecity.philadelphia",
-    "possiblecity.profiles",
+    #"possiblecity.profiles",
     #'blog',
     #'about',
     #'profiles',

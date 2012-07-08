@@ -13,6 +13,6 @@ class ProjectMixin(object):
 class ProjectQuerySet(QuerySet, ProjectMixin):
     pass
 
-class ProjectManager(models.Manager, PostMixin):
+class ProjectManager(models.Manager, ProjectMixin):
     def get_query_set(self):
         return ProjectQuerySet(self.model, using=self._db)

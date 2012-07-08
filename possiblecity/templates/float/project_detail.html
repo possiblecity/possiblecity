@@ -1,0 +1,50 @@
+{% extends "float/base.html" %}
+
+{% load bootstrap_tags %}
+
+{% block head_title %}{{ project.title }}{% endblock %}
+
+{% block body %}
+    {% block page_header %}
+    {% endblock page_header %}
+    {% block project %}
+    <article id="project">
+        <header>
+            <h1>{{ project.title }}</h1>
+        </header>
+        <section id="slideshow">
+            <ul id="gallery">
+                {% for image in project.images.all %}
+                {% if image.public %}
+                <li>
+                    <img src="{{ image.large.url }}"
+                         width="{{ image.large.width }}"
+                         height="{{ image.large.height }}"
+                         alt="{% if image.caption %}{{ image.caption }}{% else %}{{ image.title }}{% endif %}"
+                         title="{{ image.title }}"/>
+                    <p class="caption">{{ image.caption }}</p>
+                    <a href="{{ image.max.url }}"
+                       class="control zoom"
+                       title="{{ image.caption }}">
+                        <span>+</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        <section id="classification">
+        </section>
+        <section id="description">
+            <h2>{{ project.tagline }}</h2>
+            {{ project.description_html|safe }}
+        </section>
+        {% block website %}
+        <section id="agent">
+            {{ project.user }}
+        </section>
+    </article>
+    {% block comments %}
+    {% endblock comments %}
+    {% endblock project %}
+{% endblock body %}
+{% endblock %}

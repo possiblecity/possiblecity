@@ -1,22 +1,14 @@
 # philadelphia/models.py
 from django.contrib.gis.db import models
+from django.db.models import signals
 
-from lotxlot.models import LotBase
+from possiblecity.lotxlot.models import LotBase
 
 class Lot(LotBase):
     # spatial queryset manager
     objects = models.GeoManager()
-    
 
-class Parcel(models.Model):
-    """
-        Fields mapped to the Philadelphia parcel shapefile
-    """
-    # spatial queryset manager
-    objects = models.GeoManager()
-
-    lot = models.OneToOneField(Lot)
-
+    # Fields mapped to the Philadelphia parcel shapefile
     objectid = models.IntegerField()
     recsub = models.CharField(max_length=2, null=True, blank=True,
                               help_text="Submap to a registry map")
@@ -53,13 +45,33 @@ class Parcel(models.Model):
     geoid = models.CharField(max_length=25, null=True, blank=True)
     shape_area = models.FloatField(null=True, blank=True)
     shape_len = models.FloatField(null=True, blank=True)
-    geom = models.MultiPolygonField(srid=4326, geography=True)
+    # Already defined in LotBase
+    # geom = models.MultiPolygonField(srid=4326, geography=True)
+
+    def _get_address(self):
+        _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stname, self.stdes, self.stdessuf)
+        return " ".join(str(s) for s in _address_fields if s is not None)
+
+    def _get_coordinates(self):
+        # get coordinates from geom field
+        return self.geom.centroid
+
+    def save(self, force_insert=False, force_update=False):
+        if not self.pk:
+            # These are all lots for Philadelphia, PA. So populate those fields on creation.
+            self.city = "Philadelphia"
+            self.state = "PA"
+            # populate address field with concatenation of address related fields from Parcel
+            self.address = _get_address(self)
+            # get coordinates from geometry
+            self.coord = _get_coordinates(self)
+        super(Lot, self).save(force_insert, force_update)
 
 class LandUnit(models.Model):
     """
      Fields mapped to Philadelphia land use shape file
     """
-    lot = models.ForeignKey(Lot)
+    lot = models.ForeignKey(Lot, null=True, blank=True)
 
     # spatial queryset manager
     objects = models.GeoManager()
@@ -103,9 +115,13 @@ class PhlPublicVacantLot(models.Model):
     exempt_land_value = models.DecimalField(max_digits=11, decimal_places=2)
     exempt_building_value = models.DecimalField(max_digits=11, decimal_places=2)
 
+    coord = models.PointField(blank=True, null=True)
 
-# Auto-generated `LayerMapping` dictionary for PhlParcel model
-phlparcel_mapping = {
+
+
+
+# Auto-generated `LayerMapping` dictionary for Parcel model
+parcel_mapping = {
     'objectid' : 'OBJECTID',
     'recsub' : 'RECSUB',
     'basereg' : 'BASEREG',
@@ -133,10 +149,10 @@ phlparcel_mapping = {
     'shape_area' : 'SHAPE_AREA',
     'shape_len' : 'SHAPE_LEN',
     'geom' : 'MULTIPOLYGON',
-    }
+}
 
-# Auto-generated `LayerMapping` dictionary for PhlLand model
-phlland_mapping = {
+# Auto-generated `LayerMapping` dictionary for LandUnit model
+land_mapping = {
     'objectid' : 'OBJECTID',
     'c_dig1' : 'C_DIG1',
     'c_dig1desc' : 'C_DIG1DESC',

@@ -1,0 +1,16 @@
+{% extends "account/base.html" %}
+
+{% load bootstrap_tags %}
+
+{% block head_title %}General Settings{% endblock %}
+
+{% block body %}
+    <form method="POST" action="{% url account_settings %}">
+    	<legend>General Settings</legend>
+        {% csrf_token %}
+        {{ form|as_bootstrap }}
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+{% endblock %}

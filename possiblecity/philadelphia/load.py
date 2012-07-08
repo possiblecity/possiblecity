@@ -1,8 +1,8 @@
 import os
 from django.contrib.gis.utils import LayerMapping
-from models import PhlLand
+from models import Parcel, LandUnit
 
-phlparcel_mapping = {
+parcel_mapping = {
     'objectid' : 'OBJECTID',
     'recsub' : 'RECSUB',
     'basereg' : 'BASEREG',
@@ -32,8 +32,8 @@ phlparcel_mapping = {
     'geom' : 'MULTIPOLYGON',
 }
 
-# Auto-generated `LayerMapping` dictionary for PhlLand model
-phlland_mapping = {
+# Auto-generated `LayerMapping` dictionary for LandUnit model
+land_mapping = {
     'objectid' : 'OBJECTID',
     'c_dig1' : 'C_DIG1',
     'c_dig1desc' : 'C_DIG1DESC',
@@ -52,12 +52,12 @@ parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/Philadel
 land_use = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/vacant_parcels_WGS84.shp'))
 
 def map_parcels(verbose=True, strict=True, progress=False, step=False):
-    lm = LayerMapping(PhlParcel, shp, phlparcel_mapping,
+    lm = LayerMapping(Parcel, shp, parcel_mapping,
                       transform=False, encoding='iso-8859-1')
     lm.save(verbose=verbose, strict=strict, progress=progress, step=step)
 
 def map_landuse(verbose=True, strict=True, progress=False, step=False):
-    lm = LayerMapping(PhlLand, land_use, phlland_mapping,
+    lm = LayerMapping(LandUnit, land_use, land_mapping,
         transform=False, encoding='iso-8859-1')
     lm.save(verbose=verbose, strict=strict, progress=progress, step=step)
 

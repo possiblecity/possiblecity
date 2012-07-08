@@ -3,27 +3,19 @@
 from django.contrib.gis.db import models
 from django.db.models import permalink
 
-class DataSource(models.Model):
-    pass
+from django.contrib.localflavor.us.models import USZipCodeField, USStateField
 
 class LotBase(models.Model):
-    """
-        This model defines a discreet piece of land within a municipality
-    """
-
     address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
-    state = models.CharField(max_length=255, blank=True, null=True)
-    zip_code = models.IntegerField(blank=True, null=True)
-
     is_vacant = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False)
     is_visible = models.BooleanField(default=True)
 
     # spatial fields
     coord = models.PointField(blank=True, null=True)
-    # should geom live here? or in concrete models? 
-    # geom =  
+    # should geom live here? or in concrete models?
+    geom = models.MultiPolygonField(srid=4326, geography=True)
 
     class Meta:
         abstract = True
@@ -31,19 +23,9 @@ class LotBase(models.Model):
     def __unicode__(self):
         return u'%s' % (self.address)
 
-    #@models.permalink
-    #def get_absolute_url(self):
-       #return ('', [)])
-
-    def save(self, *args, **kwargs):
-        """
-           Make sure the model has coordinates and an address.
-           If there are no coordinates, first try to get them from
-           the geom field. If there is no geom field, get the coordinates
-           by reverse geocoding the address. If there are coordinates and no
-           address, geocode the coordinates.
-
-           If the address, geometry, or coordinates change, make sure they are 
-           all in sync. 
-        """
-        pass
+class USLotBase(LotBase):
+    """
+        This model defines a discreet piece of land within a municipality in the United States
+    """
+    state = models.USStateField
+    zip_code = models.USZipCodeField
