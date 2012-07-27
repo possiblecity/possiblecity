@@ -2,7 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79c1e648-0369-49ff-8afc-8aeabf5bb6d4" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/possiblecity/local_settings.template.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/float/forms.py" afterPath="$PROJECT_DIR$/possiblecity/float/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/float/urls/explore.py" afterPath="$PROJECT_DIR$/possiblecity/float/urls/explore.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/float/urls/share.py" afterPath="$PROJECT_DIR$/possiblecity/float/urls/share.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/float/views/explore.py" afterPath="$PROJECT_DIR$/possiblecity/float/views/explore.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/float/views/share.py" afterPath="$PROJECT_DIR$/possiblecity/float/views/share.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/lotxlot/models.py" afterPath="$PROJECT_DIR$/possiblecity/lotxlot/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/philadelphia/admin.py" afterPath="$PROJECT_DIR$/possiblecity/philadelphia/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/philadelphia/load.py" afterPath="$PROJECT_DIR$/possiblecity/philadelphia/load.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/philadelphia/models.py" afterPath="$PROJECT_DIR$/possiblecity/philadelphia/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/profiles/admin.py" afterPath="$PROJECT_DIR$/possiblecity/profiles/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/possiblecity/settings.py" afterPath="$PROJECT_DIR$/possiblecity/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
     <ignored path="possiblecity.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +41,53 @@
     <favorites_list name="possiblecity" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/possiblecity/lotxlot/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="61" selection-start="672" selection-end="672" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/possiblecity/philadelphia/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="187" column="69" selection-start="7895" selection-end="7895" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/possiblecity/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="199" column="16" selection-start="6191" selection-end="6191" vertical-scroll-proportion="0.41379312">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="local_settings.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/possiblecity/local_settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="5" selection-start="423" selection-end="423" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="load.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/possiblecity/philadelphia/load.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="42" selection-start="1924" selection-end="1924" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -40,22 +100,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/possiblecity/float/urls/explore.py" />
-        <option value="$PROJECT_DIR$/possiblecity/urls.py" />
-        <option value="$PROJECT_DIR$/possiblecity/lotxlot/views.py" />
-        <option value="$PROJECT_DIR$/possiblecity/philadelphia/admin.py" />
-        <option value="$PROJECT_DIR$/possiblecity/auth_utils/views.py" />
-        <option value="$PROJECT_DIR$/possiblecity/profiles/models.py" />
-        <option value="$PROJECT_DIR$/possiblecity/templates/float/base.html" />
-        <option value="$PROJECT_DIR$/possiblecity/templates/float/project_detail.html" />
-        <option value="$PROJECT_DIR$/possiblecity/lotxlot/fields.py" />
-        <option value="$PROJECT_DIR$/possiblecity/philadelphia/load.py" />
-        <option value="$PROJECT_DIR$/possiblecity/float/models.py" />
         <option value="$PROJECT_DIR$/possiblecity/float/managers.py" />
-        <option value="$PROJECT_DIR$/possiblecity/settings.py" />
         <option value="$PROJECT_DIR$/possiblecity/lotxlot/utils.py" />
+        <option value="$PROJECT_DIR$/possiblecity/philadelphia/admin.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/possiblecity/profiles/admin.py" />
+        <option value="$PROJECT_DIR$/possiblecity/float/forms.py" />
+        <option value="$PROJECT_DIR$/possiblecity/float/urls/explore.py" />
+        <option value="$PROJECT_DIR$/possiblecity/float/views/share.py" />
+        <option value="$PROJECT_DIR$/possiblecity/float/urls/share.py" />
+        <option value="$PROJECT_DIR$/possiblecity/float/views/explore.py" />
+        <option value="$PROJECT_DIR$/possiblecity/urls.py" />
+        <option value="$PROJECT_DIR$/possiblecity/philadelphia/load.py" />
         <option value="$PROJECT_DIR$/possiblecity/lotxlot/models.py" />
         <option value="$PROJECT_DIR$/possiblecity/philadelphia/models.py" />
+        <option value="$PROJECT_DIR$/possiblecity/local_settings.py" />
+        <option value="$PROJECT_DIR$/possiblecity/settings.py" />
       </list>
     </option>
   </component>
@@ -91,6 +151,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -137,18 +207,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="auth_utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -336,18 +396,31 @@
       <created>1341766196848</created>
       <updated>1341766196848</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="work in progress">
+      <created>1342581718188</created>
+      <updated>1342581718188</updated>
+    </task>
+    <task id="LOCAL-00007" summary="work in progress">
+      <created>1343359377396</created>
+      <updated>1343359377396</updated>
+    </task>
+    <task id="LOCAL-00008" summary="work in progress">
+      <created>1343361524200</created>
+      <updated>1343361524200</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="142" y="22" width="1245" height="741" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580644" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296593" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977778" sideWeight="0.6655629" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2852377" sideWeight="0.67419356" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32860717" sideWeight="0.67419356" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -357,7 +430,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32566372" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580644" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -440,72 +512,32 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/possiblecity/templates/account/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="477" vertical-scroll-proportion="-0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/templates/account/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/templates/account/settings.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="438" vertical-scroll-proportion="-0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/philadelphia/load.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="42" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.7508306" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/float/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="61" selection-start="2603" selection-end="2919" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/float/managers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="16" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/lotxlot/fields.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="212" column="5" selection-start="6423" selection-end="6423" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/lotxlot/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="44" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/possiblecity/float/fields.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="2" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/philadelphia/models.py">
+    <entry file="file://$PROJECT_DIR$/possiblecity/float/views/explore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="56" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0" />
+        <state line="9" column="36" selection-start="219" selection-end="219" vertical-scroll-proportion="-5.4" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/float/urls/share.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="456" selection-end="456" vertical-scroll-proportion="-8.4" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/float/urls/explore.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="1" selection-start="355" selection-end="355" vertical-scroll-proportion="-4.2" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="48" selection-start="1071" selection-end="1071" vertical-scroll-proportion="-13.24" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/possiblecity/templates/float/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="96" selection-end="96" vertical-scroll-proportion="-3.125" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/templates/float/create_image.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/possiblecity/templates/float/create_project.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
@@ -515,9 +547,55 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/auth_utils/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/auth_utils/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/auth_utils/pipelines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/auth_utils/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/possiblecity/lotxlot/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="52" selection-start="526" selection-end="574" vertical-scroll-proportion="0.3035413" />
+        <state line="17" column="61" selection-start="672" selection-end="672" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/philadelphia/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="187" column="69" selection-start="7895" selection-end="7895" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/philadelphia/load.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="42" selection-start="1924" selection-end="1924" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/local_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="5" selection-start="423" selection-end="423" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/possiblecity/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="199" column="16" selection-start="6191" selection-end="6191" vertical-scroll-proportion="0.41379312">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

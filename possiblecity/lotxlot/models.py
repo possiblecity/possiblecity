@@ -3,7 +3,7 @@
 from django.contrib.gis.db import models
 from django.db.models import permalink
 
-from django.contrib.localflavor.us.models import USZipCodeField, USStateField
+from django.contrib.localflavor.us.models import USStateField
 
 class LotBase(models.Model):
     address = models.CharField(max_length=255, blank=True, null=True)
@@ -27,5 +27,8 @@ class USLotBase(LotBase):
     """
         This model defines a discreet piece of land within a municipality in the United States
     """
-    state = models.USStateField
-    zip_code = models.USZipCodeField
+    state = USStateField()
+    zip = models.CharField(max_length=10)
+
+    class Meta:
+        abstract = True

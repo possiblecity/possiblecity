@@ -12,10 +12,11 @@ from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.template import RequestContext
+from django.utils.decorators import method_decorator
 
-from float.models import Project, ProjectImage
+from possiblecity.float.models import Project, ProjectImage
 
-from float.forms import ProjectForm, ProjectImageForm
+from possiblecity.float.forms import ProjectForm, ProjectImageForm
 
 class ProjectCreateView(CreateView):
     form_class = ProjectForm

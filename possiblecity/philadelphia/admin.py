@@ -1,5 +1,5 @@
 from django.contrib.gis import admin
-from philadelphia.models import PhlParcel, PhlLand, PhlPublicVacantLot
+from possiblecity.philadelphia.models import Lot, LandUnit
 
-admin.site.register(PhlParcel, admin.GeoModelAdmin)
-admin.site.register(PhlPublicVacantLot, admin.GeoModelAdmin)
+admin.site.register(Lot, admin.GeoModelAdmin)
+admin.site.register(LandUnit, admin.GeoModelAdmin)

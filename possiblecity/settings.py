@@ -179,7 +179,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    #"django.contrib.gis",
+    "django.contrib.gis",
 
     # theme
     "pinax_theme_bootstrap_account",
@@ -191,7 +191,8 @@ INSTALLED_APPS = (
     "timezones",
     "metron", # analytics
     "social_auth", # registration via social networks
-    #"idios", # profiles
+    "idios", # profiles
+    "pagination", # pagination
 
     #"haystack", # search
     #"south", # database migrations
@@ -212,7 +213,7 @@ INSTALLED_APPS = (
     "possiblecity.lotxlot",
     #"possiblecity.float",
     "possiblecity.philadelphia",
-    #"possiblecity.profiles",
+    "possiblecity.profiles",
     #'blog',
     #'about',
     #'profiles',

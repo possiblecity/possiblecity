@@ -1,12 +1,30 @@
 # philadelphia/models.py
 from django.contrib.gis.db import models
-from django.db.models import signals
+from django.db.models.signals import post_save
 
-from possiblecity.lotxlot.models import LotBase
+from possiblecity.lotxlot.models import USLotBase
 
-class Lot(LotBase):
+class Lot(USLotBase):
     # spatial queryset manager
     objects = models.GeoManager()
+
+    def _get_zip(self):
+        # determine zip code from address, city and state
+        pass
+
+    def save(self, force_insert=False, force_update=False):
+        if not self.pk:
+            # These are all lots for Philadelphia, PA. So populate those fields on creation.
+            self.city = "Philadelphia"
+            self.state = "PA"
+            # self.zip = self._get_zip
+        super(Lot, self).save(force_insert, force_update)
+
+class Parcel(models.Model):
+    # spatial queryset manager
+    objects = models.GeoManager()
+
+    lot = models.OneToOneField(Lot)
 
     # Fields mapped to the Philadelphia parcel shapefile
     objectid = models.IntegerField()
@@ -45,8 +63,7 @@ class Lot(LotBase):
     geoid = models.CharField(max_length=25, null=True, blank=True)
     shape_area = models.FloatField(null=True, blank=True)
     shape_len = models.FloatField(null=True, blank=True)
-    # Already defined in LotBase
-    # geom = models.MultiPolygonField(srid=4326, geography=True)
+    geom = models.MultiPolygonField(srid=4326, geography=True)
 
     def _get_address(self):
         _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stname, self.stdes, self.stdessuf)
@@ -56,16 +73,6 @@ class Lot(LotBase):
         # get coordinates from geom field
         return self.geom.centroid
 
-    def save(self, force_insert=False, force_update=False):
-        if not self.pk:
-            # These are all lots for Philadelphia, PA. So populate those fields on creation.
-            self.city = "Philadelphia"
-            self.state = "PA"
-            # populate address field with concatenation of address related fields from Parcel
-            self.address = _get_address(self)
-            # get coordinates from geometry
-            self.coord = _get_coordinates(self)
-        super(Lot, self).save(force_insert, force_update)
 
 class LandUnit(models.Model):
     """
@@ -89,12 +96,13 @@ class LandUnit(models.Model):
     shape_len = models.FloatField()
     geom = models.MultiPolygonField(srid=4326, geography=True)
 
+"""
 class PhlPublicVacantLot(models.Model):
-    """
+
         This model represents fields from an excel file release by the
         City of Philadelphia. It contains all of the publicly owned
         vacant property as of its release date on May 1, 2009.
-    """
+
     zip_code = models.IntegerField()
     location = models.CharField(max_length=100)
     owner1 = models.CharField(max_length=100)
@@ -116,7 +124,7 @@ class PhlPublicVacantLot(models.Model):
     exempt_building_value = models.DecimalField(max_digits=11, decimal_places=2)
 
     coord = models.PointField(blank=True, null=True)
-
+"""
 
 
 
@@ -165,3 +173,19 @@ land_mapping = {
     'shape_len' : 'SHAPE_LEN',
     'geom' : 'MULTIPOLYGON',
 }
+
+
+def create_lot(sender, instance, created, **kwargs):
+    """
+        When a parcel instance is created, create a related Lot instance.
+        Then use its address data and geometry data to update the related
+        Lot address and coord fields, respectively.
+    """
+    # if this is a new instance of parcel, create a populate a related Lot
+    if created:
+        # create the Lot instance
+        lot = Lot(parcel=instance, address=instance._get_address,
+                  coord=instance._get_coordinates, geom=instance.geom)
+        lot.save()
+
+post_save.connect(create_lot, sender=Parcel)

@@ -2,7 +2,7 @@
 
 from django.conf.urls.defaults import *
 
-from float.views import ProjectDetailView, ProjectListView
+from possiblecity.float.views.explore import ProjectDetailView, ProjectListView
 
 urlpatterns = patterns('',
     url(r'^projects/$', ProjectListView.as_view(), name='float_project_list'),
