@@ -23,10 +23,12 @@ urlpatterns = patterns('',
         name="social_settings"),
     url(r"^social/", include('social_auth.urls')),
     url(r"^account/", include("account.urls")),
+
     url(r"^profiles/", include("idios.urls")),
 
     #projects
-    #url(r"^float/", include("float.urls")),
+    (r'^share/', include('possiblecity.float.urls.share')),
+    (r'^explore/', include('possiblecity.float.urls.explore')),
 
     #places
     #url(r"^lotxlot/", include("lotxlot.urls")),
