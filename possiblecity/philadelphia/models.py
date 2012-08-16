@@ -14,7 +14,8 @@ class Lot(USLotBase):
 
     def save(self, force_insert=False, force_update=False):
         if not self.pk:
-            # These are all lots for Philadelphia, PA. So populate those fields on creation.
+            # These are all lots for Philadelphia, PA.
+            # So populate those fields on creation.
             self.city = "Philadelphia"
             self.state = "PA"
             # self.zip = self._get_zip
@@ -74,59 +75,6 @@ class Parcel(models.Model):
         return self.geom.centroid
 
 
-class LandUnit(models.Model):
-    """
-     Fields mapped to Philadelphia land use shape file
-    """
-    lot = models.ForeignKey(Lot, null=True, blank=True)
-
-    # spatial queryset manager
-    objects = models.GeoManager()
-
-    # fields from Philadelphia City Planning shapefile for landuse
-    objectid = models.IntegerField()
-    c_dig1 = models.IntegerField()
-    c_dig1desc = models.CharField(max_length=50)
-    c_dig2 = models.IntegerField()
-    c_dig2desc = models.CharField(max_length=50)
-    c_dig3 = models.IntegerField()
-    c_dig3desc = models.CharField(max_length=250)
-    lu_current = models.IntegerField()
-    shape_area = models.FloatField()
-    shape_len = models.FloatField()
-    geom = models.MultiPolygonField(srid=4326, geography=True)
-
-"""
-class PhlPublicVacantLot(models.Model):
-
-        This model represents fields from an excel file release by the
-        City of Philadelphia. It contains all of the publicly owned
-        vacant property as of its release date on May 1, 2009.
-
-    zip_code = models.IntegerField()
-    location = models.CharField(max_length=100)
-    owner1 = models.CharField(max_length=100)
-    owner2 = models.CharField(max_length=100)
-    bldg_code = models.CharField(max_length=5)
-    total_area = models.IntegerField()
-    livable_area = models.IntegerField()
-    recording_date = models.DateField()
-    brief_descr = models.CharField(max_length=100)
-    std_owner = models.CharField(max_length=100)
-    abbr = models.CharField(max_length=100)
-    market_value = models.DecimalField(max_digits=11, decimal_places=2)
-    market_value_date = models.DateField()
-    last_sale_price = models.DecimalField(max_digits=11, decimal_places=2)
-    last_sale_date = models.DateField()
-    taxable_land_value =  models.DecimalField(max_digits=11, decimal_places=2)
-    taxable_building_value = models.DecimalField(max_digits=11, decimal_places=2)
-    exempt_land_value = models.DecimalField(max_digits=11, decimal_places=2)
-    exempt_building_value = models.DecimalField(max_digits=11, decimal_places=2)
-
-    coord = models.PointField(blank=True, null=True)
-"""
-
-
 
 # Auto-generated `LayerMapping` dictionary for Parcel model
 parcel_mapping = {
@@ -159,33 +107,18 @@ parcel_mapping = {
     'geom' : 'MULTIPOLYGON',
 }
 
-# Auto-generated `LayerMapping` dictionary for LandUnit model
-land_mapping = {
-    'objectid' : 'OBJECTID',
-    'c_dig1' : 'C_DIG1',
-    'c_dig1desc' : 'C_DIG1DESC',
-    'c_dig2' : 'C_DIG2',
-    'c_dig2desc' : 'C_DIG2DESC',
-    'c_dig3' : 'C_DIG3',
-    'c_dig3desc' : 'C_DIG3DESC',
-    'lu_current' : 'LU_CURRENT',
-    'shape_area' : 'SHAPE_AREA',
-    'shape_len' : 'SHAPE_LEN',
-    'geom' : 'MULTIPOLYGON',
-}
-
-
-def create_lot(sender, instance, created, **kwargs):
+def parcel_post_save(sender, **kwargs):
     """
         When a parcel instance is created, create a related Lot instance.
         Then use its address data and geometry data to update the related
         Lot address and coord fields, respectively.
     """
+    parcel, created = kwargs["instance"], kwargs["created"]
     # if this is a new instance of parcel, create a populate a related Lot
     if created:
         # create the Lot instance
-        lot = Lot(parcel=instance, address=instance._get_address,
-                  coord=instance._get_coordinates, geom=instance.geom)
+        lot = Lot(parcel=parcel, address=parcel._get_address,
+                  coord=parcel._get_coordinates, geom=parcel.geom)
         lot.save()
 
-post_save.connect(create_lot, sender=Parcel)
+post_save.connect(parcel_post_save, sender=Parcel)

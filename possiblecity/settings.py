@@ -15,6 +15,9 @@ MANAGERS = ADMINS
 
 SITE_ID = 1
 
+# Python dotted path to the WSGI application used by Django's runserver.
+WSGI_APPLICATION = "possiblecity.wsgi.application"
+
 #==============================================================================
 # Debugging
 #==============================================================================
@@ -32,12 +35,8 @@ INTERNAL_IPS = [
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "dev.db",                       # Or path to database file if using sqlite3.
-        "USER": "",                             # Not used with sqlite3.
-        "PASSWORD": "",                         # Not used with sqlite3.
-        "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
-        "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "dev.db",                      
     }
 }
 
@@ -49,7 +48,6 @@ TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True    #internationalization machinery
 USE_L10N = True    #format dates, numbers and calendars according to locale
-# If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
 #==============================================================================
@@ -85,7 +83,7 @@ TEMPLATE_DIRS = [
 TEMPLATE_LOADERS = [
     "django.template.loaders.filesystem.Loader",
     "django.template.loaders.app_directories.Loader",
-    ]
+]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
@@ -98,7 +96,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.messages.context_processors.messages",
     "pinax_utils.context_processors.settings",
     "account.context_processors.account",
-    'social_auth.context_processors.social_auth_by_name_backends',
 ]
 
 #==============================================================================
@@ -140,9 +137,11 @@ ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
-
-ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+ACCOUNT_LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -150,20 +149,6 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
-
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "what_next"
-LOGOUT_REDIRECT_URLNAME = "home"
-
-AUTHENTICATION_BACKENDS = (
-    "social_auth.backends.twitter.TwitterBackend",
-    "social_auth.backends.facebook.FacebookBackend",
-    "django.contrib.auth.backends.ModelBackend",
-)
-
-SOCIAL_AUTH_COMPLETE_URL_NAME  = "socialauth_complete"
-SOCIAL_AUTH_ASSOCIATE_URL_NAME = "socialauth_associate_complete"
-
 
 
 #==============================================================================
@@ -179,7 +164,6 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.gis",
 
     # theme
     "pinax_theme_bootstrap_account",
@@ -188,35 +172,10 @@ INSTALLED_APPS = (
 
     # third party apps
     "account", #registration
-    "timezones",
     "metron", # analytics
-    "social_auth", # registration via social networks
-    "idios", # profiles
-    "pagination", # pagination
-
-    #"haystack", # search
-    #"south", # database migrations
-    #"oembed",
-    #"imagekit",
-    #"django_markup", # required for blog
-    "taggit", # required for blog, float, & lotxlot
-
-
-    # backbeat apps
-    #'inlines',
-    #'twittools',
-    #'images',
-    #'text',
-
+    
     # local apps
-    "possiblecity.auth_utils",
-    "possiblecity.lotxlot",
-    #"possiblecity.float",
-    "possiblecity.philadelphia",
     "possiblecity.profiles",
-    #'blog',
-    #'about',
-    #'profiles',
 
 )
 
@@ -260,22 +219,20 @@ LOGGING = {
 #==============================================================================
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_CONFIRMATION_DAYS = 2
-EMAIL_DEBUG = DEBUG
 
 #==============================================================================
 # Search
 #==============================================================================
 
 # django-haystack
-HAYSTACK_SITECONF = 'possiblecity.search_sites'
+#HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
 
 #==============================================================================
 # Notifications
 #==============================================================================
 
-NOTIFICATION_LANGUAGE_MODULE = "account.Account"
+#NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 #==============================================================================
 # Analytics
@@ -291,7 +248,7 @@ METRON_SETTINGS = {
 # local app settings
 #==============================================================================
 
-BLOG_MARKUP_DEFAULT = 'markdown'
+#BLOG_MARKUP_DEFAULT = 'markdown'
 
 #==============================================================================
 # local environment settings

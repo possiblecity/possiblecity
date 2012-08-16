@@ -19,25 +19,15 @@ urlpatterns = patterns('',
     url(r"^$", TemplateView.as_view(template_name="homepage.html"),name="home"),
 
     # people
-    url(r"^account/social/", login_required(TemplateView.as_view(template_name="account/social.html")),
-        name="social_settings"),
-    url(r"^social/", include('social_auth.urls')),
     url(r"^account/", include("account.urls")),
 
-    url(r"^profiles/", include("idios.urls")),
-
     #projects
-    (r'^share/', include('possiblecity.float.urls.share')),
-    (r'^explore/', include('possiblecity.float.urls.explore')),
 
     #places
-    #url(r"^lotxlot/", include("lotxlot.urls")),
 
     # blog
-    #(r'^blog/', include('blog.urls')),
 
     # search
-    #(r'^search/', include('haystack.urls')),
 
 )
 
