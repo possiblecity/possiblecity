@@ -32,19 +32,16 @@
                 {% endif %}
                 {% endfor %}
             </ul>
-        <section id="classification">
-        </section>
+        <section id="classification"> </section>
         <section id="description">
             <h2>{{ project.tagline }}</h2>
             {{ project.description_html|safe }}
         </section>
-        {% block website %}
         <section id="agent">
-            {{ project.user }}
+            {{ project.agent }}
         </section>
     </article>
     {% block comments %}
     {% endblock comments %}
     {% endblock project %}
 {% endblock body %}
-{% endblock %}

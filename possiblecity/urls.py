@@ -16,12 +16,14 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # homepage
-    url(r"^$", TemplateView.as_view(template_name="homepage.html"),name="home"),
+    url(r'^$', TemplateView.as_view(template_name='homepage.html'),name='home'),
 
     # people
-    url(r"^account/", include("account.urls")),
+    url(r'^account/', include('account.urls')),
 
     #projects
+    url(r'^float/', include('possiblecity.float.urls.share')),
+    url(r'^explore/', include('possiblecity.float.urls.explore')),
 
     #places
 

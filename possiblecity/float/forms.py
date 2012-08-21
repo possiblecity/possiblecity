@@ -5,12 +5,7 @@ from possiblecity.float.models import Project, ProjectImage
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        exclude = ['user', 'slug', 'status',
-                   'enable_comments',
-                   'moderate_comments',
-                   'website', 'featured',
-                   'tags',]
-
+        fields = ('title', 'tagline', 'description')
 
 class ProjectImageForm(forms.ModelForm):
     class Meta:

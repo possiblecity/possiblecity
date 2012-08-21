@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     
     # local apps
     "possiblecity.profiles",
+    "possiblecity.float",
 
 )
 

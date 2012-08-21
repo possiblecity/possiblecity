@@ -1,9 +1,5 @@
 # portfolio/views/share.py
 
-from markdown import markdown
-
-from django.views.generic import CreateView, UpdateView, DeleteView
-
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -13,14 +9,14 @@ from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.template import RequestContext
 from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from possiblecity.float.models import Project, ProjectImage
-
 from possiblecity.float.forms import ProjectForm, ProjectImageForm
 
 class ProjectCreateView(CreateView):
     form_class = ProjectForm
-    success_url = 'success'
+    #success_url = 'success'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -28,7 +24,7 @@ class ProjectCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.agent = self.request.user
         self.object.slug = str(slugify(form.cleaned_data['title']))
         self.object.featured = False
         self.object.enable_comments = False
@@ -78,57 +74,4 @@ class ProjectImageCreateView(CreateView):
     def dispatch(self, *args, **kwargs):
         self.project = get_object_or_404(Project, pk=kwargs['project_id'])
         return super(ProjectImageCreateView, self).dispatch(*args, **kwargs)
-
-@login_required
-def add_image(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    if request.user.id != project.user.id:
-        return HttpResponseForbidden()
-    if request.method == 'POST':
-        form = ProjectImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_image = form.save(commit=False)
-            new_image.user = request.user
-            title = form.cleaned_data['title']
-            slugified_title = str(slugify(title))
-            new_image.slug = slugified_title
-            new_image.public = True
-            new_image.project = project.id
-            new_image.save()
-            form.save()
-            if '_save' in request.POST:
-                return HttpResponseRedirect(reverse('profiles_profile_detail',
-                    args=[request.user]))
-            elif '_addanother' in request.POST:
-                return HttpResponseRedirect(reverse('portfolio-image-add',
-                    args=[project.id]))
-    else:
-        form = ImageForm()
-    context = {'project': project, 'form': form, 'add': True}
-    return render_to_response('portfolio/image_form.html',
-        context,
-        context_instance=RequestContext(request))
-
-@login_required
-def edit_image(request, project_id, image_id):
-    project = get_object_or_404(Project, pk=project_id)
-    image = get_object_or_404(ProjectImage, pk=image_id)
-    if request.user.id != project.user.id:
-        return HttpResponseForbidden()
-    if request.method == 'POST':
-        form = ProjectImageForm(instance=image, data=request.POST, files=request.FILES)
-        if form.is_valid():
-            image = form.save()
-            if '_save' in request.POST:
-                return HttpResponseRedirect(reverse('profiles_profile_detail',
-                    args=[request.user]))
-            elif '_edit' in request.POST:
-                return HttpResponseRedirect(reverse('idea-edit',
-                    args=[project.id]))
-    else:
-        form = ProjectImageForm(instance=image)
-    context = {'project': project, 'form': form, 'add': False}
-    return render_to_response('portfolio/image_form.html',
-        context,
-        context_instance=RequestContext(request))
 
