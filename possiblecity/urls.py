@@ -20,10 +20,11 @@ urlpatterns = patterns('',
 
     # people
     url(r'^account/', include('account.urls')),
+    url(r'^profiles/', include('possiblecity.profiles.urls')),    
 
     #projects
     url(r'^float/', include('possiblecity.float.urls.share')),
-    url(r'^explore/', include('possiblecity.float.urls.explore')),
+    url(r'^ground/', include('possiblecity.float.urls.explore')),
 
     #places
 

@@ -138,9 +138,10 @@ ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
 ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_SIGNUP_REDIRECT_URL = "profiles_profile_create"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
 
@@ -171,7 +172,7 @@ INSTALLED_APPS = (
     "django_forms_bootstrap",
 
     # third party apps
-    "account", #registration
+    "account", # registration
     "metron", # analytics
     
     # local apps

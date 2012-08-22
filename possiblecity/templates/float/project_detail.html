@@ -1,6 +1,15 @@
 {% extends "float/base.html" %}
 
 {% load bootstrap_tags %}
+{% block subnav %}
+<section>
+<h2><a href="{{ project.agent.get_absolute_url }}">
+{{ project.agent.profile.full_name }}</a></h2>
+<p>{{ project.agent.username }}</p>
+<p>{{ project.agent }}</p>
+{{ project.agent.profile.about }}
+</section>
+{% endblock subnav %}
 
 {% block head_title %}{{ project.title }}{% endblock %}
 
@@ -35,10 +44,7 @@
         <section id="classification"> </section>
         <section id="description">
             <h2>{{ project.tagline }}</h2>
-            {{ project.description_html|safe }}
-        </section>
-        <section id="agent">
-            {{ project.agent }}
+            {{ project.description|safe }}
         </section>
     </article>
     {% block comments %}
