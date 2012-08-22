@@ -109,6 +109,7 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "pagination.middleware.PaginationMiddleware"
 ]
 
 #==============================================================================
@@ -165,6 +166,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
 
     # theme
     "pinax_theme_bootstrap_account",
@@ -174,7 +176,8 @@ INSTALLED_APPS = (
     # third party apps
     "account", # registration
     "metron", # analytics
-    
+    "pagination", 
+
     # local apps
     "possiblecity.profiles",
     "possiblecity.float",
