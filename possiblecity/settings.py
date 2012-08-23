@@ -176,7 +176,8 @@ INSTALLED_APPS = (
     # third party apps
     "account", # registration
     "metron", # analytics
-    "pagination", 
+    "pagination", # pagination
+    "phileo", # liking 
 
     # local apps
     "possiblecity.profiles",

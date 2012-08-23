@@ -11,16 +11,13 @@ from django.template import RequestContext
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DeleteView
 
+from possiblecity.views import LoginRequiredMixin
 from possiblecity.float.models import Project, ProjectImage
 from possiblecity.float.forms import ProjectForm, ProjectImageForm
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     form_class = ProjectForm
     #success_url = 'success'
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ProjectCreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -39,10 +36,10 @@ class ProjectCreateView(CreateView):
         context_data.update({'create': True})
         return context_data
 
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProjectForm
     template_name = 'float/create_project.html'
-    success_url = 'success'
+    #success_url = 'success'
 
     def dispatch(self, *args, **kwargs):
         self.project = get_object_or_404(Project, pk=kwargs['project_id'])
