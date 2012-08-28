@@ -1,0 +1,23 @@
+{% extends "profiles/base.html" %}
+
+{% load i18n %}
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title %}{% trans "All Profiles" %}{% endblock %}
+
+{% block body %}
+    <header class="jumbotron subhead" id="overview">
+        <h1>{% trans "All Profiles" %}</h1>
+        <p class="lead">{% trans "All profiles on the site." %}</p>
+    </header>
+    
+    {% autopaginate profiles %}
+    <ul>
+    {% for profile in profiles %}
+        <li><a href="{% url profiles_profile_detail profile.user.username %}">{{ profile }}</a></li>
+    {% endfor %}
+    </ul>
+     {% paginate %}
+    
+{% endblock %}
