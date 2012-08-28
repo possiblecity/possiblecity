@@ -26,6 +26,9 @@ urlpatterns = patterns('',
     url(r'^float/', include('possiblecity.float.urls.share')),
     url(r'^ground/', include('possiblecity.float.urls.explore')),
 
+    # network
+    url(r"^network/", include("phileo.urls")),
+    
     #places
 
     # blog

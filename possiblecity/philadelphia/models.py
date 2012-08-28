@@ -1,31 +1,40 @@
 # philadelphia/models.py
+
+from django.conf import settings
 from django.contrib.gis.db import models
 from django.db.models.signals import post_save
 
+from possiblecity.lotxlot.utils import fetch_json
 from possiblecity.lotxlot.models import USLotBase
 
 class Lot(USLotBase):
     # spatial queryset manager
     objects = models.GeoManager()
+     
+    parcel = models.OneToOneField("Parcel")
+    
+    def _get_coordinates(self):
+        # get coordinates from geom field
+        return self.geom.centroid
 
     def _get_zip(self):
         # determine zip code from address, city and state
         pass
 
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         if not self.pk:
             # These are all lots for Philadelphia, PA.
             # So populate those fields on creation.
             self.city = "Philadelphia"
             self.state = "PA"
             # self.zip = self._get_zip
-        super(Lot, self).save(force_insert, force_update)
+            self.coord = self._get_coordinates()
+        super(Lot, self).save(*args, **kwargs)
 
 class Parcel(models.Model):
     # spatial queryset manager
     objects = models.GeoManager()
 
-    lot = models.OneToOneField(Lot)
 
     # Fields mapped to the Philadelphia parcel shapefile
     objectid = models.IntegerField()
@@ -64,49 +73,30 @@ class Parcel(models.Model):
     geoid = models.CharField(max_length=25, null=True, blank=True)
     shape_area = models.FloatField(null=True, blank=True)
     shape_len = models.FloatField(null=True, blank=True)
-    geom = models.MultiPolygonField(srid=4326, geography=True)
+    geom = models.MultiPolygonField(srid=4326)
 
     def _get_address(self):
-        _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stname, self.stdes, self.stdessuf)
-        return " ".join(str(s) for s in _address_fields if s is not None)
+        _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stnam, self.stdes, self.stdessuf)
+        return " ".join(str(s) for s in _address_fields if s)
 
     def _get_coordinates(self):
         # get coordinates from geom field
         return self.geom.centroid
 
-
-
-# Auto-generated `LayerMapping` dictionary for Parcel model
-parcel_mapping = {
-    'objectid' : 'OBJECTID',
-    'recsub' : 'RECSUB',
-    'basereg' : 'BASEREG',
-    'mapreg' : 'MAPREG',
-    'parcel' : 'PARCEL',
-    'recmap' : 'RECMAP',
-    'stcod' : 'STCOD',
-    'house' : 'HOUSE',
-    'suf' : 'SUF',
-    'unit' : 'UNIT',
-    'stex' : 'STEX',
-    'stdir' : 'STDIR',
-    'stnam' : 'STNAM',
-    'stdes' : 'STDES',
-    'stdessuf' : 'STDESSUF',
-    'elev_flag' : 'ELEV_FLAG',
-    'topelev' : 'TOPELEV',
-    'botelev' : 'BOTELEV',
-    'condoflag' : 'CONDOFLAG',
-    'matchflag' : 'MATCHFLAG',
-    'inactdate' : 'INACTDATE',
-    'orig_date' : 'ORIG_DATE',
-    'status' : 'STATUS',
-    'geoid' : 'GEOID',
-    'shape_area' : 'SHAPE_AREA',
-    'shape_len' : 'SHAPE_LEN',
-    'geom' : 'MULTIPOLYGON',
-}
-
+    def _get_vacancy(self):
+        # check Philadelphia data api to determine if parcel is vacant
+        source = settings.PHILADELPHIA_DATA_SOURCES["PAPL_assets"]
+        query = "where=MAPREG='%s'" % self.mapreg
+        format = "json"
+        url = "%squery?%s&f=%s" % (source,query,format)
+        dict = fetch_json(url)
+         
+        if dict["features"]:
+            return True
+        else:
+            return False
+        
+          
 def parcel_post_save(sender, **kwargs):
     """
         When a parcel instance is created, create a related Lot instance.
@@ -114,11 +104,11 @@ def parcel_post_save(sender, **kwargs):
         Lot address and coord fields, respectively.
     """
     parcel, created = kwargs["instance"], kwargs["created"]
-    # if this is a new instance of parcel, create a populate a related Lot
+    # if this is a new instance of parcel, 
+    # create and populate the related Lot
     if created:
-        # create the Lot instance
-        lot = Lot(parcel=parcel, address=parcel._get_address,
-                  coord=parcel._get_coordinates, geom=parcel.geom)
-        lot.save()
+        Lot.objects.create(parcel=parcel, address=parcel._get_address(),
+            geom=parcel.geom, is_vacant=parcel._get_vacancy(), 
+            is_public=parcel._get_vacancy())
 
 post_save.connect(parcel_post_save, sender=Parcel)

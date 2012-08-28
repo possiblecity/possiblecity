@@ -1,5 +1,8 @@
 from django.contrib.gis import admin
-from possiblecity.philadelphia.models import Lot, LandUnit
+from possiblecity.philadelphia.models import Lot, Parcel
 
-admin.site.register(Lot, admin.GeoModelAdmin)
-admin.site.register(LandUnit, admin.GeoModelAdmin)
+class LotAdmin(admin.GeoModelAdmin):
+    list_display = ('address', 'is_public', 'is_vacant', 'is_visible')
+
+admin.site.register(Lot, LotAdmin)
+admin.site.register(Parcel, admin.GeoModelAdmin)

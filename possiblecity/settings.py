@@ -152,6 +152,11 @@ ABSOLUTE_URL_OVERRIDES = {
 
 AUTH_PROFILE_MODULE = "profiles.Profile"
 
+AUTHENTICATION_BACKENDS = (
+    "phileo.auth_backends.CanLikeBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
 
 #==============================================================================
 # Installed Apps
@@ -167,6 +172,7 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.gis",
 
     # theme
     "pinax_theme_bootstrap_account",
@@ -182,7 +188,8 @@ INSTALLED_APPS = (
     # local apps
     "possiblecity.profiles",
     "possiblecity.float",
-
+    "possiblecity.lotxlot",
+    "possiblecity.philadelphia",
 )
 
 #==============================================================================
@@ -251,10 +258,37 @@ METRON_SETTINGS = {
 }
 
 #==============================================================================
-# local app settings
+# Other 3rd Party Apps
 #==============================================================================
 
-#BLOG_MARKUP_DEFAULT = 'markdown'
+PHILEO_LIKABLE_MODELS = {
+    "profiles.Profile": {
+        "css_class_on": "icon-heart",
+        "css_class_off": "icon-heart-empty",
+        "like_text_on": "Unfollow",
+        "like_text_off": "Follow",
+        "count_text_singular": "follower",
+        "count_text_plural": "followers"
+    },
+}
+
+
+#==============================================================================
+# Local Apps
+#==============================================================================
+
+# Philadelphia
+
+PHILADELPHIA_DATA_SOURCES = {
+    "ADDRESSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Addresses/MapServer/0",
+    "PAPL": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/,
+    "PAPL_LISTINGS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/0/",
+    "PAPL_ASSETS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/",
+    "VACANCY": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/", 
+    "VACANCY_LICENCES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2",
+    "VACANCY_VIOLATIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8",
+}
+
 
 #==============================================================================
 # local environment settings

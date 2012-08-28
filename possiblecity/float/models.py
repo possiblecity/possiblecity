@@ -67,12 +67,12 @@ class Project(models.Model):
     modified = models.DateField(auto_now=True, editable=False)
     floated = models.DateField(editable=False, blank=True, null=True)
 
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         if not self.floated:
              if self.status == self.STATUS_PUBLISHED:
                 self.floated = datetime.datetime.now()
 
-        super(Project, self).save(force_insert, force_update)
+        super(Project, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return u'%s' % (self.title)
