@@ -183,7 +183,8 @@ INSTALLED_APPS = (
     "account", # registration
     "metron", # analytics
     "pagination", # pagination
-    "phileo", # liking 
+    "phileo", # liking
+    "easy_thumbnails", # image manipulation 
 
     # local apps
     "possiblecity.profiles",
@@ -279,14 +280,14 @@ PHILEO_LIKABLE_MODELS = {
 
 # Philadelphia
 
-PHILADELPHIA_DATA_SOURCES = {
+PHL_DATA = {
     "ADDRESSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Addresses/MapServer/0",
-    "PAPL": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/,
+    "PAPL": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/",
     "PAPL_LISTINGS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/0/",
     "PAPL_ASSETS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/",
     "VACANCY": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/", 
-    "VACANCY_LICENCES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2",
-    "VACANCY_VIOLATIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8",
+    "VACANCY_LICENSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2/",
+    "VACANCY_VIOLATIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8/",
 }
 
 

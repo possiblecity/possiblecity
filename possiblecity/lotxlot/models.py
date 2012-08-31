@@ -4,7 +4,7 @@ from django.contrib.gis.db import models
 from django.db.models import permalink
 
 from django.contrib.localflavor.us.models import USStateField
-from django.templates.defaultfilters import slugify
+from django.template.defaultfilters import slugify
 
 class LotBase(models.Model):
     address = models.CharField(max_length=255)
@@ -17,7 +17,6 @@ class LotBase(models.Model):
 
     # spatial fields
     coord = models.PointField(blank=True, null=True)
-    # should geom live here? or in concrete models?
     geom = models.MultiPolygonField(srid=4326)
 
     class Meta:
@@ -27,9 +26,9 @@ class LotBase(models.Model):
         return u'%s' % (self.address)
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        if not self.pk:
             self.slug = slugify(self.address)
-        super(test, self).save(*args, **kwargs)
+        super(LotBase, self).save(*args, **kwargs)
 
 class USLotBase(LotBase):
     """

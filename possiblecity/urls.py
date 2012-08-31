@@ -27,7 +27,7 @@ urlpatterns = patterns('',
     url(r'^ground/', include('possiblecity.float.urls.explore')),
 
     # network
-    url(r"^network/", include("phileo.urls")),
+    url(r"^connect/", include("phileo.urls")),
     
     #places
 

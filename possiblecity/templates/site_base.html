@@ -6,6 +6,13 @@
 {% block extra_head_base %}
     {% block extra_head %}{% endblock %}
 {% endblock %}
+{% block nav %}
+    <ul class="nav">
+        <li><a href="{% url float %}">Float</a></li>
+        <li><a href="">LotxLot</a></li>
+        <li><a href="{% url profiles_profile_list %}">People</a></li>
+    </ul>
+{% endblock %}
 
 {% block footer %}
     {% include "_footer.html" %}

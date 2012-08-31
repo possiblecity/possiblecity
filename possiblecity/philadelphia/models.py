@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from django.db.models.signals import post_save
 
-from possiblecity.lotxlot.utils import fetch_json
+from possiblecity.lotxlot.utils import fetch_json, has_feature
 from possiblecity.lotxlot.models import USLotBase
 
 class Lot(USLotBase):
@@ -21,14 +21,49 @@ class Lot(USLotBase):
         # determine zip code from address, city and state
         pass
 
+    @property
+    def has_vacancy_violation(self):
+        source = settings.PHL_DATA["VACANCY_VIOLATIONS"] + "query"
+        params = {"where":"VIOLATION_ADDRESS='%s'" % (self.address), "f":"json"}
+        
+        return has_feature(source, params)
+   
+    @property
+    def has_vacancy_license(self):
+        source = settings.PHL_DATA["VACANCY_LICENSES"] + "query"
+        params = {"where":"LICENSE_ADDRESS='%s'" % (self.address), "f":"json"}
+        
+        return has_feature(source, params)
+
+    @property
+    def is_available(self):
+        source = settings.PHL_DATA["PAPL_LISTINGS"] + "query"
+        params = {"where":"MAPREG='%s'" % (self.parcel.mapreg), "f":"json"}
+
+	return has_feature(source, params)
+
+    def _get_vacancy_status(self):
+       vacancy_flags = (self.has_vacancy_violation,
+           self.has_vacancy_license, self.is_available)
+       
+       return any(v is True for v in vacancy_flags)
+    
+    def _get_public_status(self):
+        source = settings.PHL_DATA["PAPL_ASSETS"] + "query"
+        params = {"where":"MAPREG='%s'" % (self.parcel.mapreg), "f":"json"}
+
+        return has_feature(source, params)
+
     def save(self, *args, **kwargs):
         if not self.pk:
             # These are all lots for Philadelphia, PA.
             # So populate those fields on creation.
             self.city = "Philadelphia"
             self.state = "PA"
-            # self.zip = self._get_zip
+            # self.zip = self._get_zip()
             self.coord = self._get_coordinates()
+            self.is_vacant = self._get_vacancy_status()
+            self.is_public = self._get_public_status()
         super(Lot, self).save(*args, **kwargs)
 
 class Parcel(models.Model):
@@ -79,24 +114,6 @@ class Parcel(models.Model):
         _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stnam, self.stdes, self.stdessuf)
         return " ".join(str(s) for s in _address_fields if s)
 
-    def _get_coordinates(self):
-        # get coordinates from geom field
-        return self.geom.centroid
-
-    def _get_vacancy(self):
-        # check Philadelphia data api to determine if parcel is vacant
-        source = settings.PHILADELPHIA_DATA_SOURCES["PAPL_assets"]
-        query = "where=MAPREG='%s'" % self.mapreg
-        format = "json"
-        url = "%squery?%s&f=%s" % (source,query,format)
-        dict = fetch_json(url)
-         
-        if dict["features"]:
-            return True
-        else:
-            return False
-        
-          
 def parcel_post_save(sender, **kwargs):
     """
         When a parcel instance is created, create a related Lot instance.
@@ -108,7 +125,6 @@ def parcel_post_save(sender, **kwargs):
     # create and populate the related Lot
     if created:
         Lot.objects.create(parcel=parcel, address=parcel._get_address(),
-            geom=parcel.geom, is_vacant=parcel._get_vacancy(), 
-            is_public=parcel._get_vacancy())
+            geom=parcel.geom)
 
 post_save.connect(parcel_post_save, sender=Parcel)
