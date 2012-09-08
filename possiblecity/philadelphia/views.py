@@ -1,20 +1,23 @@
-import json
+# philadelphia/views.py
 
-request
-geojson
-HttpResponse
-render_to_response
+from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
 
+from possiblecity.lotxlot.views import GeoHybridListView, GeoHybridDetailView
 from possiblecity.philadelphia.models import Lot
 
-def lots(request):
-    lots = Lots.objects.all()
-    bbox = json.dumps(lots.extent())
-    if request.is_ajax():
-       d = {}
-       for lot inlots.geojson():
-            geojson = json.loads(lots.geojson)
-            d[county.geo_id] = geojson
-        return HttpResponse(json.dumps(d), mimetype='application/json')
-    else:
-        return render_to_responsel'lots.html', { 'bbox': bbox }, context_instance=RequestContext(request))
+class LotListView(GeoHybridListView):
+    """
+    Retrieve all lots.
+    """
+    model = Lot
+    geodjango = "coord"
+
+class LotDetailView(GeoHybridDetailView):
+    """
+    Retreive a lot
+    """
+    model = Lot
+    geodjango = "geom"
+    
+

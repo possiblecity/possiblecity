@@ -1,0 +1,43 @@
+{% extends "philadelphia/base.html" %}
+{% load possiblecity_tags %}
+{% block body %}
+<div id="map" style="height:400px; width:100%">
+</div>
+<h1>{{ lot.address|capsentence }}</h1>
+<p>{{ lot.geom }}</p>
+<p>{{ lot.geom.geojson }}</p>
+<p>{{ lot.coord }}</p>
+<p>{{ lot.is_vacant }}</p>
+<p>{{ lot.is_public }}</p>
+{% endblock %}
+{% block extra_body %}
+<script>
+    var map = new L.Map('map');
+    var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/17de60efa2c548c2b8b8bb215db49cb4/47928/256/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy;'
+    });
+    //var philadelphia = new L.LatLng(39.9522, -75.1642);
+    map.addLayer(cloudmade);
+
+    var geoj = {};
+    
+    var myStyle = {
+        "fillColor": "#ff0000",
+        "opacity": 1.0,
+        "weight": 1,
+        "color":"#000000",
+        "dashArray": "2 2"
+    };
+
+    var myLayer = L.geoJson(null, {
+        style: myStyle
+    }).addTo(map);
+    
+    $.getJSON('{% url lot_detail lot.id %}', function(data){
+          myLayer.addData(data);
+          bounds = myLayer.getBounds();
+          map.fitBounds(bounds);
+    });
+
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "site_base.html" %}
+
+{% block body_class %}lotxlot{% endblock %}
+{% block extra_head %}
+<!-- Leaflet -->
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}" />
+<!--[if lte IE 8]><link rel="stylesheet" href="{% static 'leaflet/leaflet.ie.css' %}" /><![endif]-->
+<script src="{% static 'leaflet/leaflet.js' %}"></script>
+{% endblock extra_head %}
+

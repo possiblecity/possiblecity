@@ -1,0 +1,85 @@
+# lotxlot/views.py
+
+from django.views.generic.list import BaseListView, \
+                                 MultipleObjectTemplateResponseMixin
+from django.views.generic.detail import BaseDetailView, \
+                                 SingleObjectTemplateResponseMixin
+from django.utils.decorators import method_decorator
+from django.views.decorators.gzip import gzip_page
+
+from possiblecity.lotxlot.http import HttpJSONResponse
+from possiblecity.lotxlot.serializers import Serializer as GeoJSONSerializer
+
+class GeoJSONResponseMixin(object):
+    """
+    A mixin that can be used to render a GeoJSON response.
+    """
+    response_class = HttpJSONResponse
+    """ Select fields for properties """
+    fields = []
+    """ Limit float precision """
+    precision = None
+    """ Simplify geometries """
+    simplify = None
+    """ Change projection of geometries """
+    srid = None
+
+    def render_to_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        serializer = GeoJSONSerializer()
+        response = self.response_class(**response_kwargs)
+        serializer.serialize(self.get_queryset(), stream=response, 
+                             fields=self.fields, simplify=self.simplify,
+                             srid=self.srid, precision=self.precision,
+                             ensure_ascii=False)
+        return response
+
+
+class GeoListView(GeoJSONResponseMixin, BaseListView):
+    """
+    A generic view to serve a model as a layer.
+    """
+    
+    pass
+    #@method_decorator(gzip_page)
+    #def dispatch(self, *args, **kwargs):
+       #return super(GeoListView, self).dispatch(*args, **kwargs)
+
+class GeoDetailView(GeoJSONResponseMixin, BaseDetailView):
+   """
+   A generic view to serve an object as a layer
+   """
+   pass
+   
+class GeoHybridListView(GeoJSONResponseMixin, MultipleObjectTemplateResponseMixin, BaseListView):
+    """
+    A hybrid view that return a list of features as either geojson or
+    regular django context depending on the type of request
+    """
+    
+    @method_decorator(gzip_page)
+    def dispatch(self, *args, **kwargs):
+        return super(GeoHybridListView, self).dispatch(*args, **kwargs)
+    
+    def render_to_response(self, context):
+        # Look for an AJAX request
+        if self.request.is_ajax():
+            return GeoJSONResponseMixin.render_to_response(self, context)
+        else:
+            return MultipleObjectTemplateResponseMixin.render_to_response(self, context)
+
+class GeoHybridDetailView(GeoJSONResponseMixin, SingleObjectTemplateResponseMixin, BaseDetailView):
+    """
+    A hybrid view that returns an object as either geojson or
+    regular django context depending on the type of request
+    """
+    def render_to_response(self, context):
+        # Look for whether this is an AJAX request
+        if self.request.is_ajax():
+            return GeoJSONResponseMixin.render_to_response(self, context)
+        else:
+            return SingleObjectTemplateResponseMixin.render_to_response(self, context)
+
+

@@ -1,0 +1,40 @@
+{% extends "philadelphia/base.html" %}
+
+{% block body %}
+<div id="map" style="height:400px; width:100%">
+</div>
+<h1>All Lots</h1>
+{% for lot in lot_list %}
+<h2>{{ lot.address }}</h2>
+{% endfor %}
+{% endblock %}
+{% block extra_body %}
+<script>
+    var map = new L.Map('map');
+    var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/17de60efa2c548c2b8b8bb215db49cb4/47928/256/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy;'
+    });
+    var philadelphia = new L.LatLng(39.9522, -75.1642);
+    map.addLayer(cloudmade);
+
+    var geoj = {};
+    
+    var dataStyle = {
+        "fillColor": "#ff0000",
+        "opacity": 1.0,
+        "weight": 1,
+        "color":"#000000",
+    };
+
+    var dataLayer = L.geoJson(null, {
+        style: dataStyle
+    }).addTo(map);
+    
+    $.getJSON('{% url lots %}', function(data){
+          dataLayer.addData(data);
+          bounds = dataLayer.getBounds();
+          map.fitBounds(bounds);
+    });
+
+</script>
+{% endblock %}

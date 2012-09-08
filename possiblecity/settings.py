@@ -184,7 +184,8 @@ INSTALLED_APPS = (
     "metron", # analytics
     "pagination", # pagination
     "phileo", # liking
-    "easy_thumbnails", # image manipulation 
+    "easy_thumbnails", # image manipulation
+    "tastypie", # api generation
 
     # local apps
     "possiblecity.profiles",

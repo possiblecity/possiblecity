@@ -6,9 +6,13 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, RedirectView
 
+from possiblecity.philadelphia.api import LotResource
+
 from django.contrib import admin
 admin.autodiscover()
 
+
+lot_resource = LotResource()
 
 urlpatterns = patterns('',
     # admin
@@ -29,11 +33,15 @@ urlpatterns = patterns('',
     # network
     url(r"^connect/", include("phileo.urls")),
     
-    #places
+    # places
+    url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
 
     # blog
 
     # search
+
+    # api
+    (r'^api/', include(lot_resource.urls)),
 
 )
 
