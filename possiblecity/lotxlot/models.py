@@ -1,5 +1,7 @@
 # lotxlot/models.py
 
+import datetime
+
 from django.contrib.gis.db import models
 from django.db.models import permalink
 
@@ -9,11 +11,14 @@ from django.template.defaultfilters import slugify
 class LotBase(models.Model):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
+    is_visible = models.BooleanField(default=True)
     is_vacant = models.BooleanField(default=False)
     is_public = models.BooleanField(default=False)
-    is_visible = models.BooleanField(default=True)
-
-    slug = models.CharField(max_length=255, editable=False)
+ 
+    #auto-generated fields
+    slug = models.SlugField(max_length=255, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     # spatial fields
     coord = models.PointField(blank=True, null=True)

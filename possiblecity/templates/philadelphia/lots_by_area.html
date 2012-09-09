@@ -6,11 +6,10 @@
 <h1>All Lots</h1>
 <ul class="lots">
 {% for lot in lot_list %}
-<li class="lot" style="width:200px; height:200px; float:left; list-style:none">
-    <a href="{% url lot_detail lot.id %}">
-    <div id="lot-{{ lot.id }}-map" style="height:200px; width:200px; background-color:transparent;">
+<li class="lot">
+    <h2><a href="{% url lot_detail lot.id %}">{{ lot.address|capsentence }}</a></h2>
+    <div id="lot-{{ lot.id }}-map" style="height:100px; width:100px; background-color:transparent;">
     <div>
-    </a>
 </li>
 {% endfor %}
 </ul>
@@ -60,7 +59,6 @@ var detailStyle = {
          lotMap[{{ lot.id }}].addLayer(layer);
          bounds = layer.getBounds();
          lotMap[{{ lot.id }}].fitBounds(bounds);
-         lotMap[{{ lot.id }}].setZoom(19);
     });
 {% endfor %}
 </script>

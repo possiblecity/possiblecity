@@ -12,7 +12,11 @@ class Lot(USLotBase):
     objects = models.GeoManager()
      
     parcel = models.OneToOneField("Parcel")
-    
+
+    is_available = models.BooleanField(default=False)
+    has_vacancy_violation = models.BooleanField(default=False)
+    has_vacancy_license = models.BooleanField(default=False)
+
     def _get_coordinates(self):
         # get coordinates from geom field
         return self.geom.centroid
@@ -21,30 +25,27 @@ class Lot(USLotBase):
         # determine zip code from address, city and state
         pass
 
-    @property
-    def has_vacancy_violation(self):
+    def _get_vacancy_violation(self):
         source = settings.PHL_DATA["VACANCY_VIOLATIONS"] + "query"
         params = {"where":"VIOLATION_ADDRESS='%s'" % (self.address), "f":"json"}
         
         return has_feature(source, params)
    
-    @property
-    def has_vacancy_license(self):
+    def _get_vacancy_license(self):
         source = settings.PHL_DATA["VACANCY_LICENSES"] + "query"
         params = {"where":"LICENSE_ADDRESS='%s'" % (self.address), "f":"json"}
         
         return has_feature(source, params)
 
-    @property
-    def is_available(self):
+    def _get_availability(self):
         source = settings.PHL_DATA["PAPL_LISTINGS"] + "query"
         params = {"where":"MAPREG='%s'" % (self.parcel.mapreg), "f":"json"}
 
-	return has_feature(source, params)
+        return has_feature(source, params)
 
     def _get_vacancy_status(self):
-       vacancy_flags = (self.has_vacancy_violation,
-           self.has_vacancy_license, self.is_available)
+       vacancy_flags = (self._get_vacancy_violation(),
+           self._get_vacancy_license(), self.get_availability())
        
        return any(v is True for v in vacancy_flags)
     
@@ -64,6 +65,9 @@ class Lot(USLotBase):
             self.coord = self._get_coordinates()
             self.is_vacant = self._get_vacancy_status()
             self.is_public = self._get_public_status()
+            self.is_available = self._get_availability()
+            self.has_vacancy_violation = self._get_vacancy_violation()
+            self.has_vacancy_license = self._get_vacancy_license()
         super(Lot, self).save(*args, **kwargs)
 
 class Parcel(models.Model):
@@ -113,6 +117,9 @@ class Parcel(models.Model):
     def _get_address(self):
         _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stnam, self.stdes, self.stdessuf)
         return " ".join(str(s) for s in _address_fields if s)
+
+	def __unicode__(self):
+        return u'%s' % (self._get_address())
 
 def parcel_post_save(sender, **kwargs):
     """

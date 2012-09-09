@@ -8,12 +8,12 @@ from django.views.generic.list import MultipleObjectTemplateResponseMixin, BaseL
 
 class GeoResponseMixin(object):
     
-    geodjango = "geom" # default value for the geometry field
+    geo_field = "geom" # default value for the geometry field
     properties = [] # additional properties to add to result
 
     def render_to_response(self, context):
         qs = self.get_queryset()
-        djf = Django.Django(geodjango=self.geodjango)
+        djf = Django.Django(geodjango=self.geo_field)
         geoj = GeoJSON.GeoJSON()
         output = geoj.encode(djf.decode(qs))
         return HttpResponse(output, content_type='application/json')
@@ -33,7 +33,7 @@ class GeoHybridListView(GeoResponseMixin, MultipleObjectTemplateResponseMixin, B
     depending on the type of request
     """
     def render_to_response(self, context): 
-        if self.request.is_ajax():
+        if self.request.GET.get('format','html') == 'json':
             return GeoResponseMixin.render_to_response(self, context)
         else:
             return MultipleObjectTemplateResponseMixin.render_to_response(self, context) 
@@ -44,7 +44,7 @@ class GeoHybridDetailView(GeoDetailView, SingleObjectTemplateResponseMixin):
     depending on the type of request
     """
     def render_to_response(self, context):
-        if self.request.is_ajax():
+        if self.request.GET.get('format','html') == 'json':
             return GeoDetailView.render_to_response(self, context)
         else:
             return SingleObjectTemplateResponseMixin.render_to_response(self, context)

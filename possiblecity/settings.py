@@ -188,6 +188,7 @@ INSTALLED_APPS = (
     "tastypie", # api generation
 
     # local apps
+    "possiblecity.templatetags",
     "possiblecity.profiles",
     "possiblecity.float",
     "possiblecity.lotxlot",
