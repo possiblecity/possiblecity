@@ -37,6 +37,7 @@ urlpatterns = patterns('',
     url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
 
     # blog
+    url(r'^blog/', include('possiblecity.text.urls')),
 
     # search
 

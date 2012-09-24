@@ -33,7 +33,7 @@ class GeoHybridListView(GeoResponseMixin, MultipleObjectTemplateResponseMixin, B
     depending on the type of request
     """
     def render_to_response(self, context): 
-        if self.request.GET.get('format','html') == 'json':
+        if self.request.is_ajax():
             return GeoResponseMixin.render_to_response(self, context)
         else:
             return MultipleObjectTemplateResponseMixin.render_to_response(self, context) 
@@ -44,7 +44,7 @@ class GeoHybridDetailView(GeoDetailView, SingleObjectTemplateResponseMixin):
     depending on the type of request
     """
     def render_to_response(self, context):
-        if self.request.GET.get('format','html') == 'json':
+        if self.request.is_ajax():
             return GeoDetailView.render_to_response(self, context)
         else:
             return SingleObjectTemplateResponseMixin.render_to_response(self, context)

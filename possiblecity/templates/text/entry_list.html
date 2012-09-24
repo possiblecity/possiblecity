@@ -1,0 +1,42 @@
+{% extends "text/base.html" %}
+{% block head_title %}{{ block.super }}: Entries {% endblock head_title %}
+{% block body_class %}{{ block.super }} entry-list{% endblock %}
+{% block main %}
+{% block entry_list %}
+{% for entry in entry_list %}
+    <article class="entry excerpt" id="{{ entry.published|date:"Y-F-d" }}_{{ entry.slug }}">
+        <aside class="meta">
+            {% if entry.get_next_entry.published|date:"Y-F-d" != entry.published|date:"Y-F-d" %}
+            <p class="date">
+                <time datetime={{ entry.published|date:"c" }}>
+                    <span class="month">{{ entry.published|date:"F" }}</span>
+                    <span class="day">{{ entry.published|date:"d" }}</span>
+                </time>
+            </p>
+            {% else %}
+            &nbsp;
+            {% endif %}
+        </aside>
+        <section>
+            <header>
+                <h2 class="title"><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h2>
+            </header>
+            {{ entry.excerpt_html|safe }}
+        </section>
+    </article>
+{% endfor %}
+{% endblock entry_list %}
+{% block pagination %}
+      {% if is_paginated %}
+      <nav class="pagination">
+        {% if has_next %}
+        <a class="older" href="?page={{ next }}">Older</a>
+        {% endif %}
+        {% if has_next and has_previous %} | {% endif %}
+        {% if has_previous %}
+        <a class="newer" href="?page={{ previous }}">Newer</a>
+        {% endif %}
+      </nav>
+      {% endif %}
+{% endblock pagination %}
+{% endblock main %}

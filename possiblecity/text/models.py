@@ -2,9 +2,12 @@
 import datetime
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import permalink
 from django.utils.safestring import mark_safe
+
+from taggit.managers import TaggableManager
 
 from possiblecity.text.managers import EntryManager
 
@@ -58,9 +61,7 @@ class StatusMixin(models.Model):
 
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES,
                                               default=STATUS_LIVE,
-                                              help_text="Only content 
-                                              with live status will be 
-                                              publicly displayed.")
+                                              help_text="Only content with live status will be publicly displayed.")
 
     class Meta:
         abstract = True
@@ -95,7 +96,6 @@ class EntryBase(ArticleBase, StatusMixin, PostMixin):
     """
         An article with status and post information
     """
-    objects = EntryManager()
 
     slug = models.SlugField(unique_for_date='published')
 
@@ -107,6 +107,8 @@ class Entry(EntryBase):
         A blog entry. Inherits basic fields from text.models.EntryBase.
         Adds tags, markup, commenting, images
     """
+    objects = EntryManager()
+    
     tags = TaggableManager(blank=True)
     enable_comments = models.BooleanField(default=True)
 
@@ -132,4 +134,3 @@ class Entry(EntryBase):
         pass
 
 
-models.signals.post_save.connect(post_to_twitter, sender=Entry)

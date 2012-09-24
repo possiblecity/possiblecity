@@ -34,8 +34,12 @@ def has_feature(url, params):
            there are any features that match the query 
         """
         dict = fetch_json(url, params)
-        if dict["features"]:
-            return True
+		
+        if 'features' in dict:
+            if dict['features']:
+                return True
+            else:
+            		return False
         else:
             return False
 

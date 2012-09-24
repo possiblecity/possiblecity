@@ -6,11 +6,10 @@
 <h1>All Lots</h1>
 <ul class="lots">
 {% for lot in lot_list %}
-<li class="lot" style="width:200px; height:200px; float:left; list-style:none">
-    <a href="{% url lot_detail lot.id %}">
-    <div id="lot-{{ lot.id }}-map" style="height:200px; width:200px; background-color:transparent;">
+<li class="lot" style="width:33%; height:300px; float:left; list-style:none">
+    <a href="{% url lot_detail lot.id %}"><h2>{{ lot.address|capsentence }}</h2></a>
+    <div id="lot-{{ lot.id }}-map" style="height:200px; width:100%; background-color:transparent;">
     <div>
-    </a>
 </li>
 {% endfor %}
 </ul>
@@ -35,7 +34,7 @@
         style: dataStyle
     }).addTo(map);
     
-    $.getJSON('{% url lots %}', function(data){
+    $.getJSON('{% url lotxlot %}', function(data){
           dataLayer.addData(data);
           bounds = dataLayer.getBounds();
           map.fitBounds(bounds);
@@ -60,7 +59,6 @@ var detailStyle = {
          lotMap[{{ lot.id }}].addLayer(layer);
          bounds = layer.getBounds();
          lotMap[{{ lot.id }}].fitBounds(bounds);
-         lotMap[{{ lot.id }}].setZoom(19);
     });
 {% endfor %}
 </script>

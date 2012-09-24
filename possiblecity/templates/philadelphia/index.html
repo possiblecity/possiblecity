@@ -26,9 +26,9 @@
     }).addTo(map);
     
     $.getJSON('{% url vacant_lots %}', function(data){
-          dataLayer.addData(data);
-          bounds = dataLayer.getBounds();
-          map.fitBounds(bounds);
+         dataLayer.addData(data);
+         bounds = dataLayer.getBounds();
+         map.fitBounds(bounds);
     });
 </script>
 {% endblock %}

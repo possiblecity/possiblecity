@@ -45,7 +45,7 @@ class Lot(USLotBase):
 
     def _get_vacancy_status(self):
        vacancy_flags = (self._get_vacancy_violation(),
-           self._get_vacancy_license(), self.get_availability())
+           self._get_vacancy_license(), self._get_availability())
        
        return any(v is True for v in vacancy_flags)
     
@@ -116,9 +116,13 @@ class Parcel(models.Model):
 
     def _get_address(self):
         _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stnam, self.stdes, self.stdessuf)
-        return " ".join(str(s) for s in _address_fields if s)
+        address = " ".join(str(s) for s in _address_fields if s)
+        if address:
+            return address
+        else:
+            return "unknown"
 
-	def __unicode__(self):
+    def __unicode__(self):
         return u'%s' % (self._get_address())
 
 def parcel_post_save(sender, **kwargs):

@@ -186,9 +186,11 @@ INSTALLED_APPS = (
     "phileo", # liking
     "easy_thumbnails", # image manipulation
     "tastypie", # api generation
+    "taggit", # tagging
 
     # local apps
     "possiblecity.templatetags",
+    "possiblecity.text",
     "possiblecity.profiles",
     "possiblecity.float",
     "possiblecity.lotxlot",

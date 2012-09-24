@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from text.models import Entry
+from possiblecity.text.models import Entry
 
 class EntryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}

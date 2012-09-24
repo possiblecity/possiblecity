@@ -1,0 +1,21 @@
+{% extends "site_base.html" %}
+{% block head_title %}Blog{% endblock head_title %}
+{% load blog_tags %}
+{% block body_class %}blog{% endblock body_class %}
+{% block body %}
+{% block content_header %}
+    <header>
+        {%  block content_title %}
+            <h1>Possible City Blog</h1>
+        {%  endblock content_title %}
+    </header>
+{% endblock content_header %}
+{% block content %}
+    <section class="main">
+    {% block main %}
+    {% endblock main %}
+    </section>
+    {% block aside %}
+    {% endblock aside %}
+{% endblock content %}
+{% endblock body %}
