@@ -1,12 +1,10 @@
 {% extends "text/base.html" %}
-{% block head_title %}{{ block.super }}: {{ entry.title }} {% endblock head_title %}
+{% block head_title_page %}: {{ entry.title }} {% endblock head_title_page %}
 {% block body_class %}{{ block.super }} entry{% endblock body_class %}
-{% block main %}
-{% block entry %}
+{% block page_content %}
     {% include "text/_entry.html" %}
-{% endblock entry %}
-{% block comments %}{% endblock comments %}
-{% block nav %}
+    {% block comments %}{% endblock comments %}
+    {% block entry_nav %}
     <nav class="entry-nav">
         {% if object.get_previous_by_published %}
         <a class="previous" href="{{ entry.get_previous.get_absolute_url }}">
@@ -17,5 +15,5 @@
         {{ entry.get_next }} &raquo;</a>
         {% endif %}
     </nav>
-{% endblock nav %}
-{% endblock main %}
+{% endblock entry_nav %}
+{% endblock page_content %}

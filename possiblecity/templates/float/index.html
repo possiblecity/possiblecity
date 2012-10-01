@@ -1,5 +1,5 @@
 {% extends "float/base.html" %}
-{% block body %}
+{% block page_content %}
 <header>
     <h1>Float</h1>
 </header>
@@ -13,4 +13,4 @@
 <p><a href="{% url account_login %}?next={% url float_project_create %}">Login</a></p>
 {% endif %}
 </div>
-{% endblock body %}
+{% endblock page_content %}

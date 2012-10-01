@@ -1,0 +1,28 @@
+{% extends "text/base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+<link href="{% static "django-redactor/redactor/css/redactor.css" %}" type="text/css" 
+media="screen" rel="stylesheet" />
+{% endblock extra_head %}
+{% load bootstrap_tags %}
+{% block head_title_page %}: Create {% endblock head_title_page %}
+{% block body_class %}{{ block.super }} entry{% endblock body_class %}
+{% block page_content %}
+<form method="post" action="">
+    {% csrf_token %}
+{{ form|as_bootstrap }}
+
+ <button class="primary" type="submit" value="Continue">Publish</button>
+</form>
+{% endblock page_content %}
+{% block js_local %}
+<script type="text/javascript" 
+src="{% static "django-redactor/redactor/redactor.min.js" %}"></script>
+<script type="text/javascript" src="{% static "django-redactor/redactor/setup.js" %}"></script>
+<script type="text/javascript">
+$("form textarea").redactor({
+    imageUpload: '{% url text_upload_images %}',
+    imageGetJson: '{% url text_recent_images %}'
+});
+</script>
+{% endblock js_local %}

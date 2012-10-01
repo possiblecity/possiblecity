@@ -1,11 +1,11 @@
 {% extends "philadelphia/base.html" %}
 {% load possiblecity_tags %}
-{% block body %}
+{% block site_section %}
 <div id="map" style="height:400px; width:100%">
 </div>
-<h1>Lot<strong>x</strong>lot</h1>
-{% endblock %}
-{% block extra_body %}
+<h1>Lot<strong>x</strong>Lot</h1>
+{% endblock site_section %}
+{% block js_local %}
 <script>
     var map = new L.Map('map');
     var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/17de60efa2c548c2b8b8bb215db49cb4/47928/256/{z}/{x}/{y}.png', {
@@ -15,7 +15,7 @@
     map.addLayer(cloudmade);
     
     var dataStyle = {
-        "fillColor": "#ff0000",
+        "fillColor": "#D2B94D",
         "opacity": 1.0,
         "weight": 1,
         "color":"#000000",
@@ -31,4 +31,4 @@
          map.fitBounds(bounds);
     });
 </script>
-{% endblock %}
+{% endblock js_local %}

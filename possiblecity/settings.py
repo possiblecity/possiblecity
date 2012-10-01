@@ -70,6 +70,7 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
 ]
 
 #==============================================================================
@@ -180,6 +181,8 @@ INSTALLED_APPS = (
     "django_forms_bootstrap",
 
     # third party apps
+    "compressor", # static file optimization
+    "floppyforms", # form rendering
     "account", # registration
     "metron", # analytics
     "pagination", # pagination
@@ -187,6 +190,7 @@ INSTALLED_APPS = (
     "easy_thumbnails", # image manipulation
     "tastypie", # api generation
     "taggit", # tagging
+    "redactor", # wysiwyg editing
 
     # local apps
     "possiblecity.templatetags",
@@ -261,6 +265,16 @@ METRON_SETTINGS = {
         "1": "UA-28417563-1", # production
     }
 }
+
+#==============================================================================
+# Assets
+#==============================================================================
+
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-sass', 'sass {infile} {outfile}'),
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+)
 
 #==============================================================================
 # Other 3rd Party Apps

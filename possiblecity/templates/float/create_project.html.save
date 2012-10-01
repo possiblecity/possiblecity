@@ -1,0 +1,17 @@
+{% extends "float/base.html" %}
+{% block body %}
+<header>
+    <h1>Describe Your Project</h1>
+</header>
+<div>
+    <form method="post" action="">
+    {% csrf_token %}
+    <ul>
+        {{ form.as_ul }}
+        <li>
+            <button class="primary" type="submit" value="Continue">Continue</button>
+        </li>
+    </ul>
+ <button class="primary" type="submit" value="Continue">Continue</button>    </form>
+</div>
+{% endblock body %}

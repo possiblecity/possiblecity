@@ -1,20 +1,15 @@
-{% extends "subnav_base.html" %}
-
-{% load i18n %}
-{% load url from future %}
-
+{% extends "section_base.html" %}
+{% block head_title_section %}: People{% endblock head_title_section %}
 {% block body_class %}profile{% endblock %}
 
-{% block subnav %}
+{% block section_nav %}
     {% if user.is_authenticated %}
-        <ul class="nav nav-list">
-            <li class="nav-header">{% trans "Profile" %}</li>
+         <ul>
             <li><a href="{% url "profiles_profile_detail" user.username %}">
-{% trans "Your Profile" %}</a></li>
-            <li><a href="{% url "profiles_profile_list" %}">
-{% trans "All Profiles" %}</a></li>
+                Your Profile</a></li>
+            <li><a href="{% url "profiles_profile_list" %}">All Agents</a></li>
         </ul>
     {% else %}
         &nbsp;
     {% endif %}
-{% endblock %}
+{% endblock section_nav %}

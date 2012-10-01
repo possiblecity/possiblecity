@@ -1,21 +1,21 @@
-{% extends "site_base.html" %}
-{% block head_title %}Blog{% endblock head_title %}
+{% extends "section_base.html" %}
+{% block head_title_section %}: Blog{% endblock head_title_section %}
 {% load blog_tags %}
 {% block body_class %}blog{% endblock body_class %}
-{% block body %}
-{% block content_header %}
-    <header>
-        {%  block content_title %}
-            <h1>Possible City Blog</h1>
-        {%  endblock content_title %}
-    </header>
-{% endblock content_header %}
-{% block content %}
-    <section class="main">
-    {% block main %}
-    {% endblock main %}
-    </section>
-    {% block aside %}
-    {% endblock aside %}
-{% endblock content %}
-{% endblock body %}
+{% block section_title %}Possible City Blog{% endblock section_title %}
+{% block section_nav %}
+<section class="latest-entries">
+    <h3>Latest Posts</h3>
+    <ul>
+        
+    </ul>
+</section>
+<section class="dates">
+    
+    <h3>Archive</h3>
+    <ul>
+        
+    </ul>
+</section>
+{% endblock section_nav %}
+

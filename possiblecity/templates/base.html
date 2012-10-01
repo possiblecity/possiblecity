@@ -1,0 +1,109 @@
+{% block doctype %}<!doctype html>{% endblock doctype %}
+<html class="no-js" lang="en">
+<head>
+{% block head %}
+    {% block metadata %}
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="author" content="Possible City">
+    {% endblock metadata %}
+    <title>
+        {% block head_title %}
+            {% block head_title_site %}Possible City{% endblock head_title_site %}
+            {% block head_title_section %}{% endblock head_title_section %}
+            {% block head_title_page %}{% endblock head_title_page %}
+        {% endblock head_title %}
+    </title>
+
+    {% block mobile-viewport %}
+    {% endblock mobile-viewport %}
+
+    {% block favicons %}
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    {% endblock favicons %}
+
+    {% block css %}
+        {% load compress %}
+        {% compress css %}
+        <link type="text/css" rel="stylesheet" 
+             href="{{ STATIC_URL }}css/possiblecity.css" charset="utf-8">
+        {% endcompress %}
+    {% endblock css %}
+
+    {% block js_head %}
+        <!-- All JavaScript at the bottom, except for: -->
+        <script type="text/javascript" 
+            src="http://use.typekit.com/rna3gum.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+        <script src="{{ STATIC_URL }}js/libs/modernizr.dev.js"></script>
+        <script src="{{ STATIC_URL }}js/libs/respond.min.js"></script>
+    {% endblock js_head %}
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+{% endblock head %}
+</head>
+<body class="{% block body_class %}default{% endblock body_class %}"
+      {% block body_id %}{% endblock body_id %}>
+{% block site_container %}
+    <div class="site">
+        {% block site %}
+            {% block site_header_container %}
+                <header class="site-header">
+                    {% block site_header %}
+                        {% include "_header.html" %}
+                    {% endblock site_header %}
+                </header>
+            {% endblock site_header_container %}
+            {% block site_section_container %}
+                <section class="site-section">
+                     {% block site_section %}
+                     {% endblock site_section %}
+                </section>
+            {% endblock site_section_container %}
+        {% block site_footer_container %}
+            <footer class="site-footer">
+                 {% block site_footer %}
+                     {% include "_footer.html" %}
+                 {% endblock site_footer %}
+            </footer>
+        {% endblock site_footer_container %}
+    {% endblock site %}
+    </div>
+{% endblock site_container %}
+        
+{% block js_body %}
+    {% block js_frameworks %}
+        <script 
+            src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+        </script>
+        <script>
+            window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.6.2.min.js">\x3C/script>')
+        </script>
+    {% endblock js_frameworks %}
+
+    {% block js_global %}
+    {% endblock js_global %}
+
+    {% block js_local %}
+    {% endblock js_local %}
+
+    {% block analytics %}
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-28417563-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    {% endblock analytics %}
+{% endblock js_body %}    
+
+{% block extra_body %}
+{% endblock extra_body %}
+</body>
+</html>

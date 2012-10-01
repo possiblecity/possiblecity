@@ -1,15 +1,14 @@
 {% extends "profiles/base.html" %}
 
-{% load i18n %}
 {% load account_tags %}
 {% load pagination_tags %}
 
-{% block head_title %}{% trans "All Profiles" %}{% endblock %}
+{% block head_title_page %}All Agents{% endblock head_title_page %}
 
-{% block body %}
+{% block page_content %}
     <header class="jumbotron subhead" id="overview">
-        <h1>{% trans "All Profiles" %}</h1>
-        <p class="lead">{% trans "All profiles on the site." %}</p>
+        <h1>Agents of Change</h1>
+        <p>All profiles on the site</p>
     </header>
     
     {% autopaginate profiles %}
@@ -20,4 +19,4 @@
     </ul>
      {% paginate %}
     
-{% endblock %}
+{% endblock page_content %}

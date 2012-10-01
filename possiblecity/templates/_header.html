@@ -1,0 +1,22 @@
+{% block header %}
+    <nav class="site-nav">
+    {% block identity %}
+        <div class="identity">
+            <h1><a href="{% url home %}">Possiblecity</a></h1>
+            <a class="logo" href="{% url home %}">
+                <img src="{{ STATIC_URL }}images/logo_xs.png" />
+            </a>
+        </div>
+    {% endblock identity %}
+    {% block section-nav %}
+        <ul>
+            <li id="nav-float"><a href="{% url float %}">Float</a></li>
+            <li id="nav-lotxlot"><a href="{% url lotxlot %}">LotxLot</a></li>
+            <li id="nav-people">
+                <a href="{% url profiles_profile_list %}">People</a>
+            </li>
+            <li id="nav-blog"><a href="{% url text_entry_index  %}">Blog</a></li>
+        </ul>
+     {% endblock section-nav  %}
+     </nav>
+{% endblock header %}

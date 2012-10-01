@@ -39,7 +39,7 @@ class ArticleBase(TitleBase, BlurbBase):
     """
         An abstract content block with a title, text blurb, and excerpt.
     """
-    excerpt = models.TextField()
+    excerpt = models.TextField(blank=True)
 
     class Meta:
         abstract=True
@@ -60,7 +60,7 @@ class StatusMixin(models.Model):
     )
 
     status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES,
-                                              default=STATUS_LIVE,
+                                              default=STATUS_DRAFT,
                                               help_text="Only content with live status will be publicly displayed.")
 
     class Meta:
@@ -130,7 +130,19 @@ class Entry(EntryBase):
         return u'%s - %s'\
         % (self.title, self.excerpt)
 
-    def get_main_image(self):
-        pass
 
+class EntryImage(models.Model):
+    """
+    
+    An image associated with a blog entry
+
+    """
+    
+    original = models.ImageField(upload_to='images/original/')
+    title = models.CharField(max_length=255, blank=True)
+    caption = models.CharField(max_length=255, blank=True)
+
+    entry = models.ForeignKey(Entry, blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
 
