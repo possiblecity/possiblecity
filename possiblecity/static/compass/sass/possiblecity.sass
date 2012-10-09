@@ -24,56 +24,37 @@ h2
 h3
   +adjust-font-size-to($base-font-size * 1.5, $lines:2)
   color: $header-color
+  
+// layout
+
+div.site
 
 header.site-header
   +clearfix
-  padding: 10px 0
-  > nav
-    +container
-    div.identity
-      +float-left
-      h1
-        display: none
-    ul
-      +float-left
-      +horizontal-list
-      a
-        +float-left
-        padding: 10px
-        height: 40px
-        line-height: 40px
-          
-section.site-section
-  +clearfix
-  clear: both
-  +container
-  
-section.page-content
-  +span-columns(9)
-  
-aside.section-nav
-  +span-columns(3 omega)
-     
-footer.site-footer
-  +container 
-  
-article.entry
-  > aside
-    color: $gray-light
-    +span-columns(2,9)
-    time
-      text-transform: uppercase
-      text-align:center
-  > section
-    +span-columns(7 omega, 9)
-  > header
-    +push(2)
-    +span-columns(7 omega, 9) 
-    
-span.day
-  display: block
-  +adjust-font-size-to($base-font-size * 4)
+  +span-columns(4)
+  position: fixed
+  z-index: 1000
 
-span.month
-  display: block
-  +adjust-font-size-to($base-font-size * .75)   
+div.section
+  +span-columns(8)
+  +pre(4)
+  padding: 2em
+  border-left: 1px solid $gray-lighter
+  
+footer.site-footer
+  clear: both
+  +container 
+
+nav.site-nav
+  padding: 2em
+  
+div.identity
+  h1
+    display: none
+  a.logo
+    img 
+      width: 100%
+
+#map
+  width: 100%
+  height: 100%

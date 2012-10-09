@@ -1,5 +1,6 @@
 // Imports -------------------------------------------------------------------
 @import "compass"
+@import "compass/layout"
 @import "compass/reset"
 
 @import "sassybuttons"
@@ -8,9 +9,11 @@
 $total-columns: 12
 $column-width: 4em
 $gutter-width: 1em
-$grid-padding: 1em
+$grid-padding: 0
 
 @import "susy"
++border-box-sizing
+$border-box-sizing: true
 
 /* Root --------------------------------------------------------------------*/    
 
@@ -54,8 +57,8 @@ $yellow: #FFFF00
 $text-color: $gray-dark
 $header-color: $gray-darker
 
-$link-color: #D2B94D
-$link-color-hover:darken($link-color, 15%)
+$link-color: darken($yellow, 20%)
+$link-color-hover:darken($yellow, 35%)
 
 
 

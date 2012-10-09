@@ -1,24 +1,16 @@
 {% extends "philadelphia/base.html" %}
 {% load possiblecity_tags %}
-{% block body %}
-<div id="map" style="height:400px; width:100%">
+{% block layout %}
+<div id="map">
 </div>
-<h1>All Lots</h1>
-<ul class="lots">
-{% for lot in lot_list %}
-<li class="lot" style="width:33%; height:300px; float:left; list-style:none">
-    <a href="{% url lot_detail lot.id %}"><h2>{{ lot.address|capsentence }}</h2></a>
-    <div id="lot-{{ lot.id }}-map" style="height:200px; width:100%; background-color:transparent;">
-    <div>
-</li>
-{% endfor %}
-</ul>
-{% endblock %}
-{% block extra_body %}
+{% endblock layout %}
+{% block js_local %}
 <script>
-    var map = new L.Map('map');
+    var map = new L.Map('map', {
+         zoomControl: false
+    });
     var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/17de60efa2c548c2b8b8bb215db49cb4/47928/256/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy;'
+        attribution: 'Map data &copy;',
     });
     var philadelphia = new L.LatLng(39.9522, -75.1642);
     map.addLayer(cloudmade);
@@ -40,26 +32,4 @@
           map.fitBounds(bounds);
     });
 </script>
-<script>
-var lotMap = {}
-var detailStyle = {
-    "fillColor": "#000000",
-    "opacity": 1.0,
-    "stroke": false
-};
-{% for lot in lot_list %}
-    lotMap[{{ lot.id }}] = new L.Map('lot-{{ lot.id }}-map', {
-        zoomControl: false,
-        attributionControl: false
-    });
-    $.getJSON('{% url lot_detail lot.id %}', function(data) {
-         var layer = L.geoJson(data, {
-             style: detailStyle
-         });
-         lotMap[{{ lot.id }}].addLayer(layer);
-         bounds = layer.getBounds();
-         lotMap[{{ lot.id }}].fitBounds(bounds);
-    });
-{% endfor %}
-</script>
-{% endblock %}
+{% endblock js_local %}

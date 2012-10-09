@@ -1,0 +1,120 @@
+@import "base"
+
+a
+  color: $link-color
+  &:hover
+    color: $link-color-hover
+  
+button
+  +sassy-button
+
+body
+  +clearfix
+  font-family: $base-font-family
+  color: $text-color
+
+h1
+  +adjust-font-size-to($base-font-size * 3, $lines:2)
+  color: $header-color
+  
+h2
+  +adjust-font-size-to($base-font-size * 2, $lines:2)
+  color: $header-color
+  
+h3
+  +adjust-font-size-to($base-font-size * 1.5, $lines:2)
+  color: $header-color
+  
+// layout
+
+div.site
+  +clearfix
+  //+susy-grid-background
+
+header.site-header
+  +clearfix
+  +span-columns(12)
+  background: transparent
+  //+box-shadow(0 2px 2px -2px)
+  position: fixed
+  z-index: 1000
+  
+div.section
+  +span-columns(7)
+  
+footer.site-footer
+  clear: both
+  +container 
+
+nav.site-nav
+  +clearfix
+  +span-columns(12)
+  background: transparent
+  ul.section-nav
+    +span-columns(6)
+    +clearfix
+    +stretch-y
+    +horizontal-list
+    background: transparent
+    li
+      +background-clip(border-box)
+      width: $column-width + $gutter-width
+      text-align: center
+      height: 100%
+      background: $yellow
+      background-color: transparent
+      border-right: 1px solid rgba(255, 255, 255, 0)
+      margin: 0
+      padding: 0
+      &:first-child
+        border-left: 1px solid rgba(255, 255, 255, 0)
+      a 
+        background-color: rgba(255, 255, 255, 0.9)
+        text-align: center
+        text-decoration: none
+        position: relative
+        display: block
+        height: 100%
+        margin: 0
+        padding: 0
+        +adjust-font-size-to($base-font-size * .75)
+        text-transform: uppercase
+        font-weight: bold
+        &:hover
+          background: $link-color
+          color: $white
+        span
+          display: block
+          height: 2em
+          width: 100%
+          line-height: 2em
+          text-align: center
+          position: absolute
+          top: 50%
+          margin-top: -1em
+
+  
+div.identity
+  +span-columns(3,12)
+  background-color: rgba(255, 255, 255, 0.9)
+  padding: .5em 1em
+  padding-right: $gutter-width + 1em
+  margin-right: 0
+  h1
+    display: none
+  a.logo
+    img 
+      width: 100%
+
+#map
+  width: 100%
+  height: 100%
+
+
+// blog
+
+body.blog
+  header.site-header
+    
+  
+

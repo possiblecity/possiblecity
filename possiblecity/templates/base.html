@@ -46,27 +46,23 @@
 <body class="{% block body_class %}default{% endblock body_class %}"
       {% block body_id %}{% endblock body_id %}>
 {% block site_container %}
-    <div class="site">
-        {% block site %}
-            {% block site_header_container %}
-                <header class="site-header">
-                    {% block site_header %}
-                        {% include "_header.html" %}
-                    {% endblock site_header %}
-                </header>
-            {% endblock site_header_container %}
-            {% block site_section_container %}
-                <section class="site-section">
-                     {% block site_section %}
-                     {% endblock site_section %}
-                </section>
-            {% endblock site_section_container %}
+<div class="site">
+    {% block site %}
+        {% block site_header_container %}
+        <header class="site-header">
+            {% block site_header %}
+            {% include "_header.html" %}
+            {% endblock site_header %}
+        </header>
+        {% endblock site_header_container %}
+        {% block layout %}
+        {% endblock layout %}
         {% block site_footer_container %}
-            <footer class="site-footer">
-                 {% block site_footer %}
-                     {% include "_footer.html" %}
-                 {% endblock site_footer %}
-            </footer>
+        <footer class="site-footer">
+            {% block site_footer %}
+            {% include "_footer.html" %}
+            {% endblock site_footer %}
+        </footer>
         {% endblock site_footer_container %}
     {% endblock site %}
     </div>

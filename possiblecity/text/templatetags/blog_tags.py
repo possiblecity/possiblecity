@@ -4,7 +4,7 @@ from django.db import models
 
 import re
 
-Entry = models.get_model('blog', 'entry')
+Entry = models.get_model('text', 'entry')
 
 register = template.Library()
 

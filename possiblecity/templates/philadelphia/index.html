@@ -1,10 +1,9 @@
 {% extends "philadelphia/base.html" %}
 {% load possiblecity_tags %}
-{% block site_section %}
-<div id="map" style="height:400px; width:100%">
+{% block layout %}
+<div id="map">
 </div>
-<h1>Lot<strong>x</strong>Lot</h1>
-{% endblock site_section %}
+{% endblock layout %}
 {% block js_local %}
 <script>
     var map = new L.Map('map');
