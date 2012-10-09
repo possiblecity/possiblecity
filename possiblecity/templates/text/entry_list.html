@@ -5,13 +5,6 @@
         {% for entry in entry_list %}
             <article class="entry excerpt" 
                 id="{{ entry.published|date:"Y-F-d" }}_{{ entry.slug }}">
-                <header>
-                   <h2>
-                       <a href="{{ entry.get_absolute_url }}"> 
-                           {{ entry.title }}
-                       </a>
-                   </h2>
-                </header>
                 <aside class="meta">
                 {% if entry.get_next_entry.published|date:"Y-F-d" != entry.published|date:"Y-F-d" %}
                     <p class="date">
@@ -24,6 +17,13 @@
                     &nbsp;
                 {% endif %}
                </aside>
+                <header>
+                   <h2>
+                       <a href="{{ entry.get_absolute_url }}"> 
+                           {{ entry.title }}
+                       </a>
+                   </h2>
+                </header>
                 <section>
                 {{ entry.text|safe }}
                 </section>

@@ -3,31 +3,3 @@
 {% load blog_tags %}
 {% block body_class %}blog{% endblock body_class %}
 {% block section_title %}Possible City Blog{% endblock section_title %}
-{% block section_nav %}
-<section class="latest-entries">
-    <h3>Latest Posts</h3>
-        <ul>
-        {% get_latest_entries 5 as latest_entry_list %}
-        {% for latest in latest_entry_list %}
-            <li>
-                <a href="{{ latest.get_absolute_url }}">
-                    {{ latest.title }}
-                </a>
-            </li>
-        {% endfor %}
-</section>
-<section class="archive">
-    {% get_entry_archive as dates %}
-    <h3>Archive</h3>
-        <ul>
-            {% for date in dates %}
-            <li>
-                <a href="{% url text_archive_month year=date|date:"Y", 
-month=date|date:"M" %}" 
-                    title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-</section>
-{% endblock section_nav %}
-

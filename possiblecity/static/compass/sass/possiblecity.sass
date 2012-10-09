@@ -9,7 +9,6 @@ button
   +sassy-button
 
 body
-  +clearfix
   font-family: $base-font-family
   color: $text-color
 
@@ -27,27 +26,19 @@ h3
   
 // layout
 
-div.site
-
 header.site-header
-  +clearfix
-  +span-columns(4)
-  position: fixed
-  z-index: 1000
-
-div.section
-  +span-columns(8)
-  +pre(4)
-  padding: 2em
-  border-left: 1px solid $gray-lighter
+  +span-columns(4,12)
+  +box-shadow
+  +stretch-y
   
 footer.site-footer
   clear: both
-  +container 
 
 nav.site-nav
   padding: 2em
-  
+  ul
+    padding-top: 2em
+    
 div.identity
   h1
     display: none
@@ -55,6 +46,38 @@ div.identity
     img 
       width: 100%
 
+div.section
+  +span-columns(8 omega,12)
+  
+
+header.section-header
+  margin-left: -1em
+  padding: 2em
+  h1
+    color: $gray-lighter
+    text-transform: uppercase
+
+section.section-content
+  margin-left: -1em
+  padding: 0 2em 2em 2em
+
+article.entry
+  aside
+    background: $gray-lighter
+    color: $white
+    margin-left: -2em
+    padding: .5em .5em .5em 2em
+    width: $column-width * 3
+  h2
+    margin-top: .5em
+
 #map
   width: 100%
   height: 100%
+
+
+// blog
+
+    
+  
+
