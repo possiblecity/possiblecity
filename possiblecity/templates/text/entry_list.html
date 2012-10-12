@@ -1,31 +1,45 @@
 {% extends "text/base.html" %}
 {% block head_title_page %}: Posts {% endblock head_title_page %}
-{% block page_content %}
+{% block layout %}
+<div class="page-content">
     {% block entry_list %}
         {% for entry in entry_list %}
-            <article class="entry excerpt" 
+            <article class="entry" 
                 id="{{ entry.published|date:"Y-F-d" }}_{{ entry.slug }}">
                 <aside class="meta">
                 {% if entry.get_next_entry.published|date:"Y-F-d" != entry.published|date:"Y-F-d" %}
                     <p class="date">
                         <time datetime={{ entry.published|date:"c" }}>
-                            <span class="month">{{ entry.published|date:"F" }}</span>
                             <span class="day">{{ entry.published|date:"d" }}</span>
+                            <span class="month">{{ entry.published|date:"F" }}</span>
+                            <span class="year">{{ entry.published|date:"Y" }}</span>                        
                         </time>
                     </p>
+                    <p class="author">
+                        {{ entry.author.first_name }} {{ entry.author.last_name }}
+                    </p>
+                   {% if entry.tags.all %}
+                    <ul class="tags">
+                        {% for tag in entry.tags.all %}
+                        <li>{{ tag.name }}</li>
+                        {% endfor %}
+                   </ul>
+                   {% endif %}
                 {% else %}
                     &nbsp;
                 {% endif %}
                </aside>
-                <header>
-                   <h2>
-                       <a href="{{ entry.get_absolute_url }}"> 
-                           {{ entry.title }}
-                       </a>
-                   </h2>
-                </header>
-                <section>
-                {{ entry.text|safe }}
+               <section class="entry-content">
+                   <header>
+                       <h2>
+                           <a href="{{ entry.get_absolute_url }}"> 
+                               {{ entry.title }}
+                           </a>
+                       </h2>
+                    </header>
+                    <section>
+                    {{ entry.text|safe }}
+                    </section>
                 </section>
              </article>
         {% endfor %}
@@ -43,4 +57,5 @@
             </nav>
       {% endif %}
     {% endblock pagination %}
-{% endblock page_content %}
+</div>
+{% endblock layout %}

@@ -46,7 +46,7 @@ DATABASES = {
 
 TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
-USE_I18N = True    #internationalization machinery
+USE_I18N = False    #internationalization machinery
 USE_L10N = True    #format dates, numbers and calendars according to locale
 USE_TZ = True
 
@@ -95,8 +95,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    "pinax_utils.context_processors.settings",
-    "account.context_processors.account",
+    #"pinax_utils.context_processors.settings",
+    #"account.context_processors.account",
 ]
 
 #==============================================================================
@@ -154,7 +154,7 @@ ABSOLUTE_URL_OVERRIDES = {
 AUTH_PROFILE_MODULE = "profiles.Profile"
 
 AUTHENTICATION_BACKENDS = (
-    "phileo.auth_backends.CanLikeBackend",
+    #"phileo.auth_backends.CanLikeBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -173,32 +173,34 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "django.contrib.gis",
+    #"django.contrib.gis",
 
     # theme
-    "pinax_theme_bootstrap_account",
-    "pinax_theme_bootstrap",
-    "django_forms_bootstrap",
+    #"pinax_theme_bootstrap_account",
+    #"pinax_theme_bootstrap",
+    #"django_forms_bootstrap",
 
     # third party apps
+    "south", # database migrations
     "compressor", # static file optimization
-    "floppyforms", # form rendering
-    "account", # registration
-    "metron", # analytics
     "pagination", # pagination
-    "phileo", # liking
     "easy_thumbnails", # image manipulation
-    "tastypie", # api generation
-    "taggit", # tagging
     "redactor", # wysiwyg editing
+    "taggit", # tagging
+
+    #"floppyforms", # form rendering
+    #"account", # registration
+    #"metron", # analytics
+    #"phileo", # liking
+    #"tastypie", # api generation
 
     # local apps
     "possiblecity.templatetags",
-    "possiblecity.text",
-    "possiblecity.profiles",
-    "possiblecity.float",
-    "possiblecity.lotxlot",
-    "possiblecity.philadelphia",
+    "possiblecity.text", # blog app
+    #"possiblecity.profiles",
+    #"possiblecity.float",
+    #"possiblecity.lotxlot",
+    #"possiblecity.philadelphia",
 )
 
 #==============================================================================

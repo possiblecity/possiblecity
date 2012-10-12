@@ -14,8 +14,17 @@ application of another framework.
 
 """
 import os
+import site
+import sys
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "possiblecity.settings")
+site.addsitedir('/home/dmeehan/.virtualenvs/prod/lib/python2.7/site-packages')
+project = '/home/dmeehan/thepossiblecity.com/production/possiblecity/'
+workspace = os.path.dirname(project)
+sys.path.append(workspace)
+
+from django.core.handlers.wsgi import WSGIHandler
+os.environ['DJANGO_SETTINGS_MODULE'] = 'possiblecity.settings'
+application = WSGIHandler()
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

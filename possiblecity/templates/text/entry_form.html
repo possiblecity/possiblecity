@@ -4,15 +4,14 @@
 <link href="{% static "django-redactor/redactor/css/redactor.css" %}" type="text/css" 
 media="screen" rel="stylesheet" />
 {% endblock extra_head %}
-{% load bootstrap_tags %}
 {% block head_title_page %}: Create {% endblock head_title_page %}
 {% block body_class %}{{ block.super }} entry{% endblock body_class %}
 {% block page_content %}
 <form method="post" action="">
     {% csrf_token %}
-{{ form|as_bootstrap }}
+{{ form.as_ul }}
 
- <button class="primary" type="submit" value="Continue">Publish</button>
+ <button class="primary" type="submit" value="Continue">Save</button>
 </form>
 {% endblock page_content %}
 {% block js_local %}

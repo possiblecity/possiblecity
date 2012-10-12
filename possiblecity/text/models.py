@@ -105,16 +105,22 @@ class EntryBase(ArticleBase, StatusMixin, PostMixin):
 class Entry(EntryBase):
     """
         A blog entry. Inherits basic fields from text.models.EntryBase.
-        Adds tags, markup, commenting, images
     """
     objects = EntryManager()
+
+    link = models.URLField(blank=True)
     
     tags = TaggableManager(blank=True)
-    enable_comments = models.BooleanField(default=True)
+    enable_comments = models.BooleanField(default=False)
 
     # Fields to store generated HTML. For use with a markup syntax such as Markdown or Textile
     excerpt_html = models.TextField(editable=False, blank=True)
     text_html = models.TextField(editable=False, blank=True)
+    
+    def render_markup(self):
+        # @@@todo: add alternative markup options
+        self.text_html = self.text
+        self.excerpt_html = self.excerpt
 
     @permalink
     def get_absolute_url(self):
@@ -129,6 +135,10 @@ class Entry(EntryBase):
     def get_twitter_message(self):
         return u'%s - %s'\
         % (self.title, self.excerpt)
+
+    def save(self, *args, **kwargs):
+        self.render_markup()
+        super(Entry, self).save(*args, **kwargs)
 
 
 class EntryImage(models.Model):

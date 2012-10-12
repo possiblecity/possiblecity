@@ -1,31 +1,14 @@
---extra-index-url=http://dist.pinaxproject.com/dev/
---extra-index-url=http://dist.pinaxproject.com/alpha/
-
 # python modules
-#oauth2
-#markdown
-#textile
-#pillow
+pillow
+psycopg2
 
 Django==1.4.1
-pinax-theme-bootstrap==2.0.4
-pinax-theme-bootstrap-account==1.0b2
-django-user-accounts==1.0b4
-django-forms-bootstrap==2.0.3.post1
-metron==1.0
-pinax-utils==1.0b1.dev3
 
 # django third party modules
-#south
-#django-haystack
-#django-imagekit
-#django-social-auth
-#django-taggit
-#django-markup
-#django-oembed
+south
+django-taggit
+easy-thumbnails
+django-compressor
+django-pagination
 
-# backbeat apps
-#-e git+git://github.com/dmeehan/django-backbeat-text.git#egg=django-backbeat-text
-#-e git+git://github.com/dmeehan/django-backbeat-inlines.git#egg=django-backbeat-inlines
-#-e git+git://github.com/dmeehan/django-backbeat-twittools.git#egg=django-backbeat-twittools
-#-e git+git://github.com/dmeehan/django-backbeat-images.git#egg=django-backbeat-images
+-e git+git://github.com/mazelife/django-redactor.git#egg=django-redactor

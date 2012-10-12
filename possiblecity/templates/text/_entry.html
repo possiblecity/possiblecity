@@ -2,9 +2,13 @@
     <aside class="meta">
         <p class="date">
             <time datetime={{ entry.published|date:"c" }}>
-                <span class="month">{{ entry.published|date:"F" }}</span>
                 <span class="day">{{ entry.published|date:"d" }}</span>
+                <span class="month">{{ entry.published|date:"F" }}</span>
+                <span class="year">{{ entry.published|date:"Y" }}</span>
             </time>
+        </p>
+        <p class="author">
+            {{ entry.author.first_name }} {{ entry.author.last_name }}
         </p>
         <ul class="tags">
             {% for tag in entry.tags.all %}
@@ -12,10 +16,12 @@
             {% endfor %}
         </ul>
     </aside>
-    <section>
+    <section class="entry-content">
         <header>
             <h2>{{ entry.title }}</h2>
         </header>
+        <section>
         {{ entry.text|safe}}
+        </section>
     </section>
 </article>
