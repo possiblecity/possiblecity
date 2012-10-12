@@ -386,17 +386,22 @@ article.entry aside ul.tags li {
 article.entry aside ul.tags li:hover {
   background: #666666;
 }
-/* line 109, ../compass/sass/possiblecity.sass */
+/* line 108, ../compass/sass/possiblecity.sass */
+article.entry h2 {
+  color: #444444;
+  font-weight: bold;
+}
+/* line 111, ../compass/sass/possiblecity.sass */
 article.entry h2 a {
   color: #444444;
   font-weight: bold;
   text-decoration: none;
 }
-/* line 113, ../compass/sass/possiblecity.sass */
+/* line 115, ../compass/sass/possiblecity.sass */
 article.entry h2 a:hover {
   color: #999900;
 }
-/* line 116, ../compass/sass/possiblecity.sass */
+/* line 118, ../compass/sass/possiblecity.sass */
 article.entry section.entry-content {
   width: 74.28571%;
   float: right;
@@ -405,7 +410,7 @@ article.entry section.entry-content {
   display: inline;
 }
 
-/* line 119, ../compass/sass/possiblecity.sass */
+/* line 121, ../compass/sass/possiblecity.sass */
 #map {
   width: 100%;
   height: 100%;

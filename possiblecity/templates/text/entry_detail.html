@@ -3,19 +3,21 @@
 {% block body_class %}{{ block.super }} entry{% endblock body_class %}
 {% block layout %}
 {% block page_content %}
+<div class="page-content">
     {% include "text/_entry.html" %}
     {% block comments %}{% endblock comments %}
     {% block entry_nav %}
     <nav class="entry-nav">
         {% if object.get_previous_by_published %}
         <a class="previous" href="{{ entry.get_previous.get_absolute_url }}">
-        &laquo; {{ entry.get_previous }}</a>
+        &laquo; {{ entry.get_previous }}</a>&nbsp;|&nbsp;
         {% endif %}
         {% if object.get_next_by_published %}
-        | <a class="next" href="{{ entry.get_next.get_absolute_url }}">
+        <a class="next" href="{{ entry.get_next.get_absolute_url }}">
         {{ entry.get_next }} &raquo;</a>
         {% endif %}
     </nav>
 {% endblock entry_nav %}
+</div>
 {% endblock page_content %}
 {% endblock layout %}
