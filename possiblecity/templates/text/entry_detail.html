@@ -10,7 +10,7 @@
     <nav class="entry-nav">
         {% if object.get_previous_by_published %}
         <a class="previous" href="{{ entry.get_previous.get_absolute_url }}">
-        &laquo; {{ entry.get_previous }}</a>&nbsp;|&nbsp;
+        &laquo; {{ entry.get_previous }}</a>
         {% endif %}
         {% if object.get_next_by_published %}
         <a class="next" href="{{ entry.get_next.get_absolute_url }}">

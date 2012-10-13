@@ -24,8 +24,14 @@ h3
   +adjust-font-size-to($base-font-size * 1.5, $lines:2)
   color: $header-color
 
+h4
+  +adjust-font-size-to($base-font-size * 1.2, $lines:2)
+  color: $header-color
+
 p
   +trailer
+  &:first-child
+    +leader
 
 blockquote
   font-style: italic
@@ -48,6 +54,11 @@ header.site-header
 footer.site-footer
   +container
   clear: both
+  +leading-border
+  +leader
+  +trailer
+  text-align: right
+  border-color: $gray-lightest
 
 nav.site-nav
   +pre(3) 
@@ -57,20 +68,10 @@ nav.site-nav
     float: right
     li
       a
-        +inline-block
-        padding: 3px 12px
-        margin-left: 12px
-        border: 4px solid $gray-lightest
-        color: $gray-lighter
-        +border-radius(2em)
-        text-decoration: none
-        &:hover
-          background: $link-color
-          border-color: link-color
-          color: $white
+        +pill
     
 div.identity
-  +span-columns(3,9)
+  +span-columns(4,9)
   h1
     display: none
   a.logo
@@ -81,12 +82,12 @@ div.page-content
   +container
 
 article.entry
-  clear: both
   +clearfix
+  clear: both
   +trailer
   aside
+    margin-top: 0
     +span-columns(3, 12)
-    margin-top: .5em
     text-align: right
     p.date
       background: $gray-lighter
@@ -94,6 +95,7 @@ article.entry
       +border-radius(2px)
       +inline-block
       padding: 6px
+      margin-top: 0
     p.author
       color: $gray-light
     ul.tags
@@ -103,10 +105,10 @@ article.entry
         +border-radius(2px)
         +inline-block
         padding: 6px
+        margin: 2px 0 2px 2px
         &:hover
           background: $gray
   h2
-    color: $gray-dark
     font-weight: bold
     a
       color: $gray-dark
@@ -118,6 +120,12 @@ article.entry
   section.entry-content
     +span-columns(9 omega,12)
   
+nav.entry-nav
+  clear: both
+  text-align: right
+  a
+    +pill
+    
 #map
   width: 100%
   height: 100%
