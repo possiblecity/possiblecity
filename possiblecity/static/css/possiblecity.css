@@ -355,13 +355,14 @@ article.entry {
 }
 /* line 88, ../compass/sass/possiblecity.sass */
 article.entry aside {
+  margin-top: 0.5em;
   width: 22.85714%;
   float: left;
   margin-right: 2.85714%;
   display: inline;
   text-align: right;
 }
-/* line 91, ../compass/sass/possiblecity.sass */
+/* line 92, ../compass/sass/possiblecity.sass */
 article.entry aside p.date {
   background: #cccccc;
   color: white;
@@ -377,12 +378,13 @@ article.entry aside p.date {
   zoom: 1;
   *display: inline;
   padding: 6px;
+  margin-top: 0;
 }
-/* line 97, ../compass/sass/possiblecity.sass */
+/* line 99, ../compass/sass/possiblecity.sass */
 article.entry aside p.author {
   color: #999999;
 }
-/* line 100, ../compass/sass/possiblecity.sass */
+/* line 102, ../compass/sass/possiblecity.sass */
 article.entry aside ul.tags li {
   background: #eeeeee;
   color: white;
@@ -400,25 +402,25 @@ article.entry aside ul.tags li {
   padding: 6px;
   margin: 2px 0 2px 2px;
 }
-/* line 107, ../compass/sass/possiblecity.sass */
+/* line 109, ../compass/sass/possiblecity.sass */
 article.entry aside ul.tags li:hover {
   background: #666666;
 }
-/* line 109, ../compass/sass/possiblecity.sass */
+/* line 111, ../compass/sass/possiblecity.sass */
 article.entry h2 {
   font-weight: bold;
 }
-/* line 111, ../compass/sass/possiblecity.sass */
+/* line 113, ../compass/sass/possiblecity.sass */
 article.entry h2 a {
   color: #444444;
   font-weight: bold;
   text-decoration: none;
 }
-/* line 115, ../compass/sass/possiblecity.sass */
+/* line 117, ../compass/sass/possiblecity.sass */
 article.entry h2 a:hover {
   color: #999900;
 }
-/* line 118, ../compass/sass/possiblecity.sass */
+/* line 120, ../compass/sass/possiblecity.sass */
 article.entry section.entry-content {
   width: 74.28571%;
   float: right;
@@ -427,12 +429,12 @@ article.entry section.entry-content {
   display: inline;
 }
 
-/* line 121, ../compass/sass/possiblecity.sass */
+/* line 123, ../compass/sass/possiblecity.sass */
 nav.entry-nav {
   clear: both;
   text-align: right;
 }
-/* line 124, ../compass/sass/possiblecity.sass */
+/* line 126, ../compass/sass/possiblecity.sass */
 nav.entry-nav a {
   display: -moz-inline-stack;
   display: inline-block;
@@ -458,7 +460,7 @@ nav.entry-nav a:hover {
   color: white;
 }
 
-/* line 127, ../compass/sass/possiblecity.sass */
+/* line 129, ../compass/sass/possiblecity.sass */
 #map {
   width: 100%;
   height: 100%;
