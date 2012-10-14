@@ -1,6 +1,7 @@
 # python modules
 pillow
 psycopg2
+requests
 
 Django==1.4.1
 

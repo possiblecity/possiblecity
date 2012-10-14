@@ -173,7 +173,7 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    #"django.contrib.gis",
+    "django.contrib.gis",
 
     # theme
     #"pinax_theme_bootstrap_account",
@@ -196,11 +196,11 @@ INSTALLED_APPS = (
 
     # local apps
     "possiblecity.templatetags",
-    "possiblecity.text", # blog app
+    #"possiblecity.text", # blog app
     #"possiblecity.profiles",
     #"possiblecity.float",
-    #"possiblecity.lotxlot",
-    #"possiblecity.philadelphia",
+    "possiblecity.lotxlot",
+    "possiblecity.philadelphia",
 )
 
 #==============================================================================
