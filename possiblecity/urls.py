@@ -19,14 +19,14 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
         
     # blog
-    url(r'^blog/', include('possiblecity.text.urls')),
+    #url(r'^blog/', include('possiblecity.text.urls')),
 
     # homepage
-    url(r'^$', RedirectView.as_view(url='/blog'),name='home'),
+    #url(r'^$', RedirectView.as_view(url='/blog'),name='home'),
 
     # people
     #url(r'^account/', include('account.urls')),
-    url(r'^profiles/', include('possiblecity.profiles.urls')),    
+    #url(r'^profiles/', include('possiblecity.profiles.urls')),    
 
     #projects
     #url(r'^float/', include('possiblecity.float.urls.share')),
@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     #url(r"^connect/", include("phileo.urls")),
     
     # places
-    #url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
+    url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
 
 
     # search

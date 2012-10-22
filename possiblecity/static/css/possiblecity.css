@@ -1,4 +1,4 @@
-/* line 17, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,56 +20,56 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
 
 /* Root -------------------------------------------------------------------- */
-/* line 61, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+/* line 61, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
 * html {
   font-size: 100%;
 }
 
-/* line 64, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
+/* line 64, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/_vertical_rhythm.scss */
 html {
   font-size: 16px;
   line-height: 1.5em;
@@ -109,11 +109,11 @@ button {
   color: white;
   text-shadow: #043645 0 -1px 0;
 }
-/* line 15, ../../../../../../.virtualenvs/prod/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 15, ../../../../../../.virtualenvs/dev/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 button:hover {
   text-decoration: none;
 }
-/* line 36, ../../../../../../.virtualenvs/prod/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 36, ../../../../../../.virtualenvs/dev/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 button:hover {
   background-color: #07607a;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #0a86aa), color-stop(100%, #07607a));
@@ -122,13 +122,13 @@ button:hover {
   background: -o-linear-gradient(#0a86aa, #07607a);
   background: linear-gradient(#0a86aa, #07607a);
 }
-/* line 39, ../../../../../../.virtualenvs/prod/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 39, ../../../../../../.virtualenvs/dev/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 button:active {
   -webkit-box-shadow: #06546b 0 1px 2px inset;
   -moz-box-shadow: #06546b 0 1px 2px inset;
   box-shadow: #06546b 0 1px 2px inset;
 }
-/* line 6, ../../../../../../.virtualenvs/prod/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
+/* line 6, ../../../../../../.virtualenvs/dev/gems/gems/sassy-buttons-0.1.4/stylesheets/sassy-buttons/_sassy-button-pseudo-states.sass */
 button.disabled, button[disabled] {
   opacity: 0.6;
   background: #087392;
@@ -137,7 +137,7 @@ button.disabled, button[disabled] {
   -moz-box-shadow: none;
   box-shadow: none;
 }
-/* line 73, ../../../../../../.virtualenvs/prod/gems/gems/sassy-buttons-0.1.4/stylesheets/_sassy-buttons.sass */
+/* line 73, ../../../../../../.virtualenvs/dev/gems/gems/sassy-buttons-0.1.4/stylesheets/_sassy-buttons.sass */
 button::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
@@ -203,27 +203,44 @@ ol {
   list-style: lower-alpha;
 }
 
-/* line 49, ../compass/sass/possiblecity.sass */
-header.site-header {
-  *zoom: 1;
-  max-width: 70em;
-  _width: 70em;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2em;
-  padding-right: 2em;
+/* line 47, ../compass/sass/possiblecity.sass */
+div.status {
+  font-size: 0.75em;
+  line-height: 2em;
+  position: absolute;
+  top: 8em;
+  left: 50%;
+  width: 16em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: -8em;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #e8db00;
+  padding: 0.5em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/* line 65, ../compass/sass/possiblecity.sass */
+div.identity h1 {
+  display: none;
+}
+/* line 68, ../compass/sass/possiblecity.sass */
+div.identity a.logo img {
+  width: 100%;
+}
+
+/* line 73, ../compass/sass/possiblecity.sass */
+body.blog header.site-header + container {
   margin-top: 2em;
   margin-bottom: 2em;
 }
-/* line 38, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-header.site-header:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* line 54, ../compass/sass/possiblecity.sass */
-footer.site-footer {
+/* line 77, ../compass/sass/possiblecity.sass */
+body.blog footer.site-footer {
   *zoom: 1;
   max-width: 70em;
   _width: 70em;
@@ -240,23 +257,22 @@ footer.site-footer {
   text-align: right;
   border-color: #eeeeee;
 }
-/* line 38, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-footer.site-footer:after {
+/* line 38, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body.blog footer.site-footer:after {
   content: "";
   display: table;
   clear: both;
 }
-
-/* line 63, ../compass/sass/possiblecity.sass */
-nav.site-nav {
+/* line 86, ../compass/sass/possiblecity.sass */
+body.blog nav.site-nav {
   margin-left: 25.71429%;
   width: 74.28571%;
   float: left;
   margin-right: 2.85714%;
   display: inline;
 }
-/* line 66, ../compass/sass/possiblecity.sass */
-nav.site-nav ul {
+/* line 89, ../compass/sass/possiblecity.sass */
+body.blog nav.site-nav ul {
   margin: 0;
   padding: 0;
   border: 0;
@@ -264,8 +280,8 @@ nav.site-nav ul {
   *zoom: 1;
   float: right;
 }
-/* line 60, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
-nav.site-nav ul li {
+/* line 60, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.blog nav.site-nav ul li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
@@ -275,20 +291,20 @@ nav.site-nav ul li {
   padding-left: 4px;
   padding-right: 4px;
 }
-/* line 48, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
-nav.site-nav ul li:first-child, nav.site-nav ul li.first {
+/* line 48, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.blog nav.site-nav ul li:first-child, body.blog nav.site-nav ul li.first {
   padding-left: 0;
 }
-/* line 49, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
-nav.site-nav ul li:last-child {
+/* line 49, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.blog nav.site-nav ul li:last-child {
   padding-right: 0;
 }
-/* line 50, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
-nav.site-nav ul li.last {
+/* line 50, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.blog nav.site-nav ul li.last {
   padding-right: 0;
 }
-/* line 70, ../compass/sass/possiblecity.sass */
-nav.site-nav ul li a {
+/* line 93, ../compass/sass/possiblecity.sass */
+body.blog nav.site-nav ul li a {
   display: -moz-inline-stack;
   display: inline-block;
   vertical-align: middle;
@@ -307,30 +323,20 @@ nav.site-nav ul li a {
   text-decoration: none;
 }
 /* line 68, ../compass/sass/_base.sass */
-nav.site-nav ul li a:hover {
+body.blog nav.site-nav ul li a:hover {
   background: #999900;
   border-color: link-color;
   color: white;
 }
-
-/* line 73, ../compass/sass/possiblecity.sass */
-div.identity {
+/* line 96, ../compass/sass/possiblecity.sass */
+body.blog div.identity {
   width: 42.30769%;
   float: left;
   margin-right: 3.84615%;
   display: inline;
 }
-/* line 75, ../compass/sass/possiblecity.sass */
-div.identity h1 {
-  display: none;
-}
-/* line 78, ../compass/sass/possiblecity.sass */
-div.identity a.logo img {
-  width: 100%;
-}
-
-/* line 81, ../compass/sass/possiblecity.sass */
-div.page-content {
+/* line 99, ../compass/sass/possiblecity.sass */
+body.blog div.page-content {
   *zoom: 1;
   max-width: 70em;
   _width: 70em;
@@ -339,22 +345,21 @@ div.page-content {
   padding-left: 2em;
   padding-right: 2em;
 }
-/* line 38, ../../../../../../.virtualenvs/prod/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-div.page-content:after {
+/* line 38, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body.blog div.page-content:after {
   content: "";
   display: table;
   clear: both;
 }
-
-/* line 84, ../compass/sass/possiblecity.sass */
-article.entry {
+/* line 102, ../compass/sass/possiblecity.sass */
+body.blog article.entry {
   overflow: hidden;
   *zoom: 1;
   clear: both;
   margin-bottom: 1.5em;
 }
-/* line 88, ../compass/sass/possiblecity.sass */
-article.entry aside {
+/* line 106, ../compass/sass/possiblecity.sass */
+body.blog article.entry aside {
   margin-top: 0.5em;
   width: 22.85714%;
   float: left;
@@ -362,8 +367,8 @@ article.entry aside {
   display: inline;
   text-align: right;
 }
-/* line 92, ../compass/sass/possiblecity.sass */
-article.entry aside p.date {
+/* line 110, ../compass/sass/possiblecity.sass */
+body.blog article.entry aside p.date {
   background: #cccccc;
   color: white;
   -webkit-border-radius: 2px;
@@ -380,12 +385,12 @@ article.entry aside p.date {
   padding: 6px;
   margin-top: 0;
 }
-/* line 99, ../compass/sass/possiblecity.sass */
-article.entry aside p.author {
+/* line 117, ../compass/sass/possiblecity.sass */
+body.blog article.entry aside p.author {
   color: #999999;
 }
-/* line 102, ../compass/sass/possiblecity.sass */
-article.entry aside ul.tags li {
+/* line 120, ../compass/sass/possiblecity.sass */
+body.blog article.entry aside ul.tags li {
   background: #eeeeee;
   color: white;
   -webkit-border-radius: 2px;
@@ -402,40 +407,39 @@ article.entry aside ul.tags li {
   padding: 6px;
   margin: 2px 0 2px 2px;
 }
-/* line 109, ../compass/sass/possiblecity.sass */
-article.entry aside ul.tags li:hover {
+/* line 127, ../compass/sass/possiblecity.sass */
+body.blog article.entry aside ul.tags li:hover {
   background: #666666;
 }
-/* line 111, ../compass/sass/possiblecity.sass */
-article.entry h2 {
+/* line 129, ../compass/sass/possiblecity.sass */
+body.blog article.entry h2 {
   font-weight: bold;
 }
-/* line 113, ../compass/sass/possiblecity.sass */
-article.entry h2 a {
+/* line 131, ../compass/sass/possiblecity.sass */
+body.blog article.entry h2 a {
   color: #444444;
   font-weight: bold;
   text-decoration: none;
 }
-/* line 117, ../compass/sass/possiblecity.sass */
-article.entry h2 a:hover {
+/* line 135, ../compass/sass/possiblecity.sass */
+body.blog article.entry h2 a:hover {
   color: #999900;
 }
-/* line 120, ../compass/sass/possiblecity.sass */
-article.entry section.entry-content {
+/* line 138, ../compass/sass/possiblecity.sass */
+body.blog article.entry section.entry-content {
   width: 74.28571%;
   float: right;
   margin-right: 0;
   #margin-left: -2em;
   display: inline;
 }
-
-/* line 123, ../compass/sass/possiblecity.sass */
-nav.entry-nav {
+/* line 141, ../compass/sass/possiblecity.sass */
+body.blog nav.entry-nav {
   clear: both;
   text-align: right;
 }
-/* line 126, ../compass/sass/possiblecity.sass */
-nav.entry-nav a {
+/* line 144, ../compass/sass/possiblecity.sass */
+body.blog nav.entry-nav a {
   display: -moz-inline-stack;
   display: inline-block;
   vertical-align: middle;
@@ -454,14 +458,106 @@ nav.entry-nav a {
   text-decoration: none;
 }
 /* line 68, ../compass/sass/_base.sass */
-nav.entry-nav a:hover {
+body.blog nav.entry-nav a:hover {
   background: #999900;
   border-color: link-color;
   color: white;
 }
 
-/* line 129, ../compass/sass/possiblecity.sass */
-#map {
+/* line 152, ../compass/sass/possiblecity.sass */
+body.map #map {
   width: 100%;
   height: 100%;
+}
+/* line 156, ../compass/sass/possiblecity.sass */
+body.map .leaflet-control {
+  top: 6em;
+}
+/* line 159, ../compass/sass/possiblecity.sass */
+body.map header.site-header {
+  width: 100%;
+  padding: 0.5em 1em;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  z-index: 8;
+}
+/* line 165, ../compass/sass/possiblecity.sass */
+body.map header.site-header div.identity {
+  width: 14.28571%;
+  float: left;
+  margin-right: 2.85714%;
+  display: inline;
+}
+/* line 167, ../compass/sass/possiblecity.sass */
+body.map header.site-header div.identity a.logo {
+  background-color: rgba(255, 255, 255, 0.1);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  padding: 6px;
+}
+/* line 174, ../compass/sass/possiblecity.sass */
+body.map header.site-header nav.site-nav ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  *zoom: 1;
+  float: right;
+}
+/* line 60, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.map header.site-header nav.site-nav ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  white-space: nowrap;
+  display: inline;
+  float: left;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+/* line 48, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.map header.site-header nav.site-nav ul li:first-child, body.map header.site-header nav.site-nav ul li.first {
+  padding-left: 0;
+}
+/* line 49, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.map header.site-header nav.site-nav ul li:last-child {
+  padding-right: 0;
+}
+/* line 50, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
+body.map header.site-header nav.site-nav ul li.last {
+  padding-right: 0;
+}
+/* line 178, ../compass/sass/possiblecity.sass */
+body.map header.site-header nav.site-nav ul li a {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  padding: 3px 12px;
+  margin-left: 12px;
+  border: 4px solid #eeeeee;
+  color: #cccccc;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  -ms-border-radius: 2em;
+  -o-border-radius: 2em;
+  border-radius: 2em;
+  text-decoration: none;
+}
+/* line 68, ../compass/sass/_base.sass */
+body.map header.site-header nav.site-nav ul li a:hover {
+  background: #999900;
+  border-color: link-color;
+  color: white;
 }

@@ -3,9 +3,48 @@
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 
-from possiblecity.lotxlot.views import GeoListView, GeoHybridListView, GeoHybridDetailView
+from possiblecity.lotxlot.views import *
 from possiblecity.philadelphia.models import Lot
 
+# ajax views
+class LotMapView(GeoListView):
+    properties = ['address', 'id', 'is_public']
+
+class VacantLotMapView(LotMapView):
+    # return geojson coordinates to display on a map
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
+    geo_field = "coord"
+   
+class VacantLotPolyMapView(VacantLotMapView):
+    # return geojson polygons to display on a map
+    geo_field = "geom"
+   
+class AvailableLotMapView(LotMapView):
+    # return geojson coordinates to display on a map
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=True)
+    geo_field = "coord"
+
+class AvailableLotPolyMapView(AvailableLotMapView):
+    # return geojson polygons to display on a map
+    geo_field = "geom"
+    
+class UnavailablePublicVacantLotMapView(LotMapView):
+    # return geojson coordinates to display on a map
+    queryset = Lot.objects.filter(is_visible=True, is_vacant=True, is_public=True, is_available=False)
+    geo_field = "coord"
+    
+class UnavailablePublicVacantLotPolyMapView(UnavailablePublicVacantLotMapView):
+    geo_field = "geom"
+    
+class PrivateVacantLotMapView(LotMapView):
+    queryset = Lot.objects.filter(is_visible=True, is_vacant=True, is_public=False)
+    geo_field = "coord"
+
+class PrivateVacantLotPolyMapView(PrivateVacantLotMapView):
+    geo_field = "geom"
+
+
+# hybrid views
 class LotListView(GeoHybridListView):
     """
     Retrieve all lots.

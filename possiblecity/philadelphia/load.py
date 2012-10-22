@@ -33,7 +33,7 @@ parcel_mapping = {
 }
 
 
-parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/parcels1.shp'))
+parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/parcels_fix.shp'))
 
 test_parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/test_parcels.shp'))
 
