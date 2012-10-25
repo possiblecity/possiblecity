@@ -17,7 +17,11 @@ urlpatterns = patterns('',
     # admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
-        
+    
+    # about
+    url(r'^about/$', RedirectView.as_view(url='/blog/2012/oct/10/introducing-possible-city/'),
+        name='about'),
+    
     # blog
     url(r'^blog/', include('possiblecity.text.urls')),
 

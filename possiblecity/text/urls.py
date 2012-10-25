@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 
     url(r'^create/$',
         EntryCreateView.as_view(),
-        name = 'text_entry_detail'),
+        name = 'text_entry_create'),
 
 
     url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
