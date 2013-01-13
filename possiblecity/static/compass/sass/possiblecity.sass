@@ -67,6 +67,10 @@ div.identity
   a.logo
     img 
       width: 100%
+      
+footer.site-footer
+  clear: both
+  +container
 
 body.blog
 
@@ -148,36 +152,55 @@ body.blog
 // lotxlot
 
 body.map
+  
+  +border-box-sizing
 
   #map
     width: 100%
     height: 100%
  
-  .leaflet-control
-    top: 6em
+  .leaflet-control-zoom
+    left: 2em
+    top: 4em
   
   header.site-header
+    background-color: rgba(255,255,255,1.0)
     width: 100%
-    padding: .5em 1em
-    background-color: rgba(255,255,255,0.90)
+    padding: 1em 0
     position: absolute
-    z-index: 8
-    div.identity
-      +span-columns(2)
-      a.logo
-        background-color: rgba(255,255,255,0.10)
-        +border-radius(2px)
-        +inline-block
-        padding: 6px
-      
+    z-index: 1000
     nav.site-nav
+      +container
+      div.identity
+        +span-columns(2)
+        a.logo
+          +border-radius(2px)
+          +inline-block
+          //padding: 6px
+          //background-color: rgba(255,255,255,1.0)
       ul
         +horizontal-list
         float: right
         li
           a  
             +pill
-   
+            
+  article.lot
+    +container
+    position: relative
+    z-index: 1001
+    section.details
+      +span-columns(7)
+      +border-radius(8px)
+      +box-shadow()
+      height: 20em
+      padding: 1em
+      margin-top: -24em
+      background-color: rgba(255,255,255,0.7)
+    section.people
+      clear: both
+      
+     
     
 
   

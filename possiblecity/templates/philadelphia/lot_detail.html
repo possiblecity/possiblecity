@@ -2,21 +2,46 @@
 {% load possiblecity_tags %}
 {% load staticfiles %}
 {% block layout %}
-<div id="map" style="height:400px; width:100%">
+<div class="page-content">
+    <div id="map" style="height:29em; width: 100%">
+    </div>
+    <div id="map-status" class="status" style="display:none">
+        Loading Map Features...
+    </div>
+    <article class="lot">
+        <section class="details">
+            <h1>{{ lot.address|capsentence }}</h1>
+            <p>{{ lot.parcel.shape_area }}</p>
+            {% if lot.is_vacant %}<p>Vacant</p>{% endif %}
+            {% if lot.has_vacancy_license %}<p>Vacancy License</p>{% endif %}
+            {% if lot.has_vacancy_violation %}<p>Vacancy Violation</p>{% endif %}
+            {% if lot.is_public %}<p>Public</p>{% endif %}
+        </section>
+        <section class="people">
+            <p>This is more stuff</p>
+            <p>even more stuff</p>
+            <p>This is more stuff</p>
+            <p>even more stuff</p>
+            <p>This is more stuff</p>
+            <p>even more stuff</p>
+            <p>This is more stuff</p>
+            <p>even more stuff</p>
+            <p>This is more stuff</p>
+            <p>even more stuff</p>
+            <p>This is more stuff</p>
+            <p>even more stuff</p>
+        </section>
+    </article>
 </div>
-<h1>{{ lot.address|capsentence }}</h1>
-<p>{{ lot.geom }}</p>
-<p>{{ lot.geom.geojson }}</p>
-<p>{{ lot.coord }}</p>
-<p>{{ lot.is_vacant }}</p>
-<p>{{ lot.is_public }}</p>
-{% endblock %}
+{% endblock layout %}
 {% block js_local %}
 <script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
 <script src="{% static 'js/libs/leaflet-plugins/layer/tile/Google.js' %}"></script>
 <script>
     // Initialize the map object
-    var map = new L.Map('map');
+    var map = new L.Map('map', {
+        zoomControl: false
+    });
     
     // Prep the background tile layer
     var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-sued82zn/{z}/{x}/{y}.png';
@@ -24,7 +49,8 @@
     
     var streets = L.tileLayer(tileUrl, {
         attribution: tileAttribution,
-        maxZoom: 20
+        maxZoom: 20,
+        minZoom: 11,
     });
     
     
@@ -34,7 +60,7 @@
     
     var satellite = new L.Google();
     
-    map.addLayer(satellite);
+    map.addLayer(streets);
 
     var geoj = {};
     
@@ -62,6 +88,10 @@
     $.getJSON('{% url lot_detail lot.id %}', function(data){
           myLayer.addData(data);
           map.fitBounds(myLayer.getBounds());
+          map.panBy([-500, -100]);
+          zoom = map.getZoom();
+          newZoom = zoom-1;
+          map.setZoom(newZoom);
     });
 
 </script>

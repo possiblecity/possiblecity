@@ -125,6 +125,7 @@ class Parcel(models.Model):
     def __unicode__(self):
         return u'%s' % (self._get_address())
 
+
 def parcel_post_save(sender, **kwargs):
     """
         When a parcel instance is created, create a related Lot instance.
