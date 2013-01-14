@@ -1,0 +1,132 @@
+{% extends "philadelphia/test_base.html" %}
+{% load possiblecity_tags %}
+{% load staticfiles %}
+{% block layout %}
+<div class="page-content">
+    <div id="map" style="width:100%; height:100%">
+    </div>
+</div>
+{% endblock layout %}
+{% block js_local %}
+<script>
+
+ // Initialize the map object
+    var map = new L.Map('map');
+    
+    // Prep the background tile layer
+    var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-diqk1ub5/{z}/{x}/{y}.png';
+    var tileAttribution = '';
+    
+    var streets = L.tileLayer(tileUrl, {
+        attribution: tileAttribution,
+        maxZoom: 20
+    }).addTo(map);
+    
+    
+    // Set the center on Philadelphia
+    var philadelphia = new L.LatLng(39.9522, -75.1642);
+    map.setView(philadelphia, 13);
+    
+    var geojsonLayer = L.geoJson(test_hex()).addTo(map)
+
+    var points = L.geoJson(null, {
+                     pointToLayer: function(feature, latlng) {
+                         return L.circleMarker(latlng, pointStyle);
+                     }
+                 })
+                 
+    $.getJSON('{% url available_lots_points %}', function(data){
+        points.addData(data.features).addTo(map);
+        map.fitBounds(points.getBounds());
+    });
+    
+    var bounds = points.getBounds();
+    
+    alert(bounds);
+	
+
+//coordinates of each hexagon
+function hexagon(length, x_start, y_start) {
+	"use strict";
+	var hex = [
+		[length + x_start, y_start],
+		[((length / 2) + x_start), (length * Math.sqrt(length / 2)) + y_start],
+		[((-length / 2) + x_start), (length * Math.sqrt(length / 2)) + y_start],
+		[(-length + x_start), y_start],
+		[((-length / 2) + x_start), (-length * Math.sqrt(length / 2)) + y_start],
+		[(length / 2) + x_start, (-length * Math.sqrt(length / 2)) + y_start],
+		[length + x_start, y_start]];
+	return hex;
+
+}
+
+//origin is starting coordinates [x,y], length in degs for now, bbox: [xmin, xmax, ymin, ymax]
+function generate_multihex(length, bbox) {
+	"use strict";
+	var current_pos = [];
+	//container to hold the full file
+	var geojson;
+
+	//array to hold the features
+	var features = [];
+	var origin = [bbox[0], bbox[3]];
+	var up = false; //hack to align the hexagons y location
+	current_pos = origin;
+	var cur_pos_ar = [];
+
+	while (current_pos[0] < bbox[1]) {
+		while (current_pos[1] > bbox[2]) {
+			features.push(hexagon(length, current_pos[0], current_pos[1]));
+			current_pos = [current_pos[0], current_pos[1] - ((length * Math.sqrt(length / 2)) * 2)];
+		}
+
+		//shift the hexagon creation to the next column with a shift in the y to nest them
+		if (up) {
+			current_pos = [current_pos[0] + (length * 1.5), bbox[3]];
+			up = false;
+		} else {
+			current_pos = [current_pos[0] + (length * 1.5), bbox[3] + (length * Math.sqrt(length / 2))];
+			up = true;
+		}
+	}
+
+	geojson = {
+		"type": "FeatureCollection",
+		"features": [{
+			"type": "Feature",
+			"geometry": {
+				"type": "MultiPolygon",
+				"coordinates": [features]
+			},
+			"properties": {
+				"prop1": 0.0,
+				"style": {
+					"color": "#CA432D",
+					"weight": 1,
+					"opacity": 0.9,
+					"fillOpacity": 0.4,
+					"fillColor": "#F8EED3"
+				}
+			}
+		}]
+	};
+
+	return geojson;
+//F8EED3  78ADA4  CA432D
+}
+
+function test_hex() {
+	"use strict";
+	var result = generate_multihex(1, [-75.28, -74.96, 40.14, 39.87]);
+	return result;
+}
+
+function set_layer(length){	
+	geojsonLayer.clearLayers();
+	geojsonLayer.addGeoJSON(generate_multihex(length, [-179.0, 179.0, -89.0, 89.0]));
+	var hn = window.location.hostname;
+	georef = "http://" + hn + "/hex/" + length;	
+	$j("#geolink").html("<a href='" + georef + "'>geojson</a>");
+}
+</script>
+{% endblock js_local %}

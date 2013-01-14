@@ -55,6 +55,26 @@ class Lot(USLotBase):
 
         return has_feature(source, params)
 
+    def _get_listing_id(self):
+        address = self.address.title()
+        source = settings.PHL_DATA["PAPL_LISTINGS"] + "query"
+        params = {"where":"REF_ADDRES='%s'" % (address), "returnIdsOnly":"true", "f":"json"}
+
+        dict =  fetch_json(source, params)
+        
+        if dict["objectIds"][0]:
+            return dict["objectIds"][0]
+
+    @property
+    def papl_data(self):
+        source = settings.PHL_DATA["PAPL_LISTINGS"] + str(self._get_listing_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+ 
+        if data['feature']['attributes']:
+            return data['feature']['attributes']
+
     def save(self, *args, **kwargs):
         if not self.pk:
             # These are all lots for Philadelphia, PA.
@@ -124,6 +144,7 @@ class Parcel(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self._get_address())
+
 
 def parcel_post_save(sender, **kwargs):
     """

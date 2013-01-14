@@ -13,7 +13,7 @@ class GeoResponseMixin(object):
 
     def render_to_response(self, context):
         qs = self.get_queryset()
-        djf = Django.Django(geodjango=self.geo_field)
+        djf = Django.Django(geodjango=self.geo_field, properties=self.properties)
         geoj = GeoJSON.GeoJSON()
         output = geoj.encode(djf.decode(qs))
         return HttpResponse(output, content_type='application/json')
@@ -48,3 +48,9 @@ class GeoHybridDetailView(GeoDetailView, SingleObjectTemplateResponseMixin):
             return GeoDetailView.render_to_response(self, context)
         else:
             return SingleObjectTemplateResponseMixin.render_to_response(self, context)
+
+class PolygonGeoListView(GeoListView):
+    geo_field = "geom"
+
+class PointGeoListView(GeoListView):
+    geo_field = "coord"

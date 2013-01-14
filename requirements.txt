@@ -1,6 +1,8 @@
 # python modules
 pillow
 psycopg2
+requests
+vectorformats
 
 Django==1.4.1
 

@@ -12,7 +12,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 
-
 urlpatterns = patterns('',
     # admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -28,9 +27,13 @@ urlpatterns = patterns('',
     # homepage
     url(r'^$', RedirectView.as_view(url='/blog'),name='home'),
 
+    # about
+    url(r'^about/$', RedirectView.as_view(url='/blog/2012/oct/10/introducing-possible-city/'),
+        name='about'),    
+
     # people
     #url(r'^account/', include('account.urls')),
-    url(r'^profiles/', include('possiblecity.profiles.urls')),    
+    #url(r'^profiles/', include('possiblecity.profiles.urls')),    
 
     #projects
     #url(r'^float/', include('possiblecity.float.urls.share')),
@@ -40,7 +43,7 @@ urlpatterns = patterns('',
     #url(r"^connect/", include("phileo.urls")),
     
     # places
-    #url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
+    url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
 
 
     # search

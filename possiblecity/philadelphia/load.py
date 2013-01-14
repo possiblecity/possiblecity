@@ -33,10 +33,12 @@ parcel_mapping = {
 }
 
 
-parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/PhiladelphiaParcels201201_WGS84.shp'))
+parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/parcels_fix.shp'))
 
 test_parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/test_parcels.shp'))
 
+def _get_filepath(file):
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', file))
 
 def map_parcels(verbose=True, strict=True, progress=False, step=False):
     lm = LayerMapping(Parcel, parcels, parcel_mapping,
