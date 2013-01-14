@@ -62,8 +62,9 @@ class Lot(USLotBase):
 
         dict =  fetch_json(source, params)
         
-        if dict["objectIds"][0]:
-            return dict["objectIds"][0]
+        if dict["objectIds"]:
+            if dict["objectIds"][0]:
+                return dict["objectIds"][0]
 
     @property
     def papl_data(self):
@@ -71,8 +72,8 @@ class Lot(USLotBase):
         params = {"f":"json"}
 
         data = fetch_json(source, params)
- 
-        if data['feature']['attributes']:
+        
+        if not data["error"]:
             return data['feature']['attributes']
 
     def save(self, *args, **kwargs):

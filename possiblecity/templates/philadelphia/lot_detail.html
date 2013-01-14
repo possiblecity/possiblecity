@@ -19,10 +19,12 @@
                {% if lot.has_vacancy_violation %} | Vacancy Violation{% endif %}</span></li>
                <li><span class="label">Ownership:</span><span class="data">{% if lot.is_public %}Public{% else %}Private{% endif %}</span></li>
                <li><span class="label">Availability:</span><span class="data">{% if lot.is_available %}For sale{% endif %}</span></li>
-               <li><span class="label">Price:</span><span class="data">{% if lot.papl_data %}${{ lot.papl_data.PRICE|intcomma }}{% else %}Not Available{% endif %}</span></li>
+               <li><span class="label">Price:</span><span class="data">{% if lot.papl_data.PRICE %}${{ lot.papl_data.PRICE|intcomma }}{% else %}No Longer Available{% endif %}</span></li>
             </ul>
+            {% if lot.papl_data.PRICE %}
             <a class="button" href="http://secure.phila.gov/PAPLPublicWeb/AddAsset.aspx?AssetID={{ lot.papl_data.ASSET_ID }}">Express Interest</a>
             <p class="note">The button above will take you to the City of Philadelphia's website, where you can express interest in purchasing the lot.</p>
+            {% endif %}
         </section>
     </article>
 </div>

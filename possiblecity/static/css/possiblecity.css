@@ -312,11 +312,24 @@ footer.site-footer:after {
 }
 
 /* line 83, ../compass/sass/possiblecity.sass */
-body.blog header.site-header + container {
+body.blog header.site-header {
+  *zoom: 1;
+  max-width: 70em;
+  _width: 70em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2em;
+  padding-right: 2em;
   margin-top: 2em;
   margin-bottom: 2em;
 }
-/* line 87, ../compass/sass/possiblecity.sass */
+/* line 38, ../../../../../../.virtualenvs/dev/gems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body.blog header.site-header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 88, ../compass/sass/possiblecity.sass */
 body.blog footer.site-footer {
   *zoom: 1;
   max-width: 70em;
@@ -340,7 +353,7 @@ body.blog footer.site-footer:after {
   display: table;
   clear: both;
 }
-/* line 96, ../compass/sass/possiblecity.sass */
+/* line 97, ../compass/sass/possiblecity.sass */
 body.blog nav.site-nav {
   margin-left: 25.71429%;
   width: 74.28571%;
@@ -348,7 +361,7 @@ body.blog nav.site-nav {
   margin-right: 2.85714%;
   display: inline;
 }
-/* line 99, ../compass/sass/possiblecity.sass */
+/* line 100, ../compass/sass/possiblecity.sass */
 body.blog nav.site-nav ul {
   margin: 0;
   padding: 0;
@@ -380,7 +393,7 @@ body.blog nav.site-nav ul li:last-child {
 body.blog nav.site-nav ul li.last {
   padding-right: 0;
 }
-/* line 103, ../compass/sass/possiblecity.sass */
+/* line 104, ../compass/sass/possiblecity.sass */
 body.blog nav.site-nav ul li a {
   display: -moz-inline-stack;
   display: inline-block;
@@ -405,14 +418,14 @@ body.blog nav.site-nav ul li a:hover {
   border-color: link-color;
   color: white;
 }
-/* line 106, ../compass/sass/possiblecity.sass */
+/* line 107, ../compass/sass/possiblecity.sass */
 body.blog div.identity {
   width: 42.30769%;
   float: left;
   margin-right: 3.84615%;
   display: inline;
 }
-/* line 109, ../compass/sass/possiblecity.sass */
+/* line 110, ../compass/sass/possiblecity.sass */
 body.blog div.page-content {
   *zoom: 1;
   max-width: 70em;
@@ -428,14 +441,14 @@ body.blog div.page-content:after {
   display: table;
   clear: both;
 }
-/* line 112, ../compass/sass/possiblecity.sass */
+/* line 113, ../compass/sass/possiblecity.sass */
 body.blog article.entry {
   overflow: hidden;
   *zoom: 1;
   clear: both;
   margin-bottom: 1.5em;
 }
-/* line 116, ../compass/sass/possiblecity.sass */
+/* line 117, ../compass/sass/possiblecity.sass */
 body.blog article.entry aside {
   margin-top: 0.5em;
   width: 22.85714%;
@@ -444,7 +457,7 @@ body.blog article.entry aside {
   display: inline;
   text-align: right;
 }
-/* line 120, ../compass/sass/possiblecity.sass */
+/* line 121, ../compass/sass/possiblecity.sass */
 body.blog article.entry aside p.date {
   background: #cccccc;
   color: white;
@@ -462,11 +475,11 @@ body.blog article.entry aside p.date {
   padding: 6px;
   margin-top: 0;
 }
-/* line 127, ../compass/sass/possiblecity.sass */
+/* line 128, ../compass/sass/possiblecity.sass */
 body.blog article.entry aside p.author {
   color: #999999;
 }
-/* line 130, ../compass/sass/possiblecity.sass */
+/* line 131, ../compass/sass/possiblecity.sass */
 body.blog article.entry aside ul.tags li {
   background: #eeeeee;
   color: white;
@@ -484,25 +497,25 @@ body.blog article.entry aside ul.tags li {
   padding: 6px;
   margin: 2px 0 2px 2px;
 }
-/* line 137, ../compass/sass/possiblecity.sass */
+/* line 138, ../compass/sass/possiblecity.sass */
 body.blog article.entry aside ul.tags li:hover {
   background: #666666;
 }
-/* line 139, ../compass/sass/possiblecity.sass */
+/* line 140, ../compass/sass/possiblecity.sass */
 body.blog article.entry h2 {
   font-weight: bold;
 }
-/* line 141, ../compass/sass/possiblecity.sass */
+/* line 142, ../compass/sass/possiblecity.sass */
 body.blog article.entry h2 a {
   color: #444444;
   font-weight: bold;
   text-decoration: none;
 }
-/* line 145, ../compass/sass/possiblecity.sass */
+/* line 146, ../compass/sass/possiblecity.sass */
 body.blog article.entry h2 a:hover {
   color: #999900;
 }
-/* line 148, ../compass/sass/possiblecity.sass */
+/* line 149, ../compass/sass/possiblecity.sass */
 body.blog article.entry section.entry-content {
   width: 74.28571%;
   float: right;
@@ -510,12 +523,12 @@ body.blog article.entry section.entry-content {
   #margin-left: -2em;
   display: inline;
 }
-/* line 151, ../compass/sass/possiblecity.sass */
+/* line 152, ../compass/sass/possiblecity.sass */
 body.blog nav.entry-nav {
   clear: both;
   text-align: right;
 }
-/* line 154, ../compass/sass/possiblecity.sass */
+/* line 155, ../compass/sass/possiblecity.sass */
 body.blog nav.entry-nav a {
   display: -moz-inline-stack;
   display: inline-block;
@@ -547,17 +560,17 @@ body.map * {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 164, ../compass/sass/possiblecity.sass */
+/* line 165, ../compass/sass/possiblecity.sass */
 body.map #map {
   width: 100%;
   height: 100%;
 }
-/* line 168, ../compass/sass/possiblecity.sass */
+/* line 169, ../compass/sass/possiblecity.sass */
 body.map .leaflet-control-zoom {
   left: 2em;
   top: 4em;
 }
-/* line 172, ../compass/sass/possiblecity.sass */
+/* line 173, ../compass/sass/possiblecity.sass */
 body.map header.site-header {
   background-color: white;
   width: 100%;
@@ -565,7 +578,7 @@ body.map header.site-header {
   position: absolute;
   z-index: 1000;
 }
-/* line 178, ../compass/sass/possiblecity.sass */
+/* line 179, ../compass/sass/possiblecity.sass */
 body.map header.site-header nav.site-nav {
   *zoom: 1;
   max-width: 74em;
@@ -581,14 +594,14 @@ body.map header.site-header nav.site-nav:after {
   display: table;
   clear: both;
 }
-/* line 180, ../compass/sass/possiblecity.sass */
+/* line 181, ../compass/sass/possiblecity.sass */
 body.map header.site-header nav.site-nav div.identity {
   width: 14.28571%;
   float: left;
   margin-right: 2.85714%;
   display: inline;
 }
-/* line 182, ../compass/sass/possiblecity.sass */
+/* line 183, ../compass/sass/possiblecity.sass */
 body.map header.site-header nav.site-nav div.identity a.logo {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -602,7 +615,7 @@ body.map header.site-header nav.site-nav div.identity a.logo {
   zoom: 1;
   *display: inline;
 }
-/* line 187, ../compass/sass/possiblecity.sass */
+/* line 188, ../compass/sass/possiblecity.sass */
 body.map header.site-header nav.site-nav ul {
   margin: 0;
   padding: 0;
@@ -634,7 +647,7 @@ body.map header.site-header nav.site-nav ul li:last-child {
 body.map header.site-header nav.site-nav ul li.last {
   padding-right: 0;
 }
-/* line 191, ../compass/sass/possiblecity.sass */
+/* line 192, ../compass/sass/possiblecity.sass */
 body.map header.site-header nav.site-nav ul li a {
   display: -moz-inline-stack;
   display: inline-block;
@@ -659,7 +672,7 @@ body.map header.site-header nav.site-nav ul li a:hover {
   border-color: link-color;
   color: white;
 }
-/* line 194, ../compass/sass/possiblecity.sass */
+/* line 195, ../compass/sass/possiblecity.sass */
 body.map article.lot {
   *zoom: 1;
   max-width: 74em;
@@ -677,7 +690,7 @@ body.map article.lot:after {
   display: table;
   clear: both;
 }
-/* line 198, ../compass/sass/possiblecity.sass */
+/* line 199, ../compass/sass/possiblecity.sass */
 body.map article.lot section.details {
   position: relative;
   width: 48.57143%;
@@ -693,12 +706,12 @@ body.map article.lot section.details {
   margin-top: -30em;
   background-color: rgba(255, 255, 255, 0.7);
 }
-/* line 207, ../compass/sass/possiblecity.sass */
+/* line 208, ../compass/sass/possiblecity.sass */
 body.map article.lot section.details ul {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
-/* line 210, ../compass/sass/possiblecity.sass */
+/* line 211, ../compass/sass/possiblecity.sass */
 body.map article.lot section.details span.label {
   font-size: 0.8em;
   line-height: 1.875em;
@@ -714,18 +727,18 @@ body.map article.lot section.details span.label {
   width: 120px;
   text-align: right;
 }
-/* line 218, ../compass/sass/possiblecity.sass */
+/* line 219, ../compass/sass/possiblecity.sass */
 body.map article.lot section.details span.data {
   font-size: 1.2em;
   line-height: 1.25em;
   font-weight: bold;
 }
-/* line 222, ../compass/sass/possiblecity.sass */
+/* line 223, ../compass/sass/possiblecity.sass */
 body.map article.lot section.details a {
   margin-left: 120px;
   text-decoration: none;
 }
-/* line 225, ../compass/sass/possiblecity.sass */
+/* line 226, ../compass/sass/possiblecity.sass */
 body.map article.lot section.details p.note {
   margin-top: 1.5em;
   margin-left: 120px;
