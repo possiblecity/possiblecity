@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
 from possiblecity.philadelphia.views import *
@@ -11,7 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^geo/lots/lot/(?P<pk>\d+)/$', LotDetailMapView.as_view(), name='geo_lot_detail'),  
   
-    url(r'^geo/lots/vacant/available/polygons/$', AvailableLotPolyMapView.as_view(), 
+    url(r'^geo/lots/vacant/available/polygons/$', cache_page(AvailableLotPolyMapView.as_view(),60*1440), 
         name='available_lots_polys'),
     
 )

@@ -196,7 +196,7 @@ INSTALLED_APPS = (
 
     # local apps
     "possiblecity.templatetags",
-    "possiblecity.text", # blog app
+    "possiblecity.text",
     #"possiblecity.profiles",
     #"possiblecity.float",
     "possiblecity.lotxlot",
