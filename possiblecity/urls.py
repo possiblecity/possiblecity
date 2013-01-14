@@ -12,17 +12,20 @@ from django.contrib import admin
 admin.autodiscover()
 
 
-
 urlpatterns = patterns('',
     # admin
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
         
     # blog
-    #url(r'^blog/', include('possiblecity.text.urls')),
+    url(r'^blog/', include('possiblecity.text.urls')),
 
     # homepage
-    #url(r'^$', RedirectView.as_view(url='/blog'),name='home'),
+    url(r'^$', RedirectView.as_view(url='/blog'),name='home'),
+
+    # about
+    url(r'^about/$', RedirectView.as_view(url='/blog/2012/oct/10/introducing-possible-city/'),
+        name='about'),    
 
     # people
     #url(r'^account/', include('account.urls')),

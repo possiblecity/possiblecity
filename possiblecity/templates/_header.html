@@ -2,16 +2,26 @@
     <nav class="site-nav">
     {% block identity %}
         <div class="identity">
-            <h1><a href="#">Possiblecity</a></h1>
-            <a class="logo" href="#">
+            <h1><a href="{% url home %}">Possiblecity</a></h1>
+            <a class="logo" href="{% url home %}">
                 <img src="{{ STATIC_URL }}images/logo.png" />
             </a>
         </div>
     {% endblock identity %}
     {% block section-nav %}
         <ul class="section-nav">
+            <li id="nav-lotxlot">
+                <a href="{% url lotxlot %}">
+                    <span>lot<strong>x</strong>lot</span>
+                </a>
+            </li>
+            <li id="nav-blog">
+                <a href="{% url text_entry_index  %}">
+                    <span>Blog</span>
+                </a>
+            </li>
             <li id="nav-about">
-                <a href="#">
+                <a href="{% url about %}">
                     <span>About</span>
                 </a>
             </li>

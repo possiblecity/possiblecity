@@ -1,16 +1,22 @@
 # philadelphia/views.py
 
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 
 from possiblecity.lotxlot.views import *
+from possiblecity.lotxlot.utils import fetch_json
 from possiblecity.philadelphia.models import Lot
 
 # ajax views
-class LotMapView(GeoListView):
+class LotDetailMapView(GeoDetailView):
+    model = Lot
+    geo_field = "geom"
+
+class LotListMapView(GeoListView):
     properties = ['address', 'id', 'is_public']
 
-class VacantLotMapView(LotMapView):
+class VacantLotMapView(LotListMapView):
     # return geojson coordinates to display on a map
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
     geo_field = "coord"
@@ -19,7 +25,7 @@ class VacantLotPolyMapView(VacantLotMapView):
     # return geojson polygons to display on a map
     geo_field = "geom"
    
-class AvailableLotMapView(LotMapView):
+class AvailableLotMapView(LotListMapView):
     # return geojson coordinates to display on a map
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=True)
     geo_field = "coord"
@@ -28,7 +34,7 @@ class AvailableLotPolyMapView(AvailableLotMapView):
     # return geojson polygons to display on a map
     geo_field = "geom"
     
-class UnavailablePublicVacantLotMapView(LotMapView):
+class UnavailablePublicVacantLotMapView(LotListMapView):
     # return geojson coordinates to display on a map
     queryset = Lot.objects.filter(is_visible=True, is_vacant=True, is_public=True, is_available=False)
     geo_field = "coord"
@@ -36,7 +42,7 @@ class UnavailablePublicVacantLotMapView(LotMapView):
 class UnavailablePublicVacantLotPolyMapView(UnavailablePublicVacantLotMapView):
     geo_field = "geom"
     
-class PrivateVacantLotMapView(LotMapView):
+class PrivateVacantLotMapView(LotListMapView):
     queryset = Lot.objects.filter(is_visible=True, is_vacant=True, is_public=False)
     geo_field = "coord"
 
@@ -85,8 +91,6 @@ class VacantAvailableLotListView(LotListView):
     queryset = Lot.objects.filter(is_available=True, is_visible=True)
 
 
-
-
 class LotsByAreaView(GeoHybridListView):
     """
     Retrieve all lots sorted by area
@@ -104,11 +108,27 @@ class VacantLotsByAreaView(GeoHybridListView):
 
     geo_field = "geom"
 
-class LotDetailView(GeoHybridDetailView):
+
+
+
+class LotDetailView(DetailView):
     """
     Retreive a lot
     """
     model = Lot
     geo_field = "geom"
+
+    def get_object(self):
+        # Call the superclass
+        object = super(LotDetailView, self).get_object()
+        # check vacancy 
+        object.is_vacant = object._get_vacancy_status()
+        object.is_public = object._get_public_status()
+        object.is_available = object._get_availability()
+        object.has_vacancy_violation = object._get_vacancy_violation()
+        object.has_vacancy_license = object._get_vacancy_license()
+        object.save()
+        # Return the object
+        return object
     
 

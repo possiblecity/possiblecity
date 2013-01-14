@@ -196,7 +196,7 @@ INSTALLED_APPS = (
 
     # local apps
     "possiblecity.templatetags",
-    #"possiblecity.text", # blog app
+    "possiblecity.text", # blog app
     #"possiblecity.profiles",
     #"possiblecity.float",
     "possiblecity.lotxlot",
@@ -301,10 +301,11 @@ PHILEO_LIKABLE_MODELS = {
 # Philadelphia
 
 PHL_DATA = {
-    "ADDRESSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Addresses/MapServer/0",
+    "ADDRESSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Addresses/MapServer/0/",
     "PAPL": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/",
     "PAPL_LISTINGS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/0/",
     "PAPL_ASSETS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/",
+    "PAPL_WEB":	"http://secure.phila.gov/PAPLPublicWeb/",
     "VACANCY": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/", 
     "VACANCY_LICENSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2/",
     "VACANCY_VIOLATIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8/",

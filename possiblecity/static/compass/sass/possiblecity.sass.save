@@ -196,39 +196,26 @@ body.map
     position: relative
     z-index: 1001
     section.details
-      position: relative
-      +span-columns(6)
+      +span-columns(7)
       +border-radius(8px)
-      //+box-shadow()
-      //height: 20em
-      padding: 2em
-      margin-top: -30em
+      +box-shadow()
+      height: 20em
+      padding: 1em
+      margin-top: -23em
       background-color: rgba(255,255,255,0.7)
-      ul
-        +leader
-        +trailer
       span.label
         +adjust-font-size-to($base-font-size * 0.8)
-        color: #666
+        color: #555
         text-transform: uppercase
         +inline-block
         padding-right: 10px
-        width: 120px
+        width: 100px
         text-align: right
+        //+adjust-font-size-to($base-font-size * .75)
       span.data
         +adjust-font-size-to($base-font-size * 1.2)
         font-weight: bold
-        
-      a
-        margin-left: 120px
-        text-decoration: none
-      p.note
-        +leader
-        margin-left: 120px
-        +adjust-font-size-to($base-font-size * 0.8, $lines:.5)
-        color: #666
-
-        
+     
     
 
   
