@@ -39,7 +39,7 @@ class ArticleBase(TitleBase, BlurbBase):
     """
         An abstract content block with a title, text blurb, and excerpt.
     """
-    excerpt = models.TextField(blank=True)
+    excerpt = models.TextField(blank=True, null=True)
 
     class Meta:
         abstract=True
