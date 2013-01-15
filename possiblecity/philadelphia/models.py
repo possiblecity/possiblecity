@@ -63,7 +63,8 @@ class Lot(USLotBase):
         dict =  fetch_json(source, params)
         if not "error" in dict:
             if "objectIds" in dict:
-                return dict["objectIds"][0]
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]
 
     @property
     def papl_data(self):

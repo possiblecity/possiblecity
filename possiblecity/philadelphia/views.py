@@ -118,17 +118,17 @@ class LotDetailView(DetailView):
     model = Lot
     geo_field = "geom"
 
-    def get_object(self):
+    #def get_object(self):
         # Call the superclass
-        object = super(LotDetailView, self).get_object()
+        #object = super(LotDetailView, self).get_object()
         # check vacancy 
-        object.is_vacant = object._get_vacancy_status()
-        object.is_public = object._get_public_status()
-        object.is_available = object._get_availability()
-        object.has_vacancy_violation = object._get_vacancy_violation()
-        object.has_vacancy_license = object._get_vacancy_license()
-        object.save()
+        #object.is_vacant = object._get_vacancy_status()
+        #object.is_public = object._get_public_status()
+        #object.is_available = object._get_availability()
+        #object.has_vacancy_violation = object._get_vacancy_violation()
+        #object.has_vacancy_license = object._get_vacancy_license()
+        #object.save()
         # Return the object
-        return object
+        #return object
     
 
