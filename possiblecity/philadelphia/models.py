@@ -61,9 +61,8 @@ class Lot(USLotBase):
         params = {"where":"REF_ADDRES='%s'" % (address), "returnIdsOnly":"true", "f":"json"}
 
         dict =  fetch_json(source, params)
-        
-        if dict["objectIds"]:
-            if dict["objectIds"][0]:
+        if not "error" in dict:
+            if "objectIds" in dict:
                 return dict["objectIds"][0]
 
     @property
@@ -73,8 +72,9 @@ class Lot(USLotBase):
 
         data = fetch_json(source, params)
         
-        if not data["error"]:
-            return data['feature']['attributes']
+        if not "error" in data:
+            if "feature" in data:
+                return data['feature']['attributes']
 
     def save(self, *args, **kwargs):
         if not self.pk:
