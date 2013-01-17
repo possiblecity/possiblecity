@@ -37,12 +37,6 @@ class Lot(USLotBase):
         
         return has_feature(source, params)
 
-    def _get_availability(self):
-        source = settings.PHL_DATA["PAPL_LISTINGS"] + "query"
-        params = {"where":"MAPREG='%s'" % (self.parcel.mapreg), "f":"json"}
-
-        return has_feature(source, params)
-
     def _get_vacancy_status(self):
        vacancy_flags = (self._get_vacancy_violation(),
            self._get_vacancy_license(), self._get_availability())
@@ -50,8 +44,9 @@ class Lot(USLotBase):
        return any(v is True for v in vacancy_flags)
     
     def _get_public_status(self):
+        address = self.address.title()
         source = settings.PHL_DATA["PAPL_ASSETS"] + "query"
-        params = {"where":"MAPREG='%s'" % (self.parcel.mapreg), "f":"json"}
+        params = {"where":"REF_ADDRES='%s'" % (address), "f":"json"}
 
         return has_feature(source, params)
 
@@ -65,7 +60,22 @@ class Lot(USLotBase):
             if "objectIds" in dict:
                 if dict["objectIds"]:
                     return dict["objectIds"][0]
+    
+    def _get_availability(self):
+        if self._get_listing_id():
+            return True
+        else:
+            return False
+    
+    def update_availability(self):
+        self.is_available = self._get_availability()
 
+    def update_public_status(self):
+        self.is_available = self._get_public_status()
+ 
+    def update_vacancy_status(self):
+        self.is_vacant = self._get_vacancy_status()   
+        
     @property
     def papl_data(self):
         source = settings.PHL_DATA["PAPL_LISTINGS"] + str(self._get_listing_id())
