@@ -18,7 +18,7 @@
                {% if lot.has_vacancy_license %} | Vacancy License{% endif %}
                {% if lot.has_vacancy_violation %} | Vacancy Violation{% endif %}</span></li>
                <li><span class="label">Ownership:</span><span class="data">{% if lot.is_public %}Public{% else %}Private{% endif %}</span></li>
-               <li><span class="label">Availability:</span><span class="data">{% if lot.is_available %}For sale{% else %}Not For Sale</span></li>
+               <li><span class="label">Availability:</span><span class="data">{% if lot.is_available %}For sale{% else %}Not For Sale{% endif %}</span></li>
                {% if lot.is_available %}
                <li><span class="label">Price:</span><span class="data">{% if lot.papl_data.PRICE %}${{ lot.papl_data.PRICE|intcomma }}{% else %}No Longer Available{% endif %}</span></li>
                {% endif %}
