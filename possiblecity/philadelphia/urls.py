@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^geo/lots/lot/(?P<pk>\d+)/$', LotDetailMapView.as_view(), name='geo_lot_detail'),  
   
-    url(r'^geo/lots/vacant/available/polygons/$', cache_page(AvailableLotPolyMapView.as_view(),60*1440), 
+    url(r'^geo/lots/vacant/available/polygons/$', cache_page(AvailableLotPolyMapView.as_view(),60*60), 
         name='available_lots_polys'),
     
 )
