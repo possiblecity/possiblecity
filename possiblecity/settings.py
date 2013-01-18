@@ -198,7 +198,7 @@ INSTALLED_APPS = (
     "possiblecity.templatetags",
     "possiblecity.text",
     #"possiblecity.profiles",
-    #"possiblecity.float",
+    "possiblecity.float",
     "possiblecity.lotxlot",
     "possiblecity.philadelphia",
 )

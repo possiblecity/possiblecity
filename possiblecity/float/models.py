@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.html import strip_tags
 
-#from taggit.managers import TaggableManager
+from taggit.managers import TaggableManager
 
 from possiblecity.float.fields import PositionField
 from possiblecity.float.managers import ProjectManager
@@ -46,9 +46,8 @@ class Project(models.Model):
     tagline = models.CharField(max_length=500, help_text="A sentence summary of the project.")
     description = models.TextField()
 
-
     # Categorization
-    #tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True)
 
     # Site admin manages these fields
     agent = models.ForeignKey(User, help_text="The owner of the project.")
@@ -99,4 +98,3 @@ class ProjectImage(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
-

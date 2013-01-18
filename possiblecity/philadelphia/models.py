@@ -6,12 +6,15 @@ from django.db.models.signals import post_save
 
 from possiblecity.lotxlot.utils import fetch_json, has_feature
 from possiblecity.lotxlot.models import USLotBase
+from possiblecity.float.models import Project
 
 class Lot(USLotBase):
     # spatial queryset manager
     objects = models.GeoManager()
      
     parcel = models.OneToOneField("Parcel")
+
+    projects = models.ManyToManyField(Project, blank=True, null=True)
 
     is_available = models.BooleanField(default=False)
     has_vacancy_violation = models.BooleanField(default=False)
