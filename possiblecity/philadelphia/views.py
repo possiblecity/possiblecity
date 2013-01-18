@@ -123,7 +123,7 @@ class LotDetailView(DetailView):
         # refresh data sources
         object.update_availability()
         object.update_public_status()
-        object.update_vacancy_status()
+        #object.update_vacancy_status()
         object.save()
         # Return the object
         return object
