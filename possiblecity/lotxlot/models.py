@@ -21,7 +21,7 @@ class LotBase(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     # spatial fields
-    coord = models.PointField(geography=True, srid=4325, blank=True, null=True)
+    coord = models.PointField(geography=True, srid=4326, blank=True, null=True)
     geom = models.MultiPolygonField(geography=True, srid=4326)
 
     class Meta:
