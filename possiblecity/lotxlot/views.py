@@ -8,6 +8,8 @@ from django.views.generic.base import View, TemplateResponseMixinfrom django.vi
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin, BaseListView
 from django.views.generic.edit import FormMixin
 
+from .forms import AddressForm
+
 ##### GENERIC MIXINS
 class GeoResponseMixin(object):
     """
@@ -135,21 +137,13 @@ class HybridDetailView(HybridGeoResponseMixin, BaseDetailView):
     """
     pass
 
-class AddressSearchView(FormMixin, MultipleObjectMixin, LocationSearchMixin, GeoResponseMixin, View):
+class AddressSearchView(FormMixin, MultipleObjectMixin, HybridGeoResponseMixin, View):
     """
-    Allow user to input a location. Use this location as an origin point to find
-    objects within a certain distance.
-
-    queryset = None
-    geo_field = None
+    A View which takes a queryset and filters it via a form submission
+    """
     form_class = AddressForm
-    template_name = None
-    point_field = None # point field of objects to compare
-    search_type = 'distance_lte' # defaults to less than or equal to
-    origin = None # default search center point   
-    distance = 400 # default search radius in meters
-    """  
-   
+    distance = 400
+
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -164,10 +158,8 @@ class AddressSearchView(FormMixin, MultipleObjectMixin, LocationSearchMixin, Geo
             return self.form_invalid(form)    
 
     def form_valid(self, form):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        self.origin = form.cleaned_data('address')
-        return self.render_to_response()
-
-
-     
+        queryset = self.get_queryset()
+        origin = form.cleaned_data['address']
+        lot_list = queryset.filter(coord__distance_lte=(origin, self.distance))
+        context = self.get_context_data(lot_list=lot_list, form=form, origin=origin)
+        return self.render_to_response(context) 
