@@ -10,7 +10,7 @@ from possiblecity.float.models import Project
 
 class Lot(USLotBase):
     # spatial queryset manager
-    objects = models.GeoManager()
+    #objects = models.GeoManager()
      
     parcel = models.OneToOneField("Parcel")
 

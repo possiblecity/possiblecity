@@ -175,11 +175,6 @@ INSTALLED_APPS = (
     "django.contrib.humanize",
     "django.contrib.gis",
 
-    # theme
-    #"pinax_theme_bootstrap_account",
-    #"pinax_theme_bootstrap",
-    #"django_forms_bootstrap",
-
     # third party apps
     "south", # database migrations
     "compressor", # static file optimization
@@ -195,7 +190,7 @@ INSTALLED_APPS = (
     #"tastypie", # api generation
 
     # local apps
-    "possiblecity.templatetags",
+    "possiblecity.core",
     "possiblecity.text",
     #"possiblecity.profiles",
     "possiblecity.float",
@@ -207,7 +202,7 @@ INSTALLED_APPS = (
 # Logging
 #==============================================================================
 
-
+ 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

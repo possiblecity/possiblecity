@@ -11,7 +11,7 @@ from django.utils.html import strip_tags
 from taggit.managers import TaggableManager
 
 from possiblecity.float.fields import PositionField
-from possiblecity.float.managers import ProjectManager
+from possiblecity.float.managers import ProjectQuerySet
 
 class Idea(models.Model):
 	"""

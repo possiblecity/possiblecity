@@ -38,7 +38,7 @@
     map.setView(philadelphia, 12);
     
                  
-    var availableLotsPolys = L.geoJson(null, {
+    var availableLots = L.geoJson(null, {
                     onEachFeature: function(feature, layer) {
                         url = '{% url lot_detail 0 %}'.replace (0, feature.properties.id);
                         html = '<p><strong><a href="' + url + '">' 
@@ -50,16 +50,6 @@
                     },
                 });
                 
-    var unavailableLotsPolys = L.geoJson(null, {
-                    onEachFeature: function(feature, layer) {
-                        url = '{% url lot_detail 0 %}'.replace (0, feature.properties.id);
-                        html = '<p><strong><a href="' + url + '">' 
-                               + feature.properties.address 
-                               + '</a></strong></p>';     
-                        layer.bindPopup(html);
-                        layer.setStyle(polyStyle);
-                    },
-                });
                 
     var availableStyle = {
         "fillColor":"#e8db00",
@@ -70,41 +60,11 @@
         //"dashArray": "4 2"
     };
     
-    var unavailableStyle = {
-        "fillColor":"#ff00ff",
-        "fillOpacity": 0.5,
-        "opacity": 1.0,
-        "weight": 2,
-        "color":"#ff00ff",
-        "dashArray": "4 2"
-    };
     
-    
-    var baselayers = {
-        "Streets": streets
-        //"Aerial": satellite
-    };
-                
-    var overlays = {
-        "Public Lots for Sale": availableLotsPolys,
-        "Other Public Lots": unavailableLotsPolys
-    };
-    
-    
-    var layerPanel = L.control.layers(baselayers, overlays, {
-        collapsed: false
-    })
-
-    
-
-    $.getJSON('{% url available_lots_polys %}', function(data){
-        availableLotsPolys.addData(data.features).addTo(map);
+    $.getJSON('{% url available_lots %}?format=json', function(data){
+        availableLots.addData(data.features).addTo(map);
         $('#map-status').fadeOut('slow');
         map.fitBounds(polys.getBounds());
-    });
-    
-    $.getJSON('{% url unavailable_lots_polys %}', function(data){
-        unavailableLotsPolys.addData(data.features).addTo(map);
     });
     
     map.on('zoomend', onZoomend);
