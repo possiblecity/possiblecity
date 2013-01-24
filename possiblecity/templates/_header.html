@@ -20,6 +20,7 @@
                     <span>Blog</span>
                 </a>
             </li>
+            {% block nav_twitter %}
             <li id="nav-about">
                 <a href="{% url about %}">
                     <span>About</span>
@@ -30,6 +31,8 @@
                     <span>@PossibleCity</span>
                 </a>
             </li>
+            {% endblock nav_twitter %}
+            {% block nav_search %}{% endblock nav_search %}
         </ul>
      {% endblock section-nav  %}
      </nav>

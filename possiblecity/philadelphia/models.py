@@ -20,6 +20,10 @@ class Lot(USLotBase):
     has_vacancy_violation = models.BooleanField(default=False)
     has_vacancy_license = models.BooleanField(default=False)
 
+    landuse_id = models.IntegerField(blank=True, null=True)
+    listing_id = models.IntegerField(blank=True, null-True)
+    
+
     def _get_coordinates(self):
         # get coordinates from geom field
         return self.geom.centroid
@@ -41,7 +45,7 @@ class Lot(USLotBase):
         return has_feature(source, params)
 
     def _get_vacancy_status(self):
-       vacancy_flags = (self._get_vacancy_violation(),
+       vacancy_flags = (self._get_vacancy_violation(), self._get_landuse_vacancy(),
            self._get_vacancy_license(), self._get_availability())
        
        return any(v is True for v in vacancy_flags)
@@ -64,6 +68,26 @@ class Lot(USLotBase):
                 if dict["objectIds"]:
                     return dict["objectIds"][0]
     
+    def _get_landuse_id(self):
+        lon = self.coord.x
+        lat = self.coord.y
+        source = settings.PHL_DATA["LAND_USE"] + "query"
+        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                  "inSR":"4326", "spatialRel":"esriSpatialRelWithin", "returnIdsOnly":"true", "f":"json"}
+
+        dict =  fetch_json(source, params)
+        if not "error" in dict:
+            if "objectIds" in dict:
+                return dict["objectIds"][0]
+
+    def _get_landuse_vacancy(self):
+        data = self.landuse_data
+        if data:
+            if data["C_DIG3"] == 911:
+                return True
+            else:
+                return False
+
     def _get_availability(self):
         if self._get_listing_id():
             return True
@@ -88,8 +112,23 @@ class Lot(USLotBase):
         
         if not "error" in data:
             if "feature" in data:
-                return data['feature']['attributes']
+                return data["feature"]["attributes"]
 
+    @property
+    def landuse_data(self):
+        source = settings.PHL_DATA["LAND_USE"] + str(self._get_landuse_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if not "error" in data:
+            if "feature" in data:
+                return data["feature"]["attributes"]
+    
+    @property
+    def vacancy_status(self):
+        return self._get_vacancy_status()
+    
     def save(self, *args, **kwargs):
         if not self.pk:
             # These are all lots for Philadelphia, PA.
