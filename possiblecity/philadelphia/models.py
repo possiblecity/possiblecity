@@ -21,7 +21,7 @@ class Lot(USLotBase):
     has_vacancy_license = models.BooleanField(default=False)
 
     landuse_id = models.IntegerField(blank=True, null=True)
-    listing_id = models.IntegerField(blank=True, null-True)
+    listing_id = models.IntegerField(blank=True, null=True)
     
 
     def _get_coordinates(self):
@@ -69,16 +69,19 @@ class Lot(USLotBase):
                     return dict["objectIds"][0]
     
     def _get_landuse_id(self):
-        lon = self.coord.x
-        lat = self.coord.y
-        source = settings.PHL_DATA["LAND_USE"] + "query"
-        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
-                  "inSR":"4326", "spatialRel":"esriSpatialRelWithin", "returnIdsOnly":"true", "f":"json"}
+        if self.landuse_id:
+            return self.landuse_id
+        else:
+            lon = self.coord.x
+            lat = self.coord.y
+            source = settings.PHL_DATA["LAND_USE"] + "query"
+            params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                      "inSR":"4326", "spatialRel":"esriSpatialRelWithin", "returnIdsOnly":"true", "f":"json"}
 
-        dict =  fetch_json(source, params)
-        if not "error" in dict:
-            if "objectIds" in dict:
-                return dict["objectIds"][0]
+            dict =  fetch_json(source, params)
+            if not "error" in dict:
+                if "objectIds" in dict:
+                    return dict["objectIds"][0]
 
     def _get_landuse_vacancy(self):
         data = self.landuse_data
@@ -116,7 +119,8 @@ class Lot(USLotBase):
 
     @property
     def landuse_data(self):
-        source = settings.PHL_DATA["LAND_USE"] + str(self._get_landuse_id())
+        id = self._get_landuse_id()
+        source = settings.PHL_DATA["LAND_USE"] + str(id)
         params = {"f":"json"}
 
         data = fetch_json(source, params)
