@@ -3,6 +3,7 @@
 from vectorformats.Formats import Django, GeoJSON
 
 from django.contrib.gis.measure import D
+from django.contrib.gis.geos import Point
 from django.http import HttpResponse
 from django.views.generic.base import View, TemplateResponseMixinfrom django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin, BaseListView
@@ -143,23 +144,40 @@ class AddressSearchView(FormMixin, MultipleObjectMixin, HybridGeoResponseMixin, 
     """
     form_class = AddressForm
     distance = 400
+    default_origin = None
+
+    def get_queryset(self):
+        """
+        Get the list of items for this view. This must be an iterable, and may
+        be a queryset (in which qs-specific behavior will be enabled).
+        """
+        if self.queryset is not None: 
+            queryset = self.queryset
+            if hasattr(queryset, '_clone'):
+                queryset = queryset._clone()
+        elif self.model is not None:
+            queryset = self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured("'%s' must define 'queryset' or 'model'"
+                                        % self.__class__.__name__)
+        queryset = queryset.filter(coord__distance_lte=(self.default_origin, self.distance))
+        return queryset
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        return self.render_to_response(self.get_context_data(form=form))
-
+        object_list = self.get_queryset()
+        origin = self.default_origin
+        context = self.get_context_data(object_list=object_list, form=form, origin=origin)
+        return self.render_to_response(context) 
+        
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         if form.is_valid():
-            return self.form_valid(form)
+            origin = form.cleaned_data['address']
         else:
-            return self.form_invalid(form)    
-
-    def form_valid(self, form):
-        queryset = self.get_queryset()
-        origin = form.cleaned_data['address']
-        lot_list = queryset.filter(coord__distance_lte=(origin, self.distance))
-        context = self.get_context_data(lot_list=lot_list, form=form, origin=origin)
+            origin = self.default_origin
+        object_list = self.get_queryset().filter(coord__distance_lte=(origin, self.distance))
+        context = self.get_context_data(object_list=object_list, form=form, origin=origin)
         return self.render_to_response(context) 

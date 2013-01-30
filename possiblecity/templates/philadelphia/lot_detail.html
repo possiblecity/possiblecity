@@ -82,7 +82,7 @@
         style: polyStyle
     }).addTo(map);
     
-    $.getJSON('{% url geo_lot_detail lot.id %}', function(data){
+    $.getJSON('{% url "geo_lot_detail" lot.id %}', function(data){
           myLayer.addData(data);
           map.fitBounds(myLayer.getBounds());
           map.panBy([-300, -50]);

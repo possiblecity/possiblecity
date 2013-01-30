@@ -40,7 +40,7 @@
                  
     var availableLots = L.geoJson(null, {
                     onEachFeature: function(feature, layer) {
-                        url = '{% url lot_detail 0 %}'.replace (0, feature.properties.id);
+                        url = '{% url "lot_detail" 0 %}'.replace (0, feature.properties.id);
                         html = '<p><strong><a href="' + url + '">' 
                                + feature.properties.address 
                                + '</a></strong></p>'
@@ -61,7 +61,7 @@
     };
     
     
-    $.getJSON('{% url available_lots %}?format=json', function(data){
+    $.getJSON('{% url "available_lots" %}?format=json', function(data){
         availableLots.addData(data.features).addTo(map);
         $('#map-status').fadeOut('slow');
         map.fitBounds(polys.getBounds());

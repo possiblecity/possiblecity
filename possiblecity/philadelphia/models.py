@@ -19,6 +19,7 @@ class Lot(USLotBase):
     is_available = models.BooleanField(default=False)
     has_vacancy_violation = models.BooleanField(default=False)
     has_vacancy_license = models.BooleanField(default=False)
+    has_vacant_building = models.BooleanField(default=False)    
 
     landuse_id = models.IntegerField(blank=True, null=True)
     listing_id = models.IntegerField(blank=True, null=True)
@@ -81,7 +82,8 @@ class Lot(USLotBase):
             dict =  fetch_json(source, params)
             if not "error" in dict:
                 if "objectIds" in dict:
-                    return dict["objectIds"][0]
+                    if dict["objectIds"]:
+                        return dict["objectIds"][0]
 
     def _get_landuse_vacancy(self):
         data = self.landuse_data

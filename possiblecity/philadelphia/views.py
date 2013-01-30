@@ -51,9 +51,14 @@ class AvailableVacantLotListView(LotListView):
 
 
 class LotsNearAddress(AddressSearchView):
-    queryset = Lot.objects.filter(is_vacant=True)
+    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
     template_name = 'philadelphia/search.html'
-    distance = 800
+    geo_field = "geom"
+    properties = ['address', 'id', 'is_public', 'is_available', 'is_vacant',
+                  'has_vacancy_license', 'has_vacancy_violation', 'has_vacant_building']
+    distance = 400
+    default_origin = Point(-75.163894, 39.952247)
+    
 
 
 
