@@ -1,6 +1,6 @@
 # philadelphia/views.py
 
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, Polygon
 from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 from django.http import HttpResponse
@@ -16,7 +16,7 @@ from .models import Lot
 
 class LotDetailView(DetailView):
     """
-    Retreive a lot
+    Retrieve a lot
     """
     model = Lot
     
@@ -34,7 +34,7 @@ class LotDetailView(DetailView):
 class LotDetailMapView(GeoDetailView):
     model = Lot
     geo_field = "geom"
-
+    
 class LotListView(HybridListView):
     """
     Return all lot objects
@@ -49,6 +49,11 @@ class AvailableVacantLotListView(LotListView):
     """
     queryset = Lot.objects.filter(is_vacant=True, is_available=True, is_visible=True)
 
+class VacantLotListView(LotListView):
+    """
+    Return all vacant lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
 
 class LotsNearAddress(AddressSearchView):
     queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
@@ -58,14 +63,21 @@ class LotsNearAddress(AddressSearchView):
                   'has_vacancy_license', 'has_vacancy_violation', 'has_vacant_building']
     distance = 400
     default_origin = Point(-75.163894, 39.952247)
+
+class BoundingBoxMixin(object):
+    bounds = None
+    def get_queryset(self):
+        bbox = self.request.GET.get('bbox')
+        bbox = tuple(bbox.split(","))
+        bounds = Polygon.from_bbox(bbox)
+	    # Fetch the queryset from the parent's get_queryset
+        queryset = super(BoundingBoxMixin, self).get_queryset()
+        # return a filtered queryset
+        return queryset.filter(coord__within=bounds)
+
+class BoundingBoxVacantLotSearch(BoundingBoxMixin, VacantLotListView):
+    template_name = 'philadelphia/locate.html'
     
-
-
-
-
-
-
-
 
 
 

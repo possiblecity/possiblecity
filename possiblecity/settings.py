@@ -297,6 +297,9 @@ PHILEO_LIKABLE_MODELS = {
 
 PHL_DATA = {
     "ADDRESSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Addresses/MapServer/0/",
+    "ADDRESS_API": "http://api.phillyaddress.com/address/",
+    "BLOCK_API": "http://api.phillyaddress.com/block/",
+    "INTERSECTION_API": "http://api.phillyaddress.com/intersection/",
     "LAND_USE": "http://gis.phila.gov/ArcGIS/rest/services/PhilaOIT-GIS_Boundaries/MapServer/11/",
     "PAPL": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/",
     "PAPL_LISTINGS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/0/",

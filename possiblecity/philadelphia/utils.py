@@ -64,3 +64,8 @@ def check_landuse_vacancy():
             lot.save(update_fields=["landuse_id", "has_vacant_building"])
             print("%s: %s id updated" % (lot.id, lot.address))
         
+def get_form_kwargs(self):
+    kwargs = {'initial': self.get_initial()} 
+    if self.request.GET: 
+        kwargs['data'] = self.request.GET 
+    return kwargs

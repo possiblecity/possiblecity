@@ -132,6 +132,19 @@ class Lot(USLotBase):
                 return data["feature"]["attributes"]
     
     @property
+    def address_data(self):
+        address = self.address.replace (" ", "+")
+        source = settings.PHL_DATA["ADDRESS_API"] + address
+        params = {}
+
+        data = fetch_json(source, params)
+
+        if not "error" in data:
+            if "property" in data:
+                return data["property"]
+    
+
+    @property
     def vacancy_status(self):
         return self._get_vacancy_status()
     
