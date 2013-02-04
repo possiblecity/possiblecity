@@ -8,6 +8,23 @@ from possiblecity.lotxlot.views import *
 from possiblecity.lotxlot.utils import fetch_json
 from possiblecity.philadelphia.models import Lot
 
+class LotDetailView(DetailView):
+    """
+    Retreive a lot
+    """
+    model = Lot
+    
+    def get_object(self):
+        # Call the superclass
+        object = super(LotDetailView, self).get_object()
+        # refresh data sources
+        object.update_availability()
+        object.update_public_status()
+        #object.update_vacancy_status()
+        object.save()
+        # Return the object
+        return object
+
 # ajax views
 class LotDetailMapView(GeoDetailView):
     model = Lot
