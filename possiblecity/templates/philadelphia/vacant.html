@@ -36,20 +36,13 @@
     var phlBounds = new L.LatLngBounds(southWest, northEast);
 
     map.locate();
+    //var denver = new L.LatLng(39.74154151936245, -104.99968229904174);
+
     map.setView(philadelphia, 16);
     
-    function onLocationFound(e) {
-        if (phlBounds.contains(e.latlng)) {
-           center = e.latlng
-        } else {
-           center = philadelphia
-        }
-        map.setView(center, 16);
-        L.marker(center).addTo(map);
-        bounds = map.getBounds().toBBoxString();
-        var lotLayer = new lvector.Custom({
+    var lotLayer = new lvector.Custom({
             url: "{% url 'api_lots_vacant' %}",
-            scaleRange: [16, 21],
+            scaleRange: [14, 21],
             showAll: false,
             popupTemplate: "<h3>Lot</h3>",
             symbology: {
@@ -62,8 +55,19 @@
                     strokeOpacity: 1
                 }
             }              
-        });
+    });
+    
+    function onLocationFound(e) {
+        if (phlBounds.contains(e.latlng)) {
+           center = e.latlng
+        } else {
+           center = philadelphia
+        }
+        map.setView(center, 16);
+        L.marker(center).addTo(map);
+        bounds = map.getBounds().toBBoxString();
         alert(bounds);
+        lotLayer.setMap(map);
     }
 
     map.on('locationfound', onLocationFound);
