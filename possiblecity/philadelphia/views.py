@@ -3,6 +3,7 @@
 from django.contrib.gis.geos import Point, Polygon
 from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -35,25 +36,67 @@ class LotDetailMapView(GeoDetailView):
     model = Lot
     geo_field = "geom"
     
-class LotListView(HybridListView):
+class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     """
     Return all lot objects
     """
     model = Lot
     geo_field = "geom"
-    properties = ['address', 'id', 'is_public']
+    properties = ['address', 'id', 'is_public', 'is_available']
    
-class AvailableVacantLotListView(LotListView):
+class VacantLotListApiView(LotListApiView):
+    """
+    Return all vacant lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
+
+class VacantUnavailableLotListApiView(LotListApiView):
+    """
+    Return all lots not for sale
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=False)
+                 
+class VacantAvailableLotListApiView(LotListApiView):
+    """
+    Return all vacant lots for sale
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=True)
+class PublicVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant and public lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_visible=True)
+
+class PublicAvailableVacantLotListApiView(LotListApiView):
     """
     Return all vacant and available lot objects
     """
     queryset = Lot.objects.filter(is_vacant=True, is_available=True, is_visible=True)
 
-class VacantLotListView(LotListView):
+class PublicUnavailableVacantLotListApiView(LotListApiView):
     """
-    Return all vacant lot objects
+    Return all vacant and public lot objects
     """
-    queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
+    queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_available=False, is_visible=True)
+
+class PrivateUnverifiedVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant lots that are not public, 
+    and do not have a vacancy violation or vacancy license
+    """
+    queryset = Lot.objects.filter(is_visible=True, is_vacant=True,
+                                  is_public=False, has_vacancy_license=False,
+                                  has_vacancy_violation=False)
+
+class PrivateVerifiedVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant lots that are private and have a vacancy license 
+    or a vacancy violation
+    """
+    queryset = Lot.objects.filter(is_visible=True, is_public=False)\
+                          .filter(Q(has_vacancy_violation=True) | Q(has_vacancy_license=True))
+   
+    
 
 class LotsNearAddress(AddressSearchView):
     queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
@@ -64,20 +107,7 @@ class LotsNearAddress(AddressSearchView):
     distance = 400
     default_origin = Point(-75.163894, 39.952247)
 
-class BoundingBoxMixin(object):
-    bounds = None
-    def get_queryset(self):
-        bbox = self.request.GET.get('bbox')
-        bbox = tuple(bbox.split(","))
-        bounds = Polygon.from_bbox(bbox)
-	    # Fetch the queryset from the parent's get_queryset
-        queryset = super(BoundingBoxMixin, self).get_queryset()
-        # return a filtered queryset
-        return queryset.filter(coord__within=bounds)
 
-class BoundingBoxVacantLotSearch(BoundingBoxMixin, VacantLotListView):
-    template_name = 'philadelphia/locate.html'
-    
 
 
 

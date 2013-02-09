@@ -3,7 +3,7 @@
 from vectorformats.Formats import Django, GeoJSON
 
 from django.contrib.gis.measure import D
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, Polygon
 from django.http import HttpResponse
 from django.views.generic.base import View, TemplateResponseMixinfrom django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin, BaseListView
@@ -21,11 +21,14 @@ class GeoResponseMixin(object):
     geo_field = "geom" # default value for the geometry field
     properties = [] # additional properties to add to result
 
-    def render_to_response(self, context):
+    def encode_queryset(self):
         qs = self.get_queryset()
         djf = Django.Django(geodjango=self.geo_field, properties=self.properties)
         geoj = GeoJSON.GeoJSON()
-        output = geoj.encode(djf.decode(qs))
+        return geoj.encode(djf.decode(qs))
+
+    def render_to_response(self, context):
+        output = self.encode_queryset()
         return HttpResponse(output, content_type='application/json')
 
 class HybridGeoResponseMixin(GeoResponseMixin, TemplateResponseMixin):
@@ -40,25 +43,27 @@ class HybridGeoResponseMixin(GeoResponseMixin, TemplateResponseMixin):
         else:
             return TemplateResponseMixin.render_to_response(self, context) 
 
-### query filter mixins
-class VacantMixin(object):
-    """ 
-    Filter for objects marked as vacant
-    """
-    def get_queryset(self):        # Fetch the queryset from the parent's get_queryset        queryset = super(VacantMixin, self).get_queryset()        # return a filtered queryset        return queryset.filter(is_vacant=True)
-
-class PublicMixin(object):    
-    """
-    Filter for objects marked as public
-    """
-    def get_queryset(self):        # Fetch the queryset from the parent's get_queryset        queryset = super(VacantMixin, self).get_queryset()        # return a filtered queryset        return queryset.filter(is_public=True)
-
-class VacantPublicMixin(object):
-    """
-    Filter for objects marked as vacant and pubic
-    """
+class BBoxMixin(object):
+    bounds = None
     def get_queryset(self):
-        # Fetch the queryset from the parent's get_queryset        queryset = super(VacantMixin, self).get_queryset()        # return a filtered queryset        return queryset.filter(is_vacant=True).filter(is_public=True)class LocationSearchMixin(object):
+        queryset = super(BBoxMixin, self).get_queryset()
+        if self.request.GET.get('bbox'):      
+            bbox = self.request.GET.get('bbox')
+            bbox = tuple(bbox.split(","))
+            bounds = Polygon.from_bbox(bbox)
+            # return a filtered queryset
+            queryset = queryset.filter(coord__within=bounds)
+        return queryset
+
+class CallbackMixin(object):
+    def encode_queryset(self):
+        callback = self.request.GET.get('callback')
+        output = super(CallbackMixin, self).encode_queryset()
+        if callback:
+            output = callback + '(' + output + ');'
+        return output
+
+class LocationSearchMixin(object):
     """
     A mixin that will filter a queryset based on each objects distance from a given origin.
     """
@@ -75,8 +80,12 @@ class VacantPublicMixin(object):
             raise ImproperlyConfigured("You must supply an origin point for your search.") 
         else:
             # build the filter parameters
-            filter = point_field + '__' + search_type            # Fetch the queryset from the parent's get_queryset            queryset = super(LocationSearchView, self).get_queryset()            # return a filtered queryset            return queryset.filter(**{ filter: (origin, distance)})
-    
+            filter = point_field + '__' + search_type           
+            # Fetch the queryset from the parent's get_queryset
+            queryset = super(LocationSearchView, self).get_queryset() 
+            # return a filtered queryset           
+            return queryset.filter(**{ filter: (origin, distance)})
+
 ##### GENERIC AJAX VIEWS
 class GeoListView(GeoResponseMixin, BaseListView):
     """

@@ -7,24 +7,19 @@ from django.views.generic import TemplateView
 from possiblecity.philadelphia.views import *
  
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='philadelphia/public.html'), 
+    url(r'^$', TemplateView.as_view(template_name='philadelphia/vacant.html'), 
         name='lotxlot'),
 
-	url(r'^api/v1/lots/vacant/$', BoundingBoxVacantLotSearch.as_view(), name="api_lots_vacant"),
+    url(r'^lot/(?P<pk>\d+)/$', LotDetailView.as_view(), name='lot_detail'),
 
-    url(r'^lots/vacant/$', TemplateView.as_view(template_name='philadelphia/vacant.html'), 
-        name='lots_vacant'),
+    url(r'^api/v1/lots/vacant/$', VacantLotListApiView.as_view(), name="api_lots_vacant"),
+    url(r'^api/v1/lots/vacant/available/$', VacantAvailableLotListApiView.as_view(), name="api_lots_vacant_available"),
+    url(r'^api/v1/lots/vacant/unavailable/$', VacantUnavailableLotListApiView.as_view(), name="api_lots_vacant_unavailable"),
+    url(r'^api/v1/lots/vacant/public/$', PublicVacantLotListApiView.as_view(), name="api_lots_vacant_public"),
+    url(r'^api/v1/lots/vacant/public/available/$', PublicAvailableVacantLotListApiView.as_view(), name="api_lots_vacant_public_available"),
+    #url(r'^api/v1/lots/vacant/private/verified/$', PrivateVerifiedVacantLotListApiView.as_view(), name="api_lots_vacant_private_verified"),
+    #url(r'^api/v1/lots/vacant/private/unverified/$', PrivateUnverifiedLotListApiView.as_view(), name="api_lots_vacant_private_unverified"),
 
-    url(r'^locate/$', TemplateView.as_view(template_name='philadelphia/locate.html'), 
-        name='locate'),
-
-    url(r'^search/$', LotsNearAddress.as_view(), name='search'),
-
-	url(r'^lot/(?P<pk>\d+)/$', LotDetailView.as_view(), name='lot_detail'),
-
-    url(r'^geo/lots/lot/(?P<pk>\d+)/$', LotDetailMapView.as_view(), name='geo_lot_detail'),  
-  
-    url(r'^vacant/available/$', cache_page(AvailableVacantLotListView.as_view(),60*60), 
-        name='available_lots'),
-    
+    url(r'^api/v1/lots/lot/(?P<pk>\d+)/$', LotDetailMapView.as_view(), name='api_lot_detail'),  
+      
 )
