@@ -183,16 +183,10 @@ INSTALLED_APPS = (
     "redactor", # wysiwyg editing
     "taggit", # tagging
 
-    #"floppyforms", # form rendering
-    #"account", # registration
-    #"metron", # analytics
-    #"phileo", # liking
-    #"tastypie", # api generation
 
     # local apps
     "possiblecity.core",
     "possiblecity.text",
-    #"possiblecity.profiles",
     "possiblecity.float",
     "possiblecity.lotxlot",
     "possiblecity.philadelphia",
@@ -243,15 +237,12 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # Search
 #==============================================================================
 
-# django-haystack
-#HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
 
 #==============================================================================
 # Notifications
 #==============================================================================
 
-#NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 #==============================================================================
 # Analytics
@@ -277,16 +268,6 @@ COMPRESS_PRECOMPILERS = (
 # Other 3rd Party Apps
 #==============================================================================
 
-PHILEO_LIKABLE_MODELS = {
-    "profiles.Profile": {
-        "css_class_on": "icon-heart",
-        "css_class_off": "icon-heart-empty",
-        "like_text_on": "Unfollow",
-        "like_text_off": "Follow",
-        "count_text_singular": "follower",
-        "count_text_plural": "followers"
-    },
-}
 
 
 #==============================================================================
