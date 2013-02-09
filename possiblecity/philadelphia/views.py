@@ -61,11 +61,18 @@ class VacantAvailableLotListApiView(LotListApiView):
     Return all vacant lots for sale
     """
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=True)
+
 class PublicVacantLotListApiView(LotListApiView):
     """
     Return all vacant and public lot objects
     """
     queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_visible=True)
+
+class PrivateVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant and public lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_public=False, is_visible=True)
 
 class PublicAvailableVacantLotListApiView(LotListApiView):
     """

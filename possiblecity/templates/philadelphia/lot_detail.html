@@ -65,8 +65,8 @@
     
     var lotStyle = {
         "fillColor":"#e8db00",
-        "fillOpacity": 0.2,
-        "opacity": 1.0,
+        "fillOpacity": 0.0,
+        "opacity": 0.0,
         "weight": 4,
         "color":"#e8db00",
         "dashArray": "4 2"
@@ -83,10 +83,10 @@
           map.setView(center, 18);
           L.marker(center).addTo(map);
           map.panBy([-150, -50]);
+          lotLayer.setMap(map);
     });
 
     var lotLayer = new lvector.Custom({
-            map: map,
             url: "{% url 'api_lots_vacant' %}",
             scaleRange: [16, 22],
             showAll: false,
@@ -108,21 +108,30 @@
                     {
                         value: false,
                         vectorOptions: {
-                             fillColor: "#e8db00",
-                             fillOpacity: 0,
-                             weight: 1,
-                             color: "#e8db00",
-                             opacity: 1,
-                             dasharray: "4,2"
+                             fillColor: "#86f1ff",
+                             fillOpacity: 0.2,
+                             weight: 2,
+                             color: "#86f1ff",
+                             opacity: 1
                         }
                     }
                  ]
             },
-
             popupTemplate: function(properties) {
-                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id)
+                if (properties.is_public == true) {
+                    ownership = 'Public';
+                } else {
+                    ownership = 'Private';
+                }
+                if (properties.is_available == true) {
+                    availability = 'For Sale';
+                } else {
+                    availabilty = 'Unknown';
+                }
+                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id);
                 html = '<h3>' + properties.address +'</h3>' +
-                           '<p>' + properties.is_public + '</p>' +
+                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
+                           'Availability: <strong>' + availabilty + '</strong></p>' +
                            '<p><a href="' + url +'" class="button">View</a>'
                 return html;
             }

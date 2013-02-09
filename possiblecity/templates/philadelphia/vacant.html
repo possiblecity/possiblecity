@@ -7,7 +7,7 @@
         Loading Map Features...
     </div>
     <div id="map-message" class="status" style="display:none">
-        Showing only public vacant lots. Zoom in to see all.
+        <nobr>Showing only public vacant lots.</nobr><br /> Zoom in to see all.
     </div>
 </div>
 {% endblock layout %}
@@ -41,72 +41,79 @@
     var satellite = new L.BingLayer("Anqm0F_JjIZvT0P3abS6KONpaBaKuTnITRrnYuiJCE0WOhH6ZbE4DzeT6brvKVR5");
     
     map.locate();
-    
-    var unavailableLots = new lvector.Custom({
-            url: "{% url 'api_lots_vacant_unavailable' %}",
-            scaleRange: [16, 22],
-            showAll: false,
-            singlePopup: true,
-            symbology: {
-                type: "unique",
-                property: "is_public",
-                values: [
-                    {
-                        value: true,
-                        vectorOptions: {
-                             fillColor: "#e8db00",
-                             fillOpacity: 0.2,
-                             weight: 2,
-                             color: "#e8db00",
-                             opacity: 1
-                        }
-                    },
-                    {
-                        value: false,
-                        vectorOptions: {
-                             fillColor: "#e8db00",
-                             fillOpacity: 0,
-                             weight: 1,
-                             color: "#e8db00",
-                             opacity: 1,
-                             dasharray: "4,2"
-                        }
-                    }
-                 ]
-            },
 
-            popupTemplate: function(properties) {
-                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id)
-                html = '<h3>' + properties.address +'</h3>' +
-                           '<p>' + properties.is_public + '</p>' +
-                           '<p><a href="' + url +'" class="button">View</a>'
-                return html;
-            }
-    });
-    
-       var availableLots = new lvector.Custom({
-            url: "{% url 'api_lots_vacant_available' %}",
+    var availableLots = new lvector.Custom({
+            url: "{% url 'api_lots_vacant_public' %}",            
             scaleRange: [10, 22],
             showAll: true,
             singlePopup: true,
             symbology: {
                 type: "single",
                 vectorOptions: {
-                    fillColor: "#e8db00",
+                    fillColor: "#e8eb00",
                     fillOpacity: 0.2,
-                    weight: 2,
-                    color: "#e8db00",
+                    weight: 2,             
+                    color: "#e8eb00",
                     opacity: 1
                 }
              },
              popupTemplate: function(properties) {
-                url = '{% url "lot_detail" 0 %}'.replace (0, properties);
+                if (properties.is_public == true) {
+                    ownership = 'Public';
+                } else {
+                    ownership = 'Private';
+                }
+                if (properties.is_available == true) {
+                    availability = 'For Sale';
+                } else {
+                    availabilty = 'Unknown';
+                }
+                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id);
                 html = '<h3>' + properties.address +'</h3>' +
-                           '<p>' + properties.is_public + '</p>' +
+                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
+                           'Availability: <strong>' + availabilty + '</strong></p>' +
                            '<p><a href="' + url +'" class="button">View</a>'
                 return html;
             }
     });
+    
+    var unavailableLots = new lvector.Custom({
+            url: "{% url 'api_lots_vacant_private' %}",
+            scaleRange: [16, 22],
+            showAll: false,
+            singlePopup: true,
+            symbology: {
+                type: "single",
+                vectorOptions: {
+                    fillColor: "#86f1ff",
+                    fillOpacity: 0.2,
+                    weight: 2,
+                    color: "#86f1ff",
+                    opacity: 1
+                }
+            },
+
+            popupTemplate: function(properties) {
+                if (properties.is_public == true) {
+                    ownership = 'Public';
+                } else {
+                    ownership = 'Private';
+                }
+                if (properties.is_available == true) {
+                    availability = 'For Sale';
+                } else {
+                    availabilty = 'Unknown';
+                }
+                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id);
+                html = '<h3>' + properties.address +'</h3>' +
+                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
+                           'Availability: <strong>' + availabilty + '</strong></p>' +
+                           '<p><a href="' + url +'" class="button">View</a>'
+                return html;
+            }
+    });
+    
+       
 
 
     function onLocationFound(e) {
