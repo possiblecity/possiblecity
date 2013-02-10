@@ -3,6 +3,7 @@ pillow
 psycopg2
 requests
 vectorformats
+geopy
 
 Django==1.4.1
 

@@ -13,7 +13,8 @@ from possiblecity.lotxlot.views import *
 from possiblecity.lotxlot.forms import AddressForm
 from possiblecity.lotxlot.utils import fetch_json
 
-<<<<<<< HEAD
+from models import Lot
+
 class LotDetailView(DetailView):
     """
     Retreive a lot
@@ -35,9 +36,6 @@ class LotDetailView(DetailView):
 class LotDetailMapView(GeoDetailView):
     model = Lot
     geo_field = "geom"
-=======
-from .models import Lot
->>>>>>> f032389d750ad2ea3bbd7400b5d3a33c70f7a61c
 
 class LotDetailView(DetailView):
     """
@@ -55,10 +53,6 @@ class LotDetailView(DetailView):
         object.save()
         # Return the object
         return object
-
-class LotDetailMapView(GeoDetailView):
-    model = Lot
-    geo_field = "geom"
     
 class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     """
