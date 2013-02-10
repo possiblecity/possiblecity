@@ -27,7 +27,8 @@
     var map = L.map('map', {
           maxZoom: 22,
           minZoom: 10,
-          maxBounds: phlBounds
+          maxBounds: phlBounds,
+          center: philadelphia
     });
     
     // Prep the background tile layer
@@ -157,7 +158,10 @@
        function onLocationError(e) {
            center = philadelphia;
            html = '<h3>Welcome to lotxlot!</h3>We are not able to find your location, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>';
+           map.setView(center, 16);
            L.marker(center).addTo(map).bindPopup(html).openPopup();
+           unavailableLots.setMap(map);
+           availableLots.setMap(map);
        }
 
     map.on('locationfound', onLocationFound);
