@@ -27,6 +27,11 @@
             <a class="button" href="http://secure.phila.gov/PAPLPublicWeb/AddAsset.aspx?AssetID={{ lot.papl_data.ASSET_ID }}">Express Interest</a>
             <p class="note">The button above will take you to the City of Philadelphia's website, where you can express interest in purchasing the lot.</p>
             {% endif %}
+            <p class="note">Data error? 
+	            <a style="padding-left:0; margin-left:0; font-weight:bold; text-decoration:underline; href="mailto:info@thepossiblecity.com?subject={{ lot.address }}-{{ lot.id }}">
+		            Let us know
+		       </a>
+	        </p>
         </section>
     </article>
 </div>
