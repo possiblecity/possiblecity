@@ -8,6 +8,9 @@ from django.db.models import permalink
 from django.contrib.localflavor.us.models import USStateField
 from django.template.defaultfilters import slugify
 
+from possiblecity.core.managers import CustomQuerySetGeoManager
+from .managers import LotQuerySet
+
 class LotBase(models.Model):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
@@ -21,9 +24,11 @@ class LotBase(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     # spatial fields
-    coord = models.PointField(blank=True, null=True)
+    coord = models.PointField(srid=4326, blank=True, null=True)
     geom = models.MultiPolygonField(srid=4326)
 
+    objects = CustomQuerySetGeoManager(LotQuerySet)
+    
     class Meta:
         abstract = True
 

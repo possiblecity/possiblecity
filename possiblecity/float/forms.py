@@ -1,6 +1,6 @@
 from django import forms
 
-from possiblecity.float.models import Project, ProjectImage
+from .models import Project, ProjectImage
 
 class ProjectForm(forms.ModelForm):
     class Meta:

@@ -175,11 +175,6 @@ INSTALLED_APPS = (
     "django.contrib.humanize",
     "django.contrib.gis",
 
-    # theme
-    #"pinax_theme_bootstrap_account",
-    #"pinax_theme_bootstrap",
-    #"django_forms_bootstrap",
-
     # third party apps
     "south", # database migrations
     "compressor", # static file optimization
@@ -188,17 +183,11 @@ INSTALLED_APPS = (
     "redactor", # wysiwyg editing
     "taggit", # tagging
 
-    #"floppyforms", # form rendering
-    #"account", # registration
-    #"metron", # analytics
-    #"phileo", # liking
-    #"tastypie", # api generation
 
     # local apps
-    "possiblecity.templatetags",
+    "possiblecity.core",
     "possiblecity.text",
-    #"possiblecity.profiles",
-    #"possiblecity.float",
+    "possiblecity.float",
     "possiblecity.lotxlot",
     "possiblecity.philadelphia",
 )
@@ -207,7 +196,7 @@ INSTALLED_APPS = (
 # Logging
 #==============================================================================
 
-
+ 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
@@ -248,15 +237,12 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # Search
 #==============================================================================
 
-# django-haystack
-#HAYSTACK_SITECONF = 'possiblecity.search_sites'
 
 
 #==============================================================================
 # Notifications
 #==============================================================================
 
-#NOTIFICATION_LANGUAGE_MODULE = "account.Account"
 
 #==============================================================================
 # Analytics
@@ -282,16 +268,6 @@ COMPRESS_PRECOMPILERS = (
 # Other 3rd Party Apps
 #==============================================================================
 
-PHILEO_LIKABLE_MODELS = {
-    "profiles.Profile": {
-        "css_class_on": "icon-heart",
-        "css_class_off": "icon-heart-empty",
-        "like_text_on": "Unfollow",
-        "like_text_off": "Follow",
-        "count_text_singular": "follower",
-        "count_text_plural": "followers"
-    },
-}
 
 
 #==============================================================================
@@ -302,6 +278,10 @@ PHILEO_LIKABLE_MODELS = {
 
 PHL_DATA = {
     "ADDRESSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Addresses/MapServer/0/",
+    "ADDRESS_API": "http://api.phillyaddress.com/address/",
+    "BLOCK_API": "http://api.phillyaddress.com/block/",
+    "INTERSECTION_API": "http://api.phillyaddress.com/intersection/",
+    "LAND_USE": "http://gis.phila.gov/ArcGIS/rest/services/PhilaOIT-GIS_Boundaries/MapServer/11/",
     "PAPL": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/",
     "PAPL_LISTINGS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/0/",
     "PAPL_ASSETS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/",

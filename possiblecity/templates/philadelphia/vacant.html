@@ -1,0 +1,169 @@
+{% extends "philadelphia/base.html" %}
+{% block layout %}
+<div class="page-content">
+	<div id="map" style="position:absolute; width:100%; height:100%">
+    </div>
+    <div id="map-status" class="status" style="display:none">
+        Loading Map Features...
+    </div>
+    <div id="map-message" class="status" style="display:none">
+        <nobr>Showing only public vacant lots.</nobr><br /> Zoom in to see all.
+    </div>
+</div>
+{% endblock layout %}
+{% block js_local %}
+<script src="{{ STATIC_URL }}js/libs/lvector/lvector.js"></script>
+<script src="{{ STATIC_URL }}js/libs/lvector/Custom.js"></script>
+<script src="{{ STATIC_URL }}js/libs/leaflet-plugins/layer/tile/Bing.js"></script>
+<script>
+   
+    var philadelphia = new L.LatLng(39.9522, -75.1642);
+    var southWest = new L.LatLng(39.87, -75.28);
+    var northEast = new L.LatLng(40.14, -74.96);
+    var phlBounds = new L.LatLngBounds(southWest, northEast);
+
+
+    // Initialize the map object
+    var map = L.map('map', {
+          maxZoom: 22,
+          minZoom: 10,
+          maxBounds: phlBounds
+    });
+    
+    // Prep the background tile layer
+    var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-sued82zn/{z}/{x}/{y}.png';
+    var tileAttribution = '';
+    
+    var streets = L.tileLayer(tileUrl, {
+       attribution: tileAttribution,
+    }).addTo(map);
+
+    var satellite = new L.BingLayer("Anqm0F_JjIZvT0P3abS6KONpaBaKuTnITRrnYuiJCE0WOhH6ZbE4DzeT6brvKVR5");
+    
+    map.locate();
+
+    var availableLots = new lvector.Custom({
+            url: "{% url 'api_lots_vacant_public' %}",            
+            scaleRange: [10, 22],
+            showAll: true,
+            singlePopup: true,
+            symbology: {
+                type: "single",
+                vectorOptions: {
+                    fillColor: "#e8eb00",
+                    fillOpacity: 0.2,
+                    weight: 2,             
+                    color: "#e8eb00",
+                    opacity: 1
+                }
+             },
+             popupTemplate: function(properties) {
+                if (properties.is_public == true) {
+                    ownership = 'Public';
+                } else {
+                    ownership = 'Private';
+                }
+                if (properties.is_available == true) {
+                    availability = 'For Sale';
+                } else {
+                    availabilty = 'Unknown';
+                }
+                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id);
+                html = '<h3>' + properties.address +'</h3>' +
+                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
+                           'Availability: <strong>' + availabilty + '</strong></p>' +
+                           '<p><a href="' + url +'" class="button">View</a>'
+                return html;
+            }
+    });
+    
+    var unavailableLots = new lvector.Custom({
+            url: "{% url 'api_lots_vacant_private' %}",
+            scaleRange: [16, 22],
+            showAll: false,
+            singlePopup: true,
+            symbology: {
+                type: "single",
+                vectorOptions: {
+                    fillColor: "#86f1ff",
+                    fillOpacity: 0.2,
+                    weight: 2,
+                    color: "#86f1ff",
+                    opacity: 1
+                }
+            },
+
+            popupTemplate: function(properties) {
+                if (properties.is_public == true) {
+                    ownership = 'Public';
+                } else {
+                    ownership = 'Private';
+                }
+                if (properties.is_available == true) {
+                    availability = 'For Sale';
+                } else {
+                    availabilty = 'Unknown';
+                }
+                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id);
+                html = '<h3>' + properties.address +'</h3>' +
+                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
+                           'Availability: <strong>' + availabilty + '</strong></p>' +
+                           '<p><a href="' + url +'" class="button">View</a>'
+                return html;
+            }
+    });
+    
+       
+
+
+    function onLocationFound(e) {
+        if (phlBounds.contains(e.latlng)) {
+           center = e.latlng
+           html = '<h3>Welcome to lotxlot!</h3>We think you are somewhere near here, so you can explore vacant lots starting with the ones near you. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>.';
+        } else {
+           center = philadelphia
+           html = '<h3>Welcome to lotxlot!</h3>Looks like you are outside of Philadelphia, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>.';
+        }
+        map.setView(center, 16);
+        L.marker(center).addTo(map).bindPopup(html).openPopup();
+
+        unavailableLots.setMap(map);
+        availableLots.setMap(map);
+        
+    }
+
+
+    function onZoomend(){
+       if (map.getZoom()>=17) {
+           map.removeLayer(streets);
+           map.addLayer(satellite);
+       };
+
+       if(map.getZoom()<17){
+           map.removeLayer(satellite);
+           map.addLayer(streets);
+       };
+
+       if (map.getZoom()<16) {
+           $('#map-message').fadeIn('slow');
+       }
+
+       if (map.getZoom()>=16) {
+           $('#map-message').fadeOut('slow');
+       }
+
+    }
+
+       function onLocationError(e) {
+           center = philadelphia;
+           html = '<h3>Welcome to lotxlot!</h3>We are not able to find your location, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>';
+           L.marker(center).addTo(map).bindPopup(html).openPopup();
+       }
+
+    map.on('locationfound', onLocationFound);
+    map.on('zoomend', onZoomend);
+    map.on('locationerror', onLocationError); 
+
+
+</script>
+{% endblock js_local %}

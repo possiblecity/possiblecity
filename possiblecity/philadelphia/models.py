@@ -6,16 +6,24 @@ from django.db.models.signals import post_save
 
 from possiblecity.lotxlot.utils import fetch_json, has_feature
 from possiblecity.lotxlot.models import USLotBase
+from possiblecity.float.models import Project
 
 class Lot(USLotBase):
     # spatial queryset manager
-    objects = models.GeoManager()
+    #objects = models.GeoManager()
      
     parcel = models.OneToOneField("Parcel")
+
+    projects = models.ManyToManyField(Project, blank=True, null=True)
 
     is_available = models.BooleanField(default=False)
     has_vacancy_violation = models.BooleanField(default=False)
     has_vacancy_license = models.BooleanField(default=False)
+    has_vacant_building = models.BooleanField(default=False)    
+
+    landuse_id = models.IntegerField(blank=True, null=True)
+    listing_id = models.IntegerField(blank=True, null=True)
+    
 
     def _get_coordinates(self):
         # get coordinates from geom field
@@ -38,7 +46,7 @@ class Lot(USLotBase):
         return has_feature(source, params)
 
     def _get_vacancy_status(self):
-       vacancy_flags = (self._get_vacancy_violation(),
+       vacancy_flags = (self._get_vacancy_violation(), self._get_landuse_vacancy(),
            self._get_vacancy_license(), self._get_availability())
        
        return any(v is True for v in vacancy_flags)
@@ -61,6 +69,30 @@ class Lot(USLotBase):
                 if dict["objectIds"]:
                     return dict["objectIds"][0]
     
+    def _get_landuse_id(self):
+        if self.landuse_id:
+            return self.landuse_id
+        else:
+            lon = self.coord.x
+            lat = self.coord.y
+            source = settings.PHL_DATA["LAND_USE"] + "query"
+            params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                      "inSR":"4326", "spatialRel":"esriSpatialRelWithin", "returnIdsOnly":"true", "f":"json"}
+
+            dict =  fetch_json(source, params)
+            if not "error" in dict:
+                if "objectIds" in dict:
+                    if dict["objectIds"]:
+                        return dict["objectIds"][0]
+
+    def _get_landuse_vacancy(self):
+        data = self.landuse_data
+        if data:
+            if data["C_DIG3"] == 911:
+                return True
+            else:
+                return False
+
     def _get_availability(self):
         if self._get_listing_id():
             return True
@@ -85,8 +117,37 @@ class Lot(USLotBase):
         
         if not "error" in data:
             if "feature" in data:
-                return data['feature']['attributes']
+                return data["feature"]["attributes"]
 
+    @property
+    def landuse_data(self):
+        id = self._get_landuse_id()
+        source = settings.PHL_DATA["LAND_USE"] + str(id)
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if not "error" in data:
+            if "feature" in data:
+                return data["feature"]["attributes"]
+    
+    @property
+    def address_data(self):
+        address = self.address.replace (" ", "+")
+        source = settings.PHL_DATA["ADDRESS_API"] + address
+        params = {}
+
+        data = fetch_json(source, params)
+
+        if not "error" in data:
+            if "property" in data:
+                return data["property"]
+    
+
+    @property
+    def vacancy_status(self):
+        return self._get_vacancy_status()
+    
     def save(self, *args, **kwargs):
         if not self.pk:
             # These are all lots for Philadelphia, PA.
@@ -144,7 +205,7 @@ class Parcel(models.Model):
     geoid = models.CharField(max_length=25, null=True, blank=True)
     shape_area = models.FloatField(null=True, blank=True)
     shape_len = models.FloatField(null=True, blank=True)
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=4326, geography=True)
 
     def _get_address(self):
         _address_fields = (self.house, self.suf, self.unit, self.stex, self.stdir, self.stnam, self.stdes, self.stdessuf)

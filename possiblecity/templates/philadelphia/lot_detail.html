@@ -32,6 +32,8 @@
 </div>
 {% endblock layout %}
 {% block js_local %}
+<script src="{{ STATIC_URL }}js/libs/lvector/lvector.js"></script>
+<script src="{{ STATIC_URL }}js/libs/lvector/Custom.js"></script>
 <script src="{{ STATIC_URL }}js/libs/leaflet-plugins/layer/tile/Bing.js"></script>
 <script>
     // Initialize the map object
@@ -39,7 +41,7 @@
         zoomControl: false,
         doubleClickZoom: false,
         maxZoom: 21,
-        minZoom: 11
+        minZoom: 17
     });
     
     // Prep the background tile layer
@@ -61,35 +63,80 @@
 
     var geoj = {};
     
-    var polyStyle = {
+    var lotStyle = {
         "fillColor":"#e8db00",
-        "fillOpacity": 0.2,
-        "opacity": 1.0,
+        "fillOpacity": 0.0,
+        "opacity": 0.0,
         "weight": 4,
         "color":"#e8db00",
-        //"dashArray": "4 2"
+        "dashArray": "4 2"
     };
     
-    var myStyle = {
-        "fillColor": "#ff0000",
-        "opacity": 1.0,
-        "weight": 1,
-        "color":"#000000",
-        "dashArray": "2 2"
-    };
 
-    var myLayer = L.geoJson(null, {
-        style: polyStyle
+    var lot = L.geoJson(null, {
+        style: lotStyle
     }).addTo(map);
     
-    $.getJSON('{% url geo_lot_detail lot.id %}', function(data){
-          myLayer.addData(data);
-          map.fitBounds(myLayer.getBounds());
-          map.panBy([-300, -50]);
-          //zoom = map.getZoom();
-          //newZoom = 18
-          //map.setZoom(newZoom);
+    $.getJSON('{% url "api_lot_detail" lot.id %}', function(data){
+          lot.addData(data);
+          var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
+          map.setView(center, 18);
+          L.marker(center).addTo(map);
+          map.panBy([-150, -50]);
+          lotLayer.setMap(map);
     });
+
+    var lotLayer = new lvector.Custom({
+            url: "{% url 'api_lots_vacant' %}",
+            scaleRange: [16, 22],
+            showAll: false,
+            singlePopup: true,
+             symbology: {
+                type: "unique",
+                property: "is_public",
+                values: [
+                    {
+                        value: true,
+                        vectorOptions: {
+                             fillColor: "#e8db00",
+                             fillOpacity: 0.2,
+                             weight: 2,
+                             color: "#e8db00",
+                             opacity: 1
+                        }
+                    },
+                    {
+                        value: false,
+                        vectorOptions: {
+                             fillColor: "#86f1ff",
+                             fillOpacity: 0.2,
+                             weight: 2,
+                             color: "#86f1ff",
+                             opacity: 1
+                        }
+                    }
+                 ]
+            },
+            popupTemplate: function(properties) {
+                if (properties.is_public == true) {
+                    ownership = 'Public';
+                } else {
+                    ownership = 'Private';
+                }
+                if (properties.is_available == true) {
+                    availability = 'For Sale';
+                } else {
+                    availabilty = 'Unknown';
+                }
+                url = '{% url "lot_detail" 0 %}'.replace (0, properties.id);
+                html = '<h3>' + properties.address +'</h3>' +
+                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
+                           'Availability: <strong>' + availabilty + '</strong></p>' +
+                           '<p><a href="' + url +'" class="button">View</a>'
+                return html;
+            }
+    });
+
     
     map.on('zoomend', onZoomend);
 

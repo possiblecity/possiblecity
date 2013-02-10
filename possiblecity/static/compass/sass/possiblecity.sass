@@ -7,9 +7,16 @@ a
   
 a.button
   +sassy-button
+  text-decoration: none
+  color: $white
+  &:hover, &:link, &:active, &:visited
+    color: $white
 
 button
   +sassy-button
+
+strong
+  font-weight: bold
 
 body
   font-family: $base-font-family
@@ -48,21 +55,15 @@ ol
   list-style: lower-alpha
   
 div.status
-  +adjust-font-size-to($base-font-size * 0.75)
+  +adjust-font-size-to($base-font-size * 0.75, $lines:.75)
   position: absolute
   top: 8em 
-  left: 50%
-  width: 16em
+  left: 8em
   text-align: center
   text-transform: uppercase
   font-weight: bold
-  margin-left: -8em 
-  background-color: rgba(255,255,255,0.5)
-  color: #e8db00
+  background-color: rgba(255,255,255,0.7)
   padding: .5em
-  //padding-left: 2.5em
-  //background-image: url("img/loader.gif")
-  //background-repeat: no-repeat
   +border-radius(4px)
   
   
@@ -168,14 +169,18 @@ body.map
  
   .leaflet-control-zoom
     left: 2em
+<<<<<<< HEAD
     top: 8em
+=======
+    top: 6em
+>>>>>>> f032389d750ad2ea3bbd7400b5d3a33c70f7a61c
   
   header.site-header
-    background-color: rgba(255,255,255,1.0)
+    background-color: rgba(255,255,255,0.9)
+    position: fixed
+    z-index: 5
     width: 100%
     padding: 1em 0
-    position: absolute
-    z-index: 1000
     nav.site-nav
       +container
       div.identity
@@ -183,14 +188,14 @@ body.map
         a.logo
           +border-radius(2px)
           +inline-block
-          //padding: 6px
-          //background-color: rgba(255,255,255,1.0)
       ul
         +horizontal-list
         float: right
         li
           a  
             +pill
+            border-color: $white
+            color: $gray-light
             
   article.lot
     +container
@@ -229,8 +234,4 @@ body.map
         +adjust-font-size-to($base-font-size * 0.8, $lines:.5)
         color: #666
 
-        
-    
-
-  
-
+       
