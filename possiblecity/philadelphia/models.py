@@ -9,8 +9,10 @@ from possiblecity.lotxlot.models import USLotBase
 from possiblecity.float.models import Project
 
 class Lot(USLotBase):
-    # spatial queryset manager
-    #objects = models.GeoManager()
+    """
+    A unit of land in Philadelphia, PA
+    """
+    # spatial queryset manager defined in parent class
      
     parcel = models.OneToOneField("Parcel")
 
@@ -30,7 +32,7 @@ class Lot(USLotBase):
         return self.geom.centroid
 
     def _get_zip(self):
-        # determine zip code from address, city and state
+        # TODO: determine zip code from address, city and state
         pass
 
     def _get_vacancy_violation(self):
