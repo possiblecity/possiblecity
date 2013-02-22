@@ -287,8 +287,11 @@ PHL_DATA = {
     "PAPL_ASSETS": "http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/",
     "PAPL_WEB":	"http://secure.phila.gov/PAPLPublicWeb/",
     "VACANCY": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/", 
+    "VACANCY_APPEALS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/0/",
     "VACANCY_LICENSES": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2/",
-    "VACANCY_VIOLATIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8/",
+    "VACANCY_DEMOLITIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/4/",
+    "VACANCY_DEMOLITION_PERMITS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/6/",
+    "VACANCY_VIOLATIONS": "http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8/"
 }
 
 

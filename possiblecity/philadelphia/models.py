@@ -16,16 +16,20 @@ class Lot(USLotBase):
      
     parcel = models.OneToOneField("Parcel")
 
-    projects = models.ManyToManyField(Project, blank=True, null=True)
-
     is_available = models.BooleanField(default=False)
     has_vacancy_violation = models.BooleanField(default=False)
     has_vacancy_license = models.BooleanField(default=False)
     has_vacant_building = models.BooleanField(default=False)    
-
-    landuse_id = models.IntegerField(blank=True, null=True)
-    listing_id = models.IntegerField(blank=True, null=True)
     
+    # ids for external data sources
+    landuse_id = models.IntegerField(blank=True, null=True)
+    papl_listing_id = models.IntegerField(blank=True, null=True)
+    papl_asset_id = models.IntegerField(blank=True, null=True)
+    vacancy_violation_id = models.IntegerField(blank=True, null=True)
+    vacancy_license_id = models.IntegerField(blank=True, null=True)
+    vacancy_appeal_id = models.IntegerField(blank=True, null=True)
+    demolition_id = models.IntegerField(blank=True, null=True)
+    demolition_permit_id = models.IntegerField(blank=True, null=True)
 
     def _get_coordinates(self):
         # get coordinates from geom field
@@ -35,42 +39,93 @@ class Lot(USLotBase):
         # TODO: determine zip code from address, city and state
         pass
 
-    def _get_vacancy_violation(self):
-        source = settings.PHL_DATA["VACANCY_VIOLATIONS"] + "query"
-        params = {"where":"VIOLATION_ADDRESS='%s'" % (self.address), "f":"json"}
-        
-        return has_feature(source, params)
-   
-    def _get_vacancy_license(self):
-        source = settings.PHL_DATA["VACANCY_LICENSES"] + "query"
-        params = {"where":"LICENSE_ADDRESS='%s'" % (self.address), "f":"json"}
-        
-        return has_feature(source, params)
-
-    def _get_vacancy_status(self):
-       vacancy_flags = (self._get_vacancy_violation(), self._get_landuse_vacancy(),
-           self._get_vacancy_license(), self._get_availability())
+    def _get_vacancy_violation_id(self):
+        if self.vacancy_violation_id:
+            return self.vacancy_violation_id
+        else:
+            source = settings.PHL_DATA["VACANCY_VIOLATIONS"] + "query"
+            params = {"where":"VIOLATION_ADDRESS='%s'" % (self.address), "returnIdsOnly":"true", "f":"json"}
        
-       return any(v is True for v in vacancy_flags)
-    
-    def _get_public_status(self):
-        address = self.address.title()
-        source = settings.PHL_DATA["PAPL_ASSETS"] + "query"
-        params = {"where":"REF_ADDRES='%s'" % (address), "f":"json"}
-
-        return has_feature(source, params)
-
-    def _get_listing_id(self):
-        address = self.address.title()
-        source = settings.PHL_DATA["PAPL_LISTINGS"] + "query"
-        params = {"where":"REF_ADDRES='%s'" % (address), "returnIdsOnly":"true", "f":"json"}
-
-        dict =  fetch_json(source, params)
-        if not "error" in dict:
-            if "objectIds" in dict:
+            dict =  fetch_json(source, params)
+            if dict and "objectIds" in dict:
                 if dict["objectIds"]:
                     return dict["objectIds"][0]
-    
+
+    def _get_vacancy_appeal_id(self):
+        if self.vacancy_appeal_id:
+            return self.vacancy_appeal_id
+        else:
+            source = settings.PHL_DATA["VACANCY_APPEALS"] + "query"
+            params = {"where":"APPEAL_ADDRESS='%s'" % (self.address), "returnIdsOnly":"true", "f":"json"}
+
+            dict =  fetch_json(source, params)
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]        
+   
+    def _get_vacancy_license_id(self):
+        if self.vacancy_license_id:
+            return self.vacancy_license_id
+        else:
+            source = settings.PHL_DATA["VACANCY_LICENSES"] + "query"
+            params = {"where":"LICENSE_ADDRESS='%s'" % (self.address), "returnIdsOnly":"true", "f":"json"}
+        
+            dict =  fetch_json(source, params)
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                     return dict["objectIds"][0]
+  
+    def _get_demolition_id(self):
+        if self.demolition_id:
+            return self.demolition_id
+        else:
+             source = settings.PHL_DATA["VACANCY_DEMOLITIONS"] + "query"
+             params = {"where":"LICENSE_ADDRESS='%s'" % (self.address), "returnIdsOnly":"true", "f":"json"}
+
+             dict =  fetch_json(source, params)
+             if dict and "objectIds" in dict:
+                 if dict["objectIds"]:
+                      return dict["objectIds"][0]
+
+    def _get_demolition_permit_id(self):
+        if self.demolition_permit_id:
+            return self.demolition_permit_id
+        else:
+            source = settings.PHL_DATA["VACANCY_DEMOLITIONS"] + "query"
+            params = {"where":"PERMIT_ADDRESS='%s'" % (self.address), "returnIdsOnly":"true", "f":"json"}
+
+            dict =  fetch_json(source, params)
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]
+
+
+    def _get_papl_listing_id(self):
+        if self.papl_listing_id:
+            return self.papl_listing_id
+        else:
+            address = self.address.title()
+            source = settings.PHL_DATA["PAPL_LISTINGS"] + "query"
+            params = {"where":"REF_ADDRES='%s'" % (address), "returnIdsOnly":"true", "f":"json"}
+
+            dict =  fetch_json(source, params)
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]
+
+    def _get_papl_asset_id(self):
+        if self.papl_asset_id:
+            return self.papl_asset_id
+        else:
+            address = self.address.title()
+            source = settings.PHL_DATA["PAPL_ASSETS"] + "query"
+            params = {"where":"REF_ADDRES='%s'" % (address), "returnIdsOnly":"true", "f":"json"}
+
+            dict =  fetch_json(source, params)
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]
+
     def _get_landuse_id(self):
         if self.landuse_id:
             return self.landuse_id
@@ -82,10 +137,9 @@ class Lot(USLotBase):
                       "inSR":"4326", "spatialRel":"esriSpatialRelWithin", "returnIdsOnly":"true", "f":"json"}
 
             dict =  fetch_json(source, params)
-            if not "error" in dict:
-                if "objectIds" in dict:
-                    if dict["objectIds"]:
-                        return dict["objectIds"][0]
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]
 
     def _get_landuse_vacancy(self):
         data = self.landuse_data
@@ -96,30 +150,80 @@ class Lot(USLotBase):
                 return False
 
     def _get_availability(self):
-        if self._get_listing_id():
+        if self.papl_listing_id:
             return True
         else:
             return False
     
-    def update_availability(self):
-        self.is_available = self._get_availability()
+    def _get_public_status(self):
+        if self.papl_asset_id:
+            return True
+        else:
+            return False
+    
+    def _get_vacancy_status(self):
+        #TODO
+        pass
 
-    def update_public_status(self):
-        self.is_available = self._get_public_status()
- 
-    def update_vacancy_status(self):
-        self.is_vacant = self._get_vacancy_status()   
-        
     @property
-    def papl_data(self):
-        source = settings.PHL_DATA["PAPL_LISTINGS"] + str(self._get_listing_id())
+    def papl_listing_data(self):
+        source = settings.PHL_DATA["PAPL_LISTINGS"] + str(self._get_papl_listing_id())
         params = {"f":"json"}
 
         data = fetch_json(source, params)
         
-        if not "error" in data:
-            if "feature" in data:
-                return data["feature"]["attributes"]
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
+
+    @property
+    def papl_asset_data(self):
+        source = settings.PHL_DATA["PAPL_LISTINGS"] + str(self._get_papl_asset_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
+
+    @property
+    def vacancy_license_data(self):
+        source = settings.PHL_DATA["VACANCY_LICENSE"] + str(self._get_vacancy_license_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
+
+    @property
+    def vacancy_violation_data(self):
+        source = settings.PHL_DATA["VACANCY_VIOLATION"] + str(self._get_vacancy_violation_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
+    
+    @property
+    def demolition_data(self):
+        source = settings.PHL_DATA["VACANCY_DEMOLITION"] + str(self._get_demolition_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
+
+    @property
+    def demolition_permit_data(self):
+        source = settings.PHL_DATA["VACANCY_DEMOLITION_PERMIT"] + str(self._get_demolition_permit_id())
+        params = {"f":"json"}
+
+        data = fetch_json(source, params)
+
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
 
     @property
     def landuse_data(self):
@@ -145,7 +249,6 @@ class Lot(USLotBase):
             if "property" in data:
                 return data["property"]
     
-
     @property
     def vacancy_status(self):
         return self._get_vacancy_status()
@@ -161,8 +264,8 @@ class Lot(USLotBase):
             self.is_vacant = self._get_vacancy_status()
             self.is_public = self._get_public_status()
             self.is_available = self._get_availability()
-            self.has_vacancy_violation = self._get_vacancy_violation()
-            self.has_vacancy_license = self._get_vacancy_license()
+            #self.has_vacancy_violation = self._get_vacancy_violation()
+            #self.has_vacancy_license = self._get_vacancy_license()
         super(Lot, self).save(*args, **kwargs)
 
 class Parcel(models.Model):
