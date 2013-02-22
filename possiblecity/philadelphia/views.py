@@ -37,22 +37,6 @@ class LotDetailMapView(GeoDetailView):
     model = Lot
     geo_field = "geom"
 
-class LotDetailView(DetailView):
-    """
-    Retrieve a lot
-    """
-    model = Lot
-    
-    def get_object(self):
-        # Call the superclass
-        object = super(LotDetailView, self).get_object()
-        # refresh data sources
-        object.update_availability()
-        object.update_public_status()
-        #object.update_vacancy_status()
-        object.save()
-        # Return the object
-        return object
     
 class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     """

@@ -54,7 +54,7 @@ class BBoxMixin(object):
             # return a filtered queryset
             queryset = queryset.filter(coord__within=bounds)
         return queryset
-
+       
 class CallbackMixin(object):
     def encode_queryset(self):
         callback = self.request.GET.get('callback')
