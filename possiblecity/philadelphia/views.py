@@ -21,16 +21,16 @@ class LotDetailView(DetailView):
     """
     model = Lot
     
-    def get_object(self):
+    #def get_object(self):
         # Call the superclass
-        object = super(LotDetailView, self).get_object()
+        #object = super(LotDetailView, self).get_object()
         # refresh data sources
-        object.update_availability()
-        object.update_public_status()
+        #object.update_availability()
+        #object.update_public_status()
         #object.update_vacancy_status()
-        object.save()
+        #object.save()
         # Return the object
-        return object
+        #return object
 
 # ajax views
 class LotDetailMapView(GeoDetailView):
