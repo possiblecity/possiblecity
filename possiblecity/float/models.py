@@ -13,16 +13,6 @@ from taggit.managers import TaggableManager
 from possiblecity.float.fields import PositionField
 from possiblecity.float.managers import ProjectQuerySet
 
-class Idea(models.Model):
-	"""
-		Defines an idea- a concept for an intervention in a city that is less 
-		fully formed than a project; usually just a sentence or two expressing
-		a desire or a need. Not sure yet if we will implement this on the site.
-		Just a placeholder for now.
-	"""
-	description = models.CharField(max_length=140)
-	agent = models.ForeignKey(User, help_text="The person submitting the idea")
-
 class Project(models.Model):
     """
        Defines a project, which consists of ideas, plans, images, and drawings for 

@@ -235,3 +235,5 @@ def parcel_post_save(sender, **kwargs):
             geom=parcel.geom)
 
 post_save.connect(parcel_post_save, sender=Parcel)
+
+
