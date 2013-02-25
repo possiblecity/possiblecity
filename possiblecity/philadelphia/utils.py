@@ -64,6 +64,30 @@ def check_landuse_vacancy():
             lot.save(update_fields=["landuse_id", "has_vacant_building"])
             print("%s: %s id updated" % (lot.id, lot.address))
         
+
+def update_papl_asset_id():
+    """
+    Check Philadelphia gis datasource to get publicly owned vacant land id
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(papl_asset_id__isnull=True))
+    for lot in queryset:
+        lot.papl_asset_id = lot._get_papl_asset_id()
+            
+        lot.save(update_fields=["papl_asset_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.papl_asset_id))
+
+def update_papl_listing_id():
+    """
+    Check Philadelphia gis datasource to get available (for sale) publicly owned vacant land id
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(papl_listing_id__isnull=True))
+    for lot in queryset:
+        lot.papl_listing_id = lot._get_papl_listing_id()
+
+        lot.save(update_fields=["papl_listing_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.papl_listing_id))    
+
+
 def get_form_kwargs(self):
     kwargs = {'initial': self.get_initial()} 
     if self.request.GET: 

@@ -187,7 +187,7 @@ class Lot(USLotBase):
 
     @property
     def vacancy_license_data(self):
-        source = settings.PHL_DATA["VACANCY_LICENSE"] + str(self._get_vacancy_license_id())
+        source = settings.PHL_DATA["VACANCY_LICENSES"] + str(self._get_vacancy_license_id())
         params = {"f":"json"}
 
         data = fetch_json(source, params)
@@ -197,7 +197,7 @@ class Lot(USLotBase):
 
     @property
     def vacancy_violation_data(self):
-        source = settings.PHL_DATA["VACANCY_VIOLATION"] + str(self._get_vacancy_violation_id())
+        source = settings.PHL_DATA["VACANCY_VIOLATIONS"] + str(self._get_vacancy_violation_id())
         params = {"f":"json"}
 
         data = fetch_json(source, params)
@@ -207,7 +207,7 @@ class Lot(USLotBase):
     
     @property
     def demolition_data(self):
-        source = settings.PHL_DATA["VACANCY_DEMOLITION"] + str(self._get_demolition_id())
+        source = settings.PHL_DATA["VACANCY_DEMOLITIONS"] + str(self._get_demolition_id())
         params = {"f":"json"}
 
         data = fetch_json(source, params)
@@ -217,7 +217,7 @@ class Lot(USLotBase):
 
     @property
     def demolition_permit_data(self):
-        source = settings.PHL_DATA["VACANCY_DEMOLITION_PERMIT"] + str(self._get_demolition_permit_id())
+        source = settings.PHL_DATA["VACANCY_DEMOLITION_PERMITS"] + str(self._get_demolition_permit_id())
         params = {"f":"json"}
 
         data = fetch_json(source, params)
