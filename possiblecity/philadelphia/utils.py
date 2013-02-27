@@ -91,7 +91,7 @@ def update_vacancy_violation():
     """
     Check Philadelphia gis datasource to get lots with vacancy violations
     """
-    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(vacancy_violation_id__isnull=True))
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(id__gte=280101))
     for lot in queryset:
         lot.vacancy_violation_id = lot._get_vacancy_violation_id()
 

@@ -22,6 +22,8 @@ class Lot(USLotBase):
     has_vacant_building = models.BooleanField(default=False)    
     
     # ids for external data sources
+    address_id = models.IntegerField(blank=True, null=True)
+    parcel_id = models.IntegerField(blank=True, null=True)
     landuse_id = models.IntegerField(blank=True, null=True)
     papl_listing_id = models.IntegerField(blank=True, null=True)
     papl_asset_id = models.IntegerField(blank=True, null=True)
@@ -30,6 +32,7 @@ class Lot(USLotBase):
     vacancy_appeal_id = models.IntegerField(blank=True, null=True)
     demolition_id = models.IntegerField(blank=True, null=True)
     demolition_permit_id = models.IntegerField(blank=True, null=True)
+
 
     def _get_coordinates(self):
         # get coordinates from geom field
