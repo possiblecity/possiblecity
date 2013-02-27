@@ -23,8 +23,8 @@ class Lot(USLotBase):
     
     # ids for external data sources
     address_id = models.IntegerField(blank=True, null=True)
-    parcel_id = models.IntegerField(blank=True, null=True)
     landuse_id = models.IntegerField(blank=True, null=True)
+    papl_parcel_id = models.IntegerField(blank=True, null=True)
     papl_listing_id = models.IntegerField(blank=True, null=True)
     papl_asset_id = models.IntegerField(blank=True, null=True)
     vacancy_violation_id = models.IntegerField(blank=True, null=True)
