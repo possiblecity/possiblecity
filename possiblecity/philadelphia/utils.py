@@ -65,7 +65,7 @@ def check_landuse_vacancy():
             print("%s: %s id updated" % (lot.id, lot.address))
         
 
-def update_papl_asset_id():
+def update_papl_asset():
     """
     Check Philadelphia gis datasource to get publicly owned vacant land id
     """
@@ -76,7 +76,7 @@ def update_papl_asset_id():
         lot.save(update_fields=["papl_asset_id",])
         print("%s - %s: %s" % (lot.id, lot.address, lot.papl_asset_id))
 
-def update_papl_listing_id():
+def update_papl_listing():
     """
     Check Philadelphia gis datasource to get available (for sale) publicly owned vacant land id
     """
@@ -87,9 +87,48 @@ def update_papl_listing_id():
         lot.save(update_fields=["papl_listing_id",])
         print("%s - %s: %s" % (lot.id, lot.address, lot.papl_listing_id))    
 
+def update_vacancy_violation():
+    """
+    Check Philadelphia gis datasource to get lots with vacancy violations
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(vacancy_violation_id__isnull=True))
+    for lot in queryset:
+        lot.vacancy_violation_id = lot._get_vacancy_violation_id()
 
-def get_form_kwargs(self):
-    kwargs = {'initial': self.get_initial()} 
-    if self.request.GET: 
-        kwargs['data'] = self.request.GET 
-    return kwargs
+        lot.save(update_fields=["vacancy_violation_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.vacancy_violation_id))
+
+def update_vacancy_license():
+    """
+    Check Philadelphia gis datasource to get lots with vacancy licenses
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True))
+    for lot in queryset:
+        lot.vacancy_license_id = lot._get_vacancy_license_id()
+
+        lot.save(update_fields=["vacancy_license_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.vacancy_license_id))
+
+def update_demolition():
+    """
+    Check Philadelphia gis datasource to get lots with L&I demolitions
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True))
+    for lot in queryset:
+        lot.demolition_id = lot._get_demolition_id()
+
+        lot.save(update_fields=["demolition_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.demolition_id))
+
+def update_demolition_permit():
+    """
+    Check Philadelphia gis datasource to get lots with L&I demolition permits
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True))
+    for lot in queryset:
+        lot.demolition_permit_id = lot._get_demolition_permit_id()
+
+        lot.save(update_fields=["demolition_permit_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.demolition_permit_id))
+
+
