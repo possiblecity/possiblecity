@@ -91,7 +91,7 @@ def update_vacancy_violation():
     """
     Check Philadelphia gis datasource to get lots with vacancy violations
     """
-    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(id__gte=280101))
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True).filter(id__gte=427267))
     for lot in queryset:
         lot.vacancy_violation_id = lot._get_vacancy_violation_id()
 
@@ -108,6 +108,19 @@ def update_vacancy_license():
 
         lot.save(update_fields=["vacancy_license_id",])
         print("%s - %s: %s" % (lot.id, lot.address, lot.vacancy_license_id))
+
+
+def update_vacancy_appeal():
+    """
+    Check Philadelphia gis datasource to get lots with vacancy appeals
+    """
+    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True))
+    for lot in queryset:
+        lot.vacancy_appeal_id = lot._get_vacancy_appeal_id()
+
+        lot.save(update_fields=["vacancy_appeal_id",])
+        print("%s - %s: %s" % (lot.id, lot.address, lot.vacancy_appeal_id))
+
 
 def update_demolition():
     """
