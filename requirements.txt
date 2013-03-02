@@ -5,7 +5,7 @@ requests
 vectorformats
 geopy
 
-Django==1.4.1
+Django>=1.5
 
 # django third party modules
 south
