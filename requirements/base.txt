@@ -13,5 +13,3 @@ django-taggit
 easy-thumbnails
 django-compressor
 django-pagination
-
--e git+git://github.com/mazelife/django-redactor.git#egg=django-redactor

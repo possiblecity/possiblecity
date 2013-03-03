@@ -1,10 +1,23 @@
 # -*- coding: utf-8 -*-
 # Default Django settings for possiblecity
 
-import os.path
+import os
+from unipath import Path
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
+# Normally you should not import ANYTHING from Django directly
+# into your settings, but ImproperlyConfigured is an exception.
+from django.core.exceptions import ImproperlyConfigured
+.
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+	    error_msg = "Set the %s environment variable" % var_name
+	    raise ImproperlyConfigured(error_msg)
+
+
+PROJECT_DIR = Path(__file__).ancestor(3)
 
 
 ADMINS = (
@@ -22,23 +35,12 @@ WSGI_APPLICATION = "possiblecity.wsgi.application"
 # Debugging
 #==============================================================================
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 #==============================================================================
 # Databases
 #==============================================================================
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "dev.db",                      
-    }
-}
 
 #==============================================================================
 # Localization
@@ -57,14 +59,14 @@ USE_TZ = True
 
 ROOT_URLCONF = 'possiblecity.urls'
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media", "uploads")
+MEDIA_ROOT = PROJECT_DIR.child('media')
 MEDIA_URL = "/media/uploads/"
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "media", "static")
+STATIC_ROOT = PROJECT_DIR.child('static')
 STATIC_URL = "/media/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(PACKAGE_ROOT, "static"),
+    PROJECT_DIR.child('assets'),
 ]
 
 STATICFILES_FINDERS = [
@@ -78,7 +80,7 @@ STATICFILES_FINDERS = [
 #==============================================================================
 
 TEMPLATE_DIRS = [
-    os.path.join(PACKAGE_ROOT, "templates"),
+    PROJECT_DIR.child('templates'),
 ]
 
 TEMPLATE_LOADERS = [
@@ -95,8 +97,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    #"pinax_utils.context_processors.settings",
-    #"account.context_processors.account",
 ]
 
 #==============================================================================
@@ -132,29 +132,7 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 # Authentication
 #==============================================================================
 
-
-# Account
-ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
-ACCOUNT_LOGIN_REDIRECT_URL = "home"
-ACCOUNT_LOGOUT_REDIRECT_URL = "home"
-ACCOUNT_SIGNUP_REDIRECT_URL = "profiles_profile_create"
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
-
-
-ABSOLUTE_URL_OVERRIDES = {
-    "auth.user": lambda o: "/profiles/profile/%s/" % o.username,
-}
-
-AUTH_PROFILE_MODULE = "profiles.Profile"
-
 AUTHENTICATION_BACKENDS = (
-    #"phileo.auth_backends.CanLikeBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -237,12 +215,9 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # Search
 #==============================================================================
 
-
-
 #==============================================================================
 # Notifications
 #==============================================================================
-
 
 #==============================================================================
 # Analytics
@@ -258,7 +233,6 @@ METRON_SETTINGS = {
 # Assets
 #==============================================================================
 
-
 COMPRESS_PRECOMPILERS = (
     ('text/x-sass', 'sass {infile} {outfile}'),
     ('text/x-scss', 'sass --scss {infile} {outfile}'),
@@ -267,8 +241,6 @@ COMPRESS_PRECOMPILERS = (
 #==============================================================================
 # Other 3rd Party Apps
 #==============================================================================
-
-
 
 #==============================================================================
 # Local Apps
@@ -295,11 +267,4 @@ PHL_DATA = {
 }
 
 
-#==============================================================================
-# local environment settings
-#==============================================================================
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
