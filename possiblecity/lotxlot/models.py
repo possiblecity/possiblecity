@@ -25,7 +25,7 @@ class LotBase(models.Model):
 
     # spatial fields
     coord = models.PointField(srid=4326, blank=True, null=True)
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=4326, blank=True, null=True)
 
     objects = CustomQuerySetGeoManager(LotQuerySet)
     
@@ -45,7 +45,7 @@ class USLotBase(LotBase):
         This model defines a discreet piece of land within a municipality in the United States
     """
     state = USStateField()
-    zip = models.CharField(max_length=10)
+    zip = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         abstract = True
