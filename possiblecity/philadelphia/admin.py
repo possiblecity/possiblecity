@@ -1,9 +1,9 @@
-from django.contrib.gis import admin
+from django.contrib import admin
 from django.db.models import Count
 
 from possiblecity.philadelphia.models import Lot, Parcel
 
-class LotAdmin(admin.GeoModelAdmin):
+class LotAdmin(admin.ModelAdmin):
     list_display = ('address', 'is_public', 'is_vacant', 'is_visible')
     raw_id_fields = ('parcel',)
     list_filter = ('is_vacant', 'is_available', 
@@ -11,7 +11,7 @@ class LotAdmin(admin.GeoModelAdmin):
         'has_vacant_building')
     search_fields = ['address']
 
-class ParcelAdmin(admin.GeoModelAdmin):
+class ParcelAdmin(admin.ModelAdmin):
     list_display = ('objectid', 'mapreg',)
     search_fields =['objectid',]
 
