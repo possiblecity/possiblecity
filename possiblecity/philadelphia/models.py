@@ -14,7 +14,7 @@ class Lot(USLotBase):
     """
     # spatial queryset manager defined in parent class
      
-    parcel = models.OneToOneField("Parcel", null=True)
+    parcel = models.OneToOneField("Parcel", blank=True, null=True)
 
     is_available = models.BooleanField(default=False)
     has_vacancy_violation = models.BooleanField(default=False)
