@@ -14,7 +14,7 @@ class Lot(USLotBase):
     """
     # spatial queryset manager defined in parent class
      
-    parcel = models.OneToOneField("Parcel")
+    parcel = models.OneToOneField("Parcel", blank=True, null=True)
 
     is_available = models.BooleanField(default=False)
     has_vacancy_violation = models.BooleanField(default=False)
@@ -263,10 +263,10 @@ class Lot(USLotBase):
             self.city = "Philadelphia"
             self.state = "PA"
             # self.zip = self._get_zip()
-            self.coord = self._get_coordinates()
-            self.is_vacant = self._get_vacancy_status()
-            self.is_public = self._get_public_status()
-            self.is_available = self._get_availability()
+            #self.coord = self._get_coordinates()
+            #self.is_vacant = self._get_vacancy_status()
+            #self.is_public = self._get_public_status()
+            #self.is_available = self._get_availability()
             #self.has_vacancy_violation = self._get_vacancy_violation()
             #self.has_vacancy_license = self._get_vacancy_license()
         super(Lot, self).save(*args, **kwargs)
@@ -340,6 +340,6 @@ def parcel_post_save(sender, **kwargs):
         Lot.objects.create(parcel=parcel, address=parcel._get_address(),
             geom=parcel.geom)
 
-post_save.connect(parcel_post_save, sender=Parcel)
+#post_save.connect(parcel_post_save, sender=Parcel)
 
 

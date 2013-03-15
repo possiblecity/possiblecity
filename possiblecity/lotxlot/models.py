@@ -25,7 +25,7 @@ class LotBase(models.Model):
 
     # spatial fields
     coord = models.PointField(srid=4326, blank=True, null=True)
-    geom = models.MultiPolygonField(srid=4326)
+    geom = models.MultiPolygonField(srid=4326, blank=True, null=True)
 
     objects = CustomQuerySetGeoManager(LotQuerySet)
     
