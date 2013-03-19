@@ -42,6 +42,18 @@ class Lot(USLotBase):
         # TODO: determine zip code from address, city and state
         pass
 
+    def _get_address_id(self):
+        if self.address_id:
+            return self.address_id
+        else:
+            source = settings.PHL_DATA["ADDRESSES"] + "query"
+            params = {"where":"ADDRESS='%s'" % (self.address), "returnIdsOnly":"true", "f":"json"}
+
+            dict = fetch_json(source, params)
+            if dict and "objectIds" in dict:
+                if dict["objectIds"]:
+                    return dict["objectIds"][0]    
+
     def _get_vacancy_violation_id(self):
         if self.vacancy_violation_id:
             return self.vacancy_violation_id
@@ -169,6 +181,16 @@ class Lot(USLotBase):
         pass
 
     @property
+    def address_data(self):
+        source = settings.PHL_DATA["ADDRESSES"] + str(self.address_id)
+        params = {"f":"json"}
+     
+        data = fetch_json(source, params)
+       
+        if data and "feature" in data:
+            return data["feature"]["attributes"]
+
+    @property
     def papl_listing_data(self):
         source = settings.PHL_DATA["PAPL_LISTINGS"] + str(self._get_papl_listing_id())
         params = {"f":"json"}
@@ -241,7 +263,7 @@ class Lot(USLotBase):
                 return data["feature"]["attributes"]
     
     @property
-    def address_data(self):
+    def address_api_data(self):
         address = self.address.replace (" ", "+")
         source = settings.PHL_DATA["ADDRESS_API"] + address
         params = {}
@@ -263,12 +285,8 @@ class Lot(USLotBase):
             self.city = "Philadelphia"
             self.state = "PA"
             # self.zip = self._get_zip()
-            #self.coord = self._get_coordinates()
-            #self.is_vacant = self._get_vacancy_status()
-            #self.is_public = self._get_public_status()
-            #self.is_available = self._get_availability()
-            #self.has_vacancy_violation = self._get_vacancy_violation()
-            #self.has_vacancy_license = self._get_vacancy_license()
+            if self.geom:
+                self.coord = self._get_coordinates()
         super(Lot, self).save(*args, **kwargs)
 
 class Parcel(models.Model):

@@ -1,6 +1,9 @@
 # philadelphia/utils.py
+import json
+
 from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
+from django.contrib.gis.geos import GEOSGeometry, MultiPolygon
 
 from possiblecity.lotxlot.utils import queryset_iterator, fetch_json
 from possiblecity.philadelphia.models import Lot
@@ -143,25 +146,24 @@ def update_demolition_permit():
         print("%s - %s: %s" % (lot.id, lot.address, lot.demolition_permit_id))
 
 
-def get_vacancy_violations(start=0):
+def get_vacancy_data(source, id_field, address_field, start=0):
     """
     test our database against the vacancy violations
     database
     """
-    
-    source = settings.PHL_DATA["VACANCY_VIOLATIONS"] 
 
-    # get a list of OBJECTIDs for vacancy violations
+    # get a list of OBJECTIDs
     url = source  + "query"
     params = {"where":"OBJECTID>0", "returnIdsOnly":"true", "f":"json"}
     dict =  fetch_json(url, params)
     id_list = sorted(dict["objectIds"])
 
-    #loop through all vacancy violations from external data source
+    #loop through all data from external data source
     for id in id_list:
         if id >= start:
-            # do we already have this violation?
-            qs = Lot.objects.filter(vacancy_violation_id=id)
+            # do we already have this id?
+            kwargs = { id_field: id }
+            qs = Lot.objects.filter(**kwargs)
             if not qs:
                 url = source + str(id)
                 params = {"f":"json"}
@@ -169,14 +171,14 @@ def get_vacancy_violations(start=0):
                 # isolate data
                 if data and "feature" in data:
                     attrs = data["feature"]["attributes"]
-                    address = ' '.join(attrs["VIOLATION_ADDRESS"].split())
+                    address = ' '.join(attrs[address_field].split())
                     # get Lot or create a new Lot with relevant info
                     try:
                         obj, created = Lot.objects.get_or_create(address=address)
                         if created:
                             obj.address = address
                         obj.is_vacant = True
-                        obj.vacancy_violation_id = id
+                        setattr(obj, id_field, id)
                         obj.save()
                         print "%s, %s: %s" % (id, address, created)
                     except MultipleObjectsReturned:
@@ -187,157 +189,21 @@ def get_vacancy_violations(start=0):
             print id
 
 
-def get_vacancy_licenses():
-    """
-    test our database against the vacancy licenses
-    database
-    """
+def get_missing_geom():
+    queryset = queryset_iterator(Lot.objects.filter(geom__isnull=True))
+    source = settings.PHL_DATA["ADDRESSES"] + "query"
+    for lot in queryset:
+        id = lot._get_address_id()
+        params = {"where":"OBJECTID='%s'" % (id), "outSR":4236, "returnGeometry":"true", "f":"json"}
+        data = fetch_json(source, params)
+        if data and "features" in data:
+            if data["features"]:
+                coords = data["features"][0]["geometry"]["rings"]
+                geoJSON = json.dumps({"type": "Polygon", "coordinates": coords})
+                geom = GEOSGeometry(geoJSON)
+                geom = MultiPolygon(geom)
+                lot.geom = geom
+        lot.address_id = id
+        lot.save()
+        print("%s - %s: %s" % (lot.id, lot.address, lot.geom))
     
-    source = settings.PHL_DATA["VACANCY_LICENSES"] 
-
-    # get a list of OBJECTIDs for vacancy licenses
-    url = source  + "query"
-    params = {"where":"OBJECTID>0", "returnIdsOnly":"true", "f":"json"}
-    dict =  fetch_json(url, params)
-    id_list = dict["objectIds"]
-    print len(id_list)
-
-    #loop through all vacancy licenses from external data source
-    for id in id_list:
-        # do we already have this license?
-        qs = Lot.objects.filter(vacancy_license_id=id)
-        if not qs:
-            url = source + str(id)
-            params = {"f":"json"}
-            data =  fetch_json(url, params)
-            # isolate data
-            attrs = data["feature"]["attributes"]
-            address = ' '.join(attrs["LICENSE_ADDRESS"].split())
-            # get Lot or create a new Lot with relevant info
-            try:
-                obj, created = Lot.objects.get_or_create(address=address)
-                if created:
-                    obj.address = address
-                obj.is_vacant = True
-                obj.vacancy_license_id = id
-                obj.save()
-                print "%s, %s: %s" % (id, address, created)
-            except MultipleObjectsReturned:
-                f = open('lot_duplicates','w')
-                f.write(address + '\n')
-        else:
-            print id
-
-def get_demolitions():
-    """
-    test our database against the vacancy violations
-    database
-    """
-    
-    source = settings.PHL_DATA["VACANCY_DEMOLITIONS"] 
-
-    # get a list of OBJECTIDs for vacancy violations
-    url = source  + "query"
-    params = {"where":"OBJECTID>0", "returnIdsOnly":"true", "f":"json"}
-    dict =  fetch_json(url, params)
-    id_list = dict["objectIds"]
-
-    #loop through all vacancy violations from external data source
-    for id in id_list:
-        # do we already have this violation?
-        qs = Lot.objects.filter(demolition_id=id)
-        if not qs:
-            url = source + str(id)
-            params = {"f":"json"}
-            data =  fetch_json(url, params)
-            # isolate data
-            attrs = data["feature"]["attributes"]
-            # create a new lot with relevant info
-            address = ' '.join(attr["DEMOLITION_ADDRESS"].split())
-            obj, created = Lot.objects.get_or_create(address=address)
-            if created:
-                obj.address = address
-            obj.is_vacant = True
-            obj.vacancy_violation_id = id
-            obj.save()
-            print "%s, %s: %s" % (id, address, created)
-        else:
-            print id
-
-def get_vacancy_appeals():
-    """
-    test our database against the vacancy violations
-    database
-    """
-    
-    source = settings.PHL_DATA["VACANCY_APPEALS"] 
-
-    # get a list of OBJECTIDs for vacancy appeals
-    url = source  + "query"
-    params = {"where":"OBJECTID>0", "returnIdsOnly":"true", "f":"json"}
-    dict =  fetch_json(url, params)
-    id_list = dict["objectIds"]
-
-    #loop through all vacancy appeals from external data source
-    print len(id_list)
-    for id in id_list:
-        # do we already have this appeal id?
-        qs = Lot.objects.filter(vacancy_appeal_id=id)
-        if not qs:
-            url = source + str(id)
-            params = {"f":"json"}
-            data =  fetch_json(url, params)
-            # isolate data
-            attrs = data["feature"]["attributes"]
-            # create a new lot with relevant info
-            address = ' '.join(attrs["APPEAL_ADDRESS"].split())
-            # get Lot or create a new Lot with relevant info
-            try:
-                obj, created = Lot.objects.get_or_create(address=address)
-                if created:
-                    obj.address = address
-                obj.is_vacant = True
-                obj.vacancy_appeal_id = id
-                obj.save()
-                print "%s, %s: %s" % (id, address, created)
-            except MultipleObjectsReturned:
-                f = open('lot_duplicates','w')
-                f.write(address + '\n')
-        else:
-            print id
-
-def get_demolition_permits():
-    """
-    test our database against the demolition permits
-    database
-    """
-    
-    source = settings.PHL_DATA["VACANCY_DEMOLITION_PERMITS"] 
-
-    # get a list of OBJECTIDs for demolition permits
-    url = source  + "query"
-    params = {"where":"OBJECTID>0", "returnIdsOnly":"true", "f":"json"}
-    dict =  fetch_json(url, params)
-    id_list = dict["objectIds"]
-
-    #loop through all demolition permits from external data source
-    for id in id_list:
-        # do we already have this violation?
-        qs = Lot.objects.filter(demolition_permit_id=id)
-        if not qs:
-            url = source + str(id)
-            params = {"f":"json"}
-            data =  fetch_json(url, params)
-            # isolate data
-            attrs = data["feature"]["attributes"]
-            # create a new lot with relevant info
-            address = ' '.join(attrs["VIOLATION_ADDRESS"].split())
-            obj, created = Lot.objects.get_or_create(address=address)
-            if created:
-                obj.address = address
-            obj.is_vacant = True
-            obj.demolition_permit_id = id
-            obj.save()
-            print "%s, %s: %s" % (id, address, created)
-        else:
-            print id
