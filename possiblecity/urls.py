@@ -32,8 +32,7 @@ urlpatterns = patterns('',
         name='about'),    
 
     # people
-    #url(r'^account/', include('account.urls')),
-    #url(r'^profiles/', include('possiblecity.profiles.urls')),    
+    (r'^accounts/', include('allauth.urls')),
 
     #projects
     #url(r'^float/', include('possiblecity.float.urls.share')),
