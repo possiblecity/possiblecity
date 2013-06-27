@@ -4,8 +4,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 {% block head %}
-  <link rel="stylesheet" href="css/normalize.css" />
-  <link rel="stylesheet" href="css/app.css" />
 
     {% block metadata %}
         <meta charset="utf-8">
@@ -62,9 +60,6 @@
                  <ul class="title-area">
                      <li class="name"
                          <h1><a href="{% url 'home' %}">Possiblecity</a></h1>
-                      <a class="logo" href="{% url 'home' %}">
-                           <img src="{% static "images/logo.png" %}" />
-                      </a>
                       </li>
                       <li class="toggle-topbar menu-icon">
                           <a href="#">
@@ -97,14 +92,34 @@
                               </a>
                          </li>
                       </ul>     	
-                      {% endblock info_nav %}		
+                      {% endblock info_nav %}
+                      {% block auth_nav %}
+                      <ul class="right">
+                         {% if user.is_authenticated %}
+                         <li class="has-dropdown">
+                             <a href="#">{{ user.username }}</a> 
+                             <ul class="dropdown">
+                                  <li><a href="{% url 'profile_update' %}">Settings</a></li> 
+                                  <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                             </ul>
+                         </li>
+                         {% else %} 
+                         <li><a href="{% url 'account_login' %}">Sign In</a></li>
+                         <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                         {% endif %}                 
+                      </ul>
+                      {% endblock auth_nav %}		
                   {% endblock section_nav  %}
             </nav>
             {% endblock site_header %}
         </header>
         {% endblock site_header_container %}
-        {% block content %}
-        {% endblock content %}
+        {% block page_content_container %}
+            <div class="content">
+             {% block page_content %}
+             {% endblock page_content %}
+            </div>
+        {% endblock page_content_container %}
         {% block site_footer_container %}
         <footer class="site-footer">
             {% block site_footer %}

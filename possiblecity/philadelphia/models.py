@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 
 from possiblecity.lotxlot.utils import fetch_json, has_feature
 from possiblecity.lotxlot.models import USLotBase
-from possiblecity.float.models import Project
+from possiblecity.projects.models import Project
 
 class Lot(USLotBase):
     """

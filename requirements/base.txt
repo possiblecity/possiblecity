@@ -8,8 +8,8 @@ geopy
 Django>=1.5
 
 # django third party modules
+django-allauth
 south
 django-taggit
-easy-thumbnails
 django-compressor
 django-pagination

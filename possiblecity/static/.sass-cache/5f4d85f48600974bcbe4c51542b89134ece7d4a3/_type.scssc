@@ -1,1024 +1,0 @@
-3.2.1 (Media Mark)
-7df7822423f19f07fbc77e837af6f19dc3f0f9bf
-o:Sass::Tree::RootNode
-:
-@linei:@template"≠)//
-// Typography Variables
-//
-
-// We use these to control header font styles
-$header-font-family:                   "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
-$header-font-weight:                   bold !default;
-$header-font-style:                    normal !default;
-$header-font-color:                    #222 !default;
-$header-line-height:                   1.4 !default;
-$header-top-margin:                    .2em !default;
-$header-bottom-margin:                 .5em !default;
-$header-text-rendering:                optimizeLegibility !default;
-
-// We use these to control header font sizes
-$h1-font-size:                         emCalc(44px) !default;
-$h2-font-size:                         emCalc(37px) !default;
-$h3-font-size:                         emCalc(27px) !default;
-$h4-font-size:                         emCalc(23px) !default;
-$h5-font-size:                         emCalc(18px) !default;
-$h6-font-size:                         1em !default;
-
-// These control how subheaders are styled.
-$subheader-line-height:                1.4 !default;
-$subheader-font-color:                 lighten($header-font-color, 30%) !default;
-$subheader-font-weight:                300 !default;
-$subheader-top-margin:                 .2em !default;
-$subheader-bottom-margin:              .5em !default;
-
-// A general <small> styling
-$small-font-size:                      60% !default;
-$small-font-color:                     lighten($header-font-color, 30%) !default;
-
-// We use these to style paragraphs
-$paragraph-font-family:                inherit !default;
-$paragraph-font-weight:                normal !default;
-$paragraph-font-size:                  1em !default;
-$paragraph-line-height:                1.6 !default;
-$paragraph-margin-bottom:              emCalc(20px) !default;
-$paragraph-aside-font-size:            emCalc(14px) !default;
-$paragraph-aside-line-height:          1.35 !default;
-$paragraph-aside-font-style:           italic !default;
-
-// We use these to style <code> tags
-$code-color:                           darken($alert-color, 15%) !default;
-$code-font-family:                     Consolas, 'Liberation Mono', Courier, monospace !default;
-$code-font-weight:                     bold !default;
-
-// We use these to style anchors
-$anchor-text-decoration:               none !default;
-$anchor-font-color:                    $primary-color !default;
-$anchor-font-color-hover:              darken($primary-color, 5%) !default;
-
-// We use these to style the <hr> element
-$hr-border-width:                      1px !default;
-$hr-border-style:                      solid !default;
-$hr-border-color:                      #ddd !default;
-$hr-margin:                            emCalc(20px) !default;
-
-// We use these to style lists
-$list-style-position:                  outside !default;
-$list-side-margin:                     emCalc(18px) !default;
-$definition-list-header-weight:        bold !default;
-$definition-list-header-margin-bottom: .3em !default;
-$definition-list-margin-bottom:        emCalc(12px) !default;
-
-// We use these to style blockquotes
-$blockquote-font-color:                lighten($header-font-color, 30%) !default;
-$blockquote-padding:                   emCalc(9px) emCalc(20px) 0 emCalc(19px) !default;
-$blockquote-border:                    1px solid #ddd !default;
-$blockquote-cite-font-size:            emCalc(13px) !default;
-$blockquote-cite-font-color:           lighten($header-font-color, 20%) !default;
-$blockquote-cite-link-color:           $blockquote-cite-font-color !default;
-
-// Acronym styles
-$acronym-underline:                    1px dotted #ddd !default;
-
-// We use these to control padding and margin
-$microformat-padding:                  emCalc(10px) emCalc(12px) !default;
-$microformat-margin:                    0 0 emCalc(20px) 0 !default;
-
-// We use these to control the border styles
-$microformat-border-width:             1px !default;
-$microformat-border-style:             solid !default;
-$microformat-border-color:             #ddd !default;
-
-// We use these to control full name font styles
-$microformat-fullname-font-weight:     bold !default;
-$microformat-fullname-font-size:       emCalc(15px) !default;
-
-// We use this to control the summary font styles
-$microformat-summary-font-weight:      bold !default;
-
-// We use this to control abbr padding
-$microformat-abbr-padding:             0 emCalc(1px) !default;
-
-// We use this to control abbr font styles
-$microformat-abbr-font-weight:         bold !default;
-$microformat-abbr-font-decoration:     none !default;
-
-
-//
-// Typography Placeholders
-//
-
-%lead {
-  font-size: $paragraph-font-size + emCalc(3.5px);
-  line-height: 1.6;
-}
-
-%subheader {
-  line-height: $subheader-line-height;
-  color: $subheader-font-color;
-  font-weight: $subheader-font-weight;
-  margin-top: $header-top-margin;
-  margin-bottom: $header-bottom-margin;
-}
-
-
-/* Typography resets */
-div,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-form,
-p,
-blockquote,
-th,
-td {
-  margin:0;
-  padding:0;
-  direction: $text-direction;
-}
-
-/* Default Link Styles */
-a {
-  color: $anchor-font-color;
-  text-decoration: $anchor-text-decoration;
-  line-height: inherit;
-
-  &:hover,
-  &:focus { color: $anchor-font-color-hover; }
-
-  img { border:none; }
-}
-
-/* Default paragraph styles */
-p {
-  font-family: $paragraph-font-family;
-  font-weight: $paragraph-font-weight;
-  font-size: $paragraph-font-size;
-  line-height: $paragraph-line-height;
-  margin-bottom: $paragraph-margin-bottom;
-
-  &.lead { @extend %lead; }
-
-  & aside {
-    font-size: $paragraph-aside-font-size;
-    line-height: $paragraph-aside-line-height;
-    font-style: $paragraph-aside-font-style;
-  }
-}
-
-/* Default header styles */
-h1, h2, h3, h4, h5, h6 {
-  font-family: $header-font-family;
-  font-weight: $header-font-weight;
-  font-style: $header-font-style;
-  color: $header-font-color;
-  text-rendering: $header-text-rendering;
-  line-height: $header-line-height;
-  margin-top: $header-top-margin;
-  margin-bottom: $header-bottom-margin;
-
-  small {
-    font-size: $small-font-size;
-    color: $small-font-color;
-    line-height: 0;
-  }
-}
-
-h1 { font-size: $h1-font-size; }
-h2 { font-size: $h2-font-size; }
-h3 { font-size: $h3-font-size; }
-h4 { font-size: $h4-font-size; }
-h5 { font-size: $h5-font-size; }
-h6 { font-size: $h6-font-size; }
-
-.subheader { @extend %subheader; }
-
-hr {
-  border: $hr-border-style $hr-border-color;
-  border-width: $hr-border-width 0 0;
-  clear: both;
-  margin: $hr-margin 0 ($hr-margin - emCalc(1px));
-  height: 0;
-}
-
-/* Helpful Typography Defaults */
-em,
-i {
-  font-style: italic;
-  line-height: inherit;
-}
-
-strong,
-b {
-  font-weight: bold;
-  line-height: inherit;
-}
-
-small {
-  font-size: $small-font-size;
-  line-height: inherit;
-}
-
-code {
-  font-family: $code-font-family;
-  font-weight: $code-font-weight;
-  color: $code-color;
-}
-
-/* Lists */
-ul,
-ol,
-dl {
-  font-size: $paragraph-font-size;
-  line-height: $paragraph-line-height;
-  margin-bottom: $paragraph-margin-bottom;
-  list-style-position: $list-style-position;
-}
-
-/* Unordered Lists */
-ul {
-  li {
-    ul,
-    ol {
-      margin-#{$default-float}: $list-side-margin;
-      margin-bottom: 0;
-      font-size: 1em; /* Override nested font-size change */
-    }
-  }
-  &.square,
-  &.circle,
-  &.disc { margin-#{$default-float}: $list-side-margin;
-    li ul { list-style: inherit; }
-  }
-
-  &.square { list-style-type: square; }
-  &.circle { list-style-type: circle; }
-  &.disc { list-style-type: disc; }
-  &.no-bullet { list-style: none; }
-}
-
-/* Ordered Lists */
-ol { margin-#{$default-float}: $list-side-margin;
-  li {
-    ul,
-    ol {
-      margin-#{$default-float}: $list-side-margin;
-      margin-bottom: 0;
-    }
-  }
-}
-
-/* Definition Lists */
-dl {
-  dt {
-    margin-bottom: $definition-list-header-margin-bottom;
-    font-weight: $definition-list-header-weight;
-  }
-  dd { margin-bottom: $definition-list-margin-bottom; }
-}
-
-/* Abbreviations */
-abbr,
-acronym {
-  text-transform: uppercase;
-  font-size: 90%;
-  color: $body-font-color;
-  border-bottom: $acronym-underline;
-  cursor: help;
-}
-abbr {
-  text-transform: none;
-}
-
-/* Blockquotes */
-blockquote {
-  margin: 0 0 $paragraph-margin-bottom;
-  padding: $blockquote-padding;
-  border-#{$default-float}: $blockquote-border;
-
-  cite {
-    display: block;
-    font-size: $blockquote-cite-font-size;
-    color: $blockquote-cite-font-color;
-    &:before {
-      content: "\2014 \0020";
-    }
-
-    a,
-    a:visited {
-      color: $blockquote-cite-link-color;
-    }
-  }
-}
-blockquote,
-blockquote p {
-  line-height: $paragraph-line-height;
-  color: $blockquote-font-color;
-}
-
-/* Microformats */
-.vcard {
-  display: inline-block;
-  margin: $microformat-margin;
-  border: $microformat-border-width $microformat-border-style $microformat-border-color;
-  padding: $microformat-padding;
-
-  li {
-    margin: 0;
-    display: block;
-  }
-  .fn {
-    font-weight: $microformat-fullname-font-weight;
-    font-size: $microformat-fullname-font-size;
-  }
-}
-
-.vevent {
-  .summary { font-weight: $microformat-summary-font-weight; }
-
-  abbr {
-    cursor: default;
-    text-decoration: $microformat-abbr-font-decoration;
-    font-weight: $microformat-abbr-font-weight;
-    border: none;
-    padding: $microformat-abbr-padding;
-  }
-}
-
-// Only include these styles if you want them.
-@if $include-print-styles {
-  /*
-   * Print styles.
-   *
-   * Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
-   * Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
-  */
-  .print-only { display: none !important; }
-  @media print {
-    * {
-      background: transparent !important;
-      color: #000 !important; /* Black prints faster: h5bp.com/s */
-      box-shadow: none !important;
-      text-shadow: none !important;
-    }
-
-    a,
-    a:visited { text-decoration: underline;}
-    a[href]:after { content: " (" attr(href) ")"; }
-
-    abbr[title]:after { content: " (" attr(title) ")"; }
-
-    // Don't show links for images, or javascript/internal links
-    .ir a:after,
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after { content: ""; }
-
-    pre,
-    blockquote {
-      border: 1px solid #999;
-      page-break-inside: avoid;
-    }
-
-    thead { display: table-header-group; /* h5bp.com/t */ }
-
-    tr,
-    img { page-break-inside: avoid; }
-
-    img { max-width: 100% !important; }
-
-    @page { margin: 0.5cm; }
-
-    p,
-    h2,
-    h3 {
-      orphans: 3;
-      widows: 3;
-    }
-
-    h2,
-    h3 { page-break-after: avoid; }
-
-    .hide-on-print { display: none !important; }
-    .print-only { display: block !important; }
-    .hide-for-print { display: none !important; }
-    .show-for-print { display: inherit !important; }
-  }
-}
-:@has_childrenT:@options{ :@children[{o:Sass::Tree::CommentNode
-;i:
-@type:silent;	@:@value["%/*
- * Typography Variables
- * */;
-[ o;
-;i
-;;;	@;["5/* We use these to control header font styles */;
-[ o:Sass::Tree::VariableNode;i:@guarded"!default:
-@expro:Sass::Script::List	;i:@separator:
-comma;	@;[
-o:Sass::Script::String	;i;:string;	@;"Helvetica Neueo;	;i;;;	@;"Helveticao;	;i;:identifier;	@;"Helveticao;	;i;;;	@;"
-Arialo;	;i;;;	@;"sans-serif:
-@name"header-font-family;	@;
-[ o;;i;"!default;o;	;i;;;	@;"	bold;"header-font-weight;	@;
-[ o;;i;"!default;o;	;i;;;	@;"normal;"header-font-style;	@;
-[ o;;i;"!default;o:Sass::Script::Color	;i:@attrs{	:redi':
-alphai:
-greeni':	bluei';	@;0;"header-font-color;	@;
-[ o;;i;"!default;o:Sass::Script::Number;i:@numerator_units[ :@original"1.4;	@;f1.3999999999999999 ff:@denominator_units[ ;"header-line-height;	@;
-[ o;;i;"!default;o;;i; ["em;!"
-0.2em;	@;f0.20000000000000001 ôö;"[ ;"header-top-margin;	@;
-[ o;;i;"!default;o;;i; ["em;!"
-0.5em;	@;f0.5;"[ ;"header-bottom-margin;	@;
-[ o;;i;"!default;o;	;i;;;	@;"optimizeLegibility;"header-text-rendering;	@;
-[ o;
-;i;;;	@;["4/* We use these to control header font sizes */;
-[ o;;i;"!default;o:Sass::Script::Funcall;i:@keywords{ ;"emCalc;	@:@splat0:
-@args[o;;i; ["px;!"	44px;	@;i1;"[ ;"h1-font-size;	@;
-[ o;;i;"!default;o;#;i;${ ;"emCalc;	@;%0;&[o;;i; ["px;!"	37px;	@;i*;"[ ;"h2-font-size;	@;
-[ o;;i;"!default;o;#;i;${ ;"emCalc;	@;%0;&[o;;i; ["px;!"	27px;	@;i ;"[ ;"h3-font-size;	@;
-[ o;;i;"!default;o;#;i;${ ;"emCalc;	@;%0;&[o;;i; ["px;!"	23px;	@;i;"[ ;"h4-font-size;	@;
-[ o;;i;"!default;o;#;i;${ ;"emCalc;	@;%0;&[o;;i; ["px;!"	18px;	@;i;"[ ;"h5-font-size;	@;
-[ o;;i;"!default;o;;i; ["em;!"1em;	@;i;"[ ;"h6-font-size;	@;
-[ o;
-;i;;;	@;["3/* These control how subheaders are styled. */;
-[ o;;i;"!default;o;;i; [ ;!"1.4;	@;f1.3999999999999999 ff;"@9;"subheader-line-height;	@;
-[ o;;i;"!default;o;#;i;${ ;"lighten;	@;%0;&[o:Sass::Script::Variable	;i:@underscored_name"header_font_color;"header-font-color;	@o;;i; ["%;!"30%;	@;i#;"[ ;"subheader-font-color;	@;
-[ o;;i;"!default;o;;i; [ ;!"300;	@;i,;"@9;"subheader-font-weight;	@;
-[ o;;i ;"!default;o;;i ; ["em;!"
-0.2em;	@;f0.20000000000000001 ôö;"[ ;"subheader-top-margin;	@;
-[ o;;i!;"!default;o;;i!; ["em;!"
-0.5em;	@;f0.5;"[ ;"subheader-bottom-margin;	@;
-[ o;
-;i#;;;	@;["$/* A general <small> styling */;
-[ o;;i$;"!default;o;;i$; ["%;!"60%;	@;iA;"[ ;"small-font-size;	@;
-[ o;;i%;"!default;o;#;i%;${ ;"lighten;	@;%0;&[o;'	;i%;("header_font_color;"header-font-color;	@o;;i%; ["%;!"30%;	@;i#;"[ ;"small-font-color;	@;
-[ o;
-;i';;;	@;["+/* We use these to style paragraphs */;
-[ o;;i(;"!default;o;	;i(;;;	@;"inherit;"paragraph-font-family;	@;
-[ o;;i);"!default;o;	;i);;;	@;"normal;"paragraph-font-weight;	@;
-[ o;;i*;"!default;o;;i*; ["em;!"1em;	@;i;"[ ;"paragraph-font-size;	@;
-[ o;;i+;"!default;o;;i+; [ ;!"1.6;	@;f1.6000000000000001 ôö;"@9;"paragraph-line-height;	@;
-[ o;;i,;"!default;o;#;i,;${ ;"emCalc;	@;%0;&[o;;i,; ["px;!"	20px;	@;i;"[ ;"paragraph-margin-bottom;	@;
-[ o;;i-;"!default;o;#;i-;${ ;"emCalc;	@;%0;&[o;;i-; ["px;!"	14px;	@;i;"[ ;"paragraph-aside-font-size;	@;
-[ o;;i.;"!default;o;;i.; [ ;!"	1.35;	@;f1.3500000000000001 ôö;"@9;" paragraph-aside-line-height;	@;
-[ o;;i/;"!default;o;	;i/;;;	@;"italic;"paragraph-aside-font-style;	@;
-[ o;
-;i1;;;	@;[",/* We use these to style <code> tags */;
-[ o;;i2;"!default;o;#;i2;${ ;"darken;	@;%0;&[o;'	;i2;("alert_color;"alert-color;	@o;;i2; ["%;!"15%;	@;i;"[ ;"code-color;	@;
-[ o;;i3;"!default;o;	;i3;;;	@;[	o;	;i3;;;	@;"Consolaso;	;i3;;;	@;"Liberation Monoo;	;i3;;;	@;"Couriero;	;i3;;;	@;"monospace;"code-font-family;	@;
-[ o;;i4;"!default;o;	;i4;;;	@;"	bold;"code-font-weight;	@;
-[ o;
-;i6;;;	@;["(/* We use these to style anchors */;
-[ o;;i7;"!default;o;	;i7;;;	@;"	none;"anchor-text-decoration;	@;
-[ o;;i8;"!default;o;'	;i8;("primary_color;"primary-color;	@;"anchor-font-color;	@;
-[ o;;i9;"!default;o;#;i9;${ ;"darken;	@;%0;&[o;'	;i9;("primary_color;"primary-color;	@o;;i9; ["%;!"5%;	@;i
-;"[ ;"anchor-font-color-hover;	@;
-[ o;
-;i;;;;	@;["1/* We use these to style the <hr> element */;
-[ o;;i<;"!default;o;;i<; ["px;!"1px;	@;i;"[ ;"hr-border-width;	@;
-[ o;;i=;"!default;o;	;i=;;;	@;"
-solid;"hr-border-style;	@;
-[ o;;i>;"!default;o;	;i>;{	;i›;i;i›;i›;	@;0;"hr-border-color;	@;
-[ o;;i?;"!default;o;#;i?;${ ;"emCalc;	@;%0;&[o;;i?; ["px;!"	20px;	@;i;"[ ;"hr-margin;	@;
-[ o;
-;iA;;;	@;["&/* We use these to style lists */;
-[ o;;iB;"!default;o;	;iB;;;	@;"outside;"list-style-position;	@;
-[ o;;iC;"!default;o;#;iC;${ ;"emCalc;	@;%0;&[o;;iC; ["px;!"	18px;	@;i;"[ ;"list-side-margin;	@;
-[ o;;iD;"!default;o;	;iD;;;	@;"	bold;""definition-list-header-weight;	@;
-[ o;;iE;"!default;o;;iE; ["em;!"
-0.3em;	@;f0.29999999999999999 33;"[ ;")definition-list-header-margin-bottom;	@;
-[ o;;iF;"!default;o;#;iF;${ ;"emCalc;	@;%0;&[o;;iF; ["px;!"	12px;	@;i;"[ ;""definition-list-margin-bottom;	@;
-[ o;
-;iH;;;	@;[",/* We use these to style blockquotes */;
-[ o;;iI;"!default;o;#;iI;${ ;"lighten;	@;%0;&[o;'	;iI;("header_font_color;"header-font-color;	@o;;iI; ["%;!"30%;	@;i#;"[ ;"blockquote-font-color;	@;
-[ o;;iJ;"!default;o;	;iJ;:
-space;	@;[	o;#;iJ;${ ;"emCalc;	@;%0;&[o;;iJ; ["px;!"9px;	@;i;"[ o;#;iJ;${ ;"emCalc;	@;%0;&[o;;iJ; ["px;!"	20px;	@;i;"[ o;;iJ; [ ;!"0;	@;i ;"@9o;#;iJ;${ ;"emCalc;	@;%0;&[o;;iJ; ["px;!"	19px;	@;i;"[ ;"blockquote-padding;	@;
-[ o;;iK;"!default;o;	;iK;;);	@;[o;;iK; ["px;!"1px;	@;i;"[ o;	;iK;;;	@;"
-solido;	;iK;{	;i›;i;i›;i›;	@;0;"blockquote-border;	@;
-[ o;;iL;"!default;o;#;iL;${ ;"emCalc;	@;%0;&[o;;iL; ["px;!"	13px;	@;i;"[ ;"blockquote-cite-font-size;	@;
-[ o;;iM;"!default;o;#;iM;${ ;"lighten;	@;%0;&[o;'	;iM;("header_font_color;"header-font-color;	@o;;iM; ["%;!"20%;	@;i;"[ ;"blockquote-cite-font-color;	@;
-[ o;;iN;"!default;o;'	;iN;("blockquote_cite_font_color;"blockquote-cite-font-color;	@;"blockquote-cite-link-color;	@;
-[ o;
-;iP;;;	@;["/* Acronym styles */;
-[ o;;iQ;"!default;o;	;iQ;;);	@;[o;;iQ; ["px;!"1px;	@;i;"[ o;	;iQ;;;	@;"dottedo;	;iQ;{	;i›;i;i›;i›;	@;0;"acronym-underline;	@;
-[ o;
-;iS;;;	@;["5/* We use these to control padding and margin */;
-[ o;;iT;"!default;o;	;iT;;);	@;[o;#;iT;${ ;"emCalc;	@;%0;&[o;;iT; ["px;!"	10px;	@;i;"[ o;#;iT;${ ;"emCalc;	@;%0;&[o;;iT; ["px;!"	12px;	@;i;"[ ;"microformat-padding;	@;
-[ o;;iU;"!default;o;	;iU;;);	@;[	o;;iU; [ ;!"0;	@;i ;"@9o;;iU; [ ;!"0;	@;i ;"@9o;#;iU;${ ;"emCalc;	@;%0;&[o;;iU; ["px;!"	20px;	@;i;"[ o;;iU; [ ;!"0;	@;i ;"@9;"microformat-margin;	@;
-[ o;
-;iW;;;	@;["4/* We use these to control the border styles */;
-[ o;;iX;"!default;o;;iX; ["px;!"1px;	@;i;"[ ;"microformat-border-width;	@;
-[ o;;iY;"!default;o;	;iY;;;	@;"
-solid;"microformat-border-style;	@;
-[ o;;iZ;"!default;o;	;iZ;{	;i›;i;i›;i›;	@;0;"microformat-border-color;	@;
-[ o;
-;i\;;;	@;["8/* We use these to control full name font styles */;
-[ o;;i];"!default;o;	;i];;;	@;"	bold;"%microformat-fullname-font-weight;	@;
-[ o;;i^;"!default;o;#;i^;${ ;"emCalc;	@;%0;&[o;;i^; ["px;!"	15px;	@;i;"[ ;"#microformat-fullname-font-size;	@;
-[ o;
-;i`;;;	@;["9/* We use this to control the summary font styles */;
-[ o;;ia;"!default;o;	;ia;;;	@;"	bold;"$microformat-summary-font-weight;	@;
-[ o;
-;ic;;;	@;["./* We use this to control abbr padding */;
-[ o;;id;"!default;o;	;id;;);	@;[o;;id; [ ;!"0;	@;i ;"@9o;#;id;${ ;"emCalc;	@;%0;&[o;;id; ["px;!"1px;	@;i;"[ ;"microformat-abbr-padding;	@;
-[ o;
-;if;;;	@;["2/* We use this to control abbr font styles */;
-[ o;;ig;"!default;o;	;ig;;;	@;"	bold;"!microformat-abbr-font-weight;	@;
-[ o;;ih;"!default;o;	;ih;;;	@;"	none;"%microformat-abbr-font-decoration;	@;
-[ o;
-;ik;;;	@;["(/*
- * Typography Placeholders
- * */;
-[ o:Sass::Tree::RuleNode;io:
-@rule["
-%lead:@parsed_ruleso:"Sass::Selector::CommaSequence;io:@members[o:Sass::Selector::Sequence;.[o:#Sass::Selector::SimpleSequence
-;io;.[o: Sass::Selector::Placeholder;io;["	lead:@filename" :@sourceso:Set:
-@hash{ :@subject0;2@;2@;T;	@:
-@tabsi ;
-[o:Sass::Tree::PropNode:@prop_syntax:new;ip;["font-size;	@;o:Sass::Script::Operation
-:@operator:	plus;ip:@operand2o;#;ip;${ ;"emCalc;	@;%0;&[o;;ip; ["px;!"
-3.5px;	@;f3.5;"[ :@operand1o;'	;ip;("paragraph_font_size;"paragraph-font-size;	@;	@;7i ;
-[ o;8;9;:;iq;["line-height;	@;o;;;;	@;"1.6;7i ;
-[ o;*;it;+["%subheader;,o;-;it;.[o;/;.[o;0
-;it;.[o;1;it;["subheader;2" ;3o;4;5{ ;60;2@);2@);T;	@;7i ;
-[
-o;8;9;:;iu;["line-height;	@;o;'	;iu;("subheader_line_height;"subheader-line-height;	@;7i ;
-[ o;8;9;:;iv;["
-color;	@;o;'	;iv;("subheader_font_color;"subheader-font-color;	@;7i ;
-[ o;8;9;:;iw;["font-weight;	@;o;'	;iw;("subheader_font_weight;"subheader-font-weight;	@;7i ;
-[ o;8;9;:;ix;["margin-top;	@;o;'	;ix;("header_top_margin;"header-top-margin;	@;7i ;
-[ o;8;9;:;iy;["margin-bottom;	@;o;'	;iy;("header_bottom_margin;"header-bottom-margin;	@;7i ;
-[ o;
-;i};:normal;	@;["/* Typography resets */;
-[ o;*;iã;+["Zdiv,
-dl,
-dt,
-dd,
-ul,
-ol,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-form,
-p,
-blockquote,
-th,
-td;,o;-;iã;.[o;/;.[o;0
-;iã;.[o:Sass::Selector::Element	;iã;["div;2" :@namespace0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["dl;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["dt;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["dd;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["ul;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["ol;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["li;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["h1;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["h2;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["h3;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["h4;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["h5;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["h6;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["pre;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["	form;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["p;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["blockquote;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["th;2@`;B0;3o;4;5{ ;60;2@`o;/;.["
-o;0
-;iã;.[o;A	;iã;["td;2@`;B0;3o;4;5{ ;60;2@`;2@`;T;	@;7i ;
-[o;8;9;:;iå;["margin;	@;o;;;;	@;"0;7i ;
-[ o;8;9;:;iç;["padding;	@;o;;;;	@;"0;7i ;
-[ o;8;9;:;ié;["direction;	@;o;'	;ié;("text_direction;"text-direction;	@;7i ;
-[ o;
-;ië;;@;	@;["/* Default Link Styles */;
-[ o;*;ií;+["a;,o;-;ií;.[o;/;.[o;0
-;ií;.[o;A	;ií;["a;2" ;B0;3o;4;5{ ;60;2@;;2@;;T;	@;7i ;
-[
-o;8;9;:;iì;["
-color;	@;o;'	;iì;("anchor_font_color;"anchor-font-color;	@;7i ;
-[ o;8;9;:;iî;["text-decoration;	@;o;'	;iî;("anchor_text_decoration;"anchor-text-decoration;	@;7i ;
-[ o;8;9;:;iï;["line-height;	@;o;;;;	@;"inherit;7i ;
-[ o;*;iò;+["&:hover,
-  &:focus;,o;-;iò;.[o;/;.[o;0
-;iò;.[o:Sass::Selector::Parent;iò;2" o:Sass::Selector::Pseudo
-;iò;:
-class;["
-hover;2@]:	@arg0;3o;4;5{ ;60;2@]o;/;.["
-o;0
-;iò;.[o;C;iò;2@]o;D
-;iò;;E;["
-focus;2@];F0;3o;4;5{ ;60;2@];2@];T;	@;7i ;
-[o;8;9;:;iò;["
-color;	@;o;'	;iò;("anchor_font_color_hover;"anchor-font-color-hover;	@;7i ;
-[ o;*;iö;+["img;,o;-;iö;.[o;/;.[o;0
-;iö;.[o;A	;iö;["img;2" ;B0;3o;4;5{ ;60;2@Ç;2@Ç;T;	@;7i ;
-[o;8;9;:;iö;["border;	@;o;;;;	@;"	none;7i ;
-[ o;
-;iù;;@;	@;["#/* Default paragraph styles */;
-[ o;*;iû;+["p;,o;-;iû;.[o;/;.[o;0
-;iû;.[o;A	;iû;["p;2" ;B0;3o;4;5{ ;60;2@ú;2@ú;T;	@;7i ;
-[o;8;9;:;iü;["font-family;	@;o;'	;iü;("paragraph_font_family;"paragraph-font-family;	@;7i ;
-[ o;8;9;:;i†;["font-weight;	@;o;'	;i†;("paragraph_font_weight;"paragraph-font-weight;	@;7i ;
-[ o;8;9;:;i°;["font-size;	@;o;'	;i°;("paragraph_font_size;"paragraph-font-size;	@;7i ;
-[ o;8;9;:;i¢;["line-height;	@;o;'	;i¢;("paragraph_line_height;"paragraph-line-height;	@;7i ;
-[ o;8;9;:;i£;["margin-bottom;	@;o;'	;i£;("paragraph_margin_bottom;"paragraph-margin-bottom;	@;7i ;
-[ o;*;i•;+["&.lead;,o;-;i•;.[o;/;.[o;0
-;i•;.[o;C;i•;2" o:Sass::Selector::Class;i•;["	lead;2@Õ;3o;4;5{ ;60;2@Õ;2@Õ;T;	@;7i ;
-[o:Sass::Tree::ExtendNode
-;i•:@selector["%"	lead;	@:@optionalF;
-[ o;*;iß;+["& aside;,o;-;iß;.[o;/;.[o;0
-;iß;.[o;C;iß;2" ;3o;4;5{ ;60;2@„o;0
-;iß;.[o;A	;iß;["
-aside;2@„;B0;3o;4;5{ ;60;2@„;2@„;T;	@;7i ;
-[o;8;9;:;i®;["font-size;	@;o;'	;i®;("paragraph_aside_font_size;"paragraph-aside-font-size;	@;7i ;
-[ o;8;9;:;i©;["line-height;	@;o;'	;i©;(" paragraph_aside_line_height;" paragraph-aside-line-height;	@;7i ;
-[ o;8;9;:;i™;["font-style;	@;o;'	;i™;("paragraph_aside_font_style;"paragraph-aside-font-style;	@;7i ;
-[ o;
-;iÆ;;@;	@;[" /* Default header styles */;
-[ o;*;iØ;+["h1, h2, h3, h4, h5, h6;,o;-;iØ;.[o;/;.[o;0
-;iØ;.[o;A	;iØ;["h1;2" ;B0;3o;4;5{ ;60;2@o;/;.[o;0
-;iØ;.[o;A	;iØ;["h2;2@;B0;3o;4;5{ ;60;2@o;/;.[o;0
-;iØ;.[o;A	;iØ;["h3;2@;B0;3o;4;5{ ;60;2@o;/;.[o;0
-;iØ;.[o;A	;iØ;["h4;2@;B0;3o;4;5{ ;60;2@o;/;.[o;0
-;iØ;.[o;A	;iØ;["h5;2@;B0;3o;4;5{ ;60;2@o;/;.[o;0
-;iØ;.[o;A	;iØ;["h6;2@;B0;3o;4;5{ ;60;2@;2@;T;	@;7i ;
-[o;8;9;:;i∞;["font-family;	@;o;'	;i∞;("header_font_family;"header-font-family;	@;7i ;
-[ o;8;9;:;i±;["font-weight;	@;o;'	;i±;("header_font_weight;"header-font-weight;	@;7i ;
-[ o;8;9;:;i≤;["font-style;	@;o;'	;i≤;("header_font_style;"header-font-style;	@;7i ;
-[ o;8;9;:;i≥;["
-color;	@;o;'	;i≥;("header_font_color;"header-font-color;	@;7i ;
-[ o;8;9;:;i¥;["text-rendering;	@;o;'	;i¥;("header_text_rendering;"header-text-rendering;	@;7i ;
-[ o;8;9;:;iµ;["line-height;	@;o;'	;iµ;("header_line_height;"header-line-height;	@;7i ;
-[ o;8;9;:;i∂;["margin-top;	@;o;'	;i∂;("header_top_margin;"header-top-margin;	@;7i ;
-[ o;8;9;:;i∑;["margin-bottom;	@;o;'	;i∑;("header_bottom_margin;"header-bottom-margin;	@;7i ;
-[ o;*;iπ;+["
-small;,o;-;iπ;.[o;/;.[o;0
-;iπ;.[o;A	;iπ;["
-small;2" ;B0;3o;4;5{ ;60;2@à;2@à;T;	@;7i ;
-[o;8;9;:;i∫;["font-size;	@;o;'	;i∫;("small_font_size;"small-font-size;	@;7i ;
-[ o;8;9;:;iª;["
-color;	@;o;'	;iª;("small_font_color;"small-font-color;	@;7i ;
-[ o;8;9;:;iº;["line-height;	@;o;;;;	@;"0;7i ;
-[ o;*;i¿;+["h1;,o;-;i¿;.[o;/;.[o;0
-;i¿;.[o;A	;i¿;["h1;2" ;B0;3o;4;5{ ;60;2@¨;2@¨;T;	@;7i ;
-[o;8;9;:;i¿;["font-size;	@;o;'	;i¿;("h1_font_size;"h1-font-size;	@;7i ;
-[ o;*;i¡;+["h2;,o;-;i¡;.[o;/;.[o;0
-;i¡;.[o;A	;i¡;["h2;2" ;B0;3o;4;5{ ;60;2@√;2@√;T;	@;7i ;
-[o;8;9;:;i¡;["font-size;	@;o;'	;i¡;("h2_font_size;"h2-font-size;	@;7i ;
-[ o;*;i¬;+["h3;,o;-;i¬;.[o;/;.[o;0
-;i¬;.[o;A	;i¬;["h3;2" ;B0;3o;4;5{ ;60;2@⁄;2@⁄;T;	@;7i ;
-[o;8;9;:;i¬;["font-size;	@;o;'	;i¬;("h3_font_size;"h3-font-size;	@;7i ;
-[ o;*;i√;+["h4;,o;-;i√;.[o;/;.[o;0
-;i√;.[o;A	;i√;["h4;2" ;B0;3o;4;5{ ;60;2@Ò;2@Ò;T;	@;7i ;
-[o;8;9;:;i√;["font-size;	@;o;'	;i√;("h4_font_size;"h4-font-size;	@;7i ;
-[ o;*;iƒ;+["h5;,o;-;iƒ;.[o;/;.[o;0
-;iƒ;.[o;A	;iƒ;["h5;2" ;B0;3o;4;5{ ;60;2@;2@;T;	@;7i ;
-[o;8;9;:;iƒ;["font-size;	@;o;'	;iƒ;("h5_font_size;"h5-font-size;	@;7i ;
-[ o;*;i≈;+["h6;,o;-;i≈;.[o;/;.[o;0
-;i≈;.[o;A	;i≈;["h6;2" ;B0;3o;4;5{ ;60;2@;2@;T;	@;7i ;
-[o;8;9;:;i≈;["font-size;	@;o;'	;i≈;("h6_font_size;"h6-font-size;	@;7i ;
-[ o;*;i«;+[".subheader;,o;-;i«;.[o;/;.[o;0
-;i«;.[o;G;i«;["subheader;2" ;3o;4;5{ ;60;2@6;2@6;T;	@;7i ;
-[o;H
-;i«;I["%"subheader;	@;JF;
-[ o;*;i…;+["hr;,o;-;i…;.[o;/;.[o;0
-;i…;.[o;A	;i…;["hr;2" ;B0;3o;4;5{ ;60;2@K;2@K;T;	@;7i ;
-[
-o;8;9;:;i ;["border;	@;o;	;i ;;);	@;[o;'	;i ;("hr_border_style;"hr-border-style;	@o;'	;i ;("hr_border_color;"hr-border-color;	@;7i ;
-[ o;8;9;:;iÀ;["border-width;	@;o;	;iÀ;;);	@;[o;'	;iÀ;("hr_border_width;"hr-border-width;	@o;;iÀ; [ ;!"0;	@;i ;"@9o;;iÀ; [ ;!"0;	@;i ;"@9;7i ;
-[ o;8;9;:;iÃ;["
-clear;	@;o;;;;	@;"	both;7i ;
-[ o;8;9;:;iÕ;["margin;	@;o;	;iÕ;;);	@;[o;'	;iÕ;("hr_margin;"hr-margin;	@o;;iÕ; [ ;!"0;	@;i ;"@9o;;
-;<:
-minus;iÕ;>o;#;iÕ;${ ;"emCalc;	@;%0;&[o;;iÕ; ["px;!"1px;	@;i;"[ ;?o;'	;iÕ;("hr_margin;"hr-margin;	@;	@;7i ;
-[ o;8;9;:;iŒ;["height;	@;o;;;;	@;"0;7i ;
-[ o;
-;i—;;@;	@;["&/* Helpful Typography Defaults */;
-[ o;*;i”;+["
-em,
-i;,o;-;i”;.[o;/;.[o;0
-;i”;.[o;A	;i”;["em;2" ;B0;3o;4;5{ ;60;2@üo;/;.["
-o;0
-;i”;.[o;A	;i”;["i;2@ü;B0;3o;4;5{ ;60;2@ü;2@ü;T;	@;7i ;
-[o;8;9;:;i‘;["font-style;	@;o;;;;	@;"italic;7i ;
-[ o;8;9;:;i’;["line-height;	@;o;;;;	@;"inherit;7i ;
-[ o;*;iŸ;+["strong,
-b;,o;-;iŸ;.[o;/;.[o;0
-;iŸ;.[o;A	;iŸ;["strong;2" ;B0;3o;4;5{ ;60;2@≈o;/;.["
-o;0
-;iŸ;.[o;A	;iŸ;["b;2@≈;B0;3o;4;5{ ;60;2@≈;2@≈;T;	@;7i ;
-[o;8;9;:;i⁄;["font-weight;	@;o;;;;	@;"	bold;7i ;
-[ o;8;9;:;i€;["line-height;	@;o;;;;	@;"inherit;7i ;
-[ o;*;iﬁ;+["
-small;,o;-;iﬁ;.[o;/;.[o;0
-;iﬁ;.[o;A	;iﬁ;["
-small;2" ;B0;3o;4;5{ ;60;2@Î;2@Î;T;	@;7i ;
-[o;8;9;:;iﬂ;["font-size;	@;o;'	;iﬂ;("small_font_size;"small-font-size;	@;7i ;
-[ o;8;9;:;i‡;["line-height;	@;o;;;;	@;"inherit;7i ;
-[ o;*;i„;+["	code;,o;-;i„;.[o;/;.[o;0
-;i„;.[o;A	;i„;["	code;2" ;B0;3o;4;5{ ;60;2@;2@;T;	@;7i ;
-[o;8;9;:;i‰;["font-family;	@;o;'	;i‰;("code_font_family;"code-font-family;	@;7i ;
-[ o;8;9;:;iÂ;["font-weight;	@;o;'	;iÂ;("code_font_weight;"code-font-weight;	@;7i ;
-[ o;8;9;:;iÊ;["
-color;	@;o;'	;iÊ;("code_color;"code-color;	@;7i ;
-[ o;
-;iÈ;;@;	@;["/* Lists */;
-[ o;*;iÏ;+["ul,
-ol,
-dl;,o;-;iÏ;.[o;/;.[o;0
-;iÏ;.[o;A	;iÏ;["ul;2" ;B0;3o;4;5{ ;60;2@1o;/;.["
-o;0
-;iÏ;.[o;A	;iÏ;["ol;2@1;B0;3o;4;5{ ;60;2@1o;/;.["
-o;0
-;iÏ;.[o;A	;iÏ;["dl;2@1;B0;3o;4;5{ ;60;2@1;2@1;T;	@;7i ;
-[	o;8;9;:;iÌ;["font-size;	@;o;'	;iÌ;("paragraph_font_size;"paragraph-font-size;	@;7i ;
-[ o;8;9;:;iÓ;["line-height;	@;o;'	;iÓ;("paragraph_line_height;"paragraph-line-height;	@;7i ;
-[ o;8;9;:;iÔ;["margin-bottom;	@;o;'	;iÔ;("paragraph_margin_bottom;"paragraph-margin-bottom;	@;7i ;
-[ o;8;9;:;i;["list-style-position;	@;o;'	;i;("list_style_position;"list-style-position;	@;7i ;
-[ o;
-;iÛ;;@;	@;["/* Unordered Lists */;
-[ o;*;iÙ;+["ul;,o;-;iÙ;.[o;/;.[o;0
-;iÙ;.[o;A	;iÙ;["ul;2" ;B0;3o;4;5{ ;60;2@u;2@u;T;	@;7i ;
-[o;*;iı;+["li;,o;-;iı;.[o;/;.[o;0
-;iı;.[o;A	;iı;["li;2" ;B0;3o;4;5{ ;60;2@Ö;2@Ö;T;	@;7i ;
-[o;*;i˜;+["ul,
-    ol;,o;-;i˜;.[o;/;.[o;0
-;i˜;.[o;A	;i˜;["ul;2" ;B0;3o;4;5{ ;60;2@ïo;/;.["
-o;0
-;i˜;.[o;A	;i˜;["ol;2@ï;B0;3o;4;5{ ;60;2@ï;2@ï;T;	@;7i ;
-[	o;8;9;:;i¯;["margin-o;'	;i¯;("default_float;"default-float;	@;	@;o;'	;i¯;("list_side_margin;"list-side-margin;	@;7i ;
-[ o;8;9;:;i˘;["margin-bottom;	@;o;;;;	@;"0;7i ;
-[ o;8;9;:;i˙;["font-size;	@;o;;;;	@;"1em;7i ;
-[ o;
-;i˙;;@;	@;["+/* Override nested font-size change */;
-[ o;*;iˇ;+["#&.square,
-  &.circle,
-  &.disc;,o;-;iˇ;.[o;/;.[o;0
-;iˇ;.[o;C;iˇ;2" o;G;iˇ;["square;2@«;3o;4;5{ ;60;2@«o;/;.["
-o;0
-;iˇ;.[o;C;iˇ;2@«o;G;iˇ;["circle;2@«;3o;4;5{ ;60;2@«o;/;.["
-o;0
-;iˇ;.[o;C;iˇ;2@«o;G;iˇ;["	disc;2@«;3o;4;5{ ;60;2@«;2@«;T;	@;7i ;
-[o;8;9;:;iˇ;["margin-o;'	;iˇ;("default_float;"default-float;	@;	@;o;'	;iˇ;("list_side_margin;"list-side-margin;	@;7i ;
-[ o;*;i ;+["
-li ul;,o;-;i ;.[o;/;.[o;0
-;i ;.[o;A	;i ;["li;2" ;B0;3o;4;5{ ;60;2@˙o;0
-;i ;.[o;A	;i ;["ul;2@˙;B0;3o;4;5{ ;60;2@˙;2@˙;T;	@;7i ;
-[o;8;9;:;i ;["list-style;	@;o;;;;	@;"inherit;7i ;
-[ o;*;i;+["&.square;,o;-;i;.[o;/;.[o;0
-;i;.[o;C;i;2" o;G;i;["square;2@;3o;4;5{ ;60;2@;2@;T;	@;7i ;
-[o;8;9;:;i;["list-style-type;	@;o;;;;	@;"square;7i ;
-[ o;*;i;+["&.circle;,o;-;i;.[o;/;.[o;0
-;i;.[o;C;i;2" o;G;i;["circle;2@,;3o;4;5{ ;60;2@,;2@,;T;	@;7i ;
-[o;8;9;:;i;["list-style-type;	@;o;;;;	@;"circle;7i ;
-[ o;*;i;+["&.disc;,o;-;i;.[o;/;.[o;0
-;i;.[o;C;i;2" o;G;i;["	disc;2@C;3o;4;5{ ;60;2@C;2@C;T;	@;7i ;
-[o;8;9;:;i;["list-style-type;	@;o;;;;	@;"	disc;7i ;
-[ o;*;i;+["&.no-bullet;,o;-;i;.[o;/;.[o;0
-;i;.[o;C;i;2" o;G;i;["no-bullet;2@Z;3o;4;5{ ;60;2@Z;2@Z;T;	@;7i ;
-[o;8;9;:;i;["list-style;	@;o;;;;	@;"	none;7i ;
-[ o;
-;i	;;@;	@;["/* Ordered Lists */;
-[ o;*;i
-;+["ol;,o;-;i
-;.[o;/;.[o;0
-;i
-;.[o;A	;i
-;["ol;2" ;B0;3o;4;5{ ;60;2@w;2@w;T;	@;7i ;
-[o;8;9;:;i
-;["margin-o;'	;i
-;("default_float;"default-float;	@;	@;o;'	;i
-;("list_side_margin;"list-side-margin;	@;7i ;
-[ o;*;i;+["li;,o;-;i;.[o;/;.[o;0
-;i;.[o;A	;i;["li;2" ;B0;3o;4;5{ ;60;2@ë;2@ë;T;	@;7i ;
-[o;*;i;+["ul,
-    ol;,o;-;i;.[o;/;.[o;0
-;i;.[o;A	;i;["ul;2" ;B0;3o;4;5{ ;60;2@°o;/;.["
-o;0
-;i;.[o;A	;i;["ol;2@°;B0;3o;4;5{ ;60;2@°;2@°;T;	@;7i ;
-[o;8;9;:;i;["margin-o;'	;i;("default_float;"default-float;	@;	@;o;'	;i;("list_side_margin;"list-side-margin;	@;7i ;
-[ o;8;9;:;i;["margin-bottom;	@;o;;;;	@;"0;7i ;
-[ o;
-;i;;@;	@;["/* Definition Lists */;
-[ o;*;i;+["dl;,o;-;i;.[o;/;.[o;0
-;i;.[o;A	;i;["dl;2" ;B0;3o;4;5{ ;60;2@œ;2@œ;T;	@;7i ;
-[o;*;i;+["dt;,o;-;i;.[o;/;.[o;0
-;i;.[o;A	;i;["dt;2" ;B0;3o;4;5{ ;60;2@ﬂ;2@ﬂ;T;	@;7i ;
-[o;8;9;:;i;["margin-bottom;	@;o;'	;i;(")definition_list_header_margin_bottom;")definition-list-header-margin-bottom;	@;7i ;
-[ o;8;9;:;i;["font-weight;	@;o;'	;i;(""definition_list_header_weight;""definition-list-header-weight;	@;7i ;
-[ o;*;i;+["dd;,o;-;i;.[o;/;.[o;0
-;i;.[o;A	;i;["dd;2" ;B0;3o;4;5{ ;60;2@˝;2@˝;T;	@;7i ;
-[o;8;9;:;i;["margin-bottom;	@;o;'	;i;(""definition_list_margin_bottom;""definition-list-margin-bottom;	@;7i ;
-[ o;
-;i;;@;	@;["/* Abbreviations */;
-[ o;*;i;+["abbr,
-acronym;,o;-;i;.[o;/;.[o;0
-;i;.[o;A	;i;["	abbr;2" ;B0;3o;4;5{ ;60;2@	o;/;.["
-o;0
-;i;.[o;A	;i;["acronym;2@	;B0;3o;4;5{ ;60;2@	;2@	;T;	@;7i ;
-[
-o;8;9;:;i ;["text-transform;	@;o;;;;	@;"uppercase;7i ;
-[ o;8;9;:;i!;["font-size;	@;o;;;;	@;"90%;7i ;
-[ o;8;9;:;i";["
-color;	@;o;'	;i";("body_font_color;"body-font-color;	@;7i ;
-[ o;8;9;:;i#;["border-bottom;	@;o;'	;i#;("acronym_underline;"acronym-underline;	@;7i ;
-[ o;8;9;:;i$;["cursor;	@;o;;;;	@;"	help;7i ;
-[ o;*;i&;+["	abbr;,o;-;i&;.[o;/;.[o;0
-;i&;.[o;A	;i&;["	abbr;2" ;B0;3o;4;5{ ;60;2@R	;2@R	;T;	@;7i ;
-[o;8;9;:;i';["text-transform;	@;o;;;;	@;"	none;7i ;
-[ o;
-;i*;;@;	@;["/* Blockquotes */;
-[ o;*;i+;+["blockquote;,o;-;i+;.[o;/;.[o;0
-;i+;.[o;A	;i+;["blockquote;2" ;B0;3o;4;5{ ;60;2@l	;2@l	;T;	@;7i ;
-[	o;8;9;:;i,;["margin;	@;o;	;i,;;);	@;[o;;i,; [ ;!"0;	@;i ;"@9o;;i,; [ ;!"0;	@;i ;"@9o;'	;i,;("paragraph_margin_bottom;"paragraph-margin-bottom;	@;7i ;
-[ o;8;9;:;i-;["padding;	@;o;'	;i-;("blockquote_padding;"blockquote-padding;	@;7i ;
-[ o;8;9;:;i.;["border-o;'	;i.;("default_float;"default-float;	@;	@;o;'	;i.;("blockquote_border;"blockquote-border;	@;7i ;
-[ o;*;i0;+["	cite;,o;-;i0;.[o;/;.[o;0
-;i0;.[o;A	;i0;["	cite;2" ;B0;3o;4;5{ ;60;2@ú	;2@ú	;T;	@;7i ;
-[
-o;8;9;:;i1;["display;	@;o;;;;	@;"
-block;7i ;
-[ o;8;9;:;i2;["font-size;	@;o;'	;i2;("blockquote_cite_font_size;"blockquote-cite-font-size;	@;7i ;
-[ o;8;9;:;i3;["
-color;	@;o;'	;i3;("blockquote_cite_font_color;"blockquote-cite-font-color;	@;7i ;
-[ o;*;i4;+["&:before;,o;-;i4;.[o;/;.[o;0
-;i4;.[o;C;i4;2" o;D
-;i4;;E;["before;2@æ	;F0;3o;4;5{ ;60;2@æ	;2@æ	;T;	@;7i ;
-[o;8;9;:;i5;["content;	@;o;;;;	@;""\2014 \0020";7i ;
-[ o;*;i9;+["a,
-    a:visited;,o;-;i9;.[o;/;.[o;0
-;i9;.[o;A	;i9;["a;2" ;B0;3o;4;5{ ;60;2@◊	o;/;.["
-o;0
-;i9;.[o;A	;i9;["a;2@◊	;B0o;D
-;i9;;E;["visited;2@◊	;F0;3o;4;5{ ;60;2@◊	;2@◊	;T;	@;7i ;
-[o;8;9;:;i:;["
-color;	@;o;'	;i:;("blockquote_cite_link_color;"blockquote-cite-link-color;	@;7i ;
-[ o;*;i?;+["blockquote,
-blockquote p;,o;-;i?;.[o;/;.[o;0
-;i?;.[o;A	;i?;["blockquote;2" ;B0;3o;4;5{ ;60;2@˚	o;/;.["
-o;0
-;i?;.[o;A	;i?;["blockquote;2@˚	;B0;3o;4;5{ ;60;2@˚	o;0
-;i?;.[o;A	;i?;["p;2@˚	;B0;3o;4;5{ ;60;2@˚	;2@˚	;T;	@;7i ;
-[o;8;9;:;i@;["line-height;	@;o;'	;i@;("paragraph_line_height;"paragraph-line-height;	@;7i ;
-[ o;8;9;:;iA;["
-color;	@;o;'	;iA;("blockquote_font_color;"blockquote-font-color;	@;7i ;
-[ o;
-;iD;;@;	@;["/* Microformats */;
-[ o;*;iE;+[".vcard;,o;-;iE;.[o;/;.[o;0
-;iE;.[o;G;iE;["
-vcard;2" ;3o;4;5{ ;60;2@.
-;2@.
-;T;	@;7i ;
-[o;8;9;:;iF;["display;	@;o;;;;	@;"inline-block;7i ;
-[ o;8;9;:;iG;["margin;	@;o;'	;iG;("microformat_margin;"microformat-margin;	@;7i ;
-[ o;8;9;:;iH;["border;	@;o;	;iH;;);	@;[o;'	;iH;("microformat_border_width;"microformat-border-width;	@o;'	;iH;("microformat_border_style;"microformat-border-style;	@o;'	;iH;("microformat_border_color;"microformat-border-color;	@;7i ;
-[ o;8;9;:;iI;["padding;	@;o;'	;iI;("microformat_padding;"microformat-padding;	@;7i ;
-[ o;*;iK;+["li;,o;-;iK;.[o;/;.[o;0
-;iK;.[o;A	;iK;["li;2" ;B0;3o;4;5{ ;60;2@a
-;2@a
-;T;	@;7i ;
-[o;8;9;:;iL;["margin;	@;o;;;;	@;"0;7i ;
-[ o;8;9;:;iM;["display;	@;o;;;;	@;"
-block;7i ;
-[ o;*;iO;+[".fn;,o;-;iO;.[o;/;.[o;0
-;iO;.[o;G;iO;["fn;2" ;3o;4;5{ ;60;2@}
-;2@}
-;T;	@;7i ;
-[o;8;9;:;iP;["font-weight;	@;o;'	;iP;("%microformat_fullname_font_weight;"%microformat-fullname-font-weight;	@;7i ;
-[ o;8;9;:;iQ;["font-size;	@;o;'	;iQ;("#microformat_fullname_font_size;"#microformat-fullname-font-size;	@;7i ;
-[ o;*;iU;+[".vevent;,o;-;iU;.[o;/;.[o;0
-;iU;.[o;G;iU;["vevent;2" ;3o;4;5{ ;60;2@õ
-;2@õ
-;T;	@;7i ;
-[o;*;iV;+[".summary;,o;-;iV;.[o;/;.[o;0
-;iV;.[o;G;iV;["summary;2" ;3o;4;5{ ;60;2@´
-;2@´
-;T;	@;7i ;
-[o;8;9;:;iV;["font-weight;	@;o;'	;iV;("$microformat_summary_font_weight;"$microformat-summary-font-weight;	@;7i ;
-[ o;*;iX;+["	abbr;,o;-;iX;.[o;/;.[o;0
-;iX;.[o;A	;iX;["	abbr;2" ;B0;3o;4;5{ ;60;2@¬
-;2@¬
-;T;	@;7i ;
-[
-o;8;9;:;iY;["cursor;	@;o;;;;	@;"default;7i ;
-[ o;8;9;:;iZ;["text-decoration;	@;o;'	;iZ;("%microformat_abbr_font_decoration;"%microformat-abbr-font-decoration;	@;7i ;
-[ o;8;9;:;i[;["font-weight;	@;o;'	;i[;("!microformat_abbr_font_weight;"!microformat-abbr-font-weight;	@;7i ;
-[ o;8;9;:;i\;["border;	@;o;;;;	@;"	none;7i ;
-[ o;8;9;:;i];["padding;	@;o;'	;i];("microformat_abbr_padding;"microformat-abbr-padding;	@;7i ;
-[ o;
-;ia;;;	@;["6/* Only include these styles if you want them. */;
-[ u:Sass::Tree::IfNodeÿ[o:Sass::Script::Variable	:
-@lineib:@underscored_name"include_print_styles:
-@name"include-print-styles:@options{ 0[o:Sass::Tree::CommentNode
-;ic:
-@type:normal;	@	:@value["π/*
- * Print styles.
- *
- * Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
- * Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
-*/:@children[ o:Sass::Tree::RuleNode;ii:
-@rule[".print-only:@parsed_ruleso:"Sass::Selector::CommaSequence;ii:@members[o:Sass::Selector::Sequence;[o:#Sass::Selector::SimpleSequence
-;ii;[o:Sass::Selector::Class;ii;["print-only:@filename" :@sourceso:Set:
-@hash{ :@subject0;@;@:@has_childrenT;	@	:
-@tabsi ;[o:Sass::Tree::PropNode:@prop_syntax:new;ii;["display;	@	;o:Sass::Script::String;:identifier;	@	;"none !important;i ;[ o:Sass::Tree::MediaNode;ij;T;	@	;" ;i ;[o;;ik;["*;o;;ik;[o;;[o;
-;ik;[o:Sass::Selector::Universal;ik;" :@namespace0;o;;{ ;0;@2;@2;T;	@	;i ;[
-o;;; ;il;["background;	@	;o;!;;";	@	;"transparent !important;i ;[ o;;; ;im;["
-color;	@	;o;!;;";	@	;"#000 !important;i ;[ o;
-
-;im;;;	@	;["*/* Black prints faster: h5bp.com/s */;[ o;;; ;in;["box-shadow;	@	;o;!;;";	@	;"none !important;i ;[ o;;; ;io;["text-shadow;	@	;o;!;;";	@	;"none !important;i ;[ o;;is;["a,
-    a:visited;o;;is;[o;;[o;
-;is;[o:Sass::Selector::Element	;is;["a;" ;%0;o;;{ ;0;@^o;;["
-o;
-;is;[o;&	;is;["a;@^;%0o:Sass::Selector::Pseudo
-;is;:
-class;["visited;@^:	@arg0;o;;{ ;0;@^;@^;T;	@	;i ;[o;;; ;is;["text-decoration;	@	;o;!;;";	@	;"underline;i ;[ o;;it;["a[href]:after;o;;it;[o;;[o;
-;it;[o;&	;it;["a;" ;%0o:Sass::Selector::Attribute:@operator0;it;["	href:@flags0;0;@|;%0o;'
-;it;;(;["
-after;@|;)0;o;;{ ;0;@|;@|;T;	@	;i ;[o;;; ;it;["content;	@	;o:Sass::Script::List	;it:@separator:
-space;	@	;[o;!	;it;:string;	@	;" (o:Sass::Script::Funcall;it:@keywords{ ;"	attr;	@	:@splat0:
-@args[o;!	;it;;";	@	;"	hrefo;!	;it;;0;	@	;");i ;[ o;;iv;["abbr[title]:after;o;;iv;[o;;[o;
-;iv;[o;&	;iv;["	abbr;" ;%0o;*;+0;iv;["
-title;,0;0;@¢;%0o;'
-;iv;;(;["
-after;@¢;)0;o;;{ ;0;@¢;@¢;T;	@	;i ;[o;;; ;iv;["content;	@	;o;-	;iv;.;/;	@	;[o;!	;iv;;0;	@	;" (o;1;iv;2{ ;"	attr;	@	;30;4[o;!	;iv;;";	@	;"
-titleo;!	;iv;;0;	@	;");i ;[ o;
-
-;ix;:silent;	@	;["D/* Don't show links for images, or javascript/internal links */;[ o;;i{;["J.ir a:after,
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after;o;;i{;[o;;[o;
-;i{;[o;;i{;["ir;" ;o;;{ ;0;@Ão;
-;i{;[o;&	;i{;["a;@Ã;%0o;'
-;i{;;(;["
-after;@Ã;)0;o;;{ ;0;@Ão;;["
-o;
-;i{;[o;&	;i{;["a;@Ã;%0o;*;+"^=;i{;["	href;,0;[""javascript:";@Ã;%0o;'
-;i{;;(;["
-after;@Ã;)0;o;;{ ;0;@Ão;;["
-o;
-;i{;[o;&	;i{;["a;@Ã;%0o;*;+"^=;i{;["	href;,0;[""#";@Ã;%0o;'
-;i{;;(;["
-after;@Ã;)0;o;;{ ;0;@Ã;@Ã;T;	@	;i ;[o;;; ;i{;["content;	@	;o;!;;";	@	;""";i ;[ o;;i~;["pre,
-    blockquote;o;;i~;[o;;[o;
-;i~;[o;&	;i~;["pre;" ;%0;o;;{ ;0;@o;;["
-o;
-;i~;[o;&	;i~;["blockquote;@;%0;o;;{ ;0;@;@;T;	@	;i ;[o;;; ;i;["border;	@	;o;!;;";	@	;"1px solid #999;i ;[ o;;; ;iÄ;["page-break-inside;	@	;o;!;;";	@	;"
-avoid;i ;[ o;;iÉ;["
-thead;o;;iÉ;[o;;[o;
-;iÉ;[o;&	;iÉ;["
-thead;" ;%0;o;;{ ;0;@8;@8;T;	@	;i ;[o;;; ;iÉ;["display;	@	;o;!;;";	@	;"table-header-group;i ;[ o;
-
-;iÉ;;;	@	;["/* h5bp.com/t */;[ o;;iÜ;["tr,
-    img;o;;iÜ;[o;;[o;
-;iÜ;[o;&	;iÜ;["tr;" ;%0;o;;{ ;0;@Ro;;["
-o;
-;iÜ;[o;&	;iÜ;["img;@R;%0;o;;{ ;0;@R;@R;T;	@	;i ;[o;;; ;iÜ;["page-break-inside;	@	;o;!;;";	@	;"
-avoid;i ;[ o;;ià;["img;o;;ià;[o;;[o;
-;ià;[o;&	;ià;["img;" ;%0;o;;{ ;0;@r;@r;T;	@	;i ;[o;;; ;ià;["max-width;	@	;o;!;;";	@	;"100% !important;i ;[ o:Sass::Tree::DirectiveNode
-;iä;T;	@	;["
-@page;[o;;; ;iä;["margin;	@	;o;!;;";	@	;"
-0.5cm;i ;[ o;;ié;["p,
-    h2,
-    h3;o;;ié;[o;;[o;
-;ié;[o;&	;ié;["p;" ;%0;o;;{ ;0;@ío;;["
-o;
-;ié;[o;&	;ié;["h2;@í;%0;o;;{ ;0;@ío;;["
-o;
-;ié;[o;&	;ié;["h3;@í;%0;o;;{ ;0;@í;@í;T;	@	;i ;[o;;; ;iè;["orphans;	@	;o;!;;";	@	;"3;i ;[ o;;; ;iê;["widows;	@	;o;!;;";	@	;"3;i ;[ o;;iî;["h2,
-    h3;o;;iî;[o;;[o;
-;iî;[o;&	;iî;["h2;" ;%0;o;;{ ;0;@¬o;;["
-o;
-;iî;[o;&	;iî;["h3;@¬;%0;o;;{ ;0;@¬;@¬;T;	@	;i ;[o;;; ;iî;["page-break-after;	@	;o;!;;";	@	;"
-avoid;i ;[ o;;iñ;[".hide-on-print;o;;iñ;[o;;[o;
-;iñ;[o;;iñ;["hide-on-print;" ;o;;{ ;0;@‚;@‚;T;	@	;i ;[o;;; ;iñ;["display;	@	;o;!;;";	@	;"none !important;i ;[ o;;ió;[".print-only;o;;ió;[o;;[o;
-;ió;[o;;ió;["print-only;" ;o;;{ ;0;@¯;@¯;T;	@	;i ;[o;;; ;ió;["display;	@	;o;!;;";	@	;"block !important;i ;[ o;;iò;[".hide-for-print;o;;iò;[o;;[o;
-;iò;[o;;iò;["hide-for-print;" ;o;;{ ;0;@;@;T;	@	;i ;[o;;; ;iò;["display;	@	;o;!;;";	@	;"none !important;i ;[ o;;iô;[".show-for-print;o;;iô;[o;;[o;
-;iô;[o;;iô;["show-for-print;" ;o;;{ ;0;@$;@$;T;	@	;i ;[o;;; ;iô;["display;	@	;o;!;;";	@	;"inherit !important;i ;[ :@query["
-print
