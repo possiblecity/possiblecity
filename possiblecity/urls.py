@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/profile/', include('possiblecity.profiles.urls.manage')),
 
+    url(r'^people/', include('possiblecity.profiles.urls.display')),    
 
     #projects
     #url(r'^float/', include('possiblecity.projects.urls.share')),

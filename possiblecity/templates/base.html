@@ -97,8 +97,9 @@
                       <ul class="right">
                          {% if user.is_authenticated %}
                          <li class="has-dropdown">
-                             <a href="#">{{ user.username }}</a> 
+                             <a href="#"><img width="25" src={{ user.socialaccount_set.all.0.get_avatar_url }} \>{{ user.username }}</a> 
                              <ul class="dropdown">
+                                  <li><a href="{% url 'profile_detail' user.username %}">Profile</a></li>
                                   <li><a href="{% url 'profile_update' %}">Settings</a></li> 
                                   <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
                              </ul>
