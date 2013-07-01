@@ -1,6 +1,8 @@
 # text/models.py
 import datetime
 
+from markdown import markdown
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -118,9 +120,8 @@ class Entry(EntryBase):
     text_html = models.TextField(editable=False, blank=True)
     
     def render_markup(self):
-        # @@@todo: add alternative markup options
-        self.text_html = self.text
-        self.excerpt_html = self.excerpt
+        self.text_html = markdown(self.text)
+        self.excerpt_html = markdown(self.excerpt)
 
     @permalink
     def get_absolute_url(self):
@@ -148,7 +149,7 @@ class EntryImage(models.Model):
 
     """
     
-    original = models.ImageField(upload_to='images/original/')
+    file = models.ImageField(upload_to='images/blog/')
     title = models.CharField(max_length=255, blank=True)
     caption = models.CharField(max_length=255, blank=True)
 
