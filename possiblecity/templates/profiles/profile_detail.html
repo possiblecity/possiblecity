@@ -1,0 +1,24 @@
+{% extends "profiles/base.html" %}
+
+
+{% block head_title %}
+Profile for {{ profile.user.username }}
+{% endblock %}
+
+{% block content %}
+    <header>
+        {% if profile.photo %}
+        <img width="100px" src={{ profile.photo.url }} \>
+        {% endif %}
+        <h1>{% if profile.user.first_name and profile.user.last_name %}
+                {{ profile.user.first_name }} {{ profile.user.last_name }}
+            {% else %}
+                {{ profile.user.username }}
+            {% endif %}
+        </h1>
+    </header>
+    {% if profile.about %}
+        <p>{{ profile.about }}</p>
+    {% endif %}    
+    
+{% endblock %}

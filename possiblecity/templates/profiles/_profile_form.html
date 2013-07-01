@@ -1,0 +1,14 @@
+
+{% if profile_form.is_multipart %}
+    <form method="POST" enctype="multipart/form-data" action="{% url "profile_update" %}">
+{% else %}
+    <form method="POST" action="{% url "profile_update" %}">
+{% endif %}
+    {{ form }}
+    {% csrf_token %}
+    <div class="form-actions">
+        <a href="" 
+class="btn">Cancel</a>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+</form>

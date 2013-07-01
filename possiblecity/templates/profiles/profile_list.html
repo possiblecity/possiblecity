@@ -1,0 +1,22 @@
+{% extends "agents/base.html" %}
+
+{% load account_tags %}
+{% load pagination_tags %}
+
+{% block head_title_page %}All Agents{% endblock head_title_page %}
+
+{% block content %}
+    <header>
+        <h1>Agents of Change</h1>
+        <p>All profiles on the site</p>
+    </header>
+    
+    {% autopaginate profiles %}
+    <ul>
+    {% for profile in profiles %}
+        <li><a href="{% url "agents_profile_detail" profile.user.username %}">{{ profile }}</a></li>
+    {% endfor %}
+    </ul>
+     {% paginate %}
+    
+{% endblock content %}
