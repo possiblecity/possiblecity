@@ -1,22 +1,27 @@
-{% block doctype %}<!doctype html>{% endblock doctype %}
-<html class="no-js" lang="en">
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 {% block head %}
+
     {% block metadata %}
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="author" content="Possible City">
     {% endblock metadata %}
-    <title>
-        {% block head_title %}
-            {% block head_title_site %}Possible City{% endblock head_title_site %}
-            {% block head_title_section %}{% endblock head_title_section %}
-            {% block head_title_page %}{% endblock head_title_page %}
-        {% endblock head_title %}
-    </title>
+        {% block mobile_viewport %}
+       <meta name="viewport" content="width=device-width" />
+    {% endblock mobile_viewport %}
 
-    {% block mobile-viewport %}
-    {% endblock mobile-viewport %}
+
+    <title>
+    {% block head_title %}
+        {% block head_title_site %}Possible City{% endblock head_title_site %}
+        {% block head_title_section %}{% endblock head_title_section %}
+        {% block head_title_page %}{% endblock head_title_page %}
+    {% endblock head_title %}
+    </title>
 
     {% block favicons %}
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -25,8 +30,8 @@
     {% block css %}
         {% load compress %}
         {% compress css %}
-        <link type="text/css" rel="stylesheet" 
-             href="{{ STATIC_URL }}css/possiblecity.css" charset="utf-8">
+        <link rel="stylesheet" href="{% static "css/normalize.css" %}" />
+        <link rel="stylesheet" href="{% static "css/app.css" %}" />
         {% endcompress %}
     {% endblock css %}
 
@@ -35,8 +40,7 @@
         <script type="text/javascript" 
             src="http://use.typekit.com/rna3gum.js"></script>
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-        <script src="{{ STATIC_URL }}js/libs/modernizr.dev.js"></script>
-        <script src="{{ STATIC_URL }}js/libs/respond.min.js"></script>
+        <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
     {% endblock js_head %}
 
     {% block extra_head %}
@@ -51,55 +55,72 @@
         {% block site_header_container %}
         <header class="site-header">
             {% block site_header %}
-            <nav class="site-nav">
-    				{% block identity %}
-        			<div class="identity">
-            			<h1><a href="{% url 'home' %}">Possiblecity</a></h1>
-            			<a class="logo" href="{% url 'home' %}">
-                			<img src="{{ STATIC_URL }}images/logo.png" />
-            			</a>
-        			</div>
-    				{% endblock identity %}
-    				{% block section-nav %}
-        			<ul class="section-nav">
-	                {% block nav_lotxlot %}
-            			<li id="nav-lotxlot">
-                			<a href="{% url 'lotxlot' %}">
+            <nav class="site-nav top-bar">
+                 {% block identity %}
+                 <ul class="title-area">
+                     <li class="name"
+                         <h1><a href="{% url 'home' %}">Possiblecity</a></h1>
+                      </li>
+                      <li class="toggle-topbar menu-icon">
+                          <a href="#">
+                              <span>Menu</span>
+                          </a>
+                      </li>
+        	 </ul>
+                 {% endblock identity %}
+                 {% block section_nav %}
+                 <section class="top-bar-section">
+        	     {% block app_nav %}
+                      <ul class="left">
+            	         <li id="nav-lotxlot">
+                             <a href="{% url 'lotxlot' %}">
                     		<span>lot<strong>x</strong>lot</span>
-                			</a>
-            			</li>
-                    {% endblock nav_lotxlot %}
-                    {% block nav_blog %}
-            			<li id="nav-blog">
-                			<a href="{% url 'text_entry_index'  %}">
-                    			<span>Blog</span>
-          				</a>
-            			</li>
-                    {% endblock nav_blog %}
-                    {% block nav_about %}
-            			<li id="nav-about">
-                			<a href="{% url 'about' %}">
-                    			<span>About</span>
-                			</a>
-            			</li>
-                    {% endblock nav_about %}
-                		{% block nav_twitter %}
-            			<li id="nav-twitter">
-                			<a href="https://twitter.com/PossibleCity">
-                    			<span>@PossibleCity</span>
-                			</a>
-            			</li>
-            			{% endblock nav_twitter %}
-            			{% block nav_search %}
-					{% endblock nav_search %}
-        			</ul>
-     			{% endblock section-nav  %}
-     		</nav>
+                             </a>
+            		 </li>
+                     </ul>
+                     {% endblock app_nav %}
+                     {% block info_nav %}
+                     <ul class="right">
+            	         <li id="nav-blog">
+                             <a href="{% url 'text_entry_index'  %}">
+                    	           <span>Blog</span>
+                             </a>
+                         </li>
+            		 <li id="nav-about">
+                              <a href="{% url 'about' %}">
+                                  <span>About</span>
+                              </a>
+                         </li>
+                      </ul>     	
+                      {% endblock info_nav %}
+                      {% block auth_nav %}
+                      <ul class="right">
+                         {% if user.is_authenticated %}
+                         <li class="has-dropdown">
+                             <a href="#"><img width="25" src={{ user.socialaccount_set.all.0.get_avatar_url }} \>{{ user.username }}</a> 
+                             <ul class="dropdown">
+                                  <li><a href="{% url 'profile_detail' user.username %}">Profile</a></li>
+                                  <li><a href="{% url 'profile_update' %}">Settings</a></li> 
+                                  <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                             </ul>
+                         </li>
+                         {% else %} 
+                         <li><a href="{% url 'account_login' %}">Sign In</a></li>
+                         <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                         {% endif %}                 
+                      </ul>
+                      {% endblock auth_nav %}		
+                  {% endblock section_nav  %}
+            </nav>
             {% endblock site_header %}
         </header>
         {% endblock site_header_container %}
-        {% block layout %}
-        {% endblock layout %}
+        {% block page_content_container %}
+            <div class="content">
+             {% block page_content %}
+             {% endblock page_content %}
+            </div>
+        {% endblock page_content_container %}
         {% block site_footer_container %}
         <footer class="site-footer">
             {% block site_footer %}
@@ -111,18 +132,31 @@
     </div>
 {% endblock site_container %}
         
-{% block js_body %}
-    {% block js_frameworks %}
-        <script 
-            src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
-        </script>
-        <script>
-            window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.6.2.min.js">\x3C/script>')
-        </script>
-    {% endblock js_frameworks %}
-
+{% block js_body %}    
     {% block js_global %}
-    {% endblock js_global %}
+    <script>
+         document.write('<script src=' +
+         ('__proto__' in {} ? '{% static "js/vendor/zepto" %}' : '{% static "js/vendor/jquery" %}') +
+         '.js><\/script>')
+     </script>
+     <script src="{% static "js/foundation/foundation.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.alerts.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.clearing.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.cookie.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.joyride.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.magellan.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.orbit.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.placeholder.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.section.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
+     <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
+     <script>
+          $(document).foundation();
+     </script>
+     {% endblock js_global %}
 
     {% block js_local %}
     {% endblock js_local %}

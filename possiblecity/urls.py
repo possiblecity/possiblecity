@@ -32,25 +32,20 @@ urlpatterns = patterns('',
         name='about'),    
 
     # people
-    #url(r'^account/', include('account.urls')),
-    #url(r'^profiles/', include('possiblecity.profiles.urls')),    
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/profile/', include('possiblecity.profiles.urls.manage')),
+
+    url(r'^people/', include('possiblecity.profiles.urls.display')),    
 
     #projects
-    #url(r'^float/', include('possiblecity.float.urls.share')),
-    #url(r'^ground/', include('possiblecity.float.urls.explore')),
+    #url(r'^float/', include('possiblecity.projects.urls.share')),
+    #url(r'^ground/', include('possiblecity.projects.urls.explore')),
 
-    # network
-    #url(r"^connect/", include("phileo.urls")),
-    
     # places
     url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
 
 
     # search
-
-    # api
-    #(r'^api/', include(lot_resource.urls)),
-
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

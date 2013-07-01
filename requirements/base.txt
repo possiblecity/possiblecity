@@ -1,0 +1,15 @@
+# python modules
+pillow
+psycopg2
+requests
+vectorformats
+geopy
+
+Django>=1.5
+
+# django third party modules
+django-allauth
+south
+django-taggit
+django-compressor
+django-pagination

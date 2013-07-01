@@ -1,6 +1,6 @@
 {% extends "text/base.html" %}
 {% block head_title_page %}: Posts {% endblock head_title_page %}
-{% block layout %}
+{% block page_content %}
 <div class="page-content">
     {% block entry_list %}
         {% for entry in entry_list %}
@@ -58,4 +58,4 @@
       {% endif %}
     {% endblock pagination %}
 </div>
-{% endblock layout %}
+{% endblock page_content %}
