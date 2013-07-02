@@ -1,4 +1,4 @@
-# portfolio/views/share.py
+# projects/views/share.py
 
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -11,9 +11,10 @@ from django.template import RequestContext
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DeleteView
 
-from possiblecity.views import LoginRequiredMixin
-from possiblecity.float.models import Project, ProjectImage
-from possiblecity.float.forms import ProjectForm, ProjectImageForm
+from braces.views import LoginRequiredMixin
+
+from .models import Project, ProjectImage
+from .forms import ProjectForm, ProjectVisualForm
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     form_class = ProjectForm
@@ -38,7 +39,6 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProjectForm
-    template_name = 'float/create_project.html'
     #success_url = 'success'
 
     def dispatch(self, *args, **kwargs):
@@ -63,12 +63,12 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         return context_data
 
 
-class ProjectImageCreateView(CreateView):
-    form_class = ProjectImageForm
-    template_name = 'float/create_image.html'
-    success_url = 'success'
+class ProjectVisualCreateView(CreateView):
+    form_class = ProjectVisualForm
+    #template_name = 'float/create_image.html'
+    #success_url = 'success'
 
     def dispatch(self, *args, **kwargs):
         self.project = get_object_or_404(Project, pk=kwargs['project_id'])
-        return super(ProjectImageCreateView, self).dispatch(*args, **kwargs)
+        return super(ProjectVisualCreateView, self).dispatch(*args, **kwargs)
 

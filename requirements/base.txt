@@ -13,3 +13,4 @@ south
 django-taggit
 django-compressor
 django-pagination
+django-validated-file
