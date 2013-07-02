@@ -9,8 +9,10 @@ Django>=1.5
 
 # django third party modules
 django-allauth
-south
-django-taggit
+django-braces
 django-compressor
 django-pagination
+django-positions
+django-taggit
 django-validated-file
+south
