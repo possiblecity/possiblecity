@@ -5,9 +5,9 @@ from .models import Project, ProjectVisual
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ('title', 'tagline', 'description', 'size')
+        fields = ('title', 'tagline', 'description', 'size', 'tags')
 
 class ProjectVisualForm(forms.ModelForm):
     class Meta:
         model = ProjectVisual
-        fields = ['file', 'title', 'caption', 'order', 'lead']
+        #fields = ['file', 'title', 'caption', 'order', 'lead']

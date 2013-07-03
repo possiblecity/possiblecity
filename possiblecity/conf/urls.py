@@ -22,7 +22,7 @@ urlpatterns = patterns('',
         name='about'),
     
     # blog
-    url(r'^blog/', include('possiblecity.text.urls')),
+    url(r'^blog/', include('apps.text.urls')),
 
     # homepage
     url(r'^$', RedirectView.as_view(url='/blog'),name='home'),
@@ -33,13 +33,13 @@ urlpatterns = patterns('',
 
     # people
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^accounts/profile/', include('possiblecity.profiles.urls.manage')),
+    url(r'^accounts/profile/', include('apps.profiles.urls.manage')),
 
-    url(r'^people/', include('possiblecity.profiles.urls.display')),    
+    url(r'^people/', include('apps.profiles.urls.display')),    
 
     #projects
-    url(r'^float/share/', include('possiblecity.projects.urls.share')),
-    url(r'^float/explore/', include('possiblecity.projects.urls.explore')),
+    url(r'^float/share/', include('apps.projects.urls.share')),
+    url(r'^float/explore/', include('apps.projects.urls.explore')),
 
     # places
     #url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),

@@ -5,8 +5,8 @@ from django.views.generic import YearArchiveView, MonthArchiveView,\
     WeekArchiveView, DayArchiveView, TodayArchiveView,\
     DetailView, ListView, ArchiveIndexView
 
-from possiblecity.text.models import Entry
-from possiblecity.text.views import *
+from .models import Entry
+from .views import *
 
 urlpatterns = patterns('',
     url(r'^$',

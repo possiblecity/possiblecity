@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 
 from taggit.managers import TaggableManager
 
-from possiblecity.text.managers import EntryManager
+from .managers import EntryManager
 
 class TitleBase(models.Model):
     """

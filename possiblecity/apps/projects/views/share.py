@@ -2,6 +2,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.http import HttpResponseForbidden
 from django.shortcuts import render_to_response
@@ -13,16 +14,17 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 
 from braces.views import LoginRequiredMixin
 
-from .models import Project, ProjectImage
-from .forms import ProjectForm, ProjectVisualForm
+from ..models import Project, ProjectVisual
+from ..forms import ProjectForm, ProjectVisualForm
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     form_class = ProjectForm
-    #success_url = 'success'
+    template_name = 'projects/project_create_form.html'
+    success_url = reverse_lazy('projects_project_list')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.agent = self.request.user
+        self.object.user = self.request.user
         self.object.slug = str(slugify(form.cleaned_data['title']))
         self.object.featured = False
         self.object.enable_comments = False
@@ -39,6 +41,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProjectForm
+    template_name = 'projects/project_update_form.html'
     #success_url = 'success'
 
     def dispatch(self, *args, **kwargs):

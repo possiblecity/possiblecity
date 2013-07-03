@@ -8,6 +8,7 @@ geopy
 Django>=1.5
 
 # django third party modules
+easy_thumbnails
 django-allauth
 django-braces
 django-compressor

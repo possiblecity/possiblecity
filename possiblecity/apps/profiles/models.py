@@ -42,5 +42,6 @@ def user_post_save(sender, **kwargs):
 
 @receiver(social_account_added)
 def populate_profile(sender, **kwargs):
-    u = UserProfile( >>FACEBOOK_DATA<< )
-    u.save()
+    pass
+    #u = UserProfile( >>FACEBOOK_DATA<< )
+    #u.save()

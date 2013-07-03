@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from possiblecity.core.views import SuperuserRequiredMixin
+from braces.views import SuperuserRequiredMixin
 from .models import Entry, EntryImage
 from .forms import EntryForm
 

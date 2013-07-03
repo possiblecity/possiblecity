@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.models import User
 
-from possiblecity.core.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin
 from .models import Profile
 from .forms import ProfileForm
 

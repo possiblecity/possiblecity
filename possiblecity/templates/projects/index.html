@@ -1,16 +1,16 @@
-{% extends "float/base.html" %}
+{% extends "projects/base.html" %}
 {% block page_content %}
 <header>
     <h1>Float</h1>
 </header>
 <div>
 {% if user.is_authenticated %}
-<p><a href="{% url float_project_create %}">Float Your Idea</a></p>
+<p><a href="{% url 'projects_project_create' %}">Float Your Idea</a></p>
 {% else %}
 <p>A Possible City account is required to continue.</p>
-<p><a href="{% url account_signup %}">Create an Account</a></p>
+<p><a href="{% url 'account_signup' %}">Create an Account</a></p>
 <p>Already have an account?</p>
-<p><a href="{% url account_login %}?next={% url float_project_create %}">Login</a></p>
+<p><a href="{% url 'account_login' %}?next={% url 'projects_project_create' %}">Login</a></p>
 {% endif %}
 </div>
 {% endblock page_content %}

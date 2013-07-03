@@ -2,7 +2,7 @@
 
 from django.views.generic import TemplateView, DetailView, ListView
 
-from possiblecity.float.models import Project
+from ..models import Project
 
 class ExploreView(DetailView):
     pass

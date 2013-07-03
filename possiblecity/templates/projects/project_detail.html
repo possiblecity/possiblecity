@@ -1,19 +1,18 @@
-{% extends "float/base.html" %}
+{% extends "projects/base.html" %}
 
-{% load bootstrap_tags %}
 {% block subnav %}
 <section>
-<h2><a href="{{ project.agent.get_absolute_url }}">
-{{ project.agent.profile.full_name }}</a></h2>
-<p>{{ project.agent.username }}</p>
-<p>{{ project.agent }}</p>
-{{ project.agent.profile.about }}
+<h2><a href="{{ project.user.get_absolute_url }}">
+{{ project.user.profile.full_name }}</a></h2>
+<p>{{ project.user.username }}</p>
+<p>{{ project.user }}</p>
+{{ project.user.profile.about }}
 </section>
 {% endblock subnav %}
 
 {% block head_title %}{{ project.title }}{% endblock %}
 
-{% block body %}
+{% block page_content %}
     {% block page_header %}
     {% endblock page_header %}
     {% block project %}
@@ -23,7 +22,7 @@
         </header>
         <section id="slideshow">
             <ul id="gallery">
-                {% for image in project.images.all %}
+                {% for image in project.projectvisual_set.all %}
                 {% if image.public %}
                 <li>
                     <img src="{{ image.large.url }}"
@@ -44,10 +43,10 @@
         <section id="classification"> </section>
         <section id="description">
             <h2>{{ project.tagline }}</h2>
-            {{ project.description|safe }}
+            {{ project.description_html|safe }}
         </section>
     </article>
     {% block comments %}
     {% endblock comments %}
     {% endblock project %}
-{% endblock body %}
+{% endblock page_content %}

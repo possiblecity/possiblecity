@@ -2,9 +2,9 @@
 
 from django.conf.urls.defaults import *
 
-from possiblecity.float.views.explore import ProjectDetailView, ProjectListView
+from ..views.explore import ProjectDetailView, ProjectListView
 
 urlpatterns = patterns('',
-    url(r'^projects/$', ProjectListView.as_view(), name='float_project_list'),
-    url(r'^project/(?P<slug>[-\w]+)/$', ProjectDetailView.as_view(), name = 'float_project_detail'),
+    url(r'^$', ProjectListView.as_view(), name='projects_project_list'),
+    url(r'^project/(?P<slug>[-\w]+)/$', ProjectDetailView.as_view(), name = 'projects_project_detail'),
 )

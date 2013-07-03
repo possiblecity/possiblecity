@@ -9,9 +9,9 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.text import slugify
 
-from positions import PositionField
+from positions.fields import PositionField
 from taggit.managers import TaggableManager
-from validatedfile import ValidatedFileField
+from validatedfile.fields import ValidatedFileField
 
 from .managers import ProjectQuerySet
 
@@ -38,11 +38,11 @@ class Project(models.Model):
     SIZE_MEDIUM = 2
     SIZE_LARGE = 3
     SIZE_EXTRALARGE = 4
-    STATUS_CHOICES = (
+    SIZE_CHOICES = (
         (SIZE_SMALL, 'Small'),
-        (STATUS_MEDIUM, 'Medium'),
-        (STATUS_LARGE, 'Large'),
-        (STATUS_EXTRALARGE, 'Extra Large'),
+        (SIZE_MEDIUM, 'Medium'),
+        (SIZE_LARGE, 'Large'),
+        (SIZE_EXTRALARGE, 'Extra Large'),
     )
 
     # Project owner manages these fields
@@ -105,6 +105,10 @@ class ProjectVisual(models.Model):
     """
         An image, video, or animation used to help describe a project.
     """
+    def get_upload_path(instance, filename):
+        return os.path.join('projects', 
+            slugify(instance.project.title), 'visuals',  filename)
+
     file = ValidatedFileField(
                     upload_to = get_upload_path,
                     max_upload_size = 10240,
@@ -124,10 +128,6 @@ class ProjectVisual(models.Model):
     added = models.DateField(auto_now_add=True, editable=False)
     modified = models.DateField(auto_now=True, editable=False)
 
-
-    def get_upload_path(instance, filename):
-        return os.path.join('projects', 
-            slugify(instance.project.title), 'visuals',  filename)
 
     @property
     def filename(self):
