@@ -38,11 +38,11 @@ urlpatterns = patterns('',
     url(r'^people/', include('possiblecity.profiles.urls.display')),    
 
     #projects
-    #url(r'^float/', include('possiblecity.projects.urls.share')),
-    #url(r'^ground/', include('possiblecity.projects.urls.explore')),
+    url(r'^float/share/', include('possiblecity.projects.urls.share')),
+    url(r'^float/explore/', include('possiblecity.projects.urls.explore')),
 
     # places
-    url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
+    #url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
 
 
     # search
