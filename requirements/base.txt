@@ -1,6 +1,6 @@
 # python modules
 pillow
-psycopg2
+#psycopg2
 requests
 vectorformats
 geopy
