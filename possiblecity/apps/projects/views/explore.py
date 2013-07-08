@@ -11,4 +11,4 @@ class ProjectDetailView(DetailView):
     model = Project
 
 class ProjectListView(ListView):
-    queryset = Project._default_manager.order_by('-featured', '-date_end')
+    model = Project

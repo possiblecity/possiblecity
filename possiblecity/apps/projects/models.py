@@ -1,6 +1,6 @@
 # projects/models.py
 
-import datetime
+import datetime, os
 
 from markdown import markdown
 
@@ -111,8 +111,8 @@ class ProjectVisual(models.Model):
 
     file = ValidatedFileField(
                     upload_to = get_upload_path,
-                    max_upload_size = 10240,
-                    content_types = ['image/png', 'image/jpg'])
+                    max_upload_size = 1024000,
+                    content_types = ['image/png', 'image/jpg', 'image/jpeg'])
     title = models.CharField(max_length=100, null=True, blank=True)
     caption = models.CharField(max_length=140, null=True, blank=True)
     

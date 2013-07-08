@@ -1,4 +1,4 @@
-# float/managers.py
+# projects/managers.py
 
 import datetime
 

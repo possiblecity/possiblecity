@@ -240,7 +240,7 @@ THIRD_PARTY_APPS = (
     'allauth', #authentication
     'allauth.account', #authentication
     'allauth.socialaccount', #authentication
-    #'allauth.socialaccount.providers.facebook', #authentication
+    'allauth.socialaccount.providers.facebook', #authentication
     #'allauth.socialaccount.providers.twitter', #authentication
     'compressor', # static file optimization
     #'easy_thumbnails', # image manipulation
@@ -254,7 +254,7 @@ LOCAL_APPS = (
     'apps.core', # general helpers
     'apps.text', # blog
     'apps.projects', # user generated projects
-    #'apps.profiles', # user profiles
+    'apps.profiles', # user profiles
     #'apps.lotxlot',
     #'apps.philadelphia',
 )

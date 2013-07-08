@@ -22,20 +22,13 @@
         </header>
         <section id="slideshow">
             <ul id="gallery">
-                {% for image in project.projectvisual_set.all %}
-                {% if image.public %}
+                {% for visual in project.projectvisual_set.all %}
+                {% if visual.public %}
                 <li>
-                    <img src="{{ image.large.url }}"
-                         width="{{ image.large.width }}"
-                         height="{{ image.large.height }}"
-                         alt="{% if image.caption %}{{ image.caption }}{% else %}{{ image.title }}{% endif %}"
-                         title="{{ image.title }}"/>
-                    <p class="caption">{{ image.caption }}</p>
-                    <a href="{{ image.max.url }}"
-                       class="control zoom"
-                       title="{{ image.caption }}">
-                        <span>+</span>
-                    </a>
+                    <img src="{{ visual.file.url }}"
+                         alt="{% if visual.caption %}{{ visual.caption }}{% else %}{{ image.title }}{% endif %}"
+                         title="{{ visual.title }}"/>
+                    <p class="caption">{{ visual.caption }}</p>
                 </li>
                 {% endif %}
                 {% endfor %}
