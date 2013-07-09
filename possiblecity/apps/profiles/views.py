@@ -17,7 +17,8 @@ class ProfileDetailView(DetailView):
     context_object_name = "profile" 
 
     def get_object(self):
-        self.profile_user = get_object_or_404(User, username=self.kwargs["username"])
+        self.username = self.kwargs["username"]
+        self.profile_user = get_object_or_404(User, username=self.username)
         profile = get_object_or_404(Profile, user=self.profile_user)
         
         #if not self.request.user.has_perm("can_view", obj=profile):
@@ -39,6 +40,13 @@ class ProfileDetailView(DetailView):
         ctx.update(super(ProfileDetailView, self).get_context_data(**kwargs))
         
         return ctx
+
+class ProfileLoginView(LoginRequiredMixin, DetailView):
+    context_object_name = "profile" 
+    def get_object(self, queryset=None):
+        profile = Profile.objects.get(user=self.request.user)
+        return profile
+          
      
 class ProfileCreateView(LoginRequiredMixin, CreateView):
     form_class = ProfileForm

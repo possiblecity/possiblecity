@@ -74,8 +74,9 @@
                       <ul class="left">
             	         <li id="nav-lotxlot">
                     		<span>lot<strong>x</strong>lot</span>
-                             </a>
             		 </li>
+                         <li>Explore Projects</li>
+                         <li>Free Agent</li>
                      </ul>
                      {% endblock app_nav %}
                      {% block info_nav %}
@@ -98,14 +99,28 @@
                          <li class="has-dropdown">
                              <a href="#"><img width="25" src={{ user.socialaccount_set.all.0.get_avatar_url }} \>{{ user.username }}</a> 
                              <ul class="dropdown">
-                                  <li><a href="{% url 'profile_detail' user.username %}">Profile</a></li>
-                                  <li><a href="{% url 'profile_update' %}">Settings</a></li> 
-                                  <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                                  <li><a href="{% url 'profiles_profile_detail' user.username %}">Profile</a></li>
+                                  <li><a href="{% url 'profiles_profile_update' %}">Settings</a></li> 
+                                  <li>
+                                     <a href="{% url 'account_logout' %}"
+                                         data-reveal-id="signout">
+                                         Sign Out</a>
+                                  </li>
                              </ul>
                          </li>
                          {% else %} 
-                         <li><a href="{% url 'account_login' %}">Sign In</a></li>
-                         <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                         <li>
+                            <a href="{% url 'account_login' %}" 
+                                data-reveal-id="login"> 
+                                Sign In
+                            </a>
+                         </li>
+                         <li>
+                            <a href="{% url 'account_signup' %}" 
+                                data-reveal-id="signup">
+                                Sign Up
+                            </a>
+                         </li>
                          {% endif %}                 
                       </ul>
                       {% endblock auth_nav %}		
@@ -174,8 +189,22 @@
         </script>
     {% endblock analytics %}
 {% endblock js_body %}    
-
 {% block extra_body %}
+{% if user.is_authenticated %}
+<div id="signout" class="reveal-modal">
+  {% include "account/_logout.html" %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+{% else %}
+<div id="login" class="reveal-modal">
+  {% include "account/_login.html" %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="signup" class="reveal-modal">
+  {% include "account/_signup.html" %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+{% endif %}
 {% endblock extra_body %}
 </body>
 </html>
