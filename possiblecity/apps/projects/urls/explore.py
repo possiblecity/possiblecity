@@ -1,4 +1,4 @@
-# float/urls/explore.py
+# project/urls/explore.py
 
 from django.conf.urls.defaults import *
 

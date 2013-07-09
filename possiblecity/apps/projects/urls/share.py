@@ -8,7 +8,7 @@ from ..views.share import ProjectCreateView, ProjectUpdateView
 urlpatterns = patterns('',
 
     # float index
-    url(r'^$', TemplateView.as_view(template_name='projects/index.html'), name='float'),
+    url(r'^$', TemplateView.as_view(template_name='projects/index.html'), name='projects_project_index'),
 
     # user input of ideas
     url(r'^project/add/$', 

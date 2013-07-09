@@ -55,10 +55,10 @@
         {% block site_header_container %}
         <header class="site-header">
             {% block site_header %}
-            <nav class="site-nav top-bar">
+            <nav class="top-bar">
                  {% block identity %}
                  <ul class="title-area">
-                     <li class="name"
+                     <li class="name">
                          <h1><a href="{% url 'home' %}">Possiblecity</a></h1>
                       </li>
                       <li class="toggle-topbar menu-icon">
@@ -68,15 +68,29 @@
                       </li>
         	 </ul>
                  {% endblock identity %}
-                 {% block section_nav %}
-                 <section class="top-bar-section">
-        	     {% block app_nav %}
-                      <ul class="left">
+        	 <section class="top-bar-section">
+                     {% block app_nav %}
+                     <ul class="left">
             	         <li id="nav-lotxlot">
-                    		<span>lot<strong>x</strong>lot</span>
-            		 </li>
-                         <li>Explore Projects</li>
-                         <li>Free Agent</li>
+                             <a href="#">
+                                 <span>lot<strong>x</strong>lot</span>
+                             </a>
+                         </li>
+                         <li>
+                             <a href="{% url 'projects_project_list' %}">
+                              Explore Projects
+                             </a>
+                         </li>
+                         <li>
+                             <a href="{% url 'projects_project_create' %}">
+                                Float a Project
+                             </a>
+                         </li>
+                         <li>
+                             <a href="{% url 'profiles_profile_list' %}">
+                                 Find People
+                             </a>
+                         </li>
                      </ul>
                      {% endblock app_nav %}
                      {% block info_nav %}
@@ -86,25 +100,30 @@
                     	           <span>Blog</span>
                              </a>
                          </li>
-            		 <li id="nav-about">
-                              <a href="{% url 'about' %}">
-                                  <span>About</span>
-                              </a>
+                         <li id="nav-about">
+                             <a href="{% url 'about' %}">
+                                 <span>About</span>
+                             </a>
                          </li>
                       </ul>     	
                       {% endblock info_nav %}
                       {% block auth_nav %}
                       <ul class="right">
-                         {% if user.is_authenticated %}
-                         <li class="has-dropdown">
-                             <a href="#"><img width="25" src={{ user.socialaccount_set.all.0.get_avatar_url }} \>{{ user.username }}</a> 
-                             <ul class="dropdown">
+                      {% if user.is_authenticated %}
+                          <li class="has-dropdown">
+                              <a href="#">
+                              {% if user.profile.photo %}
+                                  <img width="25" src={{ user.profile.photo.url }} />
+                              {% endif %}
+                                  {{ user.username }}
+                              </a> 
+                              <ul class="dropdown">
                                   <li><a href="{% url 'profiles_profile_detail' user.username %}">Profile</a></li>
                                   <li><a href="{% url 'profiles_profile_update' %}">Settings</a></li> 
                                   <li>
                                      <a href="{% url 'account_logout' %}"
-                                         data-reveal-id="signout">
-                                         Sign Out</a>
+                                        data-reveal-id="signout">
+                                        Sign Out</a>
                                   </li>
                              </ul>
                          </li>
@@ -121,10 +140,10 @@
                                 Sign Up
                             </a>
                          </li>
-                         {% endif %}                 
+                        {% endif %}                 
                       </ul>
-                      {% endblock auth_nav %}		
-                  {% endblock section_nav  %}
+                  {% endblock auth_nav %}
+                </section>
             </nav>
             {% endblock site_header %}
         </header>
@@ -145,8 +164,28 @@
     {% endblock site %}
     </div>
 {% endblock site_container %}
-        
+{% block auth %}
+{% if user.is_authenticated %}
+<div id="signout" class="reveal-modal">
+  {% include "account/_logout.html" %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+{% else %}
+<div id="login" class="reveal-modal">
+  {% include "account/_login.html" %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<div id="signup" class="reveal-modal">
+  {% include "account/_signup.html" %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+{% endif %}
+{% endblock auth %}
+{% block extra_body %}
+{% endblock extra_body %}
 {% block js_body %}    
+    {% block js_local %}
+    {% endblock js_local %}
     {% block js_global %}
     <script>
          document.write('<script src=' +
@@ -171,40 +210,6 @@
           $(document).foundation();
      </script>
      {% endblock js_global %}
-
-    {% block js_local %}
-    {% endblock js_local %}
-
-    {% block analytics %}
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-28417563-1']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-    {% endblock analytics %}
 {% endblock js_body %}    
-{% block extra_body %}
-{% if user.is_authenticated %}
-<div id="signout" class="reveal-modal">
-  {% include "account/_logout.html" %}
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-{% else %}
-<div id="login" class="reveal-modal">
-  {% include "account/_login.html" %}
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-<div id="signup" class="reveal-modal">
-  {% include "account/_signup.html" %}
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-{% endif %}
-{% endblock extra_body %}
 </body>
 </html>

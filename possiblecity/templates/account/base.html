@@ -1,18 +1,5 @@
 {% extends "base.html" %}
 {% block page_content %}
-    {% block page_nav %}
-    {% endblock page_nav %}
-      <nav class="page-nav">
-          <header>
-              <h2>{{ user.username }}</h2>
-          </header>
-          <ul class="side-nav">
-              <li><a href="{% url "profiles_profile_update" %}">Profile</a></li>
-              <li><a href="{% url "account_email" %}">Email</a></li>
-              <li><a href="{% url "account_change_password" %}">Password</a></li>
-              <li><a href="{% url "socialaccount_connections" %}">Social</a></li>
-          </ul>
-      </nav>
     {% block content %}
     {% endblock content %}
 {% endblock page_content %}
