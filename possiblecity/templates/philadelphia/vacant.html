@@ -33,7 +33,7 @@
     
     // Prep the background tile layer
     var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-sued82zn/{z}/{x}/{y}.png';
-    var tileAttribution = '';
+    var tileAttribution = 'Data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors, Design &copy; MapBox';
     
     var streets = L.tileLayer(tileUrl, {
        attribution: tileAttribution,
@@ -120,10 +120,10 @@
     function onLocationFound(e) {
         if (phlBounds.contains(e.latlng)) {
            center = e.latlng
-           html = '<h3>Welcome to lotxlot!</h3>We think you are somewhere near here, so you can explore vacant lots starting with the ones near you. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>.';
+           html = '<h3>Welcome to lotxlot!</h3>We think you are somewhere near here, so you can explore vacant lots starting with the ones near you. Publicly owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>.';
         } else {
            center = philadelphia
-           html = '<h3>Welcome to lotxlot!</h3>Looks like you are outside of Philadelphia, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>.';
+           html = '<h3>Welcome to lotxlot!</h3>Looks like you are outside of Philadelphia, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publicly owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>.';
         }
         map.setView(center, 16);
         L.marker(center).addTo(map).bindPopup(html).openPopup();
@@ -157,7 +157,7 @@
 
        function onLocationError(e) {
            center = philadelphia;
-           html = '<h3>Welcome to lotxlot!</h3>We are not able to find your location, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>';
+           html = '<h3>Welcome to lotxlot!</h3>We are not able to find your location, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publicaly owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>';
            map.setView(center, 16);
            L.marker(center).addTo(map).bindPopup(html).openPopup();
            unavailableLots.setMap(map);
