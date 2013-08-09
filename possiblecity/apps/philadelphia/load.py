@@ -3,45 +3,28 @@ from django.contrib.gis.utils import LayerMapping
 from models import Parcel
 
 parcel_mapping = {
-    'objectid' : 'OBJECTID',
-    'recsub' : 'RECSUB',
     'basereg' : 'BASEREG',
-    'mapreg' : 'MAPREG',
-    'parcel' : 'PARCEL',
-    'recmap' : 'RECMAP',
-    'stcod' : 'STCOD',
-    'house' : 'HOUSE',
-    'suf' : 'SUF',
-    'unit' : 'UNIT',
-    'stex' : 'STEX',
-    'stdir' : 'STDIR',
-    'stnam' : 'STNAM',
-    'stdes' : 'STDES',
-    'stdessuf' : 'STDESSUF',
-    'elev_flag' : 'ELEV_FLAG',
-    'topelev' : 'TOPELEV',
-    'botelev' : 'BOTELEV',
-    'condoflag' : 'CONDOFLAG',
-    'matchflag' : 'MATCHFLAG',
-    'inactdate' : 'INACTDATE',
-    'orig_date' : 'ORIG_DATE',
-    'status' : 'STATUS',
-    'geoid' : 'GEOID',
-    'shape_area' : 'SHAPE_AREA',
-    'shape_len' : 'SHAPE_LEN',
-    'geom' : 'MULTIPOLYGON',
 }
 
+pwd_mapping = {
+    'opa_code': 'TENCODE', 
+    'address': 'ADDRESS',
+    'shape': 'MULTIPOLYGON'
+}
 
-parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/parcels_fix.shp'))
+neighborhood_mapping = {
+    'name' : 'NAME',
+    'list_name' : 'LISTNAME',
+    'map_name' : 'MAPNAME',
+    'shape' : 'MULTIPOLYGON'
+}
 
-test_parcels = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data/test_parcels.shp'))
 
 def _get_filepath(file):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', file))
 
-def map_parcels(verbose=True, strict=True, progress=False, step=False):
-    lm = LayerMapping(Parcel, parcels, parcel_mapping,
+def map(model, data_source, mapping, verbose=True, strict=True, progress=False, step=False):
+    lm = LayerMapping(model, data_source, mapping,
                       transform=False, encoding='iso-8859-1')
     lm.save(verbose=verbose, strict=strict, progress=progress, step=step)
 
