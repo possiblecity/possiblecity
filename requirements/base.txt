@@ -1,19 +1,25 @@
 # python modules
-pillow
-#psycopg2
-requests
-vectorformats
-geopy
+pillow #image manipulation
+twitter==1.9.4 #twitter api
+requests==1.2.3 #http library
+redis==2.7.5 #data store
+geopy #geo tools
 
-Django>=1.5
+Django==1.5.1
 
 # django third party modules
-easy_thumbnails
-django-allauth
-django-braces
-django-compressor
+south #database migrations
+django-celery==3.0.17 #async tasks
+django-braces #generic view mixins
+django-compressor #static file compression
 django-pagination
 django-positions
-django-taggit
 django-validated-file
-south
+
+django-taggit
+django-user-accounts==1.0b14 #user authetication & accounts
+django-social-auth==0.7.23 #social authentication
+metron==1.1
+
+django-forms-bootstrap==2.0.3.post1
+pinax-theme-bootstrap==3.0a11
