@@ -1,8 +1,9 @@
 *.pyc
 local_settings.py
-dev.db
+*.db
 media/
 .sass-cache/
 .DS_Store
-.env
+.env/
+
 
