@@ -4,5 +4,5 @@ dev.db
 media/
 .sass-cache/
 .DS_Store
-
+.env
 

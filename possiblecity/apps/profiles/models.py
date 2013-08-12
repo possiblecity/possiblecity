@@ -10,7 +10,7 @@ class Profile(models.Model):
     about = models.CharField(max_length=140)
     photo = models.ImageField(upload_to='profiles', blank=True, null=True)
 
-	is_public = models.BooleanField(default=True)
+    is_public = models.BooleanField(default=True)
 
     @property
     def full_name(self):
