@@ -1,0 +1,15 @@
+{% load account_tags %}
+<div class="span2 friend">
+      <img class="thumnail" src="http://placehold.it/150x150">
+      <h4 class="media-heading">{% user_display friend.user %}</h4>
+      {{ friend.from_user }}
+      {{ friend.to_user }}
+      {% if friend.from_user == request.user %}
+        <p>Sent on {{ friend.created }}</p>
+      {% else %}
+          {% if not friend.accepted %}
+              <a href="{% url "ajax_accept_request" friend.pk %}" data-replace-closest=".friend" class="ajax btn btn-primary">Accept</a>
+              <a href="{% url "ajax_decline_request" friend.pk %}" data-replace-closest=".friend" class="ajax btn">Decline</a>
+          {% endif %}
+      {% endif %}
+</div>

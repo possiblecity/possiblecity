@@ -1,0 +1,52 @@
+{% extends "account/base.html" %}
+
+{% load bootstrap_tags %}
+
+{% block head_title %}Account Connections{% endblock %}
+
+{% block body %}
+    <h2>Connections</h2>
+    
+    <p class="lead">
+        This is where connections to external services are managed.
+    </p>
+    
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="span3">
+            
+            <h3><i class="icon icon-twitter"></i> Twitter</h3>
+            
+            <p>
+                {% if social_auth.twitter %}
+                    <a class="btn" href="{% url "socialauth_disconnect" "twitter" %}?next={% url "account_social_connections" %}">Disconnect Twitter</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url "socialauth_begin" "twitter" %}?next={% url "account_social_connections" %}">Connect Twitter</a>
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="span3">
+            <h3><i class="icon icon-facebook"></i> facebook</h3>
+            
+            <p>
+                {% if social_auth.facebook %}
+                    <a class="btn" href="{% url "socialauth_disconnect" "facebook" %}?next={% url "account_social_connections" %}">Disconnect Facebook</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url "socialauth_begin" "facebook" %}?next={% url "account_social_connections" %}">Connect Facebook</a>
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="span3">
+            <h3><i class="icon icon-google-plus"></i> Google</h3>
+            
+            <p>
+                {% if social_auth.google_oauth2 %}
+                    <a class="btn" href="{% url "socialauth_disconnect" "google-oauth2" %}?next={% url "account_social_connections" %}">Disconnect Google+</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url "socialauth_begin" "google-oauth2" %}?next={% url "account_social_connections" %}">Connect Google+</a>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+{% endblock %}
