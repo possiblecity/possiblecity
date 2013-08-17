@@ -301,7 +301,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     #'apps.core', # general helpers
     #'apps.text', # blog
-    'apps.profiles', # user profiles
+    #'apps.profiles', # user profiles
     #'apps.lotxlot',
 )
 
