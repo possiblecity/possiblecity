@@ -1,0 +1,65 @@
+{% extends "philadelphia/base.html" %}
+{% load possiblecity_tags %}
+{% block body %}
+<div id="map" style="height:400px; width:100%">
+</div>
+<h1>All Lots</h1>
+<ul class="lots">
+{% for lot in lot_list %}
+<li class="lot">
+    <h2><a href="{% url lot_detail lot.id %}">{{ lot.address|capsentence }}</a></h2>
+    <div id="lot-{{ lot.id }}-map" style="height:100px; width:100px; background-color:transparent;">
+    <div>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
+{% block extra_body %}
+<script>
+    var map = new L.Map('map');
+    var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/17de60efa2c548c2b8b8bb215db49cb4/47928/256/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy;'
+    });
+    var philadelphia = new L.LatLng(39.9522, -75.1642);
+    map.addLayer(cloudmade);
+    
+    var dataStyle = {
+        "fillColor": "#ff0000",
+        "opacity": 1.0,
+        "weight": 1,
+        "color":"#000000",
+    };
+
+    var dataLayer = L.geoJson(null, {
+        style: dataStyle
+    }).addTo(map);
+    
+    $.getJSON('{% url lots %}', function(data){
+          dataLayer.addData(data);
+          bounds = dataLayer.getBounds();
+          map.fitBounds(bounds);
+    });
+</script>
+<script>
+var lotMap = {}
+var detailStyle = {
+    "fillColor": "#000000",
+    "opacity": 1.0,
+    "stroke": false
+};
+{% for lot in lot_list %}
+    lotMap[{{ lot.id }}] = new L.Map('lot-{{ lot.id }}-map', {
+        zoomControl: false,
+        attributionControl: false
+    });
+    $.getJSON('{% url lot_detail lot.id %}', function(data) {
+         var layer = L.geoJson(data, {
+             style: detailStyle
+         });
+         lotMap[{{ lot.id }}].addLayer(layer);
+         bounds = layer.getBounds();
+         lotMap[{{ lot.id }}].fitBounds(bounds);
+    });
+{% endfor %}
+</script>
+{% endblock %}

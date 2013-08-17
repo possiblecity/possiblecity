@@ -1,0 +1,11 @@
+{% extends "philadelphia/base.html" %}
+{% block layout %}
+<div class="page-content" style="position:relative; top:100px;">
+	<p>Form submitted</p>
+	<p>{{ object_list }}</p>
+	<p>{% for object in object_list %}
+		<p>{{ object }}</p>
+	   {% endfor %}
+		<p>
+</div>
+{% endblock layout %}

@@ -1,0 +1,87 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block head_title_base %}Possible City | {% block head_title %}{% endblock %}{% endblock %}</title>
+        {% block viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+
+        {% block style_base %}
+            <link href="{% static "css/bootstrap/bootstrap.css" %}" rel="stylesheet">
+            <link href="{% static "css/custom.css" %}" rel="stylesheet">
+            <link href="{% static "css/fonts/fontello/fontello.css" %}" rel="stylesheet">
+            <link href="{% static "css/animation.css" %}" rel="stylesheet">
+            {% block extra_style %}{% endblock %}
+        {% endblock style_base %}
+
+        {% block script_head %}
+            <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+            <!--[if lt IE 9]>
+                <script src="{% static "js/vendor/html5shiv.js" %}"></script>
+            <![endif]-->
+        {% endblock script_head %}
+
+        {% block extra_head_base %}
+            {% block extra_head %}{% endblock extra_head %}
+        {% endblock extra_head_base %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
+        <div class="{% block wrapper_class %}{% endblock %}">
+	    {% block navbar_base %}
+             <nav class="navbar {% block navbar_class %}navbar-inverse navbar-fixed-top{% endblock %}">
+                 <div class="navbar-header">
+                 {% block topbar %}
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                         <span class="sr-only">Toggle navigation</span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>                                
+                     {% block site_brand %}
+                     <a class="navbar-brand" href="{% url "home" %}">Possible City</a>
+                     {% endblock site_brand %}
+                 </div>    
+                 <div class="collapse navbar-collapse nav-collapse">
+                 {% block nav %}
+                      <ul class="nav navbar-nav">
+                          <li><a href="#">Lotxlot</a></li>
+                          <li class="active"><a href="#">Ideas</a></li>
+                          <li><a href="#">People</a></li>
+                          <li><a href="#">About</a></li>
+                      </ul>
+                 {% endblock nav %}
+                 {% block account_bar %}
+	              {% include "_account_bar.html" %}
+	         {% endblock account_bar %}
+                 </div>
+                 {% endblock topbar %}
+             </nav>
+             {% endblock navbar_base %}
+	     {% block body_base %}
+	     <section class="container">
+         	{% include "_messages.html" %}
+            {% block body %}
+            	{% endblock body %}
+	     <section>
+	     {% endblock body_base %}
+         {% block footer_base %}
+        	 <footer class="container">
+        	     {% block footer %}{% endblock %}
+        	 </footer>
+        	{% endblock footer_base %}
+        </div>
+
+        {% block script_base %}
+            <script src="{% block jquery_src %}{% static "js/vendor/jquery.js" %}{% endblock %}"></script>
+            <script src="{% static "js/bootstrap/bootstrap.js" %}"></script>
+            <script src="{% static "js/pinax/theme.js" %}"></script>
+            {% block extra_script %}{% endblock extra_script %}
+        {% endblock script_base %}
+
+        {% block extra_body_base %}
+            {% block extra_body %}{% endblock extra_body %}
+        {% endblock extra_body_base %}
+    </body>
+</html>
