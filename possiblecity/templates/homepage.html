@@ -7,30 +7,29 @@
 {% block body_class %}home{% endblock %}
 
 {% block banner %}
-    <h1>{% trans "Welcome to Pinax" %}</h1>
+    <h1>{% trans "Welcome to Possible City." %}</h1>
     <p>
         {% blocktrans %}
-        <b>Pinax</b> is a <a href="http://djangoproject.com/">Django</a>
-        project intended to provide a starting point for websites. By
-        integrating numerous reusable Django apps to take care of the
-        things that many sites have in common, it lets you focus on what
-        makes your site different.
+        Possible City is a platform that will enable citizens to
+        cultivate organic growth of communities and economies through the 
+        re-purposing of vacant properties for innovative new uses.
         {% endblocktrans %}
     </p>
     
-    <h2>About Account Project</h2>
+    <h2>About Possible City</h2>
     <p>
         {% blocktrans %}
-        In addition to what is provided by the "zero" project, this project
-        provides thorough integration with django-user-accounts, adding
-        comprehensive account management functionality. It is a foundation
-        suitable for most sites that have user accounts.
+        Through a virtual, web-based network of untapped skills, ideas, 
+        and spirit, connected to a physical network of underutilized and 
+        undervalued spaces, Possible City will enable citizens to create 
+        authentic communities and economies structured around rebuilding 
+        their city.
         {% endblocktrans %}
     </p>
     
     {% if user.is_authenticated %}
-        {% url "what_next" as what_next_url %}
-        <p class="what_next">{% blocktrans %}Wondering <a href="{{ what_next_url }}" class="btn primary large">What Next</a>?{% endblocktrans %}</p>
+      <p>Welcome, {{ user.username }}!</p>
+      
     {% else %}
         {% url "account_login" as login_url %}
         {% url "account_signup" as signup_url %}

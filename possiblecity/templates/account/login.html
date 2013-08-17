@@ -1,43 +1,37 @@
-{% extends "account/base.html" %}
+{% extends "site_base.html" %}
 
-{% load i18n %}
-{% load account %}
 {% load url from future %}
+{% load i18n %}
+{% load bootstrap_tags %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}{% trans "Log in" %}{% endblock %}
 
-{% block content %}
-
-<h1>{% trans "Sign In" %}</h1>
-
-{% if socialaccount.providers  %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a> 
-for a {{site_name}} account and sign in below:{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" %}
-  </ul>
-
-  <div class="login-or">{% trans 'or' %}</div>
-
-</div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% endif %}
-
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
-
+{% block body %}
+    <div class="row">
+        <div class="span8">
+            <form method="POST" action="{% url "account_login" %}" autocapitalize="off" class="form-horizontal"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                <legend>{% trans "Log in to an existing account" %}</legend>
+                {% csrf_token %}
+                {{ form|as_bootstrap }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <div class="form-actions">
+                    <a href="{% url "account_password_reset" %}" class="btn">{% trans "Forgot your password?" %}</a>
+                    <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
+                </div>
+            </form>
+        </div>
+        <div class="span4">
+            {% include "account/_login_sidebar.html" %}
+        </div>
+    </div>
 {% endblock %}
 
+{% block extra_script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_username').focus();
+        });
+    </script>
+{% endblock %}

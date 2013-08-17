@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from celery.task import Task
 from social_auth.models import UserSocialAuth
 
-from .friends.models import Suggestion
+from apps.friends.models import Suggestion
 from .social import Provider
 
 

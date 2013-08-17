@@ -2,6 +2,7 @@
 local_settings.py
 *.db
 media/
+static/
 .sass-cache/
 .DS_Store
 .env/

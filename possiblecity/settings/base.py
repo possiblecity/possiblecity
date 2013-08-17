@@ -104,14 +104,14 @@ FIXTURE_DIRS = (
 #==============================================================================
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = normpath(join(SITE_ROOT, 'assets'))
+STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    normpath(join(SITE_ROOT, 'static')),
+    normpath(join(DJANGO_ROOT, 'static')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -147,9 +147,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     'account.context_processors.account',
-    'pinax_theme_bootstrap.context_processors.theme',
-    'social_auth.context_processors.social_auth_by_name_backends',
-    'apps.friends.context_processors.suggestions'
+    #'pinax_theme_bootstrap.context_processors.theme',
+    #'social_auth.context_processors.social_auth_by_name_backends',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -178,8 +177,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'pagination.middleware.PaginationMiddleware',
-    'social_auth.middleware.SocialAuthExceptionMiddleware'
+    #'pagination.middleware.PaginationMiddleware',
+    #'social_auth.middleware.SocialAuthExceptionMiddleware'
 )
 
 
@@ -203,18 +202,15 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 # Authentication
 #==============================================================================
 
+AUTH_USER_MODEL = 'auth.User'
+
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'account.auth_backends.EmailAuthenticationBackend',
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend'
+    'account.auth_backends.UsernameAuthenticationBackend',
+    #'social_auth.backends.twitter.TwitterBackend',
+    #'social_auth.backends.facebook.FacebookBackend'
 )
 
 ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_USE_OPENID = False
-ACCOUNT_REQUIRED_EMAIL = False
-ACCOUNT_EMAIL_VERIFICATION = False
-ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
 ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
@@ -225,9 +221,8 @@ LOGIN_REDIRECT_URL = reverse_lazy("home")
 # Social Auth
 
 LOGIN_ERROR_URL = "/account/social/connections/"
-
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = False
-
+SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 SOCIAL_AUTH_PIPELINE = [
     "libs.pipeline.prevent_duplicates",
     
@@ -238,14 +233,13 @@ SOCIAL_AUTH_PIPELINE = [
     "social_auth.backends.pipeline.social.load_extra_data",
     "social_auth.backends.pipeline.user.update_user_details",
     
-    "libs.pipeline.import_friends"
 ]
 
 TWITTER_CONSUMER_KEY = os.environ.get("TWITTER_CONSUMER_KEY", "")
 TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET", "")
 
 FACEBOOK_APP_ID = os.environ.get("FACEBOOK_APP_ID", "")
-FACEBOOK_APP_SECRET = os.environ.get("FACEBOOK_APP_SECRET", "")
+FACEBOOK_API_SECRET = os.environ.get("FACEBOOK_API_SECRET", "")
 FACEBOOK_EXTENDED_PERMISSIONS = [
     "email",
 ]
@@ -258,7 +252,7 @@ FACEBOOK_EXTRA_DATA = [
 TWITTER_EXTRA_DATA = [
     ("name", "name"),
     ("screen_name", "screen_name"),
-    ("profile_image_url", "profile_image_url"),
+    ("profile_image_url", "photo"),
 ]
 
 
@@ -287,28 +281,27 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'account', # local accounts
-    'social_auth', # social accounts
-    'djcelery', # async
-
-    'compressor', # static file optimization
-    'pagination', # pagination
     'south', # database migrations
-    'taggit', # tagging
+    'djcelery', # async
+    'account', # local accounts
+    #'social_auth', # social accounts
+
+    #'compressor', # static file optimization
+    #'pagination', # pagination
+    
+    #'taggit', # tagging
     'metron',
     
     # theme
-    'pinax_theme_bootstrap',
+    #'pinax_theme_bootstrap',
     'django_forms_bootstrap'
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    'apps.core', # general helpers
-    'apps.text', # blog
-    'apps.projects', # user generated projects
+    #'apps.core', # general helpers
+    #'apps.text', # blog
     'apps.profiles', # user profiles
-    'apps.friends', #user relationships
     #'apps.lotxlot',
 )
 

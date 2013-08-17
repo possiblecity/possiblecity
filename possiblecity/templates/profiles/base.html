@@ -1,8 +1,35 @@
-{% extends "base.html" %}
-{% block page_content %}
-    {% block page_nav %}
-    {% endblock page_nav %}
-    {% block content %}
-    {% endblock content %}
-{% endblock page_content %}
+{% extends "subnav_base.html" %}
+
+{% load i18n %}
+
+{% block body_class %}profiles{% endblock %}
+
+{% block subnav %}
+    <aside>
+        <img alt="" href="{{ profile.photo.url }}" />
+        <h3>Cary Betagole</h3>
+        <ul>
+            <li></li>
+            <li>{{ profile.neighborhood }}</li>
+            <li><a href="#">{{ profile.twitter_handle }}</a><br/>
+            <li><a href="#">{{ profile.website }}</a>
+        </ul>
+        <hr />
+        <h4>Skills</h4>
+        <ul>
+        {% for skill in profile.skills.all %}
+            <li>{{ skill.name }}</li>
+        {% endfor %}
+        </ul>
+        <hr/>
+        <ul class="nav nav-list">
+            <li class="nav-header">{% trans "Profile" %}</li>
+            <li>
+                <a href="{% url "profile_update" %}">
+                    {% trans "Edit Profile" %}
+                </a>
+            </li>
+        </ul>
+    </aside >
+{% endblock %}
 

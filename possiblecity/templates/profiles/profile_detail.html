@@ -1,11 +1,11 @@
 {% extends "profiles/base.html" %}
 
 
-{% block head_title %}
+{% block_title %}
 Profile for {{ profile.user.username }}
 {% endblock %}
 
-{% block content %}
+{% block body %}
     <header>
         {% if profile.photo %}
         <img width="100px" src={{ profile.photo.url }} \>

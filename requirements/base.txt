@@ -15,6 +15,7 @@ django-compressor #static file compression
 django-pagination
 django-positions
 django-validated-file
+-e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
 
 django-taggit
 django-user-accounts==1.0b14 #user authetication & accounts
@@ -22,4 +23,3 @@ django-social-auth==0.7.23 #social authentication
 metron==1.1
 
 django-forms-bootstrap==2.0.3.post1
-pinax-theme-bootstrap==3.0a11
