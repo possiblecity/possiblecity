@@ -17,7 +17,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'about', 'photo', 'is_public')
+        fields = ('first_name', 'last_name', 'about', 'photo', 'phone', 'website', 'twitter', 'is_public')
 
     def save(self, *args, **kwargs):
         """

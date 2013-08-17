@@ -47,9 +47,8 @@
                  {% block nav %}
                       <ul class="nav navbar-nav">
                           <li><a href="#">Lotxlot</a></li>
-                          <li class="active"><a href="#">Ideas</a></li>
-                          <li><a href="#">People</a></li>
-                          <li><a href="#">About</a></li>
+                          <li><a href="#">Ideas</a></li>
+                          <li><a href="{% url 'profiles_profile_list' %}">People</a></li>
                       </ul>
                  {% endblock nav %}
                  {% block account_bar %}

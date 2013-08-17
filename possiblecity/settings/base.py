@@ -177,7 +177,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'pagination.middleware.PaginationMiddleware',
+    'account.middleware.LocaleMiddleware',
+    'account.middleware.TimezoneMiddleware',
+    'pagination.middleware.PaginationMiddleware',
     #'social_auth.middleware.SocialAuthExceptionMiddleware'
 )
 
@@ -211,10 +213,14 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_OPEN_SIGNUP = True
-ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = False
+ACCOUNT_USE_OPENID = False
+ACCOUNT_REQUIRED_EMAIL = False
+ACCOUNT_EMAIL_VERIFICATION = False
+ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
+
 LOGIN_URL = reverse_lazy("account_login_signup")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 
@@ -286,8 +292,8 @@ THIRD_PARTY_APPS = (
     'account', # local accounts
     #'social_auth', # social accounts
 
-    #'compressor', # static file optimization
-    #'pagination', # pagination
+    'compressor', # static file optimization
+    'pagination', # pagination
     
     #'taggit', # tagging
     'metron',
@@ -301,7 +307,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     #'apps.core', # general helpers
     #'apps.text', # blog
-    #'apps.profiles', # user profiles
+    'apps.profiles', # user profiles
     #'apps.lotxlot',
 )
 

@@ -8,8 +8,8 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="">My Profile</a></li>
-                    <li><a href="">Edit Profile</a></li>
+                    <li><a href="{% url 'profiles_profile_detail' user.username %}">My Profile</a></li>
+                    <li><a href="{% url 'profiles_profile_update' %}">Edit Profile</a></li>
                     <li class="divider"></li>
                     {% if request.user.is_staff %}
                         <li><a href="{% url THEME_ADMIN_URL|default:'admin:index' %}">{% trans "Admin" %}</a></li>

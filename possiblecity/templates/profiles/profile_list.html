@@ -2,20 +2,24 @@
 
 {% load pagination_tags %}
 
-{% block head_title_page %}All Agents{% endblock head_title_page %}
+{% block head_title %}People{% endblock head_title %}
 
-{% block content %}
-    <header>
-        <h1>Agents of Change</h1>
-        <p>All profiles on the site</p>
+{% block body %}
+    <header class="row">
+        <h1>People <small>{{ profiles.count }}</small></h1>
     </header>
-    
-    {% autopaginate profiles %}
-    <ul>
-    {% for profile in profiles %}
-        <li><a href="{% url "profiles_profile_detail" profile.user.username %}">{{ profile }}</a></li>
-    {% endfor %}
-    </ul>
-     {% paginate %}
-    
-{% endblock content %}
+    <section class="row">
+        <ul class="people-list" style="margin:0; padding:0;">
+        {% autopaginate profiles %}
+        {% for profile in profiles %}
+            <li class="thumbnail col-lg-2 col-6">
+                <a href="{% url 'profiles_profile_detail' profile.user.username %}">
+                    <img class="profile-pic" src="{{ profile.photo.url }}" />
+                </a>
+                <h4>{{ profile.full_name }}</h4>
+            </li>
+        {% endfor %}
+        </ul>
+        {% paginate %}
+    </section>
+{% endblock body %}

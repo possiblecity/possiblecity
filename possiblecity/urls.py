@@ -35,15 +35,8 @@ urlpatterns = patterns('',
     #),
     #url(r"^account/social/", include("social_auth.urls")),
 
-    url(r"^account/login/$",
-        TemplateView.as_view(template_name="account/signup.html"),
-        name="account_login"),
-
-    url(r"^account/signup/$",
-        TemplateView.as_view(template_name="account/signup.html"),
-        name="account_signup"),
-
-    url(r"^account/", include("account.urls")),    
+    url(r"^account/", include("account.urls")),   
+    url(r"^profiles/", include("apps.profiles.urls")),   
 
     #projects
     #url(r'^projects/float/', include('apps.projects.urls.share')),
@@ -57,3 +50,5 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

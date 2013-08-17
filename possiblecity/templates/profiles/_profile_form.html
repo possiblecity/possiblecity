@@ -1,14 +1,14 @@
-
-{% if profile_form.is_multipart %}
-    <form method="POST" enctype="multipart/form-data" action="{% url "profiles_profile_update" %}">
+{% load i18n %}
+{% load bootstrap_tags %}
+{% if form.is_multipart %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'profiles_profile_update' %}">
 {% else %}
-    <form method="POST" action="{% url "profiles_profile_update" %}">
+    <form method="POST" action="{% url 'profiles_profile_update' %}">
 {% endif %}
-    {{ form }}
+    {{ form|as_bootstrap }}
     {% csrf_token %}
     <div class="form-actions">
-        <a href="" 
-class="btn">Cancel</a>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="" class="btn">{% trans "Cancel" %}</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
     </div>
 </form>

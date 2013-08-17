@@ -1,14 +1,17 @@
 from django.conf import settings
+from django.contrib.localflavor.us.models import PhoneNumberField
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
-from django.contrib.auth.models import User
 
 class Profile(models.Model):
     
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     about = models.CharField(max_length=140)
-    photo = models.ImageField(upload_to='profiles', blank=True, null=True)
+    photo = models.ImageField(upload_to='images/profiles', blank=True, null=True)
+    phone = PhoneNumberField(blank=True)
+    website = models.URLField(blank=True)
+    twitter = models.CharField(max_length=100, blank=True)
 
     is_public = models.BooleanField(default=True)
 
@@ -24,4 +27,4 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         kwargs = {"username": self.user.username}
-        return reverse("profile_detail", kwargs=kwargs)
+        return reverse("profiles_profile_detail", kwargs=kwargs)
