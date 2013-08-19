@@ -208,8 +208,7 @@ class LotDetailView(DetailView):
     """
     Retreive a lot
     """
-    model = Lot    
-    slug_field = 'id'
+    model = Lot 
 
 # ajax views
 class LotDetailMapView(GeoDetailView):
@@ -223,77 +222,13 @@ class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     """
     model = Lot
     geo_field = "geom"
-    properties = ['address', 'id', 'is_public', 'is_available']
+    properties = ['address', 'id', 'is_public']
    
 class VacantLotListApiView(LotListApiView):
     """
     Return all vacant lot objects
     """
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
-
-class VacantUnavailableLotListApiView(LotListApiView):
-    """
-    Return all lots not for sale
-    """
-    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=False)
-                 
-class VacantAvailableLotListApiView(LotListApiView):
-    """
-    Return all vacant lots for sale
-    """
-    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=True)
-
-class PublicVacantLotListApiView(LotListApiView):
-    """
-    Return all vacant and public lot objects
-    """
-    queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_visible=True)
-
-class PrivateVacantLotListApiView(LotListApiView):
-    """
-    Return all vacant and public lot objects
-    """
-    queryset = Lot.objects.filter(is_vacant=True, is_public=False, is_visible=True)
-
-class PublicAvailableVacantLotListApiView(LotListApiView):
-    """
-    Return all vacant and available lot objects
-    """
-    queryset = Lot.objects.filter(is_vacant=True, is_available=True, is_visible=True)
-
-class PublicUnavailableVacantLotListApiView(LotListApiView):
-    """
-    Return all vacant and public lot objects
-    """
-    queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_available=False, is_visible=True)
-
-class PrivateUnverifiedVacantLotListApiView(LotListApiView):
-    """
-    Return all vacant lots that are not public, 
-    and do not have a vacancy violation or vacancy license
-    """
-    queryset = Lot.objects.filter(is_visible=True, is_vacant=True,
-                                  is_public=False, has_vacancy_license=False,
-                                  has_vacancy_violation=False)
-
-class PrivateVerifiedVacantLotListApiView(LotListApiView):
-    """
-    Return all vacant lots that are private and have a vacancy license 
-    or a vacancy violation
-    """
-    queryset = Lot.objects.filter(is_visible=True, is_public=False)\
-                          .filter(Q(has_vacancy_violation=True) | Q(has_vacancy_license=True))
-   
-    
-
-class LotsNearAddress(AddressSearchView):
-    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
-    template_name = 'philadelphia/search.html'
-    geo_field = "geom"
-    properties = ['address', 'id', 'is_public', 'is_available', 'is_vacant',
-                  'has_vacancy_license', 'has_vacancy_violation', 'has_vacant_building']
-    distance = 400
-    default_origin = Point(-75.163894, 39.952247)
 
 
 

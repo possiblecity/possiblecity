@@ -43,7 +43,7 @@ urlpatterns = patterns('',
     url(r'^ideas/explore/', include('apps.ideas.urls.explore')),
 
     # places
-    #url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),
+    url(r'^lotxlot/', include('apps.lotxlot.urls')),
 
 
     # search

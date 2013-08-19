@@ -44,10 +44,10 @@ class Lot(models.Model):
         else:
             return u'No Address %s' % (self.pk)
 
-    @permalink
-    def get_absolute_url(self):
-        kwargs = { 'slug': self.slug, 'id': self.id }
-        return reverse("lotxlot_lot_detail", kwargs=kwargs)
+    #@permalink
+    #def get_absolute_url(self):
+        #kwargs = { 'slug': self.slug, 'id': self.id }
+        #return reverse("lotxlot_lot_detail", kwargs=kwargs)
 
     def save(self, *args, **kwargs):
         if not self.pk:

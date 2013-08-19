@@ -4,6 +4,8 @@ redis==2.7.5 #data store
 pillow #image manipulation
 requests==1.2.3 #http library
 geopy #geo tools
+vectorformats
+simplejson
 markdown
 twitter==1.9.4 #twitter api
 

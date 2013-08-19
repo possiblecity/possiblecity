@@ -7,5 +7,7 @@ from django.views.generic import TemplateView
 from .views import *
  
 urlpatterns = patterns('',
-    url(r'^lot/(?P<slug>[-\w\d]+),(?P<id>\d+)/$', LotDetailView.as_view(), name='lotxlot_lot_detail'),
+    url(r'^lot/(?P<pk>\d+)/$', LotDetailView.as_view(), name='lotxlot_lot_detail'),
+    url(r'^api/v1/lots/lot/(?P<pk>\d+)/$', LotDetailMapView.as_view(), name='api_lot_detail'),
+    url(r'^api/v1/lots/vacant/$', VacantLotListApiView.as_view(), name="api_lots_vacant"),
 )
