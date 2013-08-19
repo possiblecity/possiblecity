@@ -142,20 +142,20 @@
     var lotStyle = {
         "fillColor":"#e8db00",
         "fillOpacity": 0.0,
-        "opacity": 0.0,
+        "opacity": 1.0,
         "weight": 4,
         "color":"#e8db00",
         "dashArray": "4 2"
     };
     
-
+   
     var lot = L.geoJson(null, {
         style: lotStyle
     }).addTo(map);
 
-    //var vacant = L.geoJson(null, {
-        //style: lotStyle
-    //}).addTo(map);
+    var vacant = L.geoJson(null, {
+        style: lotStyle
+    }).addTo(map);
     
     $.getJSON('{% url "api_lot_detail" lot.id %}', function(data){
           lot.addData(data);
@@ -165,9 +165,9 @@
           map.panBy([-150, -50]);
     });
 
-    //$.getJSON('{% url "api_lots_vacant" %}', function(data){
-          //vacant.addData(data);
-    //});
+    $.getJSON('{% url "api_lots_vacant" %}', function(data){
+          vacant.addData(data);
+    });
     
 
     
