@@ -1,36 +1,35 @@
 import os
 from django.contrib.gis.utils import LayerMapping
-from models import Parcel
+from models import LotProfile, Neighborhood
 
-parcel_mapping = {
+dor_parcel_mapping = {
     'basereg' : 'BASEREG',
 }
 
-pwd_mapping = {
+pwd_parcel_mapping = {
     'opa_code': 'TENCODE', 
     'address': 'ADDRESS',
-    'shape': 'MULTIPOLYGON'
+    'pwd_parcel': 'MULTIPOLYGON'
 }
 
 neighborhood_mapping = {
-    'name' : 'NAME',
-    'list_name' : 'LISTNAME',
-    'map_name' : 'MAPNAME',
-    'shape' : 'MULTIPOLYGON'
+    'name': 'NAME',
+    'map_name': 'MAPNAME',
+    'list_name': 'LISTNAME',
+    'bounds': 'MULTIPOLYGON'
 }
+
+point_breeze = 'point_breeze/point_breeze_pwd_parcels.shp'
+neighborhoods = 'Neighborhoods_Philadelphia/neighborhoods_philadelphia.shp'
 
 
 def _get_filepath(file):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', file))
 
-def map(model, data_source, mapping, verbose=True, strict=True, progress=False, step=False):
+def map(model, file, mapping, verbose=True, strict=True, progress=False, step=False):
+    data_source = _get_filepath(file)
     lm = LayerMapping(model, data_source, mapping,
                       transform=False, encoding='iso-8859-1')
-    lm.save(verbose=verbose, strict=strict, progress=progress, step=step)
-
-def map_parcels_test(verbose=True, strict=True, progress=False, step=False):
-    lm = LayerMapping(Parcel, test_parcels, parcel_mapping,
-        transform=False, encoding='iso-8859-1')
     lm.save(verbose=verbose, strict=strict, progress=progress, step=step)
 
 

@@ -9,6 +9,7 @@ from urllib import urlencode
 from django.contrib.gis.geos import Point
 from django.core.cache import cache
 
+
 def geocode_address(address):
     """ returns GeoDjango Point object for given address
     """ 
@@ -61,7 +62,7 @@ def has_feature(url, params):
             if dict['features']:
                 return True
             else:
-            		return False
+            	return False
         else:
             return False
 

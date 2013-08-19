@@ -3,7 +3,6 @@
 {% load staticfiles %}
 {% load humanize %}
 {% block body %}
-<div class="page-content">
     <div id="map" style="height:600px; width: 100%">
     </div>
     <div id="map-status" class="status" style="display:none">
@@ -28,7 +27,7 @@
             <p class="note">The button above will take you to the City of Philadelphia's website, where you can express interest in purchasing the lot.</p>
             {% endif %}
             <p class="note">Data error? 
-	            <a style="padding-left:0; margin-left:0; font-weight:bold; text-decoration:underline; href="mailto:info@thepossiblecity.com?subject={{ lot.address }}-{{ lot.id }}">
+	            <a style="padding-left:0; margin-left:0; font-weight:bold; text-decoration:underline;" href="mailto:info@thepossiblecity.com?subject={{ lot.address }}-{{ lot.id }}">
 		            Let us know
 		       </a>
 	        </p>

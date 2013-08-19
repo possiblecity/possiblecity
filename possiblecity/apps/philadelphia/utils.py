@@ -5,8 +5,7 @@ from django.conf import settings
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon
 
-from possiblecity.lotxlot.utils import queryset_iterator, fetch_json
-from possiblecity.philadelphia.models import Lot
+from apps.lotxlot.utils import queryset_iterator, fetch_json, has_feature
 
 def delete_duplicate_parcels():
     if Parcel.objects.filter(object_id=row.object_id).count() > 1:
@@ -24,46 +23,82 @@ def delete_duplicate_lots():
 
 def check_landuse_vacancy():
     """
-     check landuse data source to see if there have been any changes$
-     vacancy status. If so, update database accordingly
+    Check landuse data source to get vacancy status. 
+    Update database accordingly.
     """
-    queryset = queryset_iterator(Lot.objects.filter(landuse_id__isnull=True))
-    for lot in queryset:
-        status = lot.is_vacant
-        data = lot.landuse_data
-        
-        if data and "OBJECTID" in data:
-            landuse_id = data["OBJECTID"]
-        else:
-            landuse_id = None
-        if data and "VACBLDG" in data:
-            if data["VACBLDG"]:
-                vacbldg = True
-            else:
-                vacbldg = False
-        else:
-            vacbldg = False
-        if not status:
-            if data and "C_DIG3" in data:
-                if data["C_DIG3"] == 911:
-                    new_status = True
-                else:
-                    new_status = False
-            else:
-                new_status = status
-        else:
-            new_status = status
-        
-        lot.is_vacant = new_status
-        lot.landuse_id = landuse_id
-        lot.has_vacant_building = vacbldg
+    from apps.lotxlot.models import Lot
 
-        if new_status != status:
-            lot.save(update_fields=["landuse_id", "is_vacant", "has_vacant_building"])
-            print("%s: %s vacancy, id, building updated" % (lot.id, lot.address))
+    queryset = queryset_iterator(Lot.objects.all())
+    for lot in queryset:
+        lon = lot.coord.x
+        lat = lot.coord.y
+        source = settings.PHL_DATA["LAND_USE"] + "query"
+        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
+                  "outFields":"C_DIG3", "f":"json"}
+
+        data =  fetch_json(source, params)
+
+        if data:
+            if "error" in data:
+                print(data["error"]["details"])
+            else:
+                if "features" in data:
+                    features = data["features"]
+                    if features[0]:
+                        attributes = features[0]["attributes"]
+                        if "C_DIG3" in attributes:
+                            if attributes["C_DIG3"] == 911:
+                                lot.is_vacant = True
+                                lot.save(update_fields=["is_vacant",])
+                                print("%s: %s updated" % (lot.id, lot.address))
+                            else:
+                                print("%s" % (lot.id))
+                        else:
+                            print("No C_DIG3 for %s" % (lot.id))
+                    else:
+                        print("No attributes for %s" % (lot.id))
+                else:
+                    print("No features for %s" % (lot.id))
         else:
-            lot.save(update_fields=["landuse_id", "has_vacant_building"])
-            print("%s: %s id updated" % (lot.id, lot.address))
+            print("No Data")
+
+
+def check_public():
+    """
+    Check papl assets data source to get public status. 
+    Update database accordingly.
+    """
+    from apps.lotxlot.models import Lot
+
+    queryset = queryset_iterator(Lot.objects.all())
+    for lot in queryset:
+        lon = lot.coord.x
+        lat = lot.coord.y
+        source = settings.PHL_DATA["PAPL_ASSETS"] + "query"
+        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
+                  "outFields":"C_DIG3", "f":"json"}
+
+        data =  fetch_json(source, params)
+
+        if data:
+            if "error" in data:
+                print(data["error"]["details"])
+            elif "features" in data:
+                features = data["features"]
+                if features:
+                    if features[0]:
+                        lot.is_public = True
+                        lot.save(update_fields=["is_public",])
+                        print("%s: %s updated" % (lot.id, lot.address))
+                    else:
+                        print("%s" % (lot.id))
+                else:
+                    print("No features for %s" % (lot.id))
+        else:
+            print("No Data")
+        
         
 
 def update_papl_asset():

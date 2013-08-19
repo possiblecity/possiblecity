@@ -3,7 +3,9 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib import messages
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
 
 from braces.views import LoginRequiredMixin
 from .models import Profile
@@ -70,6 +72,13 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
     model = Profile
     template_name = "profiles/profile_update.html"
+
+    messages = {
+        "profile_updated": {
+            "level": messages.SUCCESS,
+            "text": _("Your profile was successfully updated.")
+        },
+    }
     
     def get_object(self, queryset=None):
         profile = Profile.objects.get(user=self.request.user)
@@ -80,6 +89,13 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         profile.user = self.request.user
         profile.save()
         self.object = profile
+
+        if self.messages.get("profile_updated"):
+            messages.add_message(
+                self.request,
+                self.messages["profile_updated"]["level"],
+                self.messages["profile_updated"]["text"]
+            )
         
         return HttpResponseRedirect(self.get_success_url())
     

@@ -38,9 +38,9 @@ urlpatterns = patterns('',
     url(r"^account/", include("account.urls")),   
     url(r"^profiles/", include("apps.profiles.urls")),   
 
-    #projects
-    #url(r'^projects/float/', include('apps.projects.urls.share')),
-    #url(r'^projects/explore/', include('apps.projects.urls.explore')),
+    #ideas
+    url(r'^ideas/float/', include('apps.ideas.urls.share')),
+    url(r'^ideas/explore/', include('apps.ideas.urls.explore')),
 
     # places
     #url(r'^lotxlot/', include('possiblecity.philadelphia.urls')),

@@ -2,15 +2,26 @@
 
 from vectorformats.Formats import Django, GeoJSON
 
+from django.conf import settings
 from django.contrib.gis.measure import D
 from django.contrib.gis.geos import Point, Polygon
+from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
 from django.http import HttpResponse
-from django.views.generic.base import View, TemplateResponseMixinfrom django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.views.generic import ListView, DetailView
+from django.views.generic.base import View, TemplateResponseMixin
+from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin, BaseListView
 from django.views.generic.edit import FormMixin
 
 from .forms import AddressForm
+from .models import Lot
+from .utils import fetch_json
 
+
+ 
 ##### GENERIC MIXINS
 class GeoResponseMixin(object):
     """
@@ -80,7 +91,8 @@ class LocationSearchMixin(object):
             raise ImproperlyConfigured("You must supply an origin point for your search.") 
         else:
             # build the filter parameters
-            filter = point_field + '__' + search_type           
+            filter = point_field + '__' + search_type
+           
             # Fetch the queryset from the parent's get_queryset
             queryset = super(LocationSearchView, self).get_queryset() 
             # return a filtered queryset           
@@ -190,3 +202,102 @@ class AddressSearchView(FormMixin, MultipleObjectMixin, HybridGeoResponseMixin, 
         object_list = self.get_queryset().filter(coord__distance_lte=(origin, self.distance))
         context = self.get_context_data(object_list=object_list, form=form, origin=origin)
         return self.render_to_response(context) 
+
+
+class LotDetailView(DetailView):
+    """
+    Retreive a lot
+    """
+    model = Lot    
+    slug_field = 'id'
+
+# ajax views
+class LotDetailMapView(GeoDetailView):
+    model = Lot
+    geo_field = "geom"
+
+    
+class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
+    """
+    Return all lot objects
+    """
+    model = Lot
+    geo_field = "geom"
+    properties = ['address', 'id', 'is_public', 'is_available']
+   
+class VacantLotListApiView(LotListApiView):
+    """
+    Return all vacant lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
+
+class VacantUnavailableLotListApiView(LotListApiView):
+    """
+    Return all lots not for sale
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=False)
+                 
+class VacantAvailableLotListApiView(LotListApiView):
+    """
+    Return all vacant lots for sale
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True, is_available=True)
+
+class PublicVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant and public lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_visible=True)
+
+class PrivateVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant and public lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_public=False, is_visible=True)
+
+class PublicAvailableVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant and available lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_available=True, is_visible=True)
+
+class PublicUnavailableVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant and public lot objects
+    """
+    queryset = Lot.objects.filter(is_vacant=True, is_public=True, is_available=False, is_visible=True)
+
+class PrivateUnverifiedVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant lots that are not public, 
+    and do not have a vacancy violation or vacancy license
+    """
+    queryset = Lot.objects.filter(is_visible=True, is_vacant=True,
+                                  is_public=False, has_vacancy_license=False,
+                                  has_vacancy_violation=False)
+
+class PrivateVerifiedVacantLotListApiView(LotListApiView):
+    """
+    Return all vacant lots that are private and have a vacancy license 
+    or a vacancy violation
+    """
+    queryset = Lot.objects.filter(is_visible=True, is_public=False)\
+                          .filter(Q(has_vacancy_violation=True) | Q(has_vacancy_license=True))
+   
+    
+
+class LotsNearAddress(AddressSearchView):
+    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
+    template_name = 'philadelphia/search.html'
+    geo_field = "geom"
+    properties = ['address', 'id', 'is_public', 'is_available', 'is_vacant',
+                  'has_vacancy_license', 'has_vacancy_violation', 'has_vacant_building']
+    distance = 400
+    default_origin = Point(-75.163894, 39.952247)
+
+
+
+
+
+
+

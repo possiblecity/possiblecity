@@ -47,7 +47,7 @@
                  {% block nav %}
                       <ul class="nav navbar-nav">
                           <li><a href="#">Lotxlot</a></li>
-                          <li><a href="#">Ideas</a></li>
+                          <li><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
                           <li><a href="{% url 'profiles_profile_list' %}">People</a></li>
                       </ul>
                  {% endblock nav %}

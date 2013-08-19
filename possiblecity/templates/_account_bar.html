@@ -4,7 +4,14 @@
         {% if request.user.is_authenticated %}
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle signed-in" data-toggle="dropdown">
-                    {% user_display request.user %}
+                    {% if user.profile.photo %}
+                    <img width="30px" src="{{ user.profile.photo.url }}" />
+                    {% endif %}
+                    {% if user.first_name %}
+                        {{ user.profile.full_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
@@ -12,10 +19,10 @@
                     <li><a href="{% url 'profiles_profile_update' %}">Edit Profile</a></li>
                     <li class="divider"></li>
                     {% if request.user.is_staff %}
-                        <li><a href="{% url THEME_ADMIN_URL|default:'admin:index' %}">{% trans "Admin" %}</a></li>
+                    <li><a href="{% url THEME_ADMIN_URL|default:'admin:index' %}">{% trans "Admin" %}</a></li>
                     {% endif %}
+                    <li><a href="{% url 'account_settings' %}">Settings</a></li>
                     <li>
-                        <li><a href="{% url 'account_settings' %}">Settings</a></li>
                         <a id="account_logout" href="{% url 'account_logout' %}">
                             {% trans "Log out" %}
                         </a>

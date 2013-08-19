@@ -7,16 +7,6 @@ from base import *
 
 
 #==============================================================================
-# Debug Configuration
-#==============================================================================
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-TEMPLATE_DEBUG = DEBUG
-
-
-#==============================================================================
 # Email Configuration
 #==============================================================================
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
@@ -30,11 +20,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
-        'USER': '',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('DJANGO_DB_NAME', 'possiblecity'),
+        'USER': os.environ.get('DJANGO_DB_USER', 'possiblecity'),
         'PASSWORD': '',
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }

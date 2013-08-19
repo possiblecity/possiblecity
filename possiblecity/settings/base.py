@@ -49,7 +49,7 @@ ALLOWED_HOSTS = []
 #==============================================================================
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
@@ -74,20 +74,7 @@ USE_I18N = True    #internationalization machinery
 USE_L10N = True    #format dates, numbers and calendars according to locale
 USE_TZ = True
 
-#==============================================================================
-# Databases
-#==============================================================================
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
 
 #==============================================================================
 # Fixtures
@@ -147,7 +134,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     'account.context_processors.account',
-    #'pinax_theme_bootstrap.context_processors.theme',
     #'social_auth.context_processors.social_auth_by_name_backends',
 )
 
@@ -276,7 +262,7 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 
     # gis add-ons
-    #'django.contrib.gis',
+    'django.contrib.gis',
 
     # Useful template tags:
     'django.contrib.humanize',
@@ -296,7 +282,7 @@ THIRD_PARTY_APPS = (
     'pagination', # pagination
     
     #'taggit', # tagging
-    'metron',
+    'metron', # analytics
     
     # theme
     #'pinax_theme_bootstrap',
@@ -308,7 +294,9 @@ LOCAL_APPS = (
     #'apps.core', # general helpers
     #'apps.text', # blog
     'apps.profiles', # user profiles
-    #'apps.lotxlot',
+    'apps.ideas', # user uploaded ideas
+    'apps.lotxlot',
+    'apps.philadelphia'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

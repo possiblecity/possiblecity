@@ -1,8 +1,9 @@
 from django.conf import settings
-from django.contrib.localflavor.us.models import PhoneNumberField
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
+
+from localflavor.us.models import PhoneNumberField
 
 class Profile(models.Model):
     
@@ -25,6 +26,7 @@ class Profile(models.Model):
         else:
             return u'%s' % self.user.username
 
+    @permalink
     def get_absolute_url(self):
         kwargs = {"username": self.user.username}
         return reverse("profiles_profile_detail", kwargs=kwargs)
