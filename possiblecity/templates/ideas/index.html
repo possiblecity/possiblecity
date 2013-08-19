@@ -1,0 +1,16 @@
+{% extends "ideas/base.html" %}
+{% block body %}
+<header>
+    <h1>Float</h1>
+</header>
+<div>
+{% if user.is_authenticated %}
+<p><a href="{% url 'ideas_idea_create' %}">Float Your Idea</a></p>
+{% else %}
+<p>A Possible City account is required to continue.</p>
+<p><a href="{% url 'account_signup' %}">Create an Account</a></p>
+<p>Already have an account?</p>
+<p><a href="{% url 'account_login' %}?next={% url 'ideas_idea_create' %}">Login</a></p>
+{% endif %}
+</div>
+{% endblock body %}

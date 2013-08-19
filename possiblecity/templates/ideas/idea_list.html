@@ -1,0 +1,40 @@
+{% extends "ideas/base.html" %}
+
+{% load pagination_tags %}
+
+{% block head_title %}Ideas{% endblock head_title %}
+
+{% block body %}
+    <header class="row">
+        <h1>Ideas Feed <small>{{ ideas.count }}</small></h1>
+    </header>
+    <section class="row">
+       <div class="panel activity">
+            <ul class="list-group">
+            {% autopaginate ideas %}
+            {% for idea in ideas %}
+                <li class="list-group-item">
+                    <div class="media">
+                        {% if idea.user.profile.photo %}
+                        <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
+                            <img class="media-object" src="{{ idea.user.profile.photo.url }}"  style="width: 64px; height: 64px;">
+                        </a>
+                        {% endif %}
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="{% url 'profiles_profile_detail' idea.user.username %}">
+                                    {{ idea.user.username }}
+                                </a>
+                                <small>@carybeta <i class="icon-twitter"></i></small>
+                            </h4>    
+                            <p><a href="{% url 'ideas_idea_detail' idea.slug %}">{{ idea.tagline }}</a></p>
+                            <h6>Posted {{ idea.floated }} • on <a href="#">Lot #3456</a> • <a href="#">Like</a></h6>
+                        </div>
+                    </div>
+                </li>
+        {% endfor %}
+        </ul>
+        </div>
+        {% paginate %}
+    </section>
+{% endblock body %}

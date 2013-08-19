@@ -1,0 +1,39 @@
+{% extends "ideas/base.html" %}
+
+{% block head_title %}{{ idea.tagline }}{% endblock %}
+
+{% block body %}
+    <aside>
+        <h2><a href="{{ idea.user.get_absolute_url }}">
+        {{ idea.user.profile.full_name }}</a></h2>
+    </aside>
+    {% block project %}
+    <article id="idea">
+        <header>
+            <h1>{{ idea.tagline}}</h1>
+        </header>
+        {% if idea.ideavisual_set %}
+        <section id="slideshow">
+            <ul id="gallery">
+                {% for visual in project.projectvisual_set.all %}
+                {% if visual.public %}
+                <li>
+                    <img src="{{ visual.file.url }}"
+                         alt="{% if visual.caption %}{{ visual.caption }}{% else %}{{ image.title }}{% endif %}"
+                         title="{{ visual.title }}"/>
+                    <p class="caption">{{ visual.caption }}</p>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if idea.description %}
+        <section id="description">
+            {{ project.description_html|safe }}
+        </section>
+        {% endif %}
+    </article>
+    {% block comments %}
+    {% endblock comments %}
+    {% endblock project %}
+{% endblock body %}

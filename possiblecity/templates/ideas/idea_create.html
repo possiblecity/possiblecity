@@ -1,0 +1,25 @@
+{% extends "ideas/base.html" %}
+
+{% block head_title %}Float an Idea{% endblock %}
+
+{% block body %}
+    <header>
+        <h1>Float an Idea</h1>
+    </header>
+
+    {% load i18n %}
+	{% load bootstrap_tags %}
+	{% if form.is_multipart %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_create' %}">
+	{% else %}
+    <form method="POST" action="{% url 'ideas_idea_create' %}">
+	{% endif %}
+    {{ form|as_bootstrap }}
+    {% csrf_token %}
+    <div class="form-actions">
+        <a href="{% url 'ideas_idea_list' %}" class="btn">{% trans "Cancel" %}</a>
+        <button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
+    </div>
+</form>
+
+{% endblock %}
