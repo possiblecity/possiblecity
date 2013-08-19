@@ -213,7 +213,7 @@ class LotDetailView(DetailView):
 # ajax views
 class LotDetailMapView(GeoDetailView):
     model = Lot
-    geo_field = "geom"
+    geo_field = "bounds"
 
     
 class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
@@ -221,7 +221,7 @@ class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     Return all lot objects
     """
     model = Lot
-    geo_field = "geom"
+    geo_field = "bounds"
     properties = ['address', 'id', 'is_public']
    
 class VacantLotListApiView(LotListApiView):
