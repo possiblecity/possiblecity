@@ -1,0 +1,7 @@
+{% load account_tags %}
+<div class="span3 suggestion">
+      <img src="http://placehold.it/150x150" class="thumbnail">
+      <h4 class="media-heading">{% user_display suggestion.to_user %}</h4>
+      <a href="{% url "ajax_request_suggestion" suggestion.pk %}" data-replace-closest=".suggestion" class="ajax btn btn-mini btn-primary">Request</a>
+      <a href="{% url "ajax_ignore_suggestion" suggestion.pk %}" data-replace-closest=".suggestion" class="ajax btn btn-mini ">Ignore</a>
+</div>

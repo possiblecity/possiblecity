@@ -1,148 +1,86 @@
-{% block doctype %}<!doctype html>{% endblock doctype %}
-<html class="no-js" lang="en">
-<head>
-{% block head %}
-    {% block metadata %}
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="author" content="Possible City">
-    {% endblock metadata %}
-    <title>
-        {% block head_title %}
-            {% block head_title_site %}Possible City{% endblock head_title_site %}
-            {% block head_title_section %}{% endblock head_title_section %}
-            {% block head_title_page %}{% endblock head_title_page %}
-        {% endblock head_title %}
-    </title>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block head_title_base %}Possible City | {% block head_title %}{% endblock %}{% endblock %}</title>
+        {% block viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
 
-    {% block mobile-viewport %}
-    {% endblock mobile-viewport %}
+        {% block style_base %}
+            <link href="{% static "css/bootstrap/bootstrap.css" %}" rel="stylesheet">
+            <link href="{% static "css/custom.css" %}" rel="stylesheet">
+            <link href="{% static "css/fonts/fontello/fontello.css" %}" rel="stylesheet">
+            <link href="{% static "css/animation.css" %}" rel="stylesheet">
+            {% block extra_style %}{% endblock %}
+        {% endblock style_base %}
 
-    {% block favicons %}
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    {% endblock favicons %}
+        {% block script_head %}
+            <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+            <!--[if lt IE 9]>
+                <script src="{% static "js/vendor/html5shiv.js" %}"></script>
+            <![endif]-->
+        {% endblock script_head %}
 
-    {% block css %}
-        {% load compress %}
-        {% compress css %}
-        <link type="text/css" rel="stylesheet" 
-             href="{{ STATIC_URL }}css/possiblecity.css" charset="utf-8">
-        {% endcompress %}
-    {% endblock css %}
+        {% block extra_head_base %}
+            {% block extra_head %}{% endblock extra_head %}
+        {% endblock extra_head_base %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
+        <div class="{% block wrapper_class %}{% endblock %}">
+	    {% block navbar_base %}
+             <nav class="navbar {% block navbar_class %}navbar-inverse navbar-fixed-top{% endblock %}">
+                 <div class="navbar-header">
+                 {% block topbar %}
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                         <span class="sr-only">Toggle navigation</span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                     </button>                                
+                     {% block site_brand %}
+                     <a class="navbar-brand" href="{% url "home" %}">Possible City</a>
+                     {% endblock site_brand %}
+                 </div>    
+                 <div class="collapse navbar-collapse nav-collapse">
+                 {% block nav %}
+                      <ul class="nav navbar-nav">
+                          <li><a href="{% url 'lotxlot_lot_detail' 3862 %}">Lotxlot</a></li>
+                          <li><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
+                          <li><a href="{% url 'profiles_profile_list' %}">People</a></li>
+                      </ul>
+                 {% endblock nav %}
+                 {% block account_bar %}
+	              {% include "_account_bar.html" %}
+	         {% endblock account_bar %}
+                 </div>
+                 {% endblock topbar %}
+             </nav>
+             {% endblock navbar_base %}
+	     {% block body_base %}
+	     <section class="container">
+         	{% include "_messages.html" %}
+            {% block body %}
+            	{% endblock body %}
+	     <section>
+	     {% endblock body_base %}
+         {% block footer_base %}
+        	 <footer class="container">
+        	     {% block footer %}{% endblock %}
+        	 </footer>
+        	{% endblock footer_base %}
+        </div>
 
-    {% block js_head %}
-        <!-- All JavaScript at the bottom, except for: -->
-        <script type="text/javascript" 
-            src="http://use.typekit.com/rna3gum.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-        <script src="{{ STATIC_URL }}js/libs/modernizr.dev.js"></script>
-        <script src="{{ STATIC_URL }}js/libs/respond.min.js"></script>
-    {% endblock js_head %}
+        {% block script_base %}
+            <script src="{% block jquery_src %}{% static "js/vendor/jquery.js" %}{% endblock %}"></script>
+            <script src="{% static "js/bootstrap/bootstrap.js" %}"></script>
+            <script src="{% static "js/pinax/theme.js" %}"></script>
+            {% block extra_script %}{% endblock extra_script %}
+        {% endblock script_base %}
 
-    {% block extra_head %}
-    {% endblock extra_head %}
-{% endblock head %}
-</head>
-<body class="{% block body_class %}default{% endblock body_class %}"
-      {% block body_id %}{% endblock body_id %}>
-{% block site_container %}
-<div class="site">
-    {% block site %}
-        {% block site_header_container %}
-        <header class="site-header">
-            {% block site_header %}
-            <nav class="site-nav">
-    				{% block identity %}
-        			<div class="identity">
-            			<h1><a href="{% url 'home' %}">Possiblecity</a></h1>
-            			<a class="logo" href="{% url 'home' %}">
-                			<img src="{{ STATIC_URL }}images/logo.png" />
-            			</a>
-        			</div>
-    				{% endblock identity %}
-    				{% block section-nav %}
-        			<ul class="section-nav">
-	                {% block nav_lotxlot %}
-            			<li id="nav-lotxlot">
-                			<a href="{% url 'lotxlot' %}">
-                    		<span>lot<strong>x</strong>lot</span>
-                			</a>
-            			</li>
-                    {% endblock nav_lotxlot %}
-                    {% block nav_blog %}
-            			<li id="nav-blog">
-                			<a href="{% url 'text_entry_index'  %}">
-                    			<span>Blog</span>
-          				</a>
-            			</li>
-                    {% endblock nav_blog %}
-                    {% block nav_about %}
-            			<li id="nav-about">
-                			<a href="{% url 'about' %}">
-                    			<span>About</span>
-                			</a>
-            			</li>
-                    {% endblock nav_about %}
-                		{% block nav_twitter %}
-            			<li id="nav-twitter">
-                			<a href="https://twitter.com/PossibleCity">
-                    			<span>@PossibleCity</span>
-                			</a>
-            			</li>
-            			{% endblock nav_twitter %}
-            			{% block nav_search %}
-					{% endblock nav_search %}
-        			</ul>
-     			{% endblock section-nav  %}
-     		</nav>
-            {% endblock site_header %}
-        </header>
-        {% endblock site_header_container %}
-        {% block layout %}
-        {% endblock layout %}
-        {% block site_footer_container %}
-        <footer class="site-footer">
-            {% block site_footer %}
-            {% include "_footer.html" %}
-            {% endblock site_footer %}
-        </footer>
-        {% endblock site_footer_container %}
-    {% endblock site %}
-    </div>
-{% endblock site_container %}
-        
-{% block js_body %}
-    {% block js_frameworks %}
-        <script 
-            src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
-        </script>
-        <script>
-            window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.6.2.min.js">\x3C/script>')
-        </script>
-    {% endblock js_frameworks %}
-
-    {% block js_global %}
-    {% endblock js_global %}
-
-    {% block js_local %}
-    {% endblock js_local %}
-
-    {% block analytics %}
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-28417563-1']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-    {% endblock analytics %}
-{% endblock js_body %}    
-
-{% block extra_body %}
-{% endblock extra_body %}
-</body>
+        {% block extra_body_base %}
+            {% block extra_body %}{% endblock extra_body %}
+        {% endblock extra_body_base %}
+    </body>
 </html>

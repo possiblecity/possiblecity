@@ -1,0 +1,17 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}{% trans "Edit Profile" %}{% endblock %}
+
+{% block body_class %}suggesions{% endblock %}
+
+{% block body %}
+    <h2>Friend Recommendations</h2>
+    <div class="row">
+        {% for suggestion in suggestions %}
+            {% include "friends/_suggestion.html" %}
+        {% endfor %}
+    </div>
+{% endblock %}

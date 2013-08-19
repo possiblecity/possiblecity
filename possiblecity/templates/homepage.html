@@ -1,12 +1,38 @@
-{% extends "base.html" %}
+{% extends "banner_base.html" %}
 
-{% block head_title_site %}Welcome to the Possible City{% endblock head_title_site %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Welcome" %}{% endblock %}
 
 {% block body_class %}home{% endblock %}
-{% block site_header_container %}{% endblock %}
-{% block layout %}
-<div class="site" style="margin-top:80px">
-<img src="{{ STATIC_URL }}images/logo.png" style="width:100%" />
-</div>
-{% endblock layout %}    
-{% block site_footer_container %}{% endblock %}
+
+{% block banner %}
+    <h1>{% trans "Welcome to Possible City." %}</h1>
+    <p>
+        {% blocktrans %}
+        Possible City is a platform that will enable citizens to
+        cultivate organic growth of communities and economies through the 
+        re-purposing of vacant properties for innovative new uses.
+        {% endblocktrans %}
+    </p>
+    
+    <h2>About Possible City</h2>
+    <p>
+        {% blocktrans %}
+        Through a virtual, web-based network of untapped skills, ideas, 
+        and spirit, connected to a physical network of underutilized and 
+        undervalued spaces, Possible City will enable citizens to create 
+        authentic communities and economies structured around rebuilding 
+        their city.
+        {% endblocktrans %}
+    </p>
+    
+    {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}!</p>
+      
+    {% else %}
+        {% url "account_login" as login_url %}
+        {% url "account_signup" as signup_url %}
+        <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn">Log In</a> or <a href="{{ signup_url }}" class="btn primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
+    {% endif %}
+{% endblock %}

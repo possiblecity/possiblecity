@@ -1,36 +1,53 @@
 {% extends "profiles/base.html" %}
 
 {% load i18n %}
-{% load account_tags %}
-{% load url from future %}
-{% load phileo_tags %}
 
 {% block head_title %}
-{% user_display profile_user as profile_user_display %}
-Profile for {{ page_user_display }} 
-{% endblock %}
+Profile for {{ profile.user.username }}
+{% endblock head_title %}
 
 {% block body %}
-    {% user_display profile_user as profile_user_display %}
-    <header class="jumbotron subhead" id="overview">
-        <h1>{% if profile.user.first_name and profile.user.last_name %}
+    <aside class="col-lg-3 col-12">
+        {% if profile.photo %}
+        <img src={{ profile.photo.url }} />
+        {% endif %}
+        <h3>{% if profile.user.first_name and profile.user.last_name %}
                 {{ profile.user.first_name }} {{ profile.user.last_name }}
             {% else %}
                 {{ profile.user.username }}
             {% endif %}
-        </h1>
-    </header>
-    
-    {% if profile.about %}
-        <p>{{ profile.about }}</p>
-    {% endif %}    
-    
-    {% if request.user.is_authenticated %}
-        {% if is_current %}
-            <p><a href="{% url "profiles_profile_update" %}" class="btn">
-               Update my profile</a></p>
-        {% else %}
-            {% phileo_widget request.user profile %}
+        </h3>
+        <ul>
+            <li><a href="http://www.twitter.com/{{ profile.twitter }}">{{ profile.twitter }}</a></li>
+            <li>{{ profile.website|urlize }}</li>
+        </ul>
+        {% if request.user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
         {% endif %}
-    {% endif %}
+    </aside>
+    <section class="col-lg-9 col-12">
+        {% if profile.about %}
+        <h5>About</h5>
+        <p class="lead">{{ profile.about }}</p>
+        {% endif %}
+        <div class="panel activity">
+            <header class="panel-heading">
+              <h5>Activity</h5>
+            </header>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="media">
+                        <a class="pull-left profile-img" href="#">
+                            <img class="media-object" src="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading"></h4>
+                            <h6>Posted <a href="#">Lot</a> • <a href="#">Like</a></h6>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section> 
+    
 {% endblock %}

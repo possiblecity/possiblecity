@@ -1,15 +1,6 @@
-{% extends "section_base.html" %}
-{% block head_title_section %}: People{% endblock head_title_section %}
-{% block body_class %}profile{% endblock %}
+{% extends "base.html" %}
 
-{% block section_nav %}
-    {% if user.is_authenticated %}
-         <ul>
-            <li><a href="{% url "profiles_profile_detail" user.username %}">
-                Your Profile</a></li>
-            <li><a href="{% url "profiles_profile_list" %}">All Agents</a></li>
-        </ul>
-    {% else %}
-        &nbsp;
-    {% endif %}
-{% endblock section_nav %}
+{% load i18n %}
+
+{% block body_class %}profiles{% endblock %}
+

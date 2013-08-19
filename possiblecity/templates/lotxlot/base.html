@@ -1,4 +1,11 @@
-{% extends "site_base.html" %}
-
-{% block body_class %}lotxlot{% endblock %}
+{% extends "base.html" %}
+{% block title %}LotxLot{% endblock title %}
+{% block body_class %}lotxlot map{% endblock %}
+{% block extra_head %}
+<!-- Leaflet -->
+{% load staticfiles %}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" /><![endif]-->
+<script src="http://cdn.leafletjs.com/leaflet-0.6/leaflet.js"></script>
+{% endblock extra_head %}
 

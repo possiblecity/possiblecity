@@ -1,17 +1,3 @@
-# python modules
-pillow
-psycopg2
-requests
-vectorformats
-geopy
-
-Django==1.4.1
-
-# django third party modules
-south
-django-taggit
-easy-thumbnails
-django-compressor
-django-pagination
-
--e git+git://github.com/mazelife/django-redactor.git#egg=django-redactor
+# This file is here because many Platforms as a Service look for
+#	requirements.txt in the root directory of a project.
+-r requirements/production.txt

@@ -1,7 +1,6 @@
 {% extends "text/base.html" %}
 {% block head_title_page %}: {{ entry.title }} {% endblock head_title_page %}
 {% block body_class %}{{ block.super }} entry{% endblock body_class %}
-{% block layout %}
 {% block page_content %}
 <div class="page-content">
     {% include "text/_entry.html" %}
@@ -20,4 +19,3 @@
 {% endblock entry_nav %}
 </div>
 {% endblock page_content %}
-{% endblock layout %}
