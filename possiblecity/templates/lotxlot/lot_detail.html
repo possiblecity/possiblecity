@@ -1,19 +1,119 @@
 {% extends "lotxlot/base.html" %}
+{% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% load staticfiles %}
 {% load humanize %}
-{% block body %}
-    <div id="map" style="width:100%; height:600px">
+{% block body_base %}
+    <div id="map" style="position:absolute; width:100%; height:100%">
     </div>
     <div id="map-status" class="status" style="display:none">
         Loading Map Features...
     </div>
-    <article class="lot">
+    <aside >
+        <div class="close-button pull-right">
+            <button type="button" class="close ">&times;</button>
+        </div>
+        <header class="lot-id-header text-center">
+            <h1>Lot {{ lot.id }}</h1>
+            <h2>{{ lot.address }}</h2>
+        </header>
+        <ul id="sidebar-tabs" class="nav nav-tabs">
+            <li class="active"><a href="#ideas" data-toggle="tab">Ideas</a></li>
+            <li class=""><a href="#info" data-toggle="tab">Info</a></li>
+        </ul>
+    
+        <div id="sidebar-tabs-content" class="tab-content">
+            <div class="tab-pane fade active in" id="ideas">
+                <div class="activity">
+                    <ul class="list-group">
+                        <div class="nav-tab-button text-center"></div>
+                        <li class="list-group-item">
+                            <div class="media">
+                                <a class="pull-left profile-img" href="#">
+                                    <img class="media-object"  alt="64x64" src="img/profiles/profile.png" style="width: 64px; height: 64px;">
+                                </a>
+                                <div class="media-body">
+                                    <textarea class="form-control" placeholder="Add your idea for this lot" rows="2" ></textarea>
+                                            <a data-toggle="modal" href="#sign-up-modal-add-idea" class="btn btn-primary btn pull-right">Add idea</a>
+                                </div>
+                            </div>
+                        </li> 
+                        <li class="list-group-item">
+                            <div class="media">
+                                <a class="pull-left profile-img" href="#">
+                                <img class="media-object"  alt="64x64" src="img/profiles/cary.jpg" style="width: 64px; height: 64px;">
+                                </a>
+                                <div class="media-body">
+                                <h4 class="media-heading">Cary Betagole <small>@carybeta <i class="icon-twitter"></i></small></h4>
+                                Odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                <h6>Posted 1 day ago • on <a href="#">Lot #3456</a> • <a href="#">Like</a></h6>
+                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="info">
+                <div class="lot-info-table"> 
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Owner:</th>
+                                <td></td>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr>
+                                <th>Sale Price:</th>
+                                <td>$</td>
+                            </tr>  
+                            <tr>
+                                <th>For Sale By:</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                            <th>Annual Taxes:</th>
+                                <td>$</td>
+                            </tr>
+            
+                            <tr>
+                                <th>Council District:</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Council Member:</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Zoning District:</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Known Use:</th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Size:</th>
+                                <td>{{ lot.bounds.area }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!--/lot-info -->
+
+                <div class="nav-tab-button text-center">
+                    <button type="button" class="btn btn-primary">Add a note about this lot</button>
+                </div><!-- /nav-tab-button -->
+            </div><!-- /#sidebar-tabs-content -->
+
+    
+
         <section class="details">
             <h1>{{ lot.address }}</h1>
         </section>
     </article>
 </div>
-{% endblock body %}
+{% endblock body_base %}
 {% block extra_body %}
 <script>
     // Initialize the map object
@@ -53,9 +153,9 @@
         style: lotStyle
     }).addTo(map);
 
-    var vacant = L.geoJson(null, {
-        style: lotStyle
-    }).addTo(map);
+    //var vacant = L.geoJson(null, {
+        //style: lotStyle
+    //}).addTo(map);
     
     $.getJSON('{% url "api_lot_detail" lot.id %}', function(data){
           lot.addData(data);
@@ -65,9 +165,9 @@
           map.panBy([-150, -50]);
     });
 
-    $.getJSON('{% url "api_lots_vacant" %}', function(data){
-          vacant.addData(data);
-    });
+    //$.getJSON('{% url "api_lots_vacant" %}', function(data){
+          //vacant.addData(data);
+    //});
     
 
     
