@@ -21,14 +21,14 @@ Profile for {{ profile.user.username }}
             <li><a href="http://www.twitter.com/{{ profile.twitter }}">{{ profile.twitter }}</a></li>
             <li>{{ profile.website|urlize }}</li>
         </ul>
-        {% if request.user.is_authenticated %}
+        {% if request.user == profile.user %}
         <a class="btn btn-primary" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
         {% endif %}
     </aside>
     <section class="col-lg-9 col-12">
         {% if profile.about %}
         <h5>About</h5>
-        <p class="lead">{{ profile.about }}</p>
+        <p class="lead">{{ profile.user.first_name }} wants {{ profile.about }}</p>
         {% endif %}
         <div class="panel activity">
             <header class="panel-heading">

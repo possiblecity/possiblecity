@@ -13,13 +13,13 @@ from positions.fields import PositionField
 #from taggit.managers import TaggableManager
 from validatedfile.fields import ValidatedFileField
 
-#from ..lotxlot.models import Lot
+#from apps.lotxlot.models import Lot
 
 from .managers import IdeaQuerySet
 
 class Idea(models.Model):
     """
-       Defines an idea, which consists of minimally of 
+       Defines an idea, which consists minimally of 
        a one sentence description (tagline). In addition,
        it may have plans, images, drawings and detailed 
        descriptions of an urban intervention. 
@@ -52,6 +52,8 @@ class Idea(models.Model):
     tagline = models.CharField(max_length=140, 
          help_text="A tweet-length summary of the idea.")
     description = models.TextField(blank=True)
+
+    #lot = models.ForeignKey(Lot, blank=True, null=True)
 
     # Categorization
     #tags = TaggableManager(blank=True)
