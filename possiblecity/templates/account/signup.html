@@ -6,8 +6,12 @@
 {% block head_title %}{% trans "Sign up" %}{% endblock %}
 
 {% block body %}
-    <div>
-        <div>
+    <div class="row">
+        <div class="col-lg-3" col-12">
+            {% include "account/_signup_sidebar.html" %}
+        </div>
+
+        <div class="col-lg-9 col-12">
             <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" class="form-horizontal"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
                 <legend>{% trans "Sign up" %}</legend>
                 <fieldset>
@@ -21,9 +25,6 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
-        <div>
-            {% include "account/_signup_sidebar.html" %}
         </div>
     </div>
 {% endblock %}

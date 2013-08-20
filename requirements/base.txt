@@ -28,4 +28,5 @@ django-user-accounts==1.0b14 #user authetication & accounts
 django-social-auth==0.7.23 #social authentication
 metron==1.1
 
+django-js-reverse
 django-forms-bootstrap==2.0.3.post1

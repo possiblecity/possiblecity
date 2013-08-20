@@ -28,7 +28,6 @@
         {% endblock extra_head_base %}
     </head>
     <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
-        <div class="{% block wrapper_class %}{% endblock %}">
 	    {% block navbar_base %}
              <nav class="navbar {% block navbar_class %}navbar-inverse navbar-fixed-top{% endblock %}">
                  <div class="navbar-header">
@@ -46,7 +45,7 @@
                  <div class="collapse navbar-collapse nav-collapse">
                  {% block nav %}
                       <ul class="nav navbar-nav">
-                          <li><a href="{% url 'lotxlot_lot_detail' 3862 %}">Lotxlot</a></li>
+                          <li><a href="{% url 'lotxlot_lot_detail' 9312 %}">Lotxlot</a></li>
                           <li><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
                           <li><a href="{% url 'profiles_profile_list' %}">People</a></li>
                       </ul>
@@ -61,16 +60,15 @@
 	     {% block body_base %}
 	     <section class="container">
          	{% include "_messages.html" %}
-            {% block body %}
+                {% block body %}
             	{% endblock body %}
-	     <section>
+	     </section>
 	     {% endblock body_base %}
-         {% block footer_base %}
+             {% block footer_base %}
         	 <footer class="container">
         	     {% block footer %}{% endblock %}
         	 </footer>
-        	{% endblock footer_base %}
-        </div>
+              {% endblock footer_base %}
 
         {% block script_base %}
             <script src="{% block jquery_src %}{% static "js/vendor/jquery.js" %}{% endblock %}"></script>

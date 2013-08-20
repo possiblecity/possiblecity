@@ -134,7 +134,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
     'account.context_processors.account',
-    #'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_by_name_backends',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -166,7 +166,7 @@ MIDDLEWARE_CLASSES = (
     'account.middleware.LocaleMiddleware',
     'account.middleware.TimezoneMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    #'social_auth.middleware.SocialAuthExceptionMiddleware'
+    'social_auth.middleware.SocialAuthExceptionMiddleware'
 )
 
 
@@ -193,9 +193,9 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 AUTH_USER_MODEL = 'auth.User'
 
 AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
     'account.auth_backends.UsernameAuthenticationBackend',
-    #'social_auth.backends.twitter.TwitterBackend',
-    #'social_auth.backends.facebook.FacebookBackend'
 )
 
 ACCOUNT_OPEN_SIGNUP = True
@@ -239,6 +239,7 @@ FACEBOOK_EXTENDED_PERMISSIONS = [
 FACEBOOK_EXTRA_DATA = [
     ("first_name", "first_name"),
     ("last_name", "last_name"),
+    ("picture", "photo"),
 ]
 
 TWITTER_EXTRA_DATA = [
@@ -276,7 +277,7 @@ THIRD_PARTY_APPS = (
     'south', # database migrations
     'djcelery', # async
     'account', # local accounts
-    #'social_auth', # social accounts
+    'social_auth', # social accounts
 
     'compressor', # static file optimization
     'pagination', # pagination
@@ -284,9 +285,8 @@ THIRD_PARTY_APPS = (
     #'taggit', # tagging
     'metron', # analytics
     
-    # theme
-    #'pinax_theme_bootstrap',
-    'django_forms_bootstrap'
+    'django_forms_bootstrap', # template form tools
+    'django_js_reverse' # javascript url tools
 )
 
 # Apps specific for this project go here.

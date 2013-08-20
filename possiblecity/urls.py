@@ -28,12 +28,12 @@ urlpatterns = patterns('',
 
     # people
     #url(r"^friends/", include("apps.friends.urls")),
-    #url(
-    #    r"^account/social/connections/$",
-    #    TemplateView.as_view(template_name="account/connections.html"),
-    #    name="account_social_connections"
-    #),
-    #url(r"^account/social/", include("social_auth.urls")),
+    url(
+        r"^account/social/connections/$",
+        TemplateView.as_view(template_name="account/connections.html"),
+        name="account_social_connections"
+    ),
+    url(r"^account/social/", include("social_auth.urls")),
 
     url(r"^account/", include("account.urls")),   
     url(r"^profiles/", include("apps.profiles.urls")),   
@@ -46,7 +46,8 @@ urlpatterns = patterns('',
     url(r'^lotxlot/', include('apps.lotxlot.urls')),
 
 
-    # search
+    # js urls
+    url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
 )
 
 urlpatterns += staticfiles_urlpatterns()
