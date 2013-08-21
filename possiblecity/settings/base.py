@@ -276,6 +276,8 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'south', # database migrations
     'djcelery', # async
+    'djsupervisor', # process mgmt
+    
     'account', # local accounts
     'social_auth', # social accounts
 
@@ -338,12 +340,13 @@ LOGGING = {
 }
 
 #==============================================================================
-# WSGI Configuration
+# Server Configuration
 #==============================================================================
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 
+GUNICORN_PORT = os.environ.get("GUNICORN_PORT", "")
 
 #==============================================================================
 # Compression 
@@ -426,6 +429,7 @@ PHL_DATA = {
     'PAPL': 'http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/',
     'PAPL_LISTINGS': 'http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/0/',
     'PAPL_ASSETS': 'http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/',
+    'PAPL_PARCELS': 'http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/2/',
     'PAPL_WEB':	'http://secure.phila.gov/PAPLPublicWeb/',
     'VACANCY': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/', 
     'VACANCY_APPEALS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/0/',

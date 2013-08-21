@@ -1,32 +1,34 @@
 # python modules
+gunicorn # server
 psycopg2 # postgres bindings
-redis==2.7.5 #data store
+redis #data store
 pillow #image manipulation
-requests==1.2.3 #http library
+requests #http library
 geopy #geo tools
-vectorformats
+vectorformats #serialization tools
 simplejson
 markdown
-twitter==1.9.4 #twitter api
+twitter #twitter api
 
 
-Django==1.5.1
+Django>=1.5
 
 # django third party modules
-django-localflavor
 south #database migrations
-django-celery==3.0.17 #async tasks
+django-supervisor #process management
+django-celery #async tasks
 django-braces #generic view mixins
 django-compressor #static file compression
-django-pagination
-django-positions
-django-validated-file
+django-pagination #pagination
+django-positions #auto ordering field
+django-validated-file #configurable file field
+django-localflavor #localization add-ons
 #-e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
 
-django-taggit
+django-taggit #tags
 django-user-accounts==1.0b14 #user authetication & accounts
 django-social-auth==0.7.23 #social authentication
-metron==1.1
+metron==1.1 #analytics tools
 
-django-js-reverse
-django-forms-bootstrap==2.0.3.post1
+django-js-reverse #use url tags in javascript
+django-forms-bootstrap==2.0.3.post1 #form tools

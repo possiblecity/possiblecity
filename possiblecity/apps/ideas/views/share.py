@@ -40,30 +40,26 @@ class IdeaCreateView(LoginRequiredMixin, CreateView):
         return context_data
 
 class IdeaUpdateView(LoginRequiredMixin, UpdateView):
+    model = Idea
     form_class = IdeaForm
-    template_name = 'ideas/idea_update_form.html'
-    #success_url = 'success'
+    template_name = 'ideas/idea_update.html'
+    success_url = reverse_lazy('ideas_idea_list')
+
 
     def dispatch(self, *args, **kwargs):
-        self.idea = get_object_or_404(Idea, pk=kwargs['idea_id'])
-        if self.idea.user.id != request.user.id:
+        self.idea = get_object_or_404(Idea, pk=kwargs['pk'])
+        if self.idea.user.id != self.request.user.id:
             return HttpResponseForbidden()
         return super(IdeaUpdateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.status = Idea.STATUS_PENDING
+        self.object.status = Idea.STATUS_PUBLISHED
         self.object.save()
         if self.object.status == Idea.STATUS_PUBLISHED:
             return HttpResponseRedirect(self.object.get_absolute_url())
         else:
             return HttpResponseRedirect(self.get_success_url())
-
-    def get_context_data(self, *args, **kwargs):
-        context_data = super(IdeaCreateView, self).get_context_data(
-            *args, **kwargs)
-        context_data.update({'create': False})
-        return context_data
 
 
 class IdeaVisualCreateView(CreateView):

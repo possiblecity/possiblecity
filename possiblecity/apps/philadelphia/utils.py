@@ -94,12 +94,48 @@ def check_public():
                         print("%s: %s updated" % (lot.id, lot.address))
                     else:
                         print("%s" % (lot.id))
-                else:
-                    print("No features for %s" % (lot.id))
+            else:
+                print("No features for %s" % (lot.id))
         else:
             print("No Data")
         
         
+def get_basereg():
+    """
+    Check papl parcel data source to get basereg number.
+    Update database accordingly.
+    """
+    from .models import LotProfile
+
+    queryset = queryset_iterator(LotProfile.objects.all())
+    for lot_profile in queryset:
+        lon = lot_profile.pwd_parcel.point_on_surface.x
+        lat = lot_profile.pwd_parcel.point_on_surface.y
+        source = settings.PHL_DATA["PAPL_PARCELS"] + "query"
+        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
+                  "outFields":"BASEREG", "f":"json"}
+
+        data =  fetch_json(source, params)
+
+        if data:
+            if "error" in data:
+                print(data["error"]["details"])
+            elif "features" in data:
+                features = data["features"]
+                if features:
+                    if features[0]:
+                        attributes = features[0]["attributes"]
+                        lot_profile.basereg = attributes["BASEREG"]
+                        lot_profile.save(update_fields=["basereg",])
+                        print("%s: %s updated" % (lot_profile.id, lot_profile.address))
+                    else:
+                        print("%s" % (lot.id))
+            else:
+                print("No features for %s" % (lot.id))
+        else:
+            print("No Data")
+
 
 def update_papl_asset():
     """

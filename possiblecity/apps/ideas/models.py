@@ -13,7 +13,7 @@ from positions.fields import PositionField
 #from taggit.managers import TaggableManager
 from validatedfile.fields import ValidatedFileField
 
-#from apps.lotxlot.models import Lot
+from apps.lotxlot.models import Lot
 
 from .managers import IdeaQuerySet
 
@@ -53,7 +53,8 @@ class Idea(models.Model):
          help_text="A tweet-length summary of the idea.")
     description = models.TextField(blank=True)
 
-    #lot = models.ForeignKey(Lot, blank=True, null=True)
+    
+    lot = models.ForeignKey(Lot, blank=True, null=True)
 
     # Categorization
     #tags = TaggableManager(blank=True)
@@ -112,10 +113,13 @@ class IdeaVisual(models.Model):
         return os.path.join('ideas', 
             slugify(instance.idea.__unicode__), 'visuals',  filename)
 
-    file = ValidatedFileField(
-                    upload_to = get_upload_path,
-                    max_upload_size = 1024000,
-                    content_types = ['image/png', 'image/jpg', 'image/jpeg'])
+    #file = ValidatedFileField(
+    #                upload_to = get_upload_path,
+    #                max_upload_size = 1024000,
+    #                content_types = ['image/png', 'image/jpg', 'image/jpeg'])
+    
+    file = models.FileField(upload_to=get_upload_path)    
+
     title = models.CharField(max_length=100, blank=True)
     caption = models.CharField(max_length=140, blank=True)
     

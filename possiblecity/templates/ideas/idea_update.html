@@ -1,0 +1,25 @@
+{% extends "ideas/base.html" %}
+{% load i18n %}
+{% load bootstrap_tags %}
+
+{% block head_title %}Update Your Idea{% endblock head_title %}
+
+{% block body %}
+    <header>
+        <h1>Update Your Idea</h1>
+    </header>
+
+    {% if form.is_multipart %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_update' idea.id %}">
+    {% else %}
+    <form method="POST" action="{% url 'ideas_idea_update' idea.id %}">
+    {% endif %}
+    {{ form|as_bootstrap }}
+    {% csrf_token %}
+    <div class="form-actions">
+        <a href="{% url 'ideas_idea_list' %}" class="btn">{% trans "Cancel" %}</a>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+    </div>
+</form>
+
+{% endblock body %}

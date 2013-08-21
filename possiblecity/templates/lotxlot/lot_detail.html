@@ -11,6 +11,10 @@
             <h1>Lot {{ lot.id }}</h1>
             <h2>{{ lot.address }}</h2>
         </header>
+        <ul id="sidebar-tabs" class="nav nav-tabs">
+          <li class="active"><a href="#ideas" data-toggle="tab">Ideas</a></li>
+          <li class=""><a href="#info" data-toggle="tab">Info</a></li>
+        </ul>
     </div>
 {% endblock body %}
 {% block map_js %}

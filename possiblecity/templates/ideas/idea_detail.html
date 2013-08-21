@@ -1,5 +1,5 @@
 {% extends "ideas/base.html" %}
-
+{% load i18n %}
 {% block head_title %}{{ idea.tagline }}{% endblock %}
 
 {% block body %}
@@ -29,8 +29,11 @@
         {% endif %}
         {% if idea.description %}
         <section id="description">
-            {{ project.description_html|safe }}
+            {{ idea.description_html|safe }}
         </section>
+        {% endif %}
+        {% if request.user == idea.user %}
+        <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Idea' %}</a>
         {% endif %}
     </article>
     {% block comments %}

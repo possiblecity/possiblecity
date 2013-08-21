@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^idea/add/$', 
         IdeaCreateView.as_view(), 
         name='ideas_idea_create'),
-    url(r'^idea/update/(?P<idea_id>\d+)/$', 
+    url(r'^idea/update/(?P<pk>[\w-]+)$', 
         IdeaUpdateView.as_view(), 
         name='ideas_idea_update'),
 
