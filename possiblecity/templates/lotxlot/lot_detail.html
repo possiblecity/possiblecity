@@ -11,8 +11,8 @@
         <div class="close-button pull-right">
             <button type="button" class="close ">&times<button>
          </div>
-        <header class="lot-id-header">
-            <h1>Lot {{ lot.id }}</h1>
+        <header class="lot-id-header text-center">
+            <h1>Lot #{{ lot.id }}</h1>
             <h2>{{ lot.address }}</h2>
         </header>
         <ul id="sidebar-tabs" class="nav nav-tabs">
@@ -27,9 +27,21 @@
                   <div class="nav-tab-button text-center"></div>
                   <li class="list-group-item">
                     <div class="media">
-                      <a class="pull-left profile-img" href="#">
-                      <img class="media-object"  alt="64x64" src="img/profiles/profile.png" style="width: 64px; height: 64px;">
+                     {% if request.user.is_authenticated %}
+                      <a class="pull-left profile-img" href="{{ request.user.profile.get_absolute_url }}">
+                      <img class="media-object"  
+                           src="{{ request.user.profile.photo.url }}"
+                           alt="64x64" 
+                           style="width: 64px; height: 64px;" />
                       </a>
+                      {% else %}
+                      <span class="pull-left profile-img">
+                      <img class="media-object"
+                           alt="64x64"
+                           src="{% static 'img/profile.png' %}" 
+                           style="width: 64px; height: 64px;" />
+                      </span>
+                      {% endif %}
                       <div class="media-body">
                         <form method="post" action=".">
                           {% for form in formset.forms %}
@@ -51,8 +63,10 @@
                   {% for idea in lot.idea_set.all %}
                   <li class="list-group-item">
                     <div class="media">
-                      <a class="pull-left profile-img" href="#">
-                        <img class="media-object"  alt="64x64" src="img/profiles/cary.jpg" style="width: 64px; height: 64px;">
+                      <a class="pull-left profile-img" href="{{ idea.user.profile.get_absolute_url }}">
+                        <img class="media-object"  
+                        alt="64x64" src="{{ idea.user.profile.photo.url }}" 
+                        style="width: 64px; height: 64px;" />
                       </a>
                       <div class="media-body">
                         <h4 class="media-heading">{{ idea.user }}</h4>
