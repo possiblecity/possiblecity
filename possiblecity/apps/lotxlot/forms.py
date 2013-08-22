@@ -2,8 +2,24 @@
 from geopy import geocoders
 
 from django import forms
+from django.forms.models import inlineformset_factory
+
+from apps.ideas.models import Idea
 
 from .utils import geocode_address
+from .models import Lot
+
+
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+
+BookFormSet = inlineformset_factory(Author, Book, extra=1)
 
 class AddressForm(forms.Form):
     """
