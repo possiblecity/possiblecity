@@ -256,7 +256,7 @@ class LotDetailView(InlineFormSetView):
             url = "%s?next=%s" % (reverse('account_login'), request.path)
             return HttpResponseRedirect(url)
         else:
-            return super(BaseInlineFormSetView, self).post(request, *args, **kwargs)
+            return super(LotDetailView, self).post(request, *args, **kwargs)
 
     def formset_valid(self, formset):
         """
