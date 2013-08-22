@@ -3,9 +3,10 @@
 from vectorformats.Formats import Django, GeoJSON
 
 from django.conf import settings
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.gis.measure import D
 from django.contrib.gis.geos import Point, Polygon
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Q
 from django.db.models.query import EmptyQuerySet
 from django.forms.models import BaseInlineFormSet
@@ -249,10 +250,18 @@ class LotDetailView(InlineFormSetView):
     extra = 1
     template_name = 'lotxlot/lot_detail.html'
 
+    def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated():
+            self.request.session['post'] = self.request.POST
+            url = "%s?next=%s" % (reverse('account_login'), request.path)
+            return HttpResponseRedirect(url)
+        else:
+            return super(BaseInlineFormSetView, self).post(request, *args, **kwargs)
 
     def formset_valid(self, formset):
         """
-        If the formset is valid, auto-populate user
+        Auto-populate user
+        and save form.
         """
         instances = formset.save(commit=False)
         for instance in instances:

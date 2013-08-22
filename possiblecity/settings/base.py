@@ -207,7 +207,7 @@ ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
-LOGIN_URL = reverse_lazy("account_login_signup")
+LOGIN_URL = reverse_lazy("account_login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 
 # Social Auth

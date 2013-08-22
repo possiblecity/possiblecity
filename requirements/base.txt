@@ -23,6 +23,7 @@ django-positions #auto ordering field
 django-validated-file #configurable file field
 django-localflavor #localization add-ons
 -e git://github.com/brack3t/django-braces.git#egg=django-braces
+django-extra-views
 #-e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
 
 django-taggit #tags
