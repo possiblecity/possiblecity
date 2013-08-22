@@ -23,12 +23,16 @@
                         <div class="media-body">
                             <h4 class="media-heading">
                                 <a href="{% url 'profiles_profile_detail' idea.user.username %}">
-                                    {{ idea.user.username }}
+                                    {{ idea.user.profile }}
                                 </a>
-                                <small>@carybeta <i class="icon-twitter"></i></small>
                             </h4>    
                             <p><a href="{% url 'ideas_idea_detail' idea.slug %}">{{ idea.tagline }}</a></p>
-                            <h6>Posted {{ idea.floated }} • on <a href="#">Lot #3456</a> • <a href="#">Like</a></h6>
+                            <h6>Floated {{ idea.floated }} 
+                           {% if idea.lot %}
+                            • on 
+                            <a href="{% url 'lotxlot_lot_detail' idea.lot.id %}">Lot #{{ idea.lot.id }}</a>
+                            {% endif %}
+                            • <a href="#">Like</a></h6>
                         </div>
                     </div>
                 </li>
