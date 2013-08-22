@@ -10,13 +10,19 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.base import View, TemplateResponseMixin
 from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin, BaseListView
 from django.views.generic.edit import FormMixin
 
-from .forms import AddressForm
+from braces.views import CanonicalSlugDetailMixin, LoginRequiredMixin
+from extra_views import InlineFormSetView
+
+from apps.ideas.models import Idea
+from apps.ideas.forms import SimpleIdeaForm
+
+from .forms import AddressForm, LotForm, IdeaFormSet
 from .models import Lot
 from .utils import fetch_json
 
@@ -204,7 +210,7 @@ class AddressSearchView(FormMixin, MultipleObjectMixin, HybridGeoResponseMixin, 
         return self.render_to_response(context) 
 
 
-class LotDetailView(DetailView):
+class LotDetailView(CanonicalSlugDetailMixin, DetailView):
     """
     Retreive a lot
     """
@@ -222,7 +228,7 @@ class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     """
     model = Lot
     geo_field = "bounds"
-    properties = ['address', 'id', 'is_public']
+    properties = ['address', 'id', 'is_public', 'slug']
    
 class VacantLotListApiView(LotListApiView):
     """
@@ -230,6 +236,13 @@ class VacantLotListApiView(LotListApiView):
     """
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
 
+
+
+class LotDetailView(InlineFormSetView):
+    model = Lot
+    inline_model = Idea
+    extra = 1
+    template_name = 'lotxlot/lot_detail.html'
 
 
 

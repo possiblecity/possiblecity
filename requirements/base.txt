@@ -17,12 +17,12 @@ Django>=1.5
 south #database migrations
 django-supervisor #process management
 django-celery #async tasks
-django-braces #generic view mixins
 django-compressor #static file compression
 django-pagination #pagination
 django-positions #auto ordering field
 django-validated-file #configurable file field
 django-localflavor #localization add-ons
+-e git://github.com/brack3t/django-braces.git#egg=django-braces
 #-e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
 
 django-taggit #tags

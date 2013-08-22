@@ -1,6 +1,10 @@
 {% extends "lotxlot/map_base.html" %}
+
 {% load staticfiles %}
 {% load humanize %}
+{% load i18n %}
+{% load bootstrap_tags %}
+
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
     <div class="sidebar ideas-lot-info-sidebar">
@@ -15,8 +19,56 @@
           <li class="active"><a href="#ideas" data-toggle="tab">Ideas</a></li>
           <li class=""><a href="#info" data-toggle="tab">Info</a></li>
         </ul>
+
+        <div id="sidebar-tabs-content" class="tab-content">
+          <div class="tab-pane fade active in" id="ideas">
+            <div class="activity">
+                <ul class="list-group">
+                  <div class="nav-tab-button text-center"></div>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <a class="pull-left profile-img" href="#">
+                      <img class="media-object"  alt="64x64" src="img/profiles/profile.png" style="width: 64px; height: 64px;">
+                      </a>
+                      <div class="media-body">
+                        <form method="post" action="">
+                          {% for form in formset.forms %}
+                            {{ form.tagline }} 
+                            <!--<textarea class="form-control" placeholder="Add your idea for this lot" rows="2" ></textarea>-->
+                          {% endfor %}
+
+                          {% csrf_token %}
+                          <div class="form-actions">
+                            {{ formset.management_form }}
+                            <button type="submit" class="btn btn-primary pull-right">{% trans "Add idea" %}</button>
+                          </div>
+                          </form> 
+                      </div>
+                    </div>
+                  </li>
+                  {% for idea in lot.idea_set.all %}
+                  <li class="list-group-item">
+                    <div class="media">
+                      <a class="pull-left profile-img" href="#">
+                        <img class="media-object"  alt="64x64" src="img/profiles/cary.jpg" style="width: 64px; height: 64px;">
+                      </a>
+                      <div class="media-body">
+                        <h4 class="media-heading">{{ idea.user.profile.full_name }}</h4>
+                        <p>{{ idea.tagline }}</p>
+                        <h6>{{ idea.created }} • via {{ idea.via }} • <a href="#">Like</a></h6>
+                      
+                      </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+
     </div>
 {% endblock body %}
+
 {% block map_js %}
 <script>
     var lot = L.geoJson(null, {
@@ -39,7 +91,7 @@
     // does this feature have a property named address?
       if (feature.properties) {
           html = '<h4>' + feature.properties.address +'</h4>' +
-                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id) + '">View</a>'
+                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>'
           layer.bindPopup(html);
       }
     }

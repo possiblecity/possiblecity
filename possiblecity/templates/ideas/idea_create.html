@@ -1,5 +1,8 @@
 {% extends "ideas/base.html" %}
 
+{% load i18n %}
+{% load bootstrap_tags %}
+
 {% block head_title %}Float an Idea{% endblock %}
 
 {% block body %}
@@ -7,8 +10,7 @@
         <h1>Float an Idea</h1>
     </header>
 
-    {% load i18n %}
-	{% load bootstrap_tags %}
+    
 	{% if form.is_multipart %}
     <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_create' %}">
 	{% else %}

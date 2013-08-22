@@ -15,7 +15,7 @@ class LotForm(forms.ModelForm):
     class Meta:
         model = Lot
 
-LotFormSet = inlineformset_factory(Lot, Idea, extra=1)
+IdeaFormSet = inlineformset_factory(Lot, Idea, extra=1)
 
 class AddressForm(forms.Form):
     """
