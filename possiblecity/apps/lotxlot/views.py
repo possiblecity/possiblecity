@@ -7,7 +7,9 @@ from django.contrib.gis.measure import D
 from django.contrib.gis.geos import Point, Polygon
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
-from django.http import HttpResponse
+from django.db.models.query import EmptyQuerySet
+from django.forms.models import BaseInlineFormSet
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import ListView, DetailView, UpdateView
@@ -210,12 +212,6 @@ class AddressSearchView(FormMixin, MultipleObjectMixin, HybridGeoResponseMixin, 
         return self.render_to_response(context) 
 
 
-class LotDetailView(CanonicalSlugDetailMixin, DetailView):
-    """
-    Retreive a lot
-    """
-    model = Lot 
-
 # ajax views
 class LotDetailMapView(GeoDetailView):
     model = Lot
@@ -237,12 +233,34 @@ class VacantLotListApiView(LotListApiView):
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
 
 
+class IdeaInlineFormSet(BaseInlineFormSet):
+
+    form_class = SimpleIdeaForm
+    def get_queryset(self):
+        return EmptyQuerySet()
+
 
 class LotDetailView(InlineFormSetView):
     model = Lot
     inline_model = Idea
+    formset_class = IdeaInlineFormSet
+    fields = ('tagline',)
+    can_delete = False
     extra = 1
     template_name = 'lotxlot/lot_detail.html'
+
+
+    def formset_valid(self, formset):
+        """
+        If the formset is valid, auto-populate user
+        """
+        instances = formset.save(commit=False)
+        for instance in instances:
+            instance.user = self.request.user
+            instance.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
 
 
 

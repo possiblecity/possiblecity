@@ -31,10 +31,12 @@
                       <img class="media-object"  alt="64x64" src="img/profiles/profile.png" style="width: 64px; height: 64px;">
                       </a>
                       <div class="media-body">
-                        <form method="post" action="">
+                        <form method="post" action=".">
                           {% for form in formset.forms %}
-                            {{ form.tagline }} 
-                            <!--<textarea class="form-control" placeholder="Add your idea for this lot" rows="2" ></textarea>-->
+                            {{ form|as_bootstrap }}
+                            
+                            <!--<textarea class="form-control" id="id_idea_set-0-tagline" maxlength="140" name="idea_set-0-tagline" placeholder="Add your idea for this lot" rows="2"/>-->
+                            </textarea>
                           {% endfor %}
 
                           {% csrf_token %}
@@ -53,7 +55,7 @@
                         <img class="media-object"  alt="64x64" src="img/profiles/cary.jpg" style="width: 64px; height: 64px;">
                       </a>
                       <div class="media-body">
-                        <h4 class="media-heading">{{ idea.user.profile.full_name }}</h4>
+                        <h4 class="media-heading">{{ idea.user }}</h4>
                         <p>{{ idea.tagline }}</p>
                         <h6>{{ idea.created }} • via {{ idea.via }} • <a href="#">Like</a></h6>
                       
