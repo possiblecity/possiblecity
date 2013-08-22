@@ -18,7 +18,7 @@
                     <img class="profile-pic" src="{{ profile.photo.url }}" />
                 {% endif %}
                 </a>
-                <h4>{% if user.first_name %}{{ profile.full_name}}{% else %}{{ user.username }}{% endif %}</h4>
+                <h4>{% if profile.user.first_name %}{{ profile.full_name}}{% else %}{{ user.username }}{% endif %}</h4>
             </li>
         {% endfor %}
         </ul>
