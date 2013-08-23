@@ -1,11 +1,11 @@
 {% load i18n %}
-{% load bootstrap_tags %}
+{% load floppyforms %}
 {% if form.is_multipart %}
     <form method="POST" enctype="multipart/form-data" action="{% url 'profiles_profile_update' %}">
 {% else %}
     <form method="POST" action="{% url 'profiles_profile_update' %}">
 {% endif %}
-    {{ form|as_bootstrap }}
+    {{ form }}
     {% csrf_token %}
     <div class="form-actions">
         <a href="" class="btn">{% trans "Cancel" %}</a>

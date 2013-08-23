@@ -5,6 +5,7 @@ import datetime, os
 from markdown import markdown
 
 from django.conf import settings
+from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.db.models import permalink
 from django.utils.text import slugify
@@ -49,7 +50,7 @@ class Idea(models.Model):
 
     # Idea owner manages these fields
     title = models.CharField(max_length=100, blank=True)
-    tagline = models.CharField(max_length=140, 
+    tagline = models.TextField(validators=[MaxLengthValidator(140)],
          help_text="A tweet-length summary of the idea.")
     description = models.TextField(blank=True)
 

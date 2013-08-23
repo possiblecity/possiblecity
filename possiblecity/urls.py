@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     url(r"^account/social/", include("social_auth.urls")),
 
     url(r"^account/", include("account.urls")),   
-    url(r"^profiles/", include("apps.profiles.urls")),   
+    url(r"^people/", include("apps.profiles.urls")),   
 
     #ideas
     url(r'^ideas/float/', include('apps.ideas.urls.share')),

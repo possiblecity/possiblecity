@@ -1,13 +1,13 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
-{% load bootstrap_tags %}
+{% load floppyforms %}
 
 {% block head_title %}{% trans "Sign up" %}{% endblock %}
 
 {% block body %}
     <div class="row">
-        <div class="col-lg-3" col-12">
+        <div class="col-lg-3 col-12">
             {% include "account/_signup_sidebar.html" %}
         </div>
 
@@ -16,7 +16,7 @@
                 <legend>{% trans "Sign up" %}</legend>
                 <fieldset>
                     {% csrf_token %}
-                    {{ form|as_bootstrap }}
+                    {{ form }}
                     {% if redirect_field_value %}
                         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                     {% endif %}

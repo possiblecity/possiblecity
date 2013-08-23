@@ -1,7 +1,7 @@
 # lotxlot/forms.py 
 from geopy import geocoders
 
-from django import forms
+import floppyforms as forms
 from django.forms.models import inlineformset_factory
 
 from apps.ideas.models import Idea

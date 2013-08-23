@@ -1,5 +1,6 @@
 # profiles/views.py
 
+from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -45,6 +46,15 @@ class ProfileDetailView(DetailView):
 
 class ProfileLoginView(LoginRequiredMixin, DetailView):
     context_object_name = "profile" 
+
+    def dispatch(self, request, *args, **kwargs):
+        # check if there is some video onsite
+        profile = self.get_object()
+        if not profile.about:
+            return HttpResponseRedirect(reverse('profiles_profile_update'))
+        else:
+            return super(ProfileLoginView, self).dispatch(request, *args, **kwargs)
+
     def get_object(self, queryset=None):
         profile = Profile.objects.get(user=self.request.user)
         return profile

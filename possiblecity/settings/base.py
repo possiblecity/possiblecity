@@ -203,12 +203,12 @@ ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_VERIFICATION = False
 ACCOUNT_EMAIL_AUTHENTICATION = False
-ACCOUNT_LOGIN_REDIRECT_URL = "home"
-ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_LOGIN_REDIRECT_URL = 'profiles_profile_login'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
-LOGIN_URL = reverse_lazy("account_login")
-LOGIN_REDIRECT_URL = reverse_lazy("home")
+LOGIN_URL = reverse_lazy('account_login')
+LOGIN_REDIRECT_URL = reverse_lazy('profiles_profile_login')
 
 # Social Auth
 
@@ -287,6 +287,7 @@ THIRD_PARTY_APPS = (
     #'taggit', # tagging
     'metron', # analytics
     
+    'floppyforms',
     'django_forms_bootstrap', # template form tools
     'django_js_reverse' # javascript url tools
 )

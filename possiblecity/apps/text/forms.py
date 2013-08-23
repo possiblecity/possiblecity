@@ -1,9 +1,8 @@
 # text/forms.py
-
-from django.forms import ModelForm
+import floppyforms as forms
 
 from .models import Entry
 
-class EntryForm(ModelForm):
+class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry

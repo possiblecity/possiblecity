@@ -235,13 +235,13 @@ class VacantLotListApiView(LotListApiView):
 
 
 class IdeaInlineFormSet(BaseInlineFormSet):
-
-    form_class = SimpleIdeaForm
+    
     def get_queryset(self):
         return EmptyQuerySet()
 
 
 class LotDetailView(InlineFormSetView):
+    initial = [{'tagline': 'Add your idea for this lot'},]
     model = Lot
     inline_model = Idea
     formset_class = IdeaInlineFormSet

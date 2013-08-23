@@ -5,6 +5,31 @@
 {% load i18n %}
 {% load bootstrap_tags %}
 
+{% block extra_style %}
+{{ block.super }}
+<style>
+#idea-form textarea {
+  display: block;
+  width: 100%;
+  height: 56px;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+</style>
+
+{% endblock extra_style %}
+
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
     <div class="sidebar ideas-lot-info-sidebar">
@@ -30,7 +55,11 @@
                      {% if request.user.is_authenticated %}
                       <a class="pull-left profile-img" href="{{ request.user.profile.get_absolute_url }}">
                       <img class="media-object"  
+                           {% if request.user.profile.photo %}
                            src="{{ request.user.profile.photo.url }}"
+                           {% else %}
+                           src="{% static 'img/profile.png' %}"
+                           {% endif %}
                            alt="64x64" 
                            style="width: 64px; height: 64px;" />
                       </a>
@@ -43,14 +72,17 @@
                       </span>
                       {% endif %}
                       <div class="media-body">
-                        <form method="post" action=".">
+                        <form method="post" id="idea-form" action=".">
                           {% for form in formset.forms %}
-                            {{ form|as_bootstrap }}
-                            
-                            <!--<textarea class="form-control" id="id_idea_set-0-tagline" maxlength="140" name="idea_set-0-tagline" placeholder="Add your idea for this lot" rows="2"/>-->
-                            </textarea>
+                            {% for field in form %}
+                            <div id="div_id_idea_set-0-tagline" class="control-group  ">
+                              {{ field.errors }}
+                              <div class="controls">
+                                {{ field }}
+                              </div>
+                            </div>
+                            {% endfor %}
                           {% endfor %}
-
                           {% csrf_token %}
                           <div class="form-actions">
                             {{ formset.management_form }}
@@ -65,7 +97,12 @@
                     <div class="media">
                       <a class="pull-left profile-img" href="{{ idea.user.profile.get_absolute_url }}">
                         <img class="media-object"  
-                        alt="64x64" src="{{ idea.user.profile.photo.url }}" 
+                        alt="64x64" 
+                        {% if idea.user.profile.photo %}
+                        src="{{ idea.user.profile.photo.url }}" 
+                        {% else %}
+                        src="{% static 'img/profile.png' %}"
+                        {% endif %} 
                         style="width: 64px; height: 64px;" />
                       </a>
                       <div class="media-body">
