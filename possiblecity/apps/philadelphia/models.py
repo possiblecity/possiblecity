@@ -33,7 +33,7 @@ class LotProfile(models.Model):
     
     pwd_parcel = models.MultiPolygonField(srid=4326)
 
-    lot = models.OneToOneField(Lot, null=True, blank=True)
+    lot = models.OneToOneField(Lot, null=True, blank=True, related_name='profile')
     neighborhood = models.ForeignKey(Neighborhood, null=True, blank=True)
 
     def get_neighborhood(self):
