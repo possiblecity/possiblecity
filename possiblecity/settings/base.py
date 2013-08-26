@@ -275,6 +275,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'south', # database migrations
+    'gunicorn', # server
     'djcelery', # async
     'djsupervisor', # process mgmt
     

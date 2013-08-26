@@ -1,12 +1,74 @@
 {% extends "profiles/base.html" %}
 
-{% block head_title %}Edit Profile{% endblock %}
+{% load i18n %}
+{% load staticfiles %}
+{% load floppyforms %}
+
+{% block head_title %}
+Profile for {{ profile.user.username }}
+{% endblock head_title %}
 
 {% block body %}
-    <header>
-        <h1>Edit profile</h1>
-    </header>
-    
-    {% include "profiles/_profile_form.html" %}
+{% if form.is_multipart %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'profiles_profile_update' %}">
+{% else %}
+    <form method="POST" action="{% url 'profiles_profile_update' %}">
+{% endif %}
+    {% csrf_token %}
+    <aside class="col-lg-3 col-12">
+        <img
+        {% if profile.photo %}
+        src="{{ profile.photo.url }}"
+        {% else %}
+        src="{% static 'img/profile.png' %}"
+        {% endif %}
+        />
+        {{ form }}
+    </aside>
+    <section class="col-lg-9 col-12">
+        {% if profile.about %}
+        <h5>About</h5>
+        <p class="lead">{{ profile.user.first_name }} wants {{ profile.about }}</p>
+        {% endif %}
+        <div class="panel activity">
+            <div class="panel-heading">
+              <h5>Activity</h5>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                 <div class="media">
+                  <a class="pull-left profile-img" href="#">
+                    {% if profile.photo %}
+                    <img src={{ profile.photo.url }} style="width:64px; height:64px" />
+                    {% endif %}
+                  </a>
+                  <div class="media-body">
+                    <h4 class="media-heading">{{ profile.user.full_name }}<small>{{ profile.user.username }}</small></h4>
+                    <p>{{ profile.user.first_name }} joined Possible City.</p>
+                    <h6>{{ profile.user.date_joined }} . on </h6>
+                  </div>
+                </div>
+                </li>
+                {% for idea in profile.user.idea_set.all %}
+                <li class="list-group-item">
+                 <div class="media">
+                  <a class="pull-left profile-img" href="#">
+                    {% if profile.photo %}
+                    <img src={{ profile.photo.url }} style="height:64px; width:64px" />
+                    {% endif %}
+                  </a>
+                  <div class="media-body">
+                    <h4 class="media-heading">{{ profile.full_name }}<small>{{ profile.user.username }}</small></h4>
+                    <p><a href="{{ idea.get_absolute_url }}">{{ idea.tagline }}</a></p>
+                    <h6>{{ idea.floated }} on <a href="{{ idea.lot.get_absolute_url }}">{{ idea.lot }}</a></h6>
+                  </div>
+                </div>
+                </li>
+                {% endfor %}
+          
+            </ul>
+        </div>
+    </section> 
+</form>
     
 {% endblock %}
