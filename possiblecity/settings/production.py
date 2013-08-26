@@ -51,22 +51,15 @@ EMAIL_USE_TLS = True
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = EMAIL_HOST_USER
 
-#==============================================================================
-# Database
-#==============================================================================
-DATABASES = {}
-
 
 #==============================================================================
 # Cache
 #==============================================================================
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {}
+#CACHES = {}
 
 #==============================================================================
-# Secret Key
+# SERVER
 #==============================================================================
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = get_env_setting('SECRET_KEY')
-
+SERVER_PORT = environ.get('SERVER_PORT', '')

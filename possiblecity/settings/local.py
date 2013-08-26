@@ -1,9 +1,15 @@
 # settings/local.py
 
-
+import os
 from os.path import join, normpath
 
 from base import *
+
+#==============================================================================
+# Debugging
+#==============================================================================
+
+DEBUG = True
 
 
 #==============================================================================
@@ -11,24 +17,6 @@ from base import *
 #==============================================================================
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-
-#==============================================================================
-# Database Configuration
-#==============================================================================
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('DJANGO_DB_NAME', ''),
-        'USER': os.environ.get('DJANGO_DB_USER', ''),
-        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', ''),
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-
 
 
 #==============================================================================
@@ -66,3 +54,11 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'SHOW_TEMPLATE_CONTEXT': True,
 }
+
+
+#==============================================================================
+# SERVER
+#==============================================================================
+
+SERVER_PORT = os.environ.get('SERVER_PORT', '8000')
+

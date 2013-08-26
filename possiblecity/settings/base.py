@@ -49,7 +49,7 @@ ALLOWED_HOSTS = []
 #==============================================================================
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = os.environ.get('DJANGO_DEBUG', '')
+DEBUG = False
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
@@ -75,6 +75,21 @@ USE_L10N = True    #format dates, numbers and calendars according to locale
 USE_TZ = True
 
 
+
+#==============================================================================
+# Database Configuration
+#==============================================================================
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('DJANGO_DB_NAME', ''),
+        'USER': os.environ.get('DJANGO_DB_USER', ''),
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', ''),
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 #==============================================================================
 # Fixtures
