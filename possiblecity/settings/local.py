@@ -20,7 +20,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 #==============================================================================
-# Cache Configuration
+# Caching
 #==============================================================================
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
@@ -55,10 +55,4 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
 }
 
-
-#==============================================================================
-# SERVER
-#==============================================================================
-
-SERVER_PORT = os.environ.get('SERVER_PORT', '8000')
 

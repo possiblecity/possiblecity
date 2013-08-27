@@ -1,4 +1,6 @@
 import os
+
+from django.conf import settings
 from django.contrib.gis.utils import LayerMapping
 from models import LotProfile, Neighborhood
 
@@ -19,12 +21,13 @@ neighborhood_mapping = {
     'bounds': 'MULTIPOLYGON'
 }
 
-point_breeze = 'point_breeze/point_breeze_pwd_parcels.shp'
 neighborhoods = 'Neighborhoods_Philadelphia/neighborhoods_philadelphia.shp'
+point_breeze = 'point_breeze/point_breeze_pwd_parcels.shp'
+tioga = 'tioga/tioga_pwd_parcels.shp'
 
 
 def _get_filepath(file):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', file))
+    return os.path.abspath(os.path.join(settings.PROJECT_ROOT, 'data', file))
 
 def map(model, file, mapping, verbose=True, strict=True, progress=False, step=False):
     data_source = _get_filepath(file)

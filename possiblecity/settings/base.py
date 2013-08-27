@@ -366,7 +366,7 @@ LOGGING = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 
-GUNICORN_PORT = os.environ.get("GUNICORN_PORT", "")
+SERVER_PORT = os.environ.get("SERVER_PORT", "8000")
 
 #==============================================================================
 # Compression 
@@ -392,18 +392,15 @@ COMPRESS_JS_FILTERS = [
 ]
 
 #==============================================================================
-# Search
+# Caching
 #==============================================================================
 
-
-#==============================================================================
-# Notifications
-#==============================================================================
-
-
-#==============================================================================
-# Analytics
-#==============================================================================
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/home/possiblecity/memcached.sock',
+    }
+}
 
 
 #==============================================================================

@@ -1,6 +1,7 @@
 # python modules
 gunicorn # server
 psycopg2 # postgres bindings
+python-memcached # memcached bindings
 redis #data store
 pillow #image manipulation
 requests #http library

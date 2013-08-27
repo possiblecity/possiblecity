@@ -4,24 +4,11 @@ from os import environ
 
 from base import *
 
-# Normally you should not import ANYTHING from Django directly
-# into your settings, but ImproperlyConfigured is an exception.
-from django.core.exceptions import ImproperlyConfigured
-
-
-def get_env_setting(setting):
-    """ Get the environment setting or return exception """
-    try:
-        return environ[setting]
-    except KeyError:
-        error_msg = "Set the %s env variable" % setting
-        raise ImproperlyConfigured(error_msg)
-
 #==============================================================================
 # Site
 #==============================================================================
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['possiblecity.co', 'www.possiblecity.co', 'thepossiblecity.com', 'www.thepossiblecity.com']
 
 
 #==============================================================================
@@ -53,13 +40,10 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 
 #==============================================================================
-# Cache
-#==============================================================================
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-#CACHES = {}
-
-#==============================================================================
-# SERVER
+# Installed Apps
 #==============================================================================
 
-SERVER_PORT = environ.get('SERVER_PORT', '')
+INSTALLED_APPS += (
+    'memcache_status',
+)
+
