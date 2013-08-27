@@ -107,7 +107,7 @@ def get_basereg():
     """
     from .models import LotProfile
 
-    queryset = queryset_iterator(LotProfile.objects.all())
+    queryset = queryset_iterator(LotProfile.objects.filter(basereg__exact=''))
     for lot_profile in queryset:
         lon = lot_profile.pwd_parcel.point_on_surface.x
         lat = lot_profile.pwd_parcel.point_on_surface.y

@@ -80,6 +80,9 @@ class Idea(models.Model):
     floated = models.DateField("date floated", 
         editable=False, blank=True, null=True)
 
+    class Meta:
+        ordering = ['-floated']    
+
     def render_markup(self):
         """Turns  markup into HTML"""
         original = self.description_html

@@ -27,14 +27,15 @@ class Lot(models.Model):
     is_public = models.BooleanField(default=False)
  
     #auto-generated fields
-    slug = models.SlugField(max_length=255, editable=False, unique=True)
+    slug = models.SlugField(max_length=255, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     objects = CustomQuerySetGeoManager(LotQuerySet)
 
     class Meta:
-        unique_together = ('address', 'city', 'state')
+        pass
+        #unique_together = ('address', 'city', 'state')
 
     def __unicode__(self):
         if self.address:

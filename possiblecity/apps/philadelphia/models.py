@@ -18,6 +18,9 @@ class Neighborhood(models.Model):
     list_name = models.CharField(max_length=255)
     bounds = models.MultiPolygonField(srid=4326) 
 
+    class Meta:
+        ordering = ['name']    
+
     def __unicode__(self):
         return u'%s' % self.map_name
 
