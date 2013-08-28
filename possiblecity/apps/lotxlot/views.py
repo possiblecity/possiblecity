@@ -29,6 +29,9 @@ from .forms import AddressForm, LotForm, IdeaFormSet
 from .models import Lot
 from .utils import fetch_json
 
+from rest_framework import viewsets
+from .serializers import LotSerializer
+
 
  
 ##### GENERIC MIXINS
@@ -269,6 +272,14 @@ class LotDetailView(InlineFormSetView):
             instance.save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+
+class LotViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows Lots to be viewed or edited.
+    """
+    queryset = Lot.objects.filter(is_vacant=True)
+    serializer_class = LotSerializer
 
 
 

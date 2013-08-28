@@ -305,6 +305,9 @@ THIRD_PARTY_APPS = (
     
     #'taggit', # tagging
     'metron', # analytics
+
+    'rest_framework',
+    'rest_framework_gis',
     
     'floppyforms',
     'django_forms_bootstrap', # template form tools
@@ -430,6 +433,16 @@ CELERY_TASK_PUBLISH_RETRY = True
 CELERY_TASK_RESULT_EXPIRES = 7 * 24 * 60 * 60  # 7 Days
 CELERYD_TASK_TIME_LIMIT = 120
 CELERYD_TASK_SOFT_TIME_LIMIT = 120
+
+
+#==============================================================================
+# API
+#==============================================================================
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
+}
 
 #==============================================================================
 # Local App Configuration
