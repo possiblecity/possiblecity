@@ -1,4 +1,5 @@
 # philadelphia/utils.py
+import datetime
 import json
 
 from django.conf import settings
@@ -28,7 +29,8 @@ def check_landuse_vacancy():
     """
     from apps.lotxlot.models import Lot
 
-    queryset = queryset_iterator(Lot.objects.all())
+    t = datetime.datetime.now() - datetime.timedelta(days=1)
+    queryset = queryset_iterator(Lot.objects.filter(created__gt=t))
     for lot in queryset:
         lon = lot.coord.x
         lat = lot.coord.y
@@ -71,7 +73,8 @@ def check_public():
     """
     from apps.lotxlot.models import Lot
 
-    queryset = queryset_iterator(Lot.objects.all())
+    t = datetime.datetime.now() - datetime.timedelta(days=1)
+    queryset = queryset_iterator(Lot.objects.filter(created__gt=t))
     for lot in queryset:
         lon = lot.coord.x
         lat = lot.coord.y

@@ -55,7 +55,7 @@ class Idea(models.Model):
     description = models.TextField(blank=True)
 
     
-    lot = models.ManyToManyField(Lot, blank=True, null=True)
+    lots = models.ManyToManyField(Lot, blank=True, null=True)
 
     # Categorization
     #tags = TaggableManager(blank=True)

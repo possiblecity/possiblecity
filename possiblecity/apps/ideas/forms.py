@@ -13,9 +13,6 @@ class IdeaVisualForm(forms.ModelForm):
         #fields = ['file', 'title', 'caption', 'order', 'lead']
 
 class SimpleIdeaForm(forms.ModelForm):
-
-	
-	
     class Meta:
         model = Idea
         fields = ('tagline',)

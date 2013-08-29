@@ -7,7 +7,9 @@ from apps.ideas.models import Idea
 from .models import Lot
 
 class IdeaInline(admin.TabularInline):
-    model = Idea
+    model = Idea.lots.through
+    extra = 1
+    verbose_name = "ideas"
 
 class LotAdmin(admin.ModelAdmin):
 	list_display = ('id', 'address', 'city', 'state', 'is_vacant', 'is_public', 'is_visible',)

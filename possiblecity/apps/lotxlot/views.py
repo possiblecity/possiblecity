@@ -25,7 +25,7 @@ from extra_views import InlineFormSetView
 from apps.ideas.models import Idea
 from apps.ideas.forms import SimpleIdeaForm
 
-from .forms import AddressForm, LotForm, IdeaFormSet
+from .forms import AddressForm, LotForm
 from .models import Lot
 from .utils import fetch_json
 

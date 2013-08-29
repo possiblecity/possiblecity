@@ -24,6 +24,13 @@ neighborhood_mapping = {
 neighborhoods = 'Neighborhoods_Philadelphia/neighborhoods_philadelphia.shp'
 point_breeze = 'point_breeze/point_breeze_pwd_parcels.shp'
 tioga = 'tioga/tioga_pwd_parcels.shp'
+maguire = 'maguire/maguire_pwd_parcels.shp'
+nicetown = 'nicetown/nicetown_pwd_parcels.shp'
+old_kensington = 'old_kensington/old_kensington_pwd_parcels.shp'
+upper_kensington = 'upper_kensington/upper_kensington_pwd_parcels.shp'
+west_kensington = 'west_kensington/west_kensington_pwd_parcels.shp'
+east_kensington = 'east_kensington/east_kensington_pwd_parcels.shp'
+fairhill = 'fairhill/fairhill_pwd_parcels.shp'
 
 
 def _get_filepath(file):
