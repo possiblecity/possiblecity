@@ -243,7 +243,7 @@ class IdeaInlineFormSet(BaseInlineFormSet):
 class LotDetailView(InlineFormSetView):
     initial = [{'tagline': 'Add your idea for this lot'},]
     model = Lot
-    inline_model = Idea
+    inline_model = Idea.lots.through
     formset_class = IdeaInlineFormSet
     fields = ('tagline',)
     can_delete = False
