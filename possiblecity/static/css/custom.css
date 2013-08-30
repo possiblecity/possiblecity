@@ -9,6 +9,10 @@ body, html {
 
 }
 
+body {
+   padding-top:70px;
+}
+
 img {
 	max-width: 100%;
 }
