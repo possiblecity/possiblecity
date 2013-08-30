@@ -12,11 +12,16 @@ class IdeaInline(admin.TabularInline):
     verbose_name = "ideas"
 
 class LotAdmin(admin.ModelAdmin):
-	list_display = ('id', 'address', 'city', 'state', 'is_vacant', 'is_public', 'is_visible',)
-	list_editable = ('is_visible',)
-	search_fields = ['address',]
-	list_filter = ('city',)
+    list_display = ('id', 'address', 'get_neighborhood', 'city', 'state', 'is_vacant', 'is_public', 'is_visible',)
+    list_editable = ('is_visible',)
+    search_fields = ['address',]
+    list_filter = ('city',)
         
-        inlines = [ IdeaInline, ]
+    inlines = [ IdeaInline, ]
+
+    def get_neighborhood(self, obj):
+        return '%s'%(obj.lotprofile.neighborhood)
+    get_neighborhood.short_description = 'Neighborhood'
+
 
 admin.site.register(Lot, LotAdmin)
