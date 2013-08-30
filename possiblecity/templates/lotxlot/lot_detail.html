@@ -132,6 +132,7 @@
         style: lotStyle
     }).addTo(map);
     
+    bounds = map.getBounds()    
 
     $.getJSON('{% url "api_lot_detail" lot.id %}', function(data){
           lot.addData(data);
@@ -149,7 +150,9 @@
       }
     }
 
-    $.getJSON('{% url "api_lots_vacant" %}', function(data){
+    vacant_url = '{% url "api_lots_vacant"%}?bbox=' + bounds.toBBoxString()
+
+    $.getJSON(vacant_url, function(data){
           vacant  = L.geoJson(data, {
             style: lotStyle,
             onEachFeature: onEachFeature

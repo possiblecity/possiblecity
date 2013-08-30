@@ -245,7 +245,7 @@ class LotDetailView(InlineFormSetView):
     model = Lot
     inline_model = Idea.lots.through
     formset_class = IdeaInlineFormSet
-    fields = ('tagline',)
+    #fields = ('tagline',)
     can_delete = False
     extra = 1
     template_name = 'lotxlot/lot_detail.html'
