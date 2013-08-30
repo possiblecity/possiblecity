@@ -12,10 +12,10 @@ class IdeaInline(admin.TabularInline):
     verbose_name = "ideas"
 
 class LotAdmin(admin.ModelAdmin):
-    list_display = ('id', 'address', 'profile', 'city', 'state', 'is_vacant', 'is_public', 'is_visible',)
+    list_display = ('id', 'address', 'get_neighborhood', 'city', 'state', 'is_vacant', 'is_public', 'is_visible',)
     list_editable = ('is_visible',)
     search_fields = ['address',]
-    list_filter = ('city',)
+    list_filter = ('city', 'profile__neighborhood')
         
     inlines = [ IdeaInline, ]
 

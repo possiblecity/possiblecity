@@ -303,7 +303,7 @@ THIRD_PARTY_APPS = (
     'compressor', # static file optimization
     'pagination', # pagination
     
-    #'taggit', # tagging
+    'taggit', # tagging
     'metron', # analytics
     
     'floppyforms',

@@ -11,7 +11,7 @@ from django.db.models import permalink
 from django.utils.text import slugify
 
 from positions.fields import PositionField
-#from taggit.managers import TaggableManager
+from taggit.managers import TaggableManager
 from validatedfile.fields import ValidatedFileField
 
 from apps.lotxlot.models import Lot
