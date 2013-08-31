@@ -8,8 +8,7 @@ from django.contrib.gis.measure import D
 from django.contrib.gis.geos import Point, Polygon
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Q
-from django.db.models.query import EmptyQuerySet
-from django.forms.models import BaseInlineFormSet
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -22,10 +21,10 @@ from django.views.generic.edit import FormMixin
 from braces.views import CanonicalSlugDetailMixin, LoginRequiredMixin
 from extra_views import InlineFormSetView
 
-from apps.ideas.models import Idea
-from apps.ideas.forms import SimpleIdeaForm
 
-from .forms import AddressForm, LotForm
+from apps.ideas.models import Idea
+
+from .forms import AddressForm, LotForm, IdeaInlineFormSet
 from .models import Lot
 from .utils import fetch_json
 
@@ -234,20 +233,8 @@ class VacantLotListApiView(LotListApiView):
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
 
 
-class IdeaInlineFormSet(BaseInlineFormSet):
-    
-    def get_queryset(self):
-        return EmptyQuerySet()
-
-
-class LotDetailView(InlineFormSetView):
-    initial = [{'tagline': 'Add your idea for this lot'},]
-    model = Lot
-    inline_model = Idea.lots.through
-    formset_class = IdeaInlineFormSet
-    #fields = ('tagline',)
-    can_delete = False
-    extra = 1
+class LotDetailView(UpdateView):
+    model=Lot
     template_name = 'lotxlot/lot_detail.html'
 
     def post(self, request, *args, **kwargs):
@@ -261,7 +248,7 @@ class LotDetailView(InlineFormSetView):
     def formset_valid(self, formset):
         """
         Auto-populate user
-        and save form.
+       and save form.
         """
         instances = formset.save(commit=False)
         for instance in instances:
@@ -269,6 +256,34 @@ class LotDetailView(InlineFormSetView):
             instance.save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+#class LotDetailView(InlineFormSetView):
+#    model = Lot
+#    inline_model = Idea.lots.through.idea
+#    formset_class = IdeaInlineFormSet
+#    can_delete = False
+#    extra = 1
+#    template_name = 'lotxlot/lot_detail.html'
+
+#    def post(self, request, *args, **kwargs):
+#        if not self.request.user.is_authenticated():
+#            self.request.session['post'] = self.request.POST
+#            url = "%s?next=%s" % (reverse('account_login'), request.path)
+#            return HttpResponseRedirect(url)
+#        else:
+#            return super(LotDetailView, self).post(request, *args, **kwargs)
+
+#    def formset_valid(self, formset):
+#        """
+#        Auto-populate user
+#       and save form.
+#        """
+#        instances = formset.save(commit=False)
+#        for instance in instances:
+#            instance.user = self.request.user
+#            instance.save()
+
+#        return HttpResponseRedirect(self.get_success_url())
 
 
 

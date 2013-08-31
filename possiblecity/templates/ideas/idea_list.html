@@ -1,44 +1,87 @@
 {% extends "ideas/base.html" %}
 
+{% load staticfiles %}
 {% load pagination_tags %}
+{% load possiblecity_tags %}
 
 {% block head_title %}Ideas{% endblock head_title %}
 
 {% block body %}
-    <header class="row">
-        <h1>Ideas Feed <small>{{ ideas.count }}</small></h1>
-    </header>
-    <section class="row">
-       <div class="panel activity">
-            <ul class="list-group">
-            {% autopaginate ideas %}
-            {% for idea in ideas %}
-                <li class="list-group-item">
-                    <div class="media">
-                        {% if idea.user.profile.photo %}
-                        <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
-                            <img class="media-object" src="{{ idea.user.profile.photo.url }}"  style="width: 64px; height: 64px;">
-                        </a>
-                        {% endif %}
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                <a href="{% url 'profiles_profile_detail' idea.user.username %}">
-                                    {{ idea.user.profile }}
-                                </a>
-                            </h4>    
-                            <p><a href="{% url 'ideas_idea_detail' idea.slug %}">{{ idea.tagline }}</a></p>
-                            <h6>Floated {{ idea.floated }} 
-                           {% if idea.lot %}
-                            • on 
-                            <a href="{% url 'lotxlot_lot_detail' idea.lot.id %}">Lot #{{ idea.lot.id }}</a>
-                            {% endif %}
-                            • <a href="#">Like</a></h6>
-                        </div>
-                    </div>
-                </li>
-        {% endfor %}
-        </ul>
+    <header class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-12 margin-bottom-20">
+                    <h1>Ideas Feed <small>{{ ideas.count }}</small></h1>
+                </div>
+                <div class="col-sm-7  margin-bottom-20 ideas-page-neighborhoods-panel-md-devices">
+                    <nav class="panel">
+                        <ul class="nav nav-pills">
+                            <li class="active"><a href="#">All Activity</a></li>
+                            <li><a href="#">Kensington</a></li>
+                            <li><a href="#">Point Breeze</a></li>
+                            <li><a href="#">Tioga</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
-        {% paginate %}
+    </header>
+    <section class="container">
+        <div class="row">
+            <div class="col-lg-2 col-12">
+                <div class="panel ideas-page-neighborhoods-panel-xs-lg-devices">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="#">All Activity</a></li>
+                        <li><a href="#">Kensington</a></li>
+                        <li><a href="#">Point Breeze</a></li>
+                        <li><a href="#">Tioga</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-5 col-sm-6 col-12">
+                <div class="panel ideas-page-panel activity">
+                    <ul class="list-group">
+                        {% for idea in ideas %}
+                        <li class="list-group-item">
+                            <div class="media">
+                              <a class="pull-left profile-img" href="{{ idea.user.profile.get_absolute_url }}">
+                                <img class="media-object"  
+                                alt="64x64" 
+                                {% if idea.user.profile.photo %}
+                                src="{{ idea.user.profile.photo.url }}" 
+                                {% else %}
+                                src="{% static 'img/profile.png' %}"
+                                {% endif %} 
+                                style="width: 64px; height: 64px;" />
+                              </a>
+                              <div class="media-body">
+                                <h4 class="media-heading">
+                                {% if idea.user.first_name %}
+                                    {{ idea.user.profile.full_name }}
+                                {% else %}
+                                   {{ idea.user.username }}
+                                {% endif %}
+                                </h4>
+                                <p>{{ idea.tagline }}</p>
+                                <h6>Via {{ idea.get_via_display }}
+                                    {% if idea.get_via_display == "Twitter" %}
+                                    <i class="icon-twitter"></i>
+                                    {% elif idea.get_via_display == "Text" %}
+                                    <i class="icon-mobile-phone"></i>
+                                    {% elif idea.get_via_display == "Web" %}
+                                    <i class="icon-globe"></i>
+                                    {% elif idea.get_via_display == "Instagram" %}
+                                    <i class="icon-instagram"></i>
+                                    {% endif %}
+                                    • Floated {{ idea.floated|ago }} 
+                                    • <a href="#">Like</a></h6>
+                              </div>
+                            </div>
+                          </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 {% endblock body %}

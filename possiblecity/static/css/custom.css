@@ -1,4 +1,3 @@
-
 /***************************************************************************/
 /* GENERAL STYLES */
 
@@ -7,10 +6,6 @@ body, html {
 	height: 100%;
 	background: url('../img/pattern_greysquares.png');
 
-}
-
-body {
-   padding-top:70px;
 }
 
 img {
@@ -95,6 +90,8 @@ form p {
 /* SPACING STYLES */
 
 
+
+
 .margin-bottom-10 {
 	margin-bottom: 10px;
 }
@@ -123,6 +120,10 @@ form p {
 	margin-bottom: 20px;
 	border-radius: 0px;
 	background: #68C4EA;
+}
+
+.margin-bottom-0 {
+	margin-bottom: 0px;
 }
 
 .navbar-brand {
@@ -181,6 +182,19 @@ background-color: #BEE0EA;
 /***************************************************************************/
 /* MAP STYLES */
 
+
+#map {
+	margin-top: -20px;
+
+}
+
+
+.map-homepage {
+	width: 93%;
+	height: 93%;
+	margin-top: 20px;
+
+}
 
 .map-idea-profile-width {
 	width:70px;
@@ -305,6 +319,37 @@ border-top: none;
 		overflow: scroll;
 }
 
+
+
+.featured-projects .lot-id-header {
+	margin-bottom: -15px;
+}
+
+.featured-projects .activity .list-group-item {
+padding: 15px 15px 10px 15px;
+}
+
+.like-margin {
+	margin-right: 5px;
+}
+
+.comment-margin {
+	margin-left: 5px;
+}
+
+.comment-profile-img {
+	width: 20px;
+	height: 20px;
+
+}
+
+.small-profile-name {
+	font-size: 15px;
+}
+
+.2nd-hr-threaded-comment {
+	margin-top: 10px;
+}
 
 
 /***************************************************************************/
@@ -435,12 +480,16 @@ position: relative;
 }
 
 
+.latest-activity .lot-id-header {
+	margin-bottom: -15px;
+}
+
 
 /***************************************************************************/
 /* LOT INFO IN SIDEBAR */
 
 #info .table {
-margin-top: -10px;
+margin-top: 15px;
 border-bottom: 1px solid #dddddd;
 }
 
@@ -675,26 +724,8 @@ opacity: 0.6;
 /***************************************************************************/
 	/* SIDEBAR STYLES */
 
-	.sidebar {
-		position: absolute;
-		right: 0;
-		top: 51px;
-		bottom: 0;
-		width: 400px;
-		padding-top: 10px;
-		padding-bottom: 20px;
-		overflow: scroll;
-	}
+	
 
-	.ideas-page-sidebar	{
-		position: static;
-		width: 100%;
-		border: 1px solid #dddddd;
-		border-radius: 4px;
-		padding-top: 0px;
-		overflow: visible;
-		display: none;
-	}
 
 
 
@@ -823,46 +854,24 @@ opacity: 0.6;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /***************************************************************************/
 /******************************************************* RESPONSIVE STYLES */
 
-@media (min-width: 769px) {
-
-
-	.profile-edit-save-button-2 {
-		display: none;
-	}	
-	
-	/***************************************************************************/
-	/* MAP STYLES */
-	#map {
-		margin-top: -20px;
-		min-height: 93%; /* min. height for modern browser */
-	    height:auto !important; /* important rule for modern Browser */
-	    height:93%; /* min. height for IE */
-	    overflow: hidden !important; /* FF scroll-bar */
-	    float: left;
-	}
-
-
-
-
-
-	/***************************************************************************/
-	/* FOOTER */
-
-	.homepage-footer {
-		position: fixed;
-		bottom: 0;
-		z-index: 10000000;
-		width: 100%;
-		height: 20px;
-	}
-
-
-
-
-}
 
 
 @media (min-width: 1200px) {
@@ -992,7 +1001,66 @@ opacity: 0.6;
 
 
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
+
+
+	.profile-edit-save-button-2 {
+		display: none;
+	}	
+
+
+	#map {
+		position:absolute;
+		width: 93%;
+		height: 93%;
+
+	}
+
+	.sidebar {
+		position: absolute;
+		right: 0;
+		top: 51px;
+		bottom: 0;
+		width: 400px;
+		padding-top: 10px;
+		padding-bottom: 20px;
+		overflow: scroll;
+	}
+
+
+
+
+	.ideas-page-sidebar	{
+		position: static;
+		width: 100%;
+		border: 1px solid #dddddd;
+		border-radius: 4px;
+		padding-top: 0px;
+		overflow: visible;
+		display: none;
+	}
+
+
+	
+	
+
+
+
+
+
+
+	/***************************************************************************/
+	/* FOOTER */
+
+	.homepage-footer {
+		position: fixed;
+		bottom: 0;
+		z-index: 10000000;
+		width: 100%;
+		height: 20px;
+	}
+
+
 
 	.visible-xs {
 		display: none;
@@ -1014,10 +1082,10 @@ opacity: 0.6;
 
 
 
-
-
-
 }
+
+
+
 
 
 
@@ -1032,9 +1100,18 @@ opacity: 0.6;
 
 	/***************************************************************************/
 	/* MAP STYLES */
+	
+
 	#map {
+		position: static;
 		width: 100%;
 		height: 300px;
+		margin-top: -20px;
+	}
+
+	.map-hopmepage {
+		position: static;
+		margin-top: 40px;
 	}
 
 	/***************************************************************************/
@@ -1061,7 +1138,16 @@ opacity: 0.6;
 	/* SIDEBAR STYLES */
 	.sidebar {
 		width: 100%;
+
 	}
+
+	.latest-activity {
+		position: static;
+		top: 0;
+		overflow: visible;
+	}
+
+
 
 
 	/***************************************************************************/
@@ -1131,8 +1217,6 @@ opacity: 0.6;
 
 
   
-
-
 
 
 

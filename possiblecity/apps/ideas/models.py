@@ -12,7 +12,6 @@ from django.utils.text import slugify
 
 from positions.fields import PositionField
 from taggit.managers import TaggableManager
-from validatedfile.fields import ValidatedFileField
 
 from apps.lotxlot.models import Lot
 
@@ -42,10 +41,12 @@ class Idea(models.Model):
     VIA_WEB = 1
     VIA_TEXT = 2
     VIA_TWITTER = 3
+    VIA_INSTAGRAM = 4
     VIA_CHOICES = (
         (VIA_WEB, 'Web'),
         (VIA_TEXT, 'Text'),
         (VIA_TWITTER, 'Twitter'),
+        (VIA_INSTAGRAM, 'Instagram'),
     )
 
     # Idea owner manages these fields
@@ -58,7 +59,7 @@ class Idea(models.Model):
     lots = models.ManyToManyField(Lot, blank=True, null=True)
 
     # Categorization
-    #tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True)
     
     # Site admin manages these fields
     user = models.ForeignKey(settings.AUTH_USER_MODEL, help_text="The owner of the idea.", blank=True, null=True)
@@ -119,12 +120,7 @@ class IdeaVisual(models.Model):
         return os.path.join('ideas', 
             slugify(instance.idea.__unicode__), 'visuals',  filename)
 
-    #file = ValidatedFileField(
-    #                upload_to = get_upload_path,
-    #                max_upload_size = 1024000,
-    #                content_types = ['image/png', 'image/jpg', 'image/jpeg'])
-    
-    file = models.FileField(upload_to=get_upload_path)    
+    file = models.ImageField(upload_to = get_upload_path)   
 
     title = models.CharField(max_length=100, blank=True)
     caption = models.CharField(max_length=140, blank=True)
