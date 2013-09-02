@@ -16,7 +16,7 @@ class Neighborhood(models.Model):
     name = models.CharField(max_length=255)
     map_name = models.CharField(max_length=255)
     list_name = models.CharField(max_length=255)
-    bounds = models.MultiPolygonField(srid=4326) 
+    bounds = models.MultiPolygonField(srid=4326)
 
     class Meta:
         ordering = ['name']    

@@ -12,16 +12,16 @@ from django.forms.models import BaseInlineFormSet, inlineformset_factory
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, FormView
 from django.views.generic.base import View, TemplateResponseMixin
-from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView, SingleObjectMixin
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin, BaseListView
 from django.views.generic.edit import FormMixin
 
 from braces.views import CanonicalSlugDetailMixin, LoginRequiredMixin
 from extra_views import InlineFormSetView
 
-
+from apps.ideas.forms import SimpleIdeaForm
 from apps.ideas.models import Idea
 
 from .forms import AddressForm, LotForm, IdeaInlineFormSet
@@ -233,57 +233,54 @@ class VacantLotListApiView(LotListApiView):
     queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
 
 
-class LotDetailView(UpdateView):
+
+class LotDisplay(DetailView):
+    model = Lot
+
+    def get_context_data(self, **kwargs):
+        context = super(LotDisplay, self).get_context_data(**kwargs)
+        context['form'] = SimpleIdeaForm()
+        return context
+
+class LotAddIdeaView(FormView, SingleObjectMixin):
     model=Lot
+    form_class = SimpleIdeaForm
     template_name = 'lotxlot/lot_detail.html'
 
     def post(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated():
-            self.request.session['post'] = self.request.POST
+        if not request.user.is_authenticated():
+            request.session['post'] = request.POST
             url = "%s?next=%s" % (reverse('account_login'), request.path)
             return HttpResponseRedirect(url)
         else:
-            return super(LotDetailView, self).post(request, *args, **kwargs)
+            self.object = self.get_object()
+            return super(LotAddIdeaView, self).post(request, *args, **kwargs)
 
-    def formset_valid(self, formset):
+    def get_success_url(self):
+        return reverse('lotxlot_lot_detail', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
         """
         Auto-populate user
-       and save form.
+        and save form.
         """
-        instances = formset.save(commit=False)
-        for instance in instances:
-            instance.user = self.request.user
-            instance.save()
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        instance.save()
+        instance.lots.add(self.object)
+        instance.save()
 
         return HttpResponseRedirect(self.get_success_url())
 
-#class LotDetailView(InlineFormSetView):
-#    model = Lot
-#    inline_model = Idea.lots.through.idea
-#    formset_class = IdeaInlineFormSet
-#    can_delete = False
-#    extra = 1
-#    template_name = 'lotxlot/lot_detail.html'
+class LotDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view = LotDisplay.as_view()
+        return view(request, *args, **kwargs)
 
-#    def post(self, request, *args, **kwargs):
-#        if not self.request.user.is_authenticated():
-#            self.request.session['post'] = self.request.POST
-#            url = "%s?next=%s" % (reverse('account_login'), request.path)
-#            return HttpResponseRedirect(url)
-#        else:
-#            return super(LotDetailView, self).post(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        view = LotAddIdeaView.as_view()
+        return view(request, *args, **kwargs)
 
-#    def formset_valid(self, formset):
-#        """
-#        Auto-populate user
-#       and save form.
-#        """
-#        instances = formset.save(commit=False)
-#        for instance in instances:
-#            instance.user = self.request.user
-#            instance.save()
-
-#        return HttpResponseRedirect(self.get_success_url())
 
 
 

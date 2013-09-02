@@ -45,10 +45,10 @@ class Lot(models.Model):
         else:
             return u'No Address %s' % (self.pk)
 
-    #@permalink
-    #def get_absolute_url(self):
-        #kwargs = { 'slug': self.slug, 'id': self.id }
-        #return reverse("lotxlot_lot_detail", kwargs=kwargs)
+    @permalink
+    def get_absolute_url(self):
+        kwargs = { 'id': self.id }
+        return reverse("lotxlot_lot_detail", kwargs=kwargs)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -63,10 +63,23 @@ class Lot(models.Model):
 
 
 
-class DataSource(models.Model):
+class BaseBoundary(models.Model):
+    """
+    A shape that defines an area
+    """
+
+    lot = models.OneToOneField(Lot)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class BaseDataSource(models.Model):
     """
     An abstract data source attached to a lot which may need
-    to be periodically
+    to be periodically updated
     """
 
     lot = models.OneToOneField(Lot)

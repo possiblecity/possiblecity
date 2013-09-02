@@ -61,6 +61,11 @@
                                 {% else %}
                                    {{ idea.user.username }}
                                 {% endif %}
+                                <small>on</small>
+                                {% for lot in idea.lots.all %}
+                                <a href="{{ lot.get_absolute_url }}">
+                                {{ lot.address }}</a>{% if not forloop.last %},{% endif %} 
+                                {% endfor %}
                                 </h4>
                                 <p>{{ idea.tagline }}</p>
                                 <h6>Via {{ idea.get_via_display }}
@@ -74,7 +79,8 @@
                                     <i class="icon-instagram"></i>
                                     {% endif %}
                                     • Floated {{ idea.floated|ago }} 
-                                    • <a href="#">Like</a></h6>
+                                    • <i class="icon-comment-alt"></i> <a href="#">Comment</a>
+                                    <i class="icon-heart-empty"></i> <a href="#">Like</a>
                               </div>
                             </div>
                           </li>
