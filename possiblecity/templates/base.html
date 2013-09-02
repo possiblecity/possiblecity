@@ -10,7 +10,7 @@
 
         {% block style_base %}
             <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
-            <link href="{% static "css/fonts/fontello/css/fontello.css" %}" rel="stylesheet">
+            <link href="{% static "fonts/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
             <link href="{% static "css/animation.css" %}" rel="stylesheet">
             <link href="{% static "css/custom.css" %}" rel="stylesheet">
 	    {% block extra_style %}{% endblock %}
@@ -29,8 +29,8 @@
     </head>
     <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
 	    {% block navbar_base %}
-             <nav class="navbar {% block navbar_class %}navbar-inverse navbar-fixed-top{% endblock %}">
-                 <div class="navbar-header">
+             <nav class="navbar {% block navbar_class %}{% endblock %}">
+                 <div class="container">
                  {% block topbar %}
                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
                          <span class="sr-only">Toggle navigation</span>
@@ -41,34 +41,34 @@
                      {% block site_brand %}
                      <a class="navbar-brand" href="{% url "home" %}">Possible City</a>
                      {% endblock site_brand %}
-                 </div>    
-                 <div class="collapse navbar-collapse nav-collapse">
-                 {% block nav %}
+                     
+                    <div class="navbar-collapse collapse">
+                    {% block nav %}
                       <ul class="nav navbar-nav">
                           <li><a href="{% url 'lotxlot_lot_detail' 6274 %}">Map</a></li>
                           <li><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
                           <li><a href="{% url 'profiles_profile_list' %}">People</a></li>
                       </ul>
-                 {% endblock nav %}
-                 {% block account_bar %}
-	              {% include "_account_bar.html" %}
-	         {% endblock account_bar %}
-                 </div>
+                    {% endblock nav %}
+                    {% block account_bar %}
+	                   {% include "_account_bar.html" %}
+	                {% endblock account_bar %}
                  {% endblock topbar %}
+                 </div>
              </nav>
              {% endblock navbar_base %}
 	     {% block body_base %}
-	     <section class="container">
+	     <section>
          	{% include "_messages.html" %}
                 {% block body %}
             	{% endblock body %}
 	     </section>
 	     {% endblock body_base %}
-             {% block footer_base %}
-        	 <footer class="container">
-        	     {% block footer %}{% endblock %}
-        	 </footer>
-              {% endblock footer_base %}
+         {% block footer_base %}
+         <footer class="container">
+            {% block footer %}{% endblock %}
+          </footer>
+          {% endblock footer_base %}
 
         {% block script_base %}
             <script src="{% block jquery_src %}{% static "js/vendor/jquery.js" %}{% endblock %}"></script>

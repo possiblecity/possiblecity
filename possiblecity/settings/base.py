@@ -303,7 +303,7 @@ THIRD_PARTY_APPS = (
     'compressor', # static file optimization
     'pagination', # pagination
     
-    #'taggit', # tagging
+    'taggit', # tagging
     'metron', # analytics
 
     'rest_framework',
@@ -316,7 +316,7 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    #'apps.core', # general helpers
+    'apps.core', # general helpers
     #'apps.text', # blog
     'apps.profiles', # user profiles
     'apps.ideas', # user uploaded ideas

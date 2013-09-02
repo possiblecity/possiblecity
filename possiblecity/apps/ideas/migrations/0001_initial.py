@@ -12,15 +12,15 @@ class Migration(SchemaMigration):
         db.create_table(u'ideas_idea', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('tagline', self.gf('django.db.models.fields.CharField')(max_length=140)),
+            ('tagline', self.gf('django.db.models.fields.TextField')()),
             ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
             ('via', self.gf('django.db.models.fields.IntegerField')(default=1)),
             ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
             ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
             ('enable_comments', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('moderate_comments', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('featured', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('featured', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('grounded', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
             ('description_html', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('created', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
@@ -28,6 +28,15 @@ class Migration(SchemaMigration):
             ('floated', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
         ))
         db.send_create_signal(u'ideas', ['Idea'])
+
+        # Adding M2M table for field lots on 'Idea'
+        m2m_table_name = db.shorten_name(u'ideas_idea_lots')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('idea', models.ForeignKey(orm[u'ideas.idea'], null=False)),
+            ('lot', models.ForeignKey(orm[u'lotxlot.lot'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['idea_id', 'lot_id'])
 
         # Adding model 'IdeaVisual'
         db.create_table(u'ideas_ideavisual', (
@@ -48,6 +57,9 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         # Deleting model 'Idea'
         db.delete_table(u'ideas_idea')
+
+        # Removing M2M table for field lots on 'Idea'
+        db.delete_table(db.shorten_name(u'ideas_idea_lots'))
 
         # Deleting model 'IdeaVisual'
         db.delete_table(u'ideas_ideavisual')
@@ -91,22 +103,23 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'ideas.idea': {
-            'Meta': {'object_name': 'Idea'},
+            'Meta': {'ordering': "['-floated']", 'object_name': 'Idea'},
             'created': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'description_html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'enable_comments': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'floated': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'grounded': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'lots': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['lotxlot.Lot']", 'null': 'True', 'blank': 'True'}),
             'moderate_comments': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'modified': ('django.db.models.fields.DateField', [], {'auto_now': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
-            'tagline': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
+            'tagline': ('django.db.models.fields.TextField', [], {}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
             'via': ('django.db.models.fields.IntegerField', [], {'default': '1'})
         },
         u'ideas.ideavisual': {
@@ -121,6 +134,23 @@ class Migration(SchemaMigration):
             'order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'})
+        },
+        u'lotxlot.lot': {
+            'Meta': {'object_name': 'Lot'},
+            'address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
+            'bounds': ('django.contrib.gis.db.models.fields.MultiPolygonField', [], {'blank': 'True'}),
+            'city': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'}),
+            'coord': ('django.contrib.gis.db.models.fields.PointField', [], {'blank': 'True'}),
+            'country': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_vacant': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_visible': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
+            'state': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         }
     }
 

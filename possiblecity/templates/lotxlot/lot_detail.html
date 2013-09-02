@@ -3,32 +3,8 @@
 {% load staticfiles %}
 {% load humanize %}
 {% load i18n %}
-{% load bootstrap_tags %}
-
-{% block extra_style %}
-{{ block.super }}
-<style>
-#idea-form textarea {
-  display: block;
-  width: 100%;
-  height: 56px;
-  margin-bottom: 10px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.428571429;
-  color: #555555;
-  vertical-align: middle;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-</style>
-
-{% endblock extra_style %}
+{% load floppyforms %}
+{% load possiblecity_tags %}
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
@@ -73,19 +49,9 @@
                       {% endif %}
                       <div class="media-body">
                         <form method="post" id="idea-form" action=".">
-                          {% for form in formset.forms %}
-                            {% for field in form %}
-                            <div id="div_id_idea_set-0-tagline" class="control-group  ">
-                              {{ field.errors }}
-                              <div class="controls">
-                                {{ field }}
-                              </div>
-                            </div>
-                            {% endfor %}
-                          {% endfor %}
                           {% csrf_token %}
+                          {{ form }}
                           <div class="form-actions">
-                            {{ formset.management_form }}
                             <button type="submit" class="btn btn-primary pull-right">{% trans "Add idea" %}</button>
                           </div>
                           </form> 
@@ -106,9 +72,26 @@
                         style="width: 64px; height: 64px;" />
                       </a>
                       <div class="media-body">
-                        <h4 class="media-heading">{{ idea.user }}</h4>
+                        <h4 class="media-heading">
+                        {% if idea.user.first_name %}
+                            {{ idea.user.profile.full_name }}
+                        {% else %}
+                           {{ idea.user.username }}
+                        {% endif %}
+                        </h4>
                         <p>{{ idea.tagline }}</p>
-                        <h6>{{ idea.created }} • via {{ idea.via }} • <a href="#">Like</a></h6>
+                        <h6>Via {{ idea.get_via_display }}
+                            {% if idea.get_via_display == "Twitter" %}
+                            <i class="icon-twitter"></i>
+                            {% elif idea.get_via_display == "Text" %}
+                            <i class="icon-mobile-phone"></i>
+                            {% elif idea.get_via_display == "Web" %}
+                            <i class="icon-globe"></i>
+                            {% elif idea.get_via_display == "Instagram" %}
+                            <i class="icon-instagram"></i>
+                            {% endif %}
+                            • Floated {{ idea.floated|ago }} 
+                            • <a href="#">Like</a></h6>
                       
                       </div>
                     </div>
@@ -132,8 +115,11 @@
         style: lotStyle
     }).addTo(map);
     
+    bounds = map.getBounds()    
 
-    $.getJSON('{% url "api_lot_detail" lot.id %}', function(data){
+    lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json'
+
+    $.getJSON(lot_url, function(data){
           lot.addData(data);
           var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
           map.setView(center, 18);
@@ -144,12 +130,15 @@
     // does this feature have a property named address?
       if (feature.properties) {
           html = '<h4>' + feature.properties.address +'</h4>' +
+                 '<p>' + feature.idea_set +
                  '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>'
           layer.bindPopup(html);
       }
     }
 
-    $.getJSON('{% url "api_lots_vacant" %}', function(data){
+    vacant_url = '{% url "api-lot-list" %}' + '?format=json'
+
+    $.getJSON(vacant_url, function(data){
           vacant  = L.geoJson(data, {
             style: lotStyle,
             onEachFeature: onEachFeature

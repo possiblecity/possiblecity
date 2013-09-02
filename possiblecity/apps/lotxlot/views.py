@@ -1,14 +1,14 @@
 # lotxlot/views.py
-
 from django.core.urlresolvers import reverse
-from django.db.models.query import EmptyQuerySet
-from django.forms.models import BaseInlineFormSet
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
+from django.views.generic.base import View
+from django.views.generic.detail import SingleObjectMixin, DetailView
+from django.views.generic.edit import FormView
 
 
-from extra_views import InlineFormSetView
 from rest_framework import viewsets
 
+from apps.ideas.forms import SimpleIdeaForm
 from apps.ideas.models import Idea
 
 from .models import Lot
@@ -17,51 +17,65 @@ from .utils import fetch_json
 from .serializers import LotSerializer
 
 
-class IdeaInlineFormSet(BaseInlineFormSet):
-    
-    def get_queryset(self):
-        return EmptyQuerySet()
 
-
-class LotDetailView(InlineFormSetView):
-    initial = [{'tagline': 'Add your idea for this lot'},]
+class LotDisplay(DetailView):
     model = Lot
-    inline_model = Idea
-    formset_class = IdeaInlineFormSet
-    fields = ('tagline',)
-    can_delete = False
-    extra = 1
+
+    def get_context_data(self, **kwargs):
+        context = super(LotDisplay, self).get_context_data(**kwargs)
+        context['form'] = SimpleIdeaForm()
+        return context
+
+class LotAddIdeaView(FormView, SingleObjectMixin):
+    model=Lot
+    form_class = SimpleIdeaForm
     template_name = 'lotxlot/lot_detail.html'
 
     def post(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated():
-            self.request.session['post'] = self.request.POST
+        if not request.user.is_authenticated():
+            request.session['post'] = request.POST
             url = "%s?next=%s" % (reverse('account_login'), request.path)
             return HttpResponseRedirect(url)
         else:
-            return super(LotDetailView, self).post(request, *args, **kwargs)
+            self.object = self.get_object()
+            return super(LotAddIdeaView, self).post(request, *args, **kwargs)
 
-    def formset_valid(self, formset):
+    def get_success_url(self):
+        return reverse('lotxlot_lot_detail', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
         """
         Auto-populate user
         and save form.
         """
-        instances = formset.save(commit=False)
-        for instance in instances:
-            instance.user = self.request.user
-            instance.save()
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        instance.save()
+        instance.lots.add(self.object)
+        instance.save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+class LotDetailView(View):
+    def get(self, request, *args, **kwargs):
+        view = LotDisplay.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = LotAddIdeaView.as_view()
+        return view(request, *args, **kwargs)
+
 
 
 # api views
 
-class LotViewSet(viewsets.ModelViewSet):
+class LotViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots to be viewed or edited.
     """
-    queryset = Lot.objects.all()
+    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
     serializer_class = LotSerializer
+    paginate_by = None
 
 
 

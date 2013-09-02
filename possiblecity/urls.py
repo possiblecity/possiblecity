@@ -12,7 +12,7 @@ from rest_framework import routers
 from apps.lotxlot import views
 
 router = routers.DefaultRouter()
-router.register(r'lots', views.LotViewSet)
+router.register(r'lotxlot/lots', views.LotViewSet, base_name='api-lot')
 
 
 from django.contrib import admin

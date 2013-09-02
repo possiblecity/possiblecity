@@ -14,3 +14,9 @@ class IdeaDetailView(DetailView):
 class IdeaListView(ListView):
     model = Idea
     context_object_name = "ideas"
+
+class IdeaListWithinFeature(IdeaListView):
+    """
+    Get all lots within a certain neighborhood
+    """
+    pass
