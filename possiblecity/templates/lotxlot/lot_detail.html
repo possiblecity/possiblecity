@@ -133,7 +133,7 @@
       }
     }
 
-    vacant_url = '{% url "api_lots_vacant"%}?bbox=' + bounds.toBBoxString()
+    vacant_url = '{% url "api_lots_vacant"%}'
 
     $.getJSON(vacant_url, function(data){
           vacant  = L.geoJson(data, {

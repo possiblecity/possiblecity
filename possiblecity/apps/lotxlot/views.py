@@ -224,7 +224,7 @@ class LotListApiView(BBoxMixin, CallbackMixin, GeoListView):
     """
     model = Lot
     geo_field = "bounds"
-    properties = ['address', 'id', 'is_public', 'slug']
+    properties = ['address', 'id', 'is_public', 'slug', 'idea_set.count']
    
 class VacantLotListApiView(LotListApiView):
     """
