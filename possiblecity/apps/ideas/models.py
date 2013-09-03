@@ -51,7 +51,7 @@ class Idea(models.Model):
 
     # Idea owner manages these fields
     title = models.CharField(max_length=100, blank=True)
-    tagline = models.TextField(validators=[MaxLengthValidator(140)],
+    tagline = models.CharField(max_length=140,
          help_text="A tweet-length summary of the idea.")
     description = models.TextField(blank=True)
 
@@ -100,7 +100,7 @@ class Idea(models.Model):
                 self.floated = datetime.datetime.now()
 
         if not self.pk:
-            slug = '%s' % (self.tagline)
+            slug = '%s' % (self.tagline[:50])
             self.slug = slugify(slug)
 
         super(Idea, self).save(*args, **kwargs)
