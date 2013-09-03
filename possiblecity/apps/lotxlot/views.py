@@ -73,7 +73,7 @@ class LotViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots to be viewed or edited.
     """
-    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True)
+    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('idea_set')
     serializer_class = LotSerializer
     paginate_by = None
 

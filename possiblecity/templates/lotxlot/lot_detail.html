@@ -8,6 +8,37 @@
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
+<style>
+.idea-label {
+  background:transparent;
+  border:none;
+  top: -35px;
+  left: -20px;
+  text-align: center;
+}
+
+.idea-label a {
+  text-decoration:none;
+}
+
+.idea-label i {
+  display:block;
+  text-align: center;
+  color: #cd00cd;
+}
+
+.idea-label h4 {
+  color: #cd00cd;
+  position: absolute; 
+  left: 24px; 
+  top: 4px;
+  text-align: center
+}
+
+.idea-label:before {
+  border:none;
+}
+</style>
     <div class="sidebar ideas-lot-info-sidebar">
         <div class="close-button pull-right">
             <button type="button" class="close ">&times<button>
@@ -79,7 +110,6 @@
                            {{ idea.user.username }}
                         {% endif %}
                         </h4>
-                        <p>{{ idea.tagline }}</p>
                         <h6>Via {{ idea.get_via_display }}
                             {% if idea.get_via_display == "Twitter" %}
                             <i class="icon-twitter"></i>
@@ -90,9 +120,11 @@
                             {% elif idea.get_via_display == "Instagram" %}
                             <i class="icon-instagram"></i>
                             {% endif %}
-                            • Floated {{ idea.floated|ago }} 
-                            • <a href="#">Like</a></h6>
-                      
+                            • Floated {{ idea.floated|ago }}
+                          </h6>
+                          <p>{{ idea.tagline }}</p>
+                           <p><a href="#"><i class="icon-heart-empty icon-border"> Like</i></a>&nbsp;&nbsp;
+                           <a href="#"><i class="icon-comment-alt icon-border"> Comment</i></a></p>
                       </div>
                     </div>
                   </li>
@@ -123,16 +155,27 @@
           lot.addData(data);
           var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
           map.setView(center, 18);
-          L.marker(center).addTo(map);
+          var labelText = '<i class="icon-comment icon-4x">' +
+                            '<h4> ' + 
+                             feature.properties.idea_set.length + '</h4></i>'
+          L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map).bindLabel(labelText, { noHide: true, className: 'idea-label-selected' }).showLabel();
     });
 
     function onEachFeature(feature, layer) {
     // does this feature have a property named address?
       if (feature.properties) {
-          html = '<h4>' + feature.properties.address +'</h4>' +
-                 '<p>' + feature.idea_set +
-                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>'
+          var html = '<h4>' + feature.properties.address +'</h4>' +
+                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>';
           layer.bindPopup(html);
+          if (feature.properties.idea_set.length > 0) {
+            var bounds = layer.getBounds();
+            var center = bounds.getCenter();
+            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
+                            '"><i class="icon-comment-alt icon-4x">' +
+                            '<h4> ' + 
+                             feature.properties.idea_set.length + '</h4></i></a>'
+            L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map).bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+          }
       }
     }
 
