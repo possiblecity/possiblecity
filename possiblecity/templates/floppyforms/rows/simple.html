@@ -1,0 +1,13 @@
+{% load floppyforms %}{% block row %}{% for field in fields %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    {% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
+    {% block field %}
+        <div class="controls {{ classes }} field-{{ field.name }}">
+            {% block widget %}{% formfield field %}{% endblock %}
+            {% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
+            {% block hidden_fields %}{% for field in hidden_fields %}{{ field.as_hidden }}{% endfor %}{% endblock %}
+        </div><!--- .controls -->
+    {% endblock %}
+    {% endwith %}
+</div><!--- .control-group{% if field.errors %}.error{% endif %} -->
+{% endfor %}{% endblock %}
