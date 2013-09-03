@@ -179,11 +179,8 @@
       }
     }
 
-<<<<<<< HEAD
-    vacant_url = '{% url "api_lots_vacant"%}'
-=======
+
     vacant_url = '{% url "api-lot-list" %}' + '?format=json'
->>>>>>> drfgis
 
     $.getJSON(vacant_url, function(data){
           vacant  = L.geoJson(data, {
