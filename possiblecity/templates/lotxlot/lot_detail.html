@@ -155,10 +155,6 @@
           lot.addData(data);
           var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
           map.setView(center, 18);
-          var labelText = '<i class="icon-comment icon-4x">' +
-                            '<h4> ' + 
-                             feature.properties.idea_set.length + '</h4></i>'
-          L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map).bindLabel(labelText, { noHide: true, className: 'idea-label-selected' }).showLabel();
     });
 
     function onEachFeature(feature, layer) {
