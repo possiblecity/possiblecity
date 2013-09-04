@@ -3,9 +3,9 @@
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.db.models.signals import post_save
+from django.db.models import Count, Sum
 
 from apps.lotxlot.models import Lot
-
 
 class Neighborhood(models.Model):
     """
@@ -17,6 +17,19 @@ class Neighborhood(models.Model):
     map_name = models.CharField(max_length=255)
     list_name = models.CharField(max_length=255)
     bounds = models.MultiPolygonField(srid=4326)
+
+    @property
+    def vacant_lot_count(self):
+        return Lot.objects.filter(is_vacant=True).filter(coord__within=self.bounds).count()
+
+    @property
+    def idea_count(self):
+        qs = Lot.objects.filter(
+            is_vacant=True).filter(
+            coord__within=self.bounds).annotate(
+            num_ideas=Count('idea')).aggregate(Sum('num_ideas'))
+        return qs["num_ideas__sum"]
+
 
     class Meta:
         ordering = ['name']    

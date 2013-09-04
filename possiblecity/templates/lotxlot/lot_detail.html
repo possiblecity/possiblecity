@@ -9,7 +9,7 @@
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
 <style>
-.idea-label {
+.idea-label, .idea-label-selected {
   background:transparent;
   border:none;
   top: -35px;
@@ -17,34 +17,34 @@
   text-align: center;
 }
 
-.idea-label a {
+.idea-label a, .idea-label-selected a {
   text-decoration:none;
 }
 
-.idea-label i {
-  display:block;
-  text-align: center;
+.idea-label i, .idea-label h4, .idea-label-selected i {
   color: #cd00cd;
 }
 
-.idea-label h4 {
-  color: #cd00cd;
+.idea-label-selected h4 {
+  color: #fff;
+}
+
+.idea-label h4, .idea-label-selected h4 {
   position: absolute; 
   left: 24px; 
   top: 4px;
-  text-align: center
 }
 
-.idea-label:before {
+.idea-label:before, .idea-label-selected:before {
   border:none;
 }
 </style>
     <div class="sidebar ideas-lot-info-sidebar">
         <div class="close-button pull-right">
-            <button type="button" class="close ">&times<button>
+            <a href="#" type="button" class="close ">&times;</a>
          </div>
         <header class="lot-id-header text-center">
-            <h1>Lot #{{ lot.profile.basereg }}</h1>
+            <h1>Lot #{{ lot.id }}</h1>
             <h2>{{ lot.address }}</h2>
         </header>
         <ul id="sidebar-tabs" class="nav nav-tabs">
@@ -142,23 +142,33 @@
     var lot = L.geoJson(null, {
         style: selectedLotStyle
     }).addTo(map);
+        
 
-    var vacant = L.geoJson(null, {
-        style: lotStyle
-    }).addTo(map);
-    
-    bounds = map.getBounds()    
-
-    lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json'
+    var lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json'
 
     $.getJSON(lot_url, function(data){
+          map.fire('dataloading');
           lot.addData(data);
           var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
           map.setView(center, 18);
+
+          var content = '<h4>{{ lot.address }}</h4>';
+
+          L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map).bindLabel(content, {direction: 'left'}).showLabel();
+
+          var bounds = map.getBounds();
+          var vacant_url = '{% url "api-lot-list" %}' + '?bbox' + bounds.toBBoxString() + '&format=json';
+          
+          $.getJSON(vacant_url, function(data){
+            vacant  = L.geoJson(data, {
+              style: lotStyle,
+              onEachFeature: onEachFeature
+            }).addTo(map);
+            map.fire('dataload');
+        });
     });
 
     function onEachFeature(feature, layer) {
-    // does this feature have a property named address?
       if (feature.properties) {
           var html = '<h4>' + feature.properties.address +'</h4>' +
                  '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>';
@@ -170,20 +180,19 @@
                             '"><i class="icon-comment-alt icon-4x">' +
                             '<h4> ' + 
                              feature.properties.idea_set.length + '</h4></i></a>'
-            L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map).bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+           var labelTextSelected = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
+                            '"><i class="icon-comment icon-4x">' +
+                            '<h4> ' + 
+                             feature.properties.idea_set.length + '</h4></i></a>'
+            marker = L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map);
+            if (feature.properties.id == {{ lot.id }}) {
+                marker.bindLabel(labelTextSelected, { noHide: true, className: 'idea-label-selected' }).showLabel();
+            } else {
+                marker.bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+            }
           }
       }
     }
-
-
-    vacant_url = '{% url "api-lot-list" %}' + '?format=json'
-
-    $.getJSON(vacant_url, function(data){
-          vacant  = L.geoJson(data, {
-            style: lotStyle,
-            onEachFeature: onEachFeature
-        }).addTo(map);
-    });
 
 </script>
 {% endblock map_js %}

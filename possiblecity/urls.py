@@ -9,10 +9,13 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
-from apps.lotxlot import views
+from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet
+from apps.philadelphia.views import NeighborhoodApiViewSet
 
 router = routers.DefaultRouter()
-router.register(r'lotxlot/lots', views.LotViewSet, base_name='api-lot')
+router.register(r'lotxlot/lots', LotApiViewSet, base_name='api-lot')
+router.register(r'lotxlot/ideas/lots', LotIdeaApiViewSet, base_name='api-lot-idea')
+router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name='api-neighborhood')
 
 
 from django.contrib import admin

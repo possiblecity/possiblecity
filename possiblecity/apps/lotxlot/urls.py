@@ -4,8 +4,9 @@ from django.conf.urls.defaults import *
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
-from .views import *
+from .views import LotDetailView, LotIndexView
  
 urlpatterns = patterns('',
+	url(r'^$', LotIndexView.as_view(), name='lotxlot'),
     url(r'^lot/(?P<pk>\d+)/$', LotDetailView.as_view(), name='lotxlot_lot_detail'),
 )

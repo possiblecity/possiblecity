@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 
-from ..core.managers import CustomQuerySetGeoManager
+#from ..core.managers import CustomQuerySetGeoManager
 from .managers import LotQuerySet
 from .fields import AutoOneToOneField
 
@@ -31,7 +31,8 @@ class Lot(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    objects = CustomQuerySetGeoManager(LotQuerySet)
+    #objects = CustomQuerySetGeoManager(LotQuerySet)
+    objects = models.GeoManager()
 
     class Meta:
         pass

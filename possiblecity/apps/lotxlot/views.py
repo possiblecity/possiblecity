@@ -1,12 +1,15 @@
 # lotxlot/views.py
+from django.contrib.gis.geos import Polygon
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic.base import View
+from django.views.generic.base import View, TemplateView
 from django.views.generic.detail import SingleObjectMixin, DetailView
 from django.views.generic.edit import FormView
 
 
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
+from rest_framework.exceptions import APIException
+from rest_framework_gis.filters import InBBOXFilter
 
 from apps.ideas.forms import SimpleIdeaForm
 from apps.ideas.models import Idea
@@ -14,7 +17,7 @@ from apps.ideas.models import Idea
 from .models import Lot
 from .utils import fetch_json
 
-from .serializers import LotSerializer
+from .serializers import LotSerializer, LotPointSerializer
 
 class LotDisplay(DetailView):
     model = Lot
@@ -64,19 +67,41 @@ class LotDetailView(View):
         return view(request, *args, **kwargs)
 
 
+class LotIndexView(TemplateView):
+    template_name='lotxlot/map.html'
+
 
 # api views
 
-class LotViewSet(viewsets.ReadOnlyModelViewSet):
+class LotApiViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows Lots to be viewed or edited.
+    API endpoint that allows Lots to be consumed as geojson.
     """
-    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('idea_set')
     serializer_class = LotSerializer
     paginate_by = None
 
+    def get_queryset(self):
+        queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('idea_set')
+        bbox = self.request.QUERY_PARAMS.get('bbox', None)
+        if bbox:
+            try:
+                p1x, p1y, p2x, p2y = (float(n) for n in bbox.split(','))
+            except ValueError:
+                raise APIException("Not valid bbox string in parameter %s."
+                               % bbox)
 
+            poly = Polygon.from_bbox((p1x, p1y, p2x, p2y))
+            queryset = queryset.filter(coord__contained=poly)
+        return queryset
 
+    
+class LotIdeaApiViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows Lots with Ideas to be consumed as.
+    """
+    queryset = Lot.objects.exclude(idea=None).prefetch_related('idea_set')
+    serializer_class = LotPointSerializer
+    paginate_by = None
 
 
 
