@@ -70,17 +70,7 @@
 {% block map_js %}
 <script>
    
-  map.fire('dataloading');
-
-   var vacant = L.geoJson.ajax(
-      '{% url "api-lot-list" %}?format=json&bbox=' 
-      + map.getBounds().toBBoxString() + '',{
-      //onEachFeature: onEachFeature,
-        style: blueStyle,
-      });
-
-   var neighborhoodMarkers = []
-   var neighborhoodLabelGroup = L.layerGroup(neighborhoodMarkers);
+   map.fire('dataloading');
 
     var neighborhoods = L.geoJson.ajax(
       '{% url "api-neighborhood-list" %}?format=json', {
@@ -166,17 +156,17 @@
 
     function onZoomend(){
        if (map.getZoom()>=16) {
-           map.addLayer(vacant)
+           //map.addLayer(vacant);
            map.removeLayer(neighborhoods);
-           map.addLayer(ideas)
-           map.removeLayer(neighborhoodLabelGroup)
+           map.addLayer(ideas);
+           //map.removeLayer(neighborhoodLabelGroup)
        };
 
        if(map.getZoom()<16){
-           map.removeLayer(vacant);
+           //map.removeLayer(vacant);
            map.addLayer(neighborhoods);
            map.removeLayer(ideas);
-           map.addLayer(neighborhoodLabelGroup)
+           //map.addLayer(neighborhoodLabelGroup)
        };
 
     }
