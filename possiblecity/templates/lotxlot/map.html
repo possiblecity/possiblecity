@@ -39,17 +39,20 @@
 }
 
 .idea-label i, .idea-label h4, .idea-label-selected i {
-  color: #cd00cd;
+  /*color: #cd00cd;*/
+  color: rgba(205, 0, 205, 0.7);
+
 }
 
 .idea-label-selected h4 {
   color: #fff;
 }
 
-.idea-label h4, .idea-label-selected h4 {
+.idea-label strong, .idea-label-selected strong {
+  color: #fff;
   position: absolute; 
-  left: 24px; 
-  top: 4px;
+  left: 14px; 
+  top: 9px;
 }
 
 .idea-label:before, .idea-label-selected:before {
@@ -82,10 +85,11 @@
       '{% url "api-lot-idea-list" %}?format=json', {
         pointToLayer: function (feature, latlng) {
            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
-                            '"><i class="icon-comment-alt icon-4x">' +
-                            '<h4> ' + 
-                             feature.properties.idea_set.length + '</h4></i></a>';
-          return L.circleMarker(latlng, emptyMarkerStyle).bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+                            '"><i class="icon-comment icon-3x"></i>' +
+                            '<strong> ' + 
+                             feature.properties.idea_set.length + '</strong></a>';
+           var labelIcon = L.divIcon({className: 'idea-label', html: labelText,  iconSize:null});
+           return L.marker(latlng, {riseOnHover: true, icon: labelIcon});
         },
       })
 
@@ -99,13 +103,15 @@
                        feature.properties.vacant_lot_count +
                        '&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i> ' + 
                        feature.properties.idea_count + '</strong>';
-       var marker = L.circleMarker(center, emptyMarkerStyle).addTo(map);
-       marker.bindLabel(labelText, { noHide: true }).showLabel();
-       //marker.bindLabel(labelText);
-       //neighborhoodMarker.push(marker);
+       var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
+       var marker = L.marker(center, {riseOnHover: true, icon: labelIcon});
+       neighborhoods.addLayer(marker);
        layer.on({
           click: zoomToFeature
         });
+       marker.on({
+          click:zoomToMarker
+       });
     }
 
     function zoomToFeature(e) {
@@ -113,6 +119,13 @@
           center=(layer.getBounds().getCenter());
           map.setView(center, 16, { animate: true });
        }
+
+     function zoomToMarker(e) {
+          var marker = e.target;
+          center=(marker.getLatLng());
+          map.setView(center, 16, { animate: true });
+       }
+
 
     function updateVacant() {
       vacant.refresh(
@@ -155,21 +168,23 @@
     }
 
     function onZoomend(){
-       if (map.getZoom()>=16) {
-           //map.addLayer(vacant);
+       if (map.getZoom()>=15) {
            map.removeLayer(neighborhoods);
            map.addLayer(ideas);
-           //map.removeLayer(neighborhoodLabelGroup)
        };
 
-       if(map.getZoom()<16){
-           //map.removeLayer(vacant);
+       if(map.getZoom()<15){
            map.addLayer(neighborhoods);
-           map.removeLayer(ideas);
-           //map.addLayer(neighborhoodLabelGroup)
        };
+  
+       if (map.getZoom()<15) {
+           map.removeLayer(ideas);
+       }
 
-    }
+       if (map.getZoom()>=15) {
+           map.addLayer(ideas);
+       };
+    }   
 
     map.on('moveend', onMove);
     map.on('zoomend', onZoomend);
