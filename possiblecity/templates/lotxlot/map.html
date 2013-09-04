@@ -1,0 +1,188 @@
+{% extends "lotxlot/map_base.html" %}
+
+{% load staticfiles %}
+{% load humanize %}
+{% load i18n %}
+{% load floppyforms %}
+{% load possiblecity_tags %}
+
+{% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
+{% block body %}
+<style>
+.leaflet-label {
+  border-color: rgba(205, 0, 205, 1.0);
+  border-width: 2px;
+  background: rgba(205, 0, 205, 0.7);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 1.0);
+  text-transform: uppercase;
+  padding-top:3px;
+  padding-bottom:3px;
+}
+
+.leaflet-label:before {
+  border-right: 6px solid black;
+  border-right-color: inherit;
+  left: -8px;
+}
+
+.idea-label, .idea-label-selected {
+  background:transparent;
+  border:none;
+  top: -35px;
+  left: -20px;
+  text-align: center;
+}
+
+.idea-label a, .idea-label-selected a {
+  text-decoration:none;
+}
+
+.idea-label i, .idea-label h4, .idea-label-selected i {
+  color: #cd00cd;
+}
+
+.idea-label-selected h4 {
+  color: #fff;
+}
+
+.idea-label h4, .idea-label-selected h4 {
+  position: absolute; 
+  left: 24px; 
+  top: 4px;
+}
+
+.idea-label:before, .idea-label-selected:before {
+  border:none;
+}
+</style>
+    <div class="sidebar ideas-lot-info-sidebar">
+        <div class="close-button pull-right">
+            <a href="#" type="button" class="close ">&times;</a>
+         </div>
+        <header class="lot-id-header text-center">
+            <h1>Featured Ideas</h1>
+        </header>
+
+    </div>
+{% endblock body %}
+
+{% block map_js %}
+<script>
+   
+  map.fire('dataloading');
+
+   var vacant = L.geoJson.ajax(
+      '{% url "api-lot-list" %}?format=json&bbox=' 
+      + map.getBounds().toBBoxString() + '',{
+      //onEachFeature: onEachFeature,
+        style: blueStyle,
+      });
+
+   var neighborhoodMarkers = []
+   var neighborhoodLabelGroup = L.layerGroup(neighborhoodMarkers);
+
+    var neighborhoods = L.geoJson.ajax(
+      '{% url "api-neighborhood-list" %}?format=json', {
+        onEachFeature: onEachNeighborhood,
+        style: blueStyle,
+      }).addTo(map);
+
+    var ideas = L.geoJson.ajax(
+      '{% url "api-lot-idea-list" %}?format=json', {
+        pointToLayer: function (feature, latlng) {
+           var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
+                            '"><i class="icon-comment-alt icon-4x">' +
+                            '<h4> ' + 
+                             feature.properties.idea_set.length + '</h4></i></a>';
+          return L.circleMarker(latlng, emptyMarkerStyle).bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+        },
+      })
+
+    
+    function onEachNeighborhood(feature, layer) {
+       map.fire('dataload');
+       var bounds = layer.getBounds();
+       var center = bounds.getCenter();
+       var labelText = '<strong>' + feature.properties.map_name +
+                       '&nbsp;&nbsp;&nbsp;<i class="icon-map-marker icon-large"></i> ' + 
+                       feature.properties.vacant_lot_count +
+                       '&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i> ' + 
+                       feature.properties.idea_count + '</strong>';
+       var marker = L.circleMarker(center, emptyMarkerStyle).addTo(map);
+       marker.bindLabel(labelText, { noHide: true }).showLabel();
+       //marker.bindLabel(labelText);
+       neighborhoodMarker.push(marker);
+       layer.on({
+          click: zoomToFeature
+        });
+    }
+
+    function zoomToFeature(e) {
+          var layer = e.target;
+          center=(layer.getBounds().getCenter());
+          map.setView(center, 16, { animate: true });
+       }
+
+    function updateVacant() {
+      vacant.refresh(
+        ['{% url "api-lot-list" %}?format=json&bbox='  
+        + map.getBounds().toBBoxString() + '']);
+    }
+
+    function onEachFeature(feature, layer) {
+      if (feature.properties) {
+          var html = '<h4>' + feature.properties.address +'</h4>' +
+                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>';
+          layer.bindPopup(html);
+          if (feature.properties.idea_set.length > 0) {
+            var bounds = layer.getBounds();
+            var center = bounds.getCenter();
+            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
+                            '"><i class="icon-comment-alt icon-4x">' +
+                            '<h4> ' + 
+                             feature.properties.idea_set.length + '</h4></i></a>'
+            marker = L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map);
+            marker.bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+          }
+      }
+    }
+
+    function labelFeature(feature, layer) {
+      if (feature.properties) {
+            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
+                            '"><i class="icon-comment-alt icon-4x">' +
+                            '<h4> ' + 
+                             feature.properties.idea_set.length + '</h4></i></a>'
+            marker = L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map);
+            marker.bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
+          }
+      }
+
+    function onMove() {
+      // map.removeLayer(GeoJSONlayer);
+      //updateVacant();
+    }
+
+    function onZoomend(){
+       if (map.getZoom()>=16) {
+           map.addLayer(vacant)
+           map.removeLayer(neighborhoods);
+           map.addLayer(ideas)
+           map.removeLayer(neighborhoodLabelGroup)
+       };
+
+       if(map.getZoom()<16){
+           map.removeLayer(vacant);
+           map.addLayer(neighborhoods);
+           map.removeLayer(ideas);
+           map.addLayer(neighborhoodLabelGroup)
+       };
+
+    }
+
+    map.on('moveend', onMove);
+    map.on('zoomend', onZoomend);
+
+</script>
+{% endblock map_js %}
