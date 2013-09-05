@@ -91,7 +91,7 @@ class Idea(models.Model):
         return self.description_html != original
 
     def get_lead_image(self):
-        return self.ideavisual_set.filter(lead=True)
+        return self.ideavisual_set.filter(lead=True)[0] or self.ideavisual_set.all()[0]
 
     def save(self, *args, **kwargs):
         self.render_markup()
@@ -100,7 +100,11 @@ class Idea(models.Model):
                 self.floated = datetime.datetime.now()
 
         if not self.pk:
-            slug = '%s' % (self.tagline[:50])
+            if self.title:
+                s = '%s: %s' % (self.title, self.tagline)
+                slug = s[:50]
+            else:
+                slug = '%s' % (self.tagline[:50])
             self.slug = slugify(slug)
 
         super(Idea, self).save(*args, **kwargs)
@@ -117,8 +121,8 @@ class IdeaVisual(models.Model):
         An image, video, or animation used to help describe an idea.
     """
     def get_upload_path(instance, filename):
-        return os.path.join('ideas', 
-            slugify(instance.idea.__unicode__), 'visuals',  filename)
+        name = instance.idea.__unicode__()
+        return os.path.join('ideas', name, 'visuals',  filename)
 
     file = models.ImageField(upload_to = get_upload_path)   
 
