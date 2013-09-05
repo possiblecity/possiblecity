@@ -120,9 +120,8 @@ class IdeaVisual(models.Model):
     """
         An image, video, or animation used to help describe an idea.
     """
-    def get_upload_path(instance, filename):
-        name = instance.idea.__unicode__()
-        return os.path.join('ideas', name, 'visuals',  filename)
+    def get_upload_path(instance, filename):        
+        return os.path.join('images', 'ideas', str(instance.idea.id), filename)
 
     file = models.ImageField(upload_to = get_upload_path)   
 
