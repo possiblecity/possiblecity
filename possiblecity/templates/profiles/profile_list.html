@@ -1,27 +1,60 @@
 {% extends "profiles/base.html" %}
 
+{% load staticfiles %}
 {% load pagination_tags %}
 
 {% block head_title %}People{% endblock head_title %}
 
 {% block body %}
-    <header class="row">
-        <h1>People <small>{{ profiles.count }}</small></h1>
+    <header class="page-header">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-12 col-md-6 col-lg-6">
+                    <h1>People <small>{{ profiles.count }}</small></h1>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="text-right margin-top-20">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-    <section class="row">
-        <ul class="people-list" style="margin:0; padding:0;">
-        {% autopaginate profiles %}
-        {% for profile in profiles %}
-            <li class="thumbnail col-lg-2 col-6">
-                <a href="{% url 'profiles_profile_detail' profile.user.username %}">
-                {% if profile.photo %}
-                    <img class="profile-pic" src="{{ profile.photo.url }}" />
-                {% endif %}
-                </a>
-                <h4>{% if profile.user.first_name %}{{ profile.full_name}}{% else %}{{ user.username }}{% endif %}</h4>
-            </li>
-        {% endfor %}
-        </ul>
-        {% paginate %}
+    <section class="container">
+        <div class="row">
+            {% autopaginate profiles %}
+            {% for profile in profiles %}
+            <div class="col-lg-2 col-6">
+                <div class="thumbnail margin-bottom-20">
+                    <div class="profile-pic">
+                        <a href="{% url 'profiles_profile_detail' profile.user.username %}">
+                        {% if profile.photo %}
+                            <img class="profile-pic" src="{{ profile.photo.url }}" />
+                        {% else %}
+                            <img class="profile-pic" src="{% static 'img/profile.png' %}" />
+                        {% endif %}
+                            </a>
+                    </div>
+                    <h4>
+                    {% if profile.user.first_name %}
+                        {{ profile.full_name}}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                    </h4>
+                    <p>
+                    {% if profile.website %}
+                        {{ profile.website|urlize }}<br/>
+                    {% endif %}
+                    {% if profile.twitter %}
+                        {{ profile.twitter }}<br/>
+                    {% endif %}
+                    </p>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
     </section>
 {% endblock body %}
