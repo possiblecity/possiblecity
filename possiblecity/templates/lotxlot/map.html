@@ -126,13 +126,6 @@
           map.setView(center, 16, { animate: true });
        }
 
-
-    function updateVacant() {
-      vacant.refresh(
-        ['{% url "api-lot-list" %}?format=json&bbox='  
-        + map.getBounds().toBBoxString() + '']);
-    }
-
     function onEachFeature(feature, layer) {
       if (feature.properties) {
           var html = '<h4>' + feature.properties.address +'</h4>' +
@@ -162,10 +155,6 @@
           }
       }
 
-    function onMove() {
-      // map.removeLayer(GeoJSONlayer);
-      //updateVacant();
-    }
 
     function onZoomend(){
        if (map.getZoom()>=15) {
@@ -186,21 +175,20 @@
        };
     }   
 
-    map.on('moveend', onMove);
     map.on('zoomend', onZoomend);
 
     var vacant = new lvector.Custom({
-            url: "{% url 'api-lot-list' %}?format=jsonp",            
+            //url: "{% url 'api-lot-list' %}",            
             scaleRange: [15, 22],
             showAll: false,
             singlePopup: true,
             symbology: {
                 type: "single",
                 vectorOptions: {
-                    fillColor: "#e8eb00",
+                    fillColor: "#ff0000",
                     fillOpacity: 0.2,
                     weight: 2,             
-                    color: "#e8eb00",
+                    color: "#ff0000",
                     opacity: 1
                 }
              },
