@@ -9,6 +9,8 @@ from django.views.generic.edit import FormView
 
 from rest_framework import viewsets, filters
 from rest_framework.exceptions import APIException
+from rest_framework.renderers import JSONRenderer, JSONPRenderer
+from rest_framework.serializers import ModelSerializer
 from rest_framework_gis.filters import InBBOXFilter
 
 from apps.ideas.forms import SimpleIdeaForm
@@ -78,6 +80,7 @@ class LotApiViewSet(viewsets.ReadOnlyModelViewSet):
     API endpoint that allows Lots to be consumed as geojson.
     """
     serializer_class = LotSerializer
+    renderer_classes = (JSONRenderer, JSONPRenderer)
     paginate_by = None
 
     def get_queryset(self):
@@ -101,6 +104,7 @@ class LotIdeaApiViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Lot.objects.exclude(idea=None).prefetch_related('idea_set')
     serializer_class = LotPointSerializer
+    
     paginate_by = None
 
 

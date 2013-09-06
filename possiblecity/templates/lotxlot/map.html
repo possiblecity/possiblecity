@@ -73,7 +73,7 @@
 {% block map_js %}
 <script>
    
-   map.fire('dataloading');
+    map.fire('dataloading');
 
     var neighborhoods = L.geoJson.ajax(
       '{% url "api-neighborhood-list" %}?format=json', {
@@ -189,5 +189,23 @@
     map.on('moveend', onMove);
     map.on('zoomend', onZoomend);
 
+    var vacant = new lvector.Custom({
+            url: "{% url 'api-lot-list' %}?format=jsonp",            
+            scaleRange: [15, 22],
+            showAll: false,
+            singlePopup: true,
+            symbology: {
+                type: "single",
+                vectorOptions: {
+                    fillColor: "#e8eb00",
+                    fillOpacity: 0.2,
+                    weight: 2,             
+                    color: "#e8eb00",
+                    opacity: 1
+                }
+             },
+    });
+
+    vacant.setMap(map);
 </script>
 {% endblock map_js %}
