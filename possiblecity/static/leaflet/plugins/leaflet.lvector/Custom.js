@@ -41,7 +41,7 @@ lvector.Custom = lvector.GeoJSONLayer.extend({
         
         // Build URL
         var url = this.options.url
-        url += "?format=json" + // JSON please
+        url += "?format=jsonp" + // JSON please
                "&callback=" + this._globalPointer + "._processFeatures"; // Need this for JSONP
         if (!this.options.showAll) {
             url += "&bbox=" + this.options.map.getBounds().toBBoxString(); // Build bbox geometry
