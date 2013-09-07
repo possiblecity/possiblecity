@@ -34,11 +34,11 @@
                  <div class="container">
                  {% block topbar %}
                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-                         <span class="sr-only">Toggle navigation</span>
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
-                     </button>                                
+                     </button>  
+
                      {% block site_brand %}
                      <a class="navbar-brand" href="{% url "home" %}">Possible City</a>
                      {% endblock site_brand %}
@@ -54,6 +54,7 @@
                     {% block account_bar %}
 	                   {% include "_account_bar.html" %}
 	                {% endblock account_bar %}
+                    </div>
                  {% endblock topbar %}
                  </div>
              </nav>
@@ -74,7 +75,6 @@
         {% block script_base %}
             <script src="{% block jquery_src %}{% static "js/vendor/jquery.js" %}{% endblock %}"></script>
             <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
-            <script src="{% static "pinax/js/theme.js" %}"></script>
             {% block extra_script %}{% endblock extra_script %}
         {% endblock script_base %}
 

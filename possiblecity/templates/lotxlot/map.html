@@ -8,57 +8,7 @@
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
-<style>
-.leaflet-label {
-  border-color: rgba(205, 0, 205, 1.0);
-  border-width: 2px;
-  background: rgba(205, 0, 205, 0.7);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 1.0);
-  text-transform: uppercase;
-  padding-top:3px;
-  padding-bottom:3px;
-}
-
-.leaflet-label:before {
-  border-right: 6px solid black;
-  border-right-color: inherit;
-  left: -8px;
-}
-
-.idea-label, .idea-label-selected {
-  background:transparent;
-  border:none;
-  top: -35px;
-  left: -20px;
-  text-align: center;
-}
-
-.idea-label a, .idea-label-selected a {
-  text-decoration:none;
-}
-
-.idea-label i, .idea-label h4, .idea-label-selected i {
-  /*color: #cd00cd;*/
-  color: rgba(205, 0, 205, 0.7);
-
-}
-
-.idea-label-selected h4 {
-  color: #fff;
-}
-
-.idea-label strong, .idea-label-selected strong {
-  color: #fff;
-  position: absolute; 
-  left: 14px; 
-  top: 9px;
-}
-
-.idea-label:before, .idea-label-selected:before {
-  border:none;
-}
-</style>
+    {% block sidebar %}
     <div class="sidebar ideas-lot-info-sidebar">
         <div class="close-button pull-right">
             <a href="#" type="button" class="close ">&times;</a>
@@ -68,6 +18,7 @@
         </header>
 
     </div>
+    {% endblock sidebar %}
 {% endblock body %}
 
 {% block map_js %}
@@ -85,74 +36,75 @@
     var ideas = L.geoJson.ajax(
       '{% url "api-lot-idea-list" %}?format=json', {
         pointToLayer: function (feature, latlng) {
-           var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
+           var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id) +
                             '"><i class="icon-comment icon-3x"></i>' +
                             '<strong> ' + 
                              feature.properties.idea_set.length + '</strong></a>';
            var labelIcon = L.divIcon({className: 'idea-label', html: labelText,  iconSize:null});
-           return L.marker(latlng, {riseOnHover: true, icon: labelIcon});
+           //var lot = {% if lot.id %}{{ lot.id }}{% else %}0{% endif %}
+           //if (feature.properties.id != lot) {
+             return L.marker(latlng, {riseOnHover: true, icon: labelIcon});
+           //};
         },
       })
 
-        var vacant = new lvector.Custom({
+      var vacant_lots = new lvector.Custom({
+            map: map,
             url: "{% url 'api-lot-list' %}",            
             scaleRange: [16, 22],
             showAll: false,
             singlePopup: true,
-            symbology: {
+            symbology : {
                 type: "unique",
                 property: "is_public",
                 values: [
                     {
-                        value: true,
-                            vectorOptions: {
-                            fillColor: "#ffff00",
-                            fillOpacity: 0.6,
-                            color: "#ffff00",
-                            opacity: 0.8,
-                            weight: 1
-                    }
-                    }, 
-                    {
-                        value: false,
-                            vectorOptions: {
-                            fillColor: "#e8eb00",
-                            fillOpacity: 0.6,
-                            color: "#e8eb00",
-                            opacity: 0.8,
-                            weight: 1
-                        }
+                      value: true,
+                      vectorOptions: {
+                        fillColor: "#BAD8E4",
+                        fillOpacity: 0.6,
+                        color: "#539DBB",
+                        opacity: 1.0,
+                        weight: 1,
+                      }
                     },
-                ]
-             },
-             symbology : {
-                type: "single",
-                vectorOptions: {
-                    fillColor: "#ffff00",
-                    fillOpacity: 0.6,
-                    color: "#ffff00",
-                    opacity: 0.8,
-                    weight: 1
-                }
+                    {
+                      value: false,
+                      vectorOptions: {
+                        fillColor: "#539DBB",
+                        fillOpacity: 0.6,
+                        color: "#539DBB",
+                        opacity: 1.0,
+                        weight: 1,
+                      }
+                    }
+                  ]
              },
 
              popupTemplate: function(properties) {
                 if (properties.is_public == true) {
                     ownership = 'Public';
+                    ownership_icon = 'icon-unlock-alt';
                 } else {
                     ownership = 'Private';
+                    ownership_icon = 'icon-lock';
                 }
                 if (properties.is_available == true) {
                     availability = 'For Sale';
                 } else {
                     availabilty = 'Unknown';
                 }
-                html = '<h3>' + properties.address +'</h3>' +
-                           '<p>Ownership: <strong>' + ownership + '</strong><br />' +
-                           '<p><a href="" class="button">View</a>'
+
+                var html = '<center><h3>{{ lot.address }}</h3>' +
+                        '<p><i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;Ownership:  </i> <strong>'  + ownership + '</strong></p>' +
+                        '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong> sq. ft.</strong></p>' +
+                        '<p><i class="icon-lightbulb icon-large"> &nbsp;&nbsp;Ideas:</i> <strong></strong></p>' +
+                        '<p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
+                           '" class="btn btn-primary">View More Details</a><center>';
                 return html;
             }
        });
+
 
    
  
@@ -180,51 +132,21 @@
           var layer = e.target;
           center=(layer.getBounds().getCenter());
           map.setView(center, 17, { animate: true });
-       }
+    }
 
-     function zoomToMarker(e) {
+    function zoomToMarker(e) {
           var marker = e.target;
           center=(marker.getLatLng());
           map.setView(center, 17, { animate: true });
-       }
-
-    function onEachFeature(feature, layer) {
-      if (feature.properties) {
-          var html = '<h4>' + feature.properties.address +'</h4>' +
-                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>';
-          layer.bindPopup(html);
-          if (feature.properties.idea_set.length > 0) {
-            var bounds = layer.getBounds();
-            var center = bounds.getCenter();
-            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
-                            '"><i class="icon-comment-alt icon-4x">' +
-                            '<h4> ' + 
-                             feature.properties.idea_set.length + '</h4></i></a>'
-            marker = L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map);
-            marker.bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
-          }
-      }
     }
-
-    function labelFeature(feature, layer) {
-      if (feature.properties) {
-            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
-                            '"><i class="icon-comment-alt icon-4x">' +
-                            '<h4> ' + 
-                             feature.properties.idea_set.length + '</h4></i></a>'
-            marker = L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map);
-            marker.bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
-          }
-      }
 
 
     function onZoomend(){
-       if (map.getZoom()>=15) {
+       if (map.getZoom()>=16) {
            map.removeLayer(neighborhoods);
-           map.addLayer(ideas);
        };
 
-       if(map.getZoom()<15){
+       if(map.getZoom()<16){
            map.addLayer(neighborhoods);
        };
   
@@ -239,6 +161,6 @@
 
     map.on('zoomend', onZoomend);
 
-    vacant.setMap(map);
 </script>
+{% block extra_map_js %}{% endblock %}
 {% endblock map_js %}

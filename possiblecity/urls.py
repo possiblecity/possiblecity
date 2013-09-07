@@ -9,12 +9,14 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
-from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet
+from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, PublicLotApiViewSet, PrivateLotApiViewSet
 from apps.philadelphia.views import NeighborhoodApiViewSet
 
 router = routers.DefaultRouter()
-router.register(r'lotxlot/lots', LotApiViewSet, base_name='api-lot')
-router.register(r'lotxlot/ideas/lots', LotIdeaApiViewSet, base_name='api-lot-idea')
+router.register(r'lots/vacant', LotApiViewSet, base_name='api-lot')
+router.register(r'lots/public', PublicLotApiViewSet, base_name='api-public-lot')
+router.register(r'lots/private', PrivateLotApiViewSet, base_name='api-private-lot')
+router.register(r'lots/ideas', LotIdeaApiViewSet, base_name='api-lot-idea')
 router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name='api-neighborhood')
 
 
@@ -57,7 +59,7 @@ urlpatterns = patterns('',
     url(r'^ideas/explore/', include('apps.ideas.urls.explore')),
 
     # places
-    url(r'^lotxlot/', include('apps.lotxlot.urls')),
+    url(r'^lots/', include('apps.lotxlot.urls')),
 
 
     # js urls

@@ -10,15 +10,6 @@
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" /><![endif]-->
 <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.css' %}" />
-<script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster.js' %}"></script>
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.css' %}" />
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.label/leaflet.label.css' %}" />
-<script src="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.lvector/lvector.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.lvector/Custom.js' %}"></script>
-<script src="{% static 'leaflet/plugins/leaflet.ajax/leaflet.ajax.js' %}"></script>
-<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 {% endblock extra_head %}
 {% block body_base %}
     <div id="map"></div>
@@ -27,6 +18,16 @@
 {% endblock body_base %}
 
 {% block extra_body %}
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.css' %}" />
+<script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster.js' %}"></script>
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.css' %}" />
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.label/leaflet.label.js' %}" />
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.label/leaflet.label.css' %}" />
+<script src="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.js' %}"></script>
+<script src="{% static 'leaflet/plugins/leaflet.lvector/lvector.js' %}"></script>
+<script src="{% static 'leaflet/plugins/leaflet.lvector/Custom.js' %}"></script>
+<script src="{% static 'leaflet/plugins/leaflet.ajax/leaflet.ajax.js' %}"></script>
+<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 <script>
     // Initialize the map object
     var map = new L.Map('map', {
@@ -38,7 +39,7 @@
     });
 
     // Prep the background tile layer
-    var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-3jbn92ke/{z}/{x}/{y}.png';
+    var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-t3op9nm9/{z}/{x}/{y}.png';
     var tileAttribution = 'Data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors, Design &copy; MapBox';
     var streets = L.tileLayer(tileUrl, {
         attribution: tileAttribution,
@@ -66,10 +67,10 @@
     };
 
     var yellowStyle = {
-        "fillColor":"#e8db00",
-        "fillOpacity": 0.2,
+        "fillColor":"#ffff00",
+        "fillOpacity": 0.0,
         "opacity": 1.0,
-        "weight": 2,
+        "weight": 6,
         "color":"#e8db00",
     };
 

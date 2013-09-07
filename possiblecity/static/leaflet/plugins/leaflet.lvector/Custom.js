@@ -39,6 +39,9 @@ lvector.Custom = lvector.GeoJSONLayer.extend({
     
     _getFeatures: function() {
         
+        // fire dataloading event
+        this.options.map.fire("dataloading");
+        
         // Build URL
         var url = this.options.url
         url += "?format=jsonp" + // JSON please

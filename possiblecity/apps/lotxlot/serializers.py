@@ -10,7 +10,7 @@ class LotSerializer(geo_serializers.GeoFeatureModelSerializer):
 	class Meta:
 		model = Lot
 		geo_field = 'bounds'
-		fields = ('id', 'slug', 'address', 'idea_set')
+		fields = ('id', 'slug', 'address', 'is_public', 'idea_set')
 
 class LotPointSerializer(geo_serializers.GeoFeatureModelSerializer):
 	class Meta:

@@ -1,24 +1,70 @@
+.idea-label, .idea-label-selected {
+  background:transparent;
+  border:none;
+  top: -35px;
+  left: -5px;
+  text-align: center;
+  z-index: 6;
+}
+
+.idea-label a, .idea-label-selected a {
+  text-decoration:none;
+}
+
+.idea-label i, .idea-label h4, .idea-label-selected i {
+  color: #cd00cd;
+  color: rgba(205, 0, 205, 0.7);
+
+}
+
+.idea-label-selected h4 {
+  color: #fff;
+}
+
+.idea-label strong, .idea-label-selected strong {
+  color: #fff;
+  position: absolute; 
+  left: 14px; 
+  top: 9px;
+}
+
+.idea-label:before, .idea-label-selected:before {
+  border:none;
+}
+
 .leaflet-label {
-	background: rgb(235, 235, 235);
-	background: rgba(235, 235, 235, 0.81);
+	border-color: rgb(205, 0, 205);
+  	border-width: 2px;
+  	background: rgb(205,0,205);
+  	background: rgba(205, 0, 205, 0.7);
+  	color: #fff;
+  	border-color: rgba(255, 255, 255, 1.0);
+  	text-transform: uppercase;
+  	padding:3px 6px;
 	background-clip: padding-box;
-	border-color: #777;
-	border-color: rgba(0,0,0,0.25);
 	border-radius: 4px;
 	border-style: solid;
-	border-width: 4px;
-	color: #111;
 	display: block;
 	font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
 	font-weight: bold;
-	padding: 1px 6px;
 	position: absolute;
+	top: -12px;
 	-webkit-user-select: none;
 	   -moz-user-select: none;
 	    -ms-user-select: none;
 	        user-select: none;
 	white-space: nowrap;
 	z-index: 6;
+}
+
+.leaflet-label-selected {
+	z-index: 8;
+	background: rgb(255,255,255);
+  	background: rgba(255, 255, 255, 1.0);
+  	color: rgb(205, 0, 205);
+  	color: rgba(205, 0, 205, 1.0);
+  	border-color: rgb(205, 0, 205);
+  	border-color: rgba(205, 0, 205, 1.0);
 }
 
 .leaflet-label.leaflet-clickable {
@@ -37,7 +83,8 @@
 .leaflet-label:before {
 	border-right: 6px solid black;
 	border-right-color: inherit;
-	left: -10px;
+	left: -8px;
+	content: "";
 }
 
 .leaflet-label:after,

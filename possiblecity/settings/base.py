@@ -184,7 +184,7 @@ MIDDLEWARE_CLASSES = (
     'account.middleware.LocaleMiddleware',
     'account.middleware.TimezoneMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'social_auth.middleware.SocialAuthExceptionMiddleware'
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
 )
 
 

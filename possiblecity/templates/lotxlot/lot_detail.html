@@ -1,4 +1,4 @@
-{% extends "lotxlot/map_base.html" %}
+{% extends "lotxlot/map.html" %}
 
 {% load staticfiles %}
 {% load humanize %}
@@ -7,45 +7,14 @@
 {% load possiblecity_tags %}
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
-{% block body %}
-<style>
-.idea-label, .idea-label-selected {
-  background:transparent;
-  border:none;
-  top: -35px;
-  left: -20px;
-  text-align: center;
-}
-
-.idea-label a, .idea-label-selected a {
-  text-decoration:none;
-}
-
-.idea-label i, .idea-label h4, .idea-label-selected i {
-  color: #cd00cd;
-}
-
-.idea-label-selected h4 {
-  color: #fff;
-}
-
-.idea-label h4, .idea-label-selected h4 {
-  position: absolute; 
-  left: 24px; 
-  top: 4px;
-}
-
-.idea-label:before, .idea-label-selected:before {
-  border:none;
-}
-</style>
+{% block sidebar %}
     <div class="sidebar ideas-lot-info-sidebar">
         <div class="close-button pull-right">
             <a href="#" type="button" class="close ">&times;</a>
          </div>
         <header class="lot-id-header text-center">
             <h1>Lot #{{ lot.id }}</h1>
-            <h2>{{ lot.address }}</h2>
+            <h2><i class="icon-map-marker"></i> {{ lot.address }}</h2>
         </header>
         <ul id="sidebar-tabs" class="nav nav-tabs">
           <li class="active"><a href="#ideas" data-toggle="tab">Ideas</a></li>
@@ -67,7 +36,7 @@
                            {% else %}
                            src="{% static 'img/profile.png' %}"
                            {% endif %}
-                           alt="64x64" 
+                           alt="{{ request.user }}" 
                            style="width: 64px; height: 64px;" />
                       </a>
                       {% else %}
@@ -135,16 +104,16 @@
           </div>
 
     </div>
-{% endblock body %}
+{% endblock sidebar %}
 
-{% block map_js %}
+{% block extra_map_js %}
 <script>
     var lot = L.geoJson(null, {
-        style: selectedLotStyle
+       style: blueStyle
     }).addTo(map);
         
 
-    var lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json'
+    var lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json';
 
     $.getJSON(lot_url, function(data){
           map.fire('dataloading');
@@ -152,47 +121,20 @@
           var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
           map.setView(center, 18);
 
-          var content = '<h4>{{ lot.address }}</h4>';
+          var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
+          var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
-          L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map).bindLabel(content, {direction: 'left'}).showLabel();
+          var content = '<center><h3><i class="icon-map-marker icon-large"></i> {{ lot.address }}</h3>' +
+                        '<p><i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;Ownership:  </i> <strong>'  + ownership + '</strong></p>' +
+                        '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong>{{ lot.get_area }} sq. ft.</strong></p>' +
+                        '<p><i class="icon-lightbulb icon-large"> &nbsp;&nbsp;Ideas:</i> <strong>{{ lot.idea_set.count }}</strong></p></center>';
 
-          var bounds = map.getBounds();
-          var vacant_url = '{% url "api-lot-list" %}' + '?bbox' + bounds.toBBoxString() + '&format=json';
-          
-          $.getJSON(vacant_url, function(data){
-            vacant  = L.geoJson(data, {
-              style: lotStyle,
-              onEachFeature: onEachFeature
-            }).addTo(map);
-            map.fire('dataload');
-        });
+          var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
+
+          L.marker(center, {riseOnHover: true}).bindPopup(content).addTo(map).openPopup();
+
+          map.fire('dataload');
     });
 
-    function onEachFeature(feature, layer) {
-      if (feature.properties) {
-          var html = '<h4>' + feature.properties.address +'</h4>' +
-                 '<p><a class="btn btn-primary" href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) + '">View</a>';
-          layer.bindPopup(html);
-          if (feature.properties.idea_set.length > 0) {
-            var bounds = layer.getBounds();
-            var center = bounds.getCenter();
-            var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
-                            '"><i class="icon-comment-alt icon-4x">' +
-                            '<h4> ' + 
-                             feature.properties.idea_set.length + '</h4></i></a>'
-           var labelTextSelected = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id, feature.properties.slug) +
-                            '"><i class="icon-comment icon-4x">' +
-                            '<h4> ' + 
-                             feature.properties.idea_set.length + '</h4></i></a>'
-            marker = L.circleMarker(center, { fillOpacity: 0, opacity: 0}).addTo(map);
-            if (feature.properties.id == {{ lot.id }}) {
-                marker.bindLabel(labelTextSelected, { noHide: true, className: 'idea-label-selected' }).showLabel();
-            } else {
-                marker.bindLabel(labelText, { noHide: true, className: 'idea-label' }).showLabel();
-            }
-          }
-      }
-    }
-
 </script>
-{% endblock map_js %}
+{% endblock extra_map_js %}

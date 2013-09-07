@@ -20,3 +20,9 @@ class IdeaListWithinFeature(IdeaListView):
     Get all lots within a certain neighborhood
     """
     pass
+
+class IdeaListFeaturedView(IdeaListView):
+	"""
+	Get all featured ideas
+	"""
+	queryset = Idea.objects.filter(featured=True)

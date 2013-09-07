@@ -20,7 +20,7 @@ class SimpleIdeaForm(forms.ModelForm):
         fields = ('tagline',)
         widgets = {
             'tagline': forms.Textarea(attrs={'rows': 2, 'class': 'form-control', 
-            	'placeholder': 'Add your idea for this lot'}),
+            	'placeholder': 'Float your idea for this lot'}),
         }
 
 class AddIdeaForm(forms.Form):

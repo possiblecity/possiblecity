@@ -8,5 +8,5 @@ from .views import LotDetailView, LotIndexView
  
 urlpatterns = patterns('',
 	url(r'^$', LotIndexView.as_view(), name='lotxlot'),
-    url(r'^lot/(?P<pk>\d+)/$', LotDetailView.as_view(), name='lotxlot_lot_detail'),
+    url(r'^(?P<pk>\d+)/$', LotDetailView.as_view(), name='lotxlot_lot_detail'),
 )

@@ -3,6 +3,7 @@
 import datetime
 
 from django.contrib.gis.db import models
+from django.contrib.gis.measure import Area
 from django.core.urlresolvers import reverse
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
@@ -37,6 +38,10 @@ class Lot(models.Model):
     class Meta:
         pass
         #unique_together = ('address', 'city', 'state')
+
+    def get_area(self):
+        area = Area(self.bounds.area)
+        return area.sq_ft
 
     def __unicode__(self):
         if self.address:

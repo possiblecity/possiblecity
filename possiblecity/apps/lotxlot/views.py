@@ -21,6 +21,25 @@ from .utils import fetch_json
 
 from .serializers import LotSerializer, LotPointSerializer
 
+########## Mixins ##########
+
+class BBoxMixin(object):
+    def get_queryset(self):
+        queryset = super(BBoxMixin, self).get_queryset()
+        bbox = self.request.QUERY_PARAMS.get('bbox', None)
+        if bbox:
+            try:
+                p1x, p1y, p2x, p2y = (float(n) for n in bbox.split(','))
+            except ValueError:
+                raise APIException("Not valid bbox string in parameter %s."
+                               % bbox)
+
+            poly = Polygon.from_bbox((p1x, p1y, p2x, p2y))
+            queryset = queryset.filter(coord__contained=poly)
+        return queryset
+
+########## HTML Views ##########
+
 class LotDisplay(DetailView):
     model = Lot
 
@@ -73,29 +92,30 @@ class LotIndexView(TemplateView):
     template_name='lotxlot/map.html'
 
 
-# api views
+########## API Views ##########
 
-class LotApiViewSet(viewsets.ReadOnlyModelViewSet):
+
+class LotApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows Lots to be consumed as geojson.
+    API endpoint that allows Lots to be consumed as geojson
     """
+    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('idea_set')
     serializer_class = LotSerializer
     renderer_classes = (JSONRenderer, JSONPRenderer)
+    filters = (InBBOXFilter,)
     paginate_by = None
 
-    def get_queryset(self):
-        queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('idea_set')
-        bbox = self.request.QUERY_PARAMS.get('bbox', None)
-        if bbox:
-            try:
-                p1x, p1y, p2x, p2y = (float(n) for n in bbox.split(','))
-            except ValueError:
-                raise APIException("Not valid bbox string in parameter %s."
-                               % bbox)
+class PublicLotApiViewSet(LotApiViewSet):
+    queryset = Lot.objects.filter(
+           is_vacant=True).filter(
+           is_visible=True).filter(
+           is_public=True).prefetch_related('idea_set')
 
-            poly = Polygon.from_bbox((p1x, p1y, p2x, p2y))
-            queryset = queryset.filter(coord__contained=poly)
-        return queryset
+class PrivateLotApiViewSet(LotApiViewSet):
+    queryset = Lot.objects.filter(
+           is_vacant=True).filter(
+           is_visible=True).filter(
+           is_public=False).prefetch_related('idea_set')
 
     
 class LotIdeaApiViewSet(viewsets.ReadOnlyModelViewSet):
