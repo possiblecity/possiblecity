@@ -7,8 +7,8 @@ class VisualInline(admin.TabularInline):
     model = IdeaVisual
 
 class IdeaAdmin(admin.ModelAdmin):
-    list_display = ('tagline', 'user', 'via')
-    list_editable = ('via',)
+    list_display = ('tagline', 'user', 'via', 'featured')
+    list_editable = ('via', 'featured')
     search_fields = ['tagline',]
     raw_id_fields = ('lots',)
  
