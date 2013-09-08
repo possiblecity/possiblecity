@@ -1,42 +1,93 @@
 {% extends "ideas/base.html" %}
+
 {% load i18n %}
+{% load staticfiles %}
+
+{% load thumbnail %}
+{% load phileo_tags %}
+
 {% block head_title %}{{ idea.tagline }}{% endblock %}
 
 {% block body %}
-    <aside>
-        <h2><a href="{{ idea.user.get_absolute_url }}">
-        {{ idea.user.profile.full_name }}</a></h2>
-    </aside>
-    {% block project %}
-    <article id="idea">
-        <header>
-            <h1>{{ idea.tagline}}</h1>
-        </header>
-        {% if idea.ideavisual_set %}
-        <section id="slideshow">
-            <ul id="gallery">
-                {% for visual in project.projectvisual_set.all %}
-                {% if visual.public %}
-                <li>
-                    <img src="{{ visual.file.url }}"
-                         alt="{% if visual.caption %}{{ visual.caption }}{% else %}{{ image.title }}{% endif %}"
-                         title="{{ visual.title }}"/>
-                    <p class="caption">{{ visual.caption }}</p>
-                </li>
+<header class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-12 margin-bottom-20">
+                <h1>{{ idea.title }}</h1>
+            </div>
+               
+        </div>
+    </div>
+</header>
+<section class="container">
+    <div class="row">
+        <div class="col-lg-2 col-12">
+            <div class="row margin-bottom-20">
+                    <div class="col-6 col-lg-12">
+                        <div class="profile-pic">
+                        {% if idea.user.profile.photo %}
+                            <img class="profile-pic" src="{{ idea.user.profile.photo.url }}" />
+                        {% else %}
+                            <img class="profile-pic" src="{% static 'img/profile.png' %}" />
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-12">
+                        <h5>Submitted by</h5>
+                        <h3>
+                        {% if idea.user.profile.user.first_name %}
+                            {{ idea.user.profile.full_name}}
+                        {% else %}
+                            {{ idea.user.user.username }}
+                        {% endif %}
+                        </h3>
+                        <p>
+                        {% if idea.user.profile.website %}
+                            {{ idea.user.profile.website|urlize }}<br/>
+                        {% endif %}
+                        {% if profile.twitter %}
+                            <a href="http://www.twitter.com/{{ profile.twitter }}">
+                            {{ idea.user.profile.twitter }}</a>
+                            <br/>
+                        {% endif %}
+                        </p>
+                        <div class="hidden-sm">
+                            <hr/>
+                            <h5>Skills</h5> 
+                            <span class="label label-info">Add Skills</span>
+                        </div>
+
+                        <hr/>
+                        {% if request.user == idea.user.profile.user %}
+                        <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit your idea' %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+        </div>
+        <div class="col-lg-7 col-12">
+            {% block project %}
+            <article id="idea">
+                {% if idea.ideavisual_set %}
+                <section class="images">
+                <img src="{% thumbnail idea.get_lead_image.file '800x400' crop %}"
+                     alt="{% if idea.get_lead_image.caption %}{{ idea.get_lead_image.caption }}{% else %}{{ idea.get_lead_image.title }}{% endif %}"
+                     title="{{ idea.get_lead_image.title }}"/>
+                </section>
                 {% endif %}
-                {% endfor %}
-            </ul>
-        {% endif %}
-        {% if idea.description %}
-        <section id="description">
-            {{ idea.description_html|safe }}
-        </section>
-        {% endif %}
-        {% if request.user == idea.user %}
-        <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Idea' %}</a>
-        {% endif %}
-    </article>
-    {% block comments %}
-    {% endblock comments %}
-    {% endblock project %}
+                <h2>{{ idea.tagline}}</h2>
+                {% if idea.description %}
+                <section id="description">
+                    {{ idea.description_html|safe }}
+                </section>
+                {% endif %}
+                {% if request.user == idea.user %}
+                <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Idea' %}</a>
+                {% endif %}
+            </article>
+            {% block comments %}
+            {% endblock comments %}
+            {% endblock project %}
+        </div>
+    </div>
+</section>
 {% endblock body %}

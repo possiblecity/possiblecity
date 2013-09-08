@@ -22,9 +22,9 @@ django-pagination #pagination
 django-positions #auto ordering field
 django-localflavor #localization add-ons
 -e git://github.com/brack3t/django-braces.git#egg=django-braces
-#django-extra-views
 -e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
 
+easy-thumbnails
 django-taggit #tags
 django-user-accounts==1.0b14 #user authetication & accounts
 django-social-auth==0.7.23 #social authentication

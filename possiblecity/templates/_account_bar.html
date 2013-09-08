@@ -23,22 +23,17 @@
                     {% endif %}
                     <li><a href="{% url 'account_settings' %}">Settings</a></li>
                     <li>
-                        <a id="account_logout" href="{% url 'account_logout' %}">
+                        <a data-toggle="modal" data-target="#logout-modal" href="#logout">
                             {% trans "Log out" %}
                         </a>
                     </li>
                 </ul>
             </li>
         {% else %}
-            <li><a href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
+            <li><a data-toggle="modal" data-target="#login-modal" href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
             {% if ACCOUNT_OPEN_SIGNUP %}
             <li>
-                <a class="" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Sign up" %}</a></li>
+                <a data-toggle="modal" data-target="#signup-modal" href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></li>
             {% endif %}
         {% endif %}
     </ul>
-
-
-    <form id="accountLogOutForm" style="display: none;" action="{% url "account_logout" %}" method="POST">
-        {% csrf_token %}
-    </form>

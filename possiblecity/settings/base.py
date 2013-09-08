@@ -303,6 +303,7 @@ THIRD_PARTY_APPS = (
 
     'compressor', # static file optimization
     'pagination', # pagination
+    'easy_thumbnails',
     
     'taggit', # tagging
     'metron', # analytics
@@ -442,7 +443,7 @@ CELERYD_TASK_SOFT_TIME_LIMIT = 120
 #==============================================================================
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
     'PAGINATE_BY': 10
 }
 

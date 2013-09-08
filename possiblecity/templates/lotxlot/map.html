@@ -3,7 +3,10 @@
 {% load staticfiles %}
 {% load humanize %}
 {% load i18n %}
+
 {% load floppyforms %}
+{% load phileo_tags %}
+
 {% load possiblecity_tags %}
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
@@ -13,11 +16,46 @@
         <div class="close-button pull-right">
             <a href="#" type="button" class="close ">&times;</a>
          </div>
-        <header class="lot-id-header text-center">
+        <header class="text-center">
             <h1>Featured Ideas</h1>
         </header>
-
-    </div>
+        <div id="sidebar-tabs-content" class="tab-content">
+          <div class="tab-pane fade active in" id="ideas">
+            <div class="activity">
+              <ul class="list-group">
+                <div class="nav-tab-button text-center"></div>
+                {% get_latest_featured ideas.Idea 3 as featured_ideas %}
+                  {% for idea in featured_ideas %}
+                  <li class="list-group-item">
+                  {% if idea.get_lead_image %}
+                    <a href="{{ idea.get_absolute_url }}">
+                        <img src="{{ idea.get_lead_image.file.url }}">
+                    </a>
+                  {% endif %}
+                  <h6>
+                  Submitted by 
+                  {% if idea.user.first_name %}
+                    {{ idea.user.profile.full_name }}
+                  {% else %}
+                    {{ idea.user.username }}
+                  {% endif %}
+                  <small>on</small>
+                  {% for lot in idea.lots.all %}
+                  <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                    {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
+                  {% endfor %}
+                  <h6>
+                  {% if idea.title %}
+                  <h5>{{ idea.title }}</h5>
+                  {% endif %}
+                  <h4>{{ idea.tagline }}</h4>
+                  <p>{{ idea.description_html|safe }}</p>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
     {% endblock sidebar %}
 {% endblock body %}
 

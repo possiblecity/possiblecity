@@ -32,6 +32,17 @@ img {
 } 
 
 
+.panel {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+
 
 
 
@@ -178,6 +189,29 @@ background-color: #BEE0EA;
 }
 
 
+
+
+
+/***************************************************************************/
+/* Homepage */
+
+.hero-image-homepage {
+	background: #000000 url(../img/hero-image-homepage.png);
+	height: 500px;
+	color: #ffffff;
+}
+
+.hero-image-homepage p {
+	font-size: 35px;
+	font-weight: 600;
+}
+
+.quotation-icon {
+	width: 30px;
+	height: 15px;
+	float: left;
+	padding-right: 10px;
+}
 
 /***************************************************************************/
 /* MAP STYLES */

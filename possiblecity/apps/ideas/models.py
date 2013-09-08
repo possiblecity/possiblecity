@@ -91,7 +91,11 @@ class Idea(models.Model):
         return self.description_html != original
 
     def get_lead_image(self):
-        return self.ideavisual_set.filter(lead=True)[0] or self.ideavisual_set.all()[0]
+        if self.ideavisual_set:
+            if self.ideavisual_set.filter(lead=True):
+                return self.ideavisual_set.filter(lead=True)[0]
+            else:
+                return self.ideavisual_set.all()[0]
 
     def save(self, *args, **kwargs):
         self.render_markup()

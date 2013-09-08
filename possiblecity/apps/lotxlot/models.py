@@ -39,9 +39,28 @@ class Lot(models.Model):
         pass
         #unique_together = ('address', 'city', 'state')
 
-    def get_area(self):
-        area = Area(self.bounds.area)
-        return area.sq_ft
+    def get_sqft(self): 
+        """ 
+        Returns the area in sq ft. 
+        """ 
+        # Convert our geographic polygons (in WGS84)
+        # into a local projection for New York (here EPSG:32118) 
+        try:
+            return self.bounds.transform(102729, clone=True).area
+        except Exception:
+            return None
+
+    def get_acres(self): 
+        """ 
+        Returns the area in sq ft. 
+        """ 
+        # Convert our geographic polygons (in WGS84)
+        # into a local projection for New York (here EPSG:32118) 
+        try:
+            return self.bounds.transform(102729, clone=True).area * 0.00002295684
+        except Exception:
+            return None
+        
 
     def __unicode__(self):
         if self.address:

@@ -67,43 +67,11 @@
 	     </section>
 	     {% endblock body_base %}
          {% block footer_base %}
+         <div class="clearfix"></div>
          <footer class="container">
-            {% block footer %}{% endblock %}
+            {% block footer %}{% include "_footer.html" %}{% endblock %}
           </footer>
           {% endblock footer_base %}
-
-        {% block signup_modal %}
-         <div class="modal fade" id="sign-up-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    
-                    <div class="modal-body">
-                      
-                        <div>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-
-                        <center style="padding:30px 0">
-                        <p>
-                            <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-facebook icon-large">&nbsp;&nbsp;Sign in with Facebook</i></a>
-                        </p>
-                         <hr>
-                        <h3>
-                            <a href="{% url "socialauth_begin" "twitter" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-twitter icon-large">  Sign in with <strong>Twitter</strong></i></a>
-                        </h3>
-
-                        <hr>
-                        <p>
-                            <a href="{% url "account_signup" %}" target="_top" class="btn btn-default">
-                            <i class="icon-envelope">  Sign In with Email</i></a>
-                        </p>
-                        </center>
-
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-        {% endblock signup_modal %}
 
         {% block script_base %}
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
@@ -116,5 +84,18 @@
         {% block extra_body_base %}
             {% block extra_body %}{% endblock extra_body %}
         {% endblock extra_body_base %}
+        
+        {% if request.user.is_authenticated %}
+            {% block logout_modal %}
+            {% include "account/_logout.html" %}
+            {% endblock logout_modal %}
+        {% else %}
+            {% block signup_modal %}
+            {% include "account/_signup.html" %}             
+            {% endblock signup_modal %}
+            {% block login_modal %}
+            {% include "account/_login.html" %}             
+            {% endblock login_modal %}
+        {% endif %}
     </body>
 </html>

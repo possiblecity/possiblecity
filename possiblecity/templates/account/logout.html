@@ -5,6 +5,7 @@
 {% block head_title %}{% trans "Log out" %}{% endblock %}
 
 {% block body %}
+<section class="container">
     <div class="row">
         <div class="span12">
             <form method="POST" action="{% url "account_logout" %}" class="form-horizontal">
@@ -19,4 +20,5 @@
             </form>
         </div>
     </div>
+</section>
 {% endblock %}
