@@ -1,0 +1,17 @@
+<span class="phileo">
+    {% if can_like %}
+      <a class="ajax"
+         data-method="post"
+         data-replace-closest=".phileo"
+         data-spinner="off"
+         href="{{ like_url }}">
+         {{ like_text }}
+         
+       </a>
+       &nbsp;•&nbsp;
+        <i class="icon {{ like_class }}"></i>
+         <span class="count">
+         {{ like_count }}
+         </span>
+    {% endif %}
+</span>
