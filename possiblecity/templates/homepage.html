@@ -33,19 +33,13 @@
                     <div class="col-lg-4">
                         {% if idea.get_lead_image %}
                         <a href="{{ idea.get_absolute_url }}">
-                        <img src="{% thumbnail idea.get_lead_image.file '400x400' crop %}">
+                        <img src="{% thumbnail idea.get_lead_image.file '300x300' crop %}">
                         </a>
                         {% endif %}
                          {% if idea.title %}
                         <h5>{{ idea.title }}</h5>
                         {% endif %}
-                        <h4>Floated by <a href="{% url 'profiles_profile_detail' idea.user.username %}"
-                        {% if idea.user.first_name %} 
-                            {{ idea.user.profile.full_name }}
-                        {% else %}
-                            {{ idea.user.username }}
-                        {% endif %}</a>
-                        <small>on</small>
+                        <h4><i class="icon-map-marker"></i>
                         {% for lot in idea.lots.all %}
                             <a href="{% url 'lotxlot_lot_detail' lot.id %}">
                             {% if lot.address %}
