@@ -52,7 +52,11 @@
     // Set the center on Philadelphia
     var offset = new L.LatLng(39.96, -75.11)
     var philadelphia = new L.LatLng(39.9522, -75.1642);
+    
+    {% block map_setview %}
     map.setView(offset, 12);
+    {% endblock map_setview %}
+
 
     map.addLayer(streets);
 
