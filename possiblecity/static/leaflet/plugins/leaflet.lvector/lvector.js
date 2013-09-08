@@ -299,7 +299,6 @@ lvector.Layer = L.Class.extend({
 					}
 			}
 		}
-
 		this.options.map.fire("dataload");
 	}
 });

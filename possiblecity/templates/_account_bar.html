@@ -32,11 +32,13 @@
         {% else %}
             <li><a href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
             {% if ACCOUNT_OPEN_SIGNUP %}
-            <li><a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></li>
+            <li>
+                <a class="" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Sign up" %}</a></li>
             {% endif %}
         {% endif %}
     </ul>
 
-<form id="accountLogOutForm" style="display: none;" action="{% url "account_logout" %}" method="POST">
-    {% csrf_token %}
-</form>
+
+    <form id="accountLogOutForm" style="display: none;" action="{% url "account_logout" %}" method="POST">
+        {% csrf_token %}
+    </form>

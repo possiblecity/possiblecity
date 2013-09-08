@@ -1,4 +1,4 @@
-{% extends "site_base.html" %}
+{% extends "base.html" %}
 
 {% load i18n %}
 {% load floppyforms %}
@@ -6,27 +6,32 @@
 {% block head_title %}{% trans "Sign up" %}{% endblock %}
 
 {% block body %}
+<section class="container">
     <div class="row">
         <div class="col-lg-3 col-12">
             {% include "account/_signup_sidebar.html" %}
         </div>
 
         <div class="col-lg-9 col-12">
-            <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" class="form-horizontal"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-                <legend>{% trans "Sign up" %}</legend>
-                <fieldset>
-                    {% csrf_token %}
-                    {{ form }}
-                    {% if redirect_field_value %}
-                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                    {% endif %}
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">{% trans "Sign up" %}</button>
+            <div class="panel">
+                <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" class="form-horizontal"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                    <legend>{% trans "Sign up" %}</legend>
+                    <fieldset>
+                        {% csrf_token %}
+                        {{ form }}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">{% trans "Sign up" %}</button>
+                        </div>
+                    </fieldset>
                     </div>
-                </fieldset>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+</section>
 {% endblock %}
 
 {% block extra_script %}

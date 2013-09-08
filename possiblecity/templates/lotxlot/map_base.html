@@ -27,6 +27,7 @@
 <script src="{% static 'leaflet/plugins/leaflet.lvector/lvector.js' %}"></script>
 <script src="{% static 'leaflet/plugins/leaflet.lvector/Custom.js' %}"></script>
 <script src="{% static 'leaflet/plugins/leaflet.ajax/leaflet.ajax.js' %}"></script>
+<script src="{% static 'leaflet/plugins/tile/Bing.js' %}"></script>
 <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 <script>
     // Initialize the map object
@@ -44,6 +45,8 @@
     var streets = L.tileLayer(tileUrl, {
         attribution: tileAttribution,
     });
+
+    var satellite = new L.BingLayer("Al_0exkMcWshayQSv6G6d87DTt5sYZOGw9aXtC_1Ef7xqyNjXY32qVSVUv-nBqGB");
 
 
     // Set the center on Philadelphia

@@ -4,6 +4,7 @@
 {% load humanize %}
 {% load i18n %}
 {% load floppyforms %}
+{% load phileo_tags %}
 {% load possiblecity_tags %}
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
@@ -50,9 +51,14 @@
                       <div class="media-body">
                         <form method="post" id="idea-form" action=".">
                           {% csrf_token %}
-                          {{ form }}
+                          {% form form using "floppyforms/layouts/simple.html" %}
                           <div class="form-actions">
-                            <button type="submit" class="btn btn-primary pull-right">{% trans "Add idea" %}</button>
+                            {% if request.user.is_authenticated %}
+                            <button type="submit" class="btn btn-primary pull-right">{% trans "Float your idea" %}
+                            </button>
+                            {% else %}
+                             <a class="btn btn-primary pull-right" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Float your idea" %}</a>
+                             {% endif %}
                           </div>
                           </form> 
                       </div>
@@ -79,6 +85,7 @@
                            {{ idea.user.username }}
                         {% endif %}
                         </h4>
+                        <p>{{ idea.tagline }}</p>
                         <h6>Via {{ idea.get_via_display }}
                             {% if idea.get_via_display == "Twitter" %}
                             <i class="icon-twitter"></i>
@@ -89,11 +96,11 @@
                             {% elif idea.get_via_display == "Instagram" %}
                             <i class="icon-instagram"></i>
                             {% endif %}
-                            • Floated {{ idea.floated|ago }}
+                            &nbsp;•&nbsp; Floated {{ idea.floated|ago }}
+                            &nbsp;•&nbsp; {% phileo_widget request.user idea %}
                           </h6>
-                          <p>{{ idea.tagline }}</p>
-                           <p><a href="#"><i class="icon-heart-empty icon-border"> Like</i></a>&nbsp;&nbsp;
-                           <a href="#"><i class="icon-comment-alt icon-border"> Comment</i></a></p>
+                          
+                           <p>&nbsp;&nbsp;
                       </div>
                     </div>
                   </li>
@@ -101,8 +108,31 @@
                 </ul>
               </div>
             </div>
+            <div class="tab-pane fade" id="info">
+             <div class="lot-info-table"> 
+               <table class="table">
+                  <thead>
+                    
+                  </thead>
+                  
+                  <tbody>
+                  <tr>
+                    <tr>
+                      <th>Ownership:</th>
+                      <td>{% if lot.is_public %}Public{% else %}Private{% endif %}</td>
+                    </tr>
+                    <th>Neighborhood:</th>
+                    <td>{{ lot.profile.neighborhood }}</td>
+                  </tr>
+                  <tr>
+                    <th>Size:</th>
+                    <td>{{ lot.bounds.area }}</td>
+                  </tr>
+                 </tbody>
+                </table>
+                </div><!--/lot-info -->
+          </div><!-- /#sidebar-tabs-content -->
           </div>
-
     </div>
 {% endblock sidebar %}
 
@@ -124,7 +154,7 @@
           var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
           var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
-          var content = '<center><h3><i class="icon-map-marker icon-large"></i> {{ lot.address }}</h3>' +
+          var content = '<center><h3>{{ lot.address }}</h3>' +
                         '<p><i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;Ownership:  </i> <strong>'  + ownership + '</strong></p>' +
                         '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong>{{ lot.get_area }} sq. ft.</strong></p>' +
                         '<p><i class="icon-lightbulb icon-large"> &nbsp;&nbsp;Ideas:</i> <strong>{{ lot.idea_set.count }}</strong></p></center>';

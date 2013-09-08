@@ -214,6 +214,7 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
     'account.auth_backends.UsernameAuthenticationBackend',
+    "phileo.auth_backends.CanLikeBackend",
 )
 
 ACCOUNT_OPEN_SIGNUP = True
@@ -305,6 +306,7 @@ THIRD_PARTY_APPS = (
     
     'taggit', # tagging
     'metron', # analytics
+    'phileo', #liking
 
     'rest_framework',
     'rest_framework_gis',
@@ -443,6 +445,17 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGINATE_BY': 10
 }
+
+
+#==============================================================================
+# Other 3rd Party
+#==============================================================================
+
+PHILEO_LIKABLE_MODELS = {
+    "profiles.Profile": {},
+    "ideas.Idea": {},
+}
+
 
 #==============================================================================
 # Local App Configuration

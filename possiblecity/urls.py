@@ -64,6 +64,8 @@ urlpatterns = patterns('',
 
     # js urls
     url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
+
+    url(r"^likes/", include("phileo.urls")),
 )
 
 urlpatterns += staticfiles_urlpatterns()
