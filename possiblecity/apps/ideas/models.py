@@ -94,8 +94,9 @@ class Idea(models.Model):
         if self.ideavisual_set:
             if self.ideavisual_set.filter(lead=True):
                 return self.ideavisual_set.filter(lead=True)[0]
-            else:
+            elif self.ideavisual_set.all():
                 return self.ideavisual_set.all()[0]
+        return None
 
     def save(self, *args, **kwargs):
         self.render_markup()
