@@ -18,7 +18,7 @@
                     <legend>{% trans "Sign up" %}</legend>
                     <fieldset>
                         {% csrf_token %}
-                        {{ form }}
+                        {% form form using "floppyforms/layouts/bootstrap.html" %}
                         {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                         {% endif %}

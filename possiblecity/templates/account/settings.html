@@ -2,13 +2,15 @@
 
 {% load floppyforms %}
 
-{% block head_title %}Account{% endblock %}
+{% block head_title %}Email{% endblock %}
 
 {% block account_content %}
     <form method="POST" action="{% url "account_settings" %}">
-        <legend>Account</legend>
+        <legend>Email</legend>
         {% csrf_token %}
-        {{ form }}
+        {% form form using %}
+            {% formrow form.email using "floppyforms/rows/bootstrap.html" %}
+        {% endform %}
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save</button>
         </div>

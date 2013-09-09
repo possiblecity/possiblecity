@@ -58,12 +58,7 @@ Profile for {{ profile.user.username }}
             {% if profile.about %}
             <div class="panel">
                 <h5>About</h5>
-                <p class="lead">{{ profile.user.first_name }} wants {{ profile.about }}</p>
-                <div class="visible-sm margin-bottom-20">
-                    <h5>Skills</h5> 
-                    <span class="label label-info">Land Irrigation</span> <span class="label label-info">Urban Farming</span>
-                    <span class="label label-info">Water Testing</span> <span class="label label-info">Community Organizing</span>
-                </div>
+                <p class="lead">{{ profile.user.first_name }} wants to {{ profile.about }}</p>
              </div><!-- .panel -->
              {% endif %}
             {% if request.user == profile.user %}
@@ -145,9 +140,15 @@ Profile for {{ profile.user.username }}
                     {% endif %}
                   </a>
                   <div class="media-body">
-                    <h4 class="media-heading">{{ profile.user.full_name }}<small>{{ profile.user.username }}</small></h4>
+                    <h4 class="media-heading">
+                                {% if idea.user.first_name %}
+                                    {{ idea.user.profile.full_name }}
+                                {% else %}
+                                   {{ idea.user.username }}
+                                {% endif %}
+                            </h4>
                     <p>{{ profile.user.first_name }} joined Possible City.</p>
-                    <h6>{{ profile.user.date_joined }} . on </h6>
+                    <h6>{{ profile.user.date_joined }}</h6>
                   </div>
                 </div>
                 </li>

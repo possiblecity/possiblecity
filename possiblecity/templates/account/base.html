@@ -1,36 +1,17 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load floppyforms %}
 
 {% block body_class %}account{% endblock %}
 
 {% block body %}
-	<header>
-		<div class="container">
-		    <div class="row">
-		        <div class="col-lg-3 col-12">
-		            <div class="panel">
-		                <div class="col-sm-9  margin-bottom-20 ideas-page-neighborhoods-panel-md-devices">
-		                    <nav class="panel">
-		                        <ul class="nav nav-pills">
-							        <li><a href="{% url "account_settings" %}">{% trans "Settings" %}</a></li>
-							        <li><a href="{% url "account_social_connections" %}">{% trans "Social Connections" %}</a></li>
-							        <li><a href="{% url "account_password" %}">{% trans "Change password" %}</a></li>
-							        <li><a href="{% url "account_delete" %}">{% trans "Delete account" %}</a></li>
-							    </ul>
-		                    </nav>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		 </div>
-	</header>
 	<section class="container">
 		<div class="row">
-			<div class="col-lg-2 col-12">
+			<div class="col-lg-3 col-12">
                 <nav class="panel ideas-page-neighborhoods-panel-xs-lg-devices">
 	                <ul class="nav nav-pills nav-stacked">
-						<li {% block settings_class %}class="active"{% endblock %}><a href="{% url "account_settings" %}">{% trans "Settings" %}</a></li>
+						<li {% block settings_class %}class="active"{% endblock %}><a href="{% url "account_settings" %}">{% trans "Email" %}</a></li>
 						<li {% block social_class %}{% endblock %}><a href="{% url "account_social_connections" %}">{% trans "Social Connections" %}</a></li>
 						<li {% block password_class %}{% endblock %}><a href="{% url "account_password" %}">{% trans "Change password" %}</a></li>
 						<li {% block delete_class %}{% endblock %}><a href="{% url "account_delete" %}">{% trans "Delete account" %}</a></li>

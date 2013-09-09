@@ -46,9 +46,9 @@
                     <div class="navbar-collapse collapse">
                     {% block nav %}
                       <ul class="nav navbar-nav">
-                          <li><a href="{% url 'lotxlot' %}">Map</a></li>
-                          <li><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
-                          <li><a href="{% url 'profiles_profile_list' %}">People</a></li>
+                          <li class="nav-map"><a href="{% url 'lotxlot' %}">Map</a></li>
+                          <li class="nav-ideas"><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
+                          <li class="nav-people"><a href="{% url 'profiles_profile_list' %}">People</a></li>
                       </ul>
                     {% endblock nav %}
                     {% block account_bar %}
@@ -97,5 +97,21 @@
             {% include "account/_login.html" %}             
             {% endblock login_modal %}
         {% endif %}
+        {% block analytics %}
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-28417563-1']);
+          _gaq.push(['_setDomainName', 'possiblecity.co']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        {% endblock analytics %}
     </body>
 </html>

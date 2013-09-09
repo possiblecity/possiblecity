@@ -1,9 +1,18 @@
 {# provide sign up in sidebar here #}
-    <p>
-        <a class="btn btn-primary" href="{% url "socialauth_begin" "facebook" %}" target="_top">
-        <i class="icon-facebook"></i>  Sign in with <b>Facebook</b></a>
+<div class="panel">
+	<h5>Aleady have an account?</h5>
+	<hr>
+	<p>
+        <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-facebook icon-large">&nbsp;&nbsp;Log in with <strong>Facebook</strong></i></a>
     </p>
-    <p>
-        <a class="btn btn-primary" href="{% url "socialauth_begin" "twitter" %}" target="_top">
-        <i class="icon-twitter"></i>  Sign in with <b>Twitter</b></a>
-    </p>
+    
+     <p>
+    	<a href="{% url "socialauth_begin" "twitter" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-twitter icon-large"> Log in with <strong>Twitter</strong></i></a>
+     </p>
+
+     
+       <p>
+         <a href="{% url "account_login" %}" target="_top" class="btn btn-default">
+           <i class="icon-envelope"> Login with Email</i></a>
+       </p>
+ </div>

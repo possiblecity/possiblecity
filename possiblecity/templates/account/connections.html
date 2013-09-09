@@ -1,15 +1,18 @@
 {% extends "account/base.html" %}
 
+{% load i18n %}
+{% load floppyforms %}
+
 {% block head_title %}Account Connections{% endblock %}
 
 {% block settings_class %}{% endblock %}
 {% block social_class %}class="active"{% endblock %}
 
 {% block account_content %}
-    <h2>Connections</h2>
+    <legend>{% trans "Social Connections" %}</legend>
     
-    <p class="lead">
-        This is where connections to external services are managed.
+    <p>
+        Connect and disconnect your social accounts.
     </p>
     
     <div class="row" style="margin-bottom: 20px;">
@@ -19,7 +22,7 @@
             
             <p>
                 {% if social_auth.twitter %}
-                    <a class="btn" 
+                    <a class="btn btn-default" 
                     href="{% url "socialauth_disconnect" "twitter" %}?next={% url "account_social_connections"%}">Disconnect Twitter</a>
                 {% else %}
                     <a class="btn btn-primary" 
@@ -33,7 +36,7 @@
             
             <p>
                 {% if social_auth.facebook %}
-                    <a class="btn" 
+                    <a class="btn btn-default" 
                     href="{% url "socialauth_disconnect" "facebook" %}?next={% url "account_social_connections" %}">Disconnect Facebook</a>
                 {% else %}
                     <a class="btn btn-primary" 
