@@ -2,6 +2,11 @@
 
 {% load i18n %}
 {% load staticfiles %}
+{% load thumbnail %}
+
+{% load phileo_tags %}
+
+{% load possiblecity_tags %}
 
 {% block head_title %}
 Profile for {{ profile.user.username }}
@@ -16,7 +21,7 @@ Profile for {{ profile.user.username }}
                     <div class="col-6 col-lg-12">
                         <div class="profile-pic">
                         {% if profile.photo %}
-                            <img class="profile-pic" src="{{ profile.photo.url }}" />
+                            <img class="profile-pic" src="{% thumbnail profile.photo '400x400' crop %}" />
                         {% else %}
                             <img class="profile-pic" src="{% static 'img/profile.png' %}" />
                         {% endif %}
@@ -40,11 +45,6 @@ Profile for {{ profile.user.username }}
                             <br/>
                         {% endif %}
                         </p>
-                        <div class="hidden-sm">
-                            <hr/>
-                            <h5>Skills</h5> 
-                            <span class="label label-info">Add Skills</span>
-                        </div>
 
                         <hr/>
                         {% if request.user == profile.user %}
@@ -55,6 +55,7 @@ Profile for {{ profile.user.username }}
             </div><!-- .panel -->
         </div><!--.col-lg-3 -->
         <div class="col-lg-9 col-12">
+            {% if profile.about %}
             <div class="panel">
                 <h5>About</h5>
                 <p class="lead">{{ profile.user.first_name }} wants {{ profile.about }}</p>
@@ -63,7 +64,8 @@ Profile for {{ profile.user.username }}
                     <span class="label label-info">Land Irrigation</span> <span class="label label-info">Urban Farming</span>
                     <span class="label label-info">Water Testing</span> <span class="label label-info">Community Organizing</span>
                 </div>
-            </div><!-- .panel -->
+             </div><!-- .panel -->
+             {% endif %}
             {% if request.user == profile.user %}
             <a class="btn btn-primary edit-profile-sm-devices margin-bottom-20" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
             {% endif %}
@@ -73,6 +75,68 @@ Profile for {{ profile.user.username }}
             </div>
         
             <ul class="list-group">
+                {% for idea in profile.user.idea_set.all %}
+                <li id="example-idea-select" class="list-group-item">
+                    <div class="media">
+                        <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
+                            <img class="media-object"  
+                                alt="64x64" 
+                                {% if idea.user.profile.photo %}
+                                src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
+                                {% else %}
+                                src="{% static 'img/profile.png' %}"
+                                {% endif %} 
+                                style="width: 64px; height: 64px;" />
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                {% if idea.user.first_name %}
+                                    {{ idea.user.profile.full_name }}
+                                {% else %}
+                                   {{ idea.user.username }}
+                                {% endif %}
+                                {% if idea.lots.all %}
+                                <small>on</small>
+                                {% for lot in idea.lots.all %}
+                                <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                                {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
+                                {% endfor %}
+                                {% endif %}
+                            </h4>
+                            {% if idea.title %}
+                            <h5>{{ idea.title }}</h5>
+                            {% endif %}
+                            <p>{{ idea.tagline }}</p>
+                            <h6>Via {{ idea.get_via_display }}
+                                {% if idea.get_via_display == "Twitter" %}
+                                <i class="icon-twitter"></i>
+                                {% elif idea.get_via_display == "Text" %}
+                                <i class="icon-mobile-phone"></i>
+                                {% elif idea.get_via_display == "Web" %}
+                                <i class="icon-globe"></i>
+                                {% elif idea.get_via_display == "Instagram" %}
+                                <i class="icon-instagram"></i>
+                                {% endif %}
+                                &nbsp;•&nbsp; Floated {{ idea.floated|ago }}
+                                {% if request.user.is_authenticated %}
+                                &nbsp;•&nbsp; {% phileo_widget request.user idea %}
+                                {% else %}
+                                <span class="phileo">
+                                    &nbsp;•&nbsp;
+                                    <a data-toggle="modal" data-target="#login-modal" href="#login-modal">
+                                        Like
+                                    </a>
+                                    &nbsp;•&nbsp;
+                                    <i class="{% if idea|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
+                                    <span class="count">
+                                        {{ idea|likes_count }}
+                                    </span>
+                                </span>
+                                {% endif %}
+                              </div>
+                            </div>
+                        </li>
+                {% endfor %}
                 <li class="list-group-item">
                  <div class="media">
                   <a class="pull-left profile-img" href="#">
@@ -87,22 +151,6 @@ Profile for {{ profile.user.username }}
                   </div>
                 </div>
                 </li>
-                {% for idea in profile.user.idea_set.all %}
-                <li class="list-group-item">
-                 <div class="media">
-                  <a class="pull-left profile-img" href="#">
-                    {% if profile.photo %}
-                    <img src={{ profile.photo.url }} style="height:64px; width:64px" />
-                    {% endif %}
-                  </a>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{ profile.full_name }}<small>{{ profile.user.username }}</small></h4>
-                    <p><a href="{{ idea.get_absolute_url }}">{{ idea.tagline }}</a></p>
-                    <h6>{{ idea.floated }} on <a href="{{ idea.lot.get_absolute_url }}">{{ idea.lot }}</a></h6>
-                  </div>
-                </div>
-                </li>
-                {% endfor %}
           
             </ul>
         </div>

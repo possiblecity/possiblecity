@@ -3,6 +3,8 @@
 {% load staticfiles %}
 {% load pagination_tags %}
 {% load phileo_tags %}
+{% load thumbnail %}
+
 {% load possiblecity_tags %}
 
 {% block head_title %}Ideas{% endblock head_title %}
@@ -45,11 +47,11 @@
                         {% for idea in ideas %}
                         <li id="example-idea-select" class="list-group-item">
                             <div class="media">
-                              <a class="pull-left profile-img" href="{% }}">
+                              <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
                                 <img class="media-object"  
                                 alt="64x64" 
                                 {% if idea.user.profile.photo %}
-                                src="{{ idea.user.profile.photo.url }}" 
+                                src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
                                 {% else %}
                                 src="{% static 'img/profile.png' %}"
                                 {% endif %} 
@@ -62,11 +64,13 @@
                                 {% else %}
                                    {{ idea.user.username }}
                                 {% endif %}
+                                {% if idea.lots.all %}
                                 <small>on</small>
                                 {% for lot in idea.lots.all %}
                                 <a href="{% url 'lotxlot_lot_detail' lot.id %}">
                                 {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
                                 {% endfor %}
+                                {% endif %}
                                 </h4>
                                 {% if idea.title %}
                                 <h5>{{ idea.title }}</h5>

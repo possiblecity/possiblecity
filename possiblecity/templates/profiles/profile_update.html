@@ -3,6 +3,9 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load floppyforms %}
+{% load thumbnail %}
+
+{% load possiblecity_tags %}
 
 {% block head_title %}
 Profile for {{ profile.user.username }}
@@ -14,61 +17,79 @@ Profile for {{ profile.user.username }}
 {% else %}
     <form method="POST" action="{% url 'profiles_profile_update' %}">
 {% endif %}
-    {% csrf_token %}
-    <aside class="col-lg-3 col-12">
-        <img
-        {% if profile.photo %}
-        src="{{ profile.photo.url }}"
-        {% else %}
-        src="{% static 'img/profile.png' %}"
-        {% endif %}
-        />
-        {{ form }}
-    </aside>
-    <section class="col-lg-9 col-12">
-        {% if profile.about %}
-        <h5>About</h5>
-        <p class="lead">{{ profile.user.first_name }} wants {{ profile.about }}</p>
-        {% endif %}
-        <div class="panel activity">
-            <div class="panel-heading">
-              <h5>Activity</h5>
+{% csrf_token %}
+{% form form using %}
+<header class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-12 margin-bottom-20">
+                    <h1>Edit Your Profile</small></h1>
+                </div>
             </div>
-            <ul class="list-group">
-                <li class="list-group-item">
-                 <div class="media">
-                  <a class="pull-left profile-img" href="#">
-                    {% if profile.photo %}
-                    <img src={{ profile.photo.url }} style="width:64px; height:64px" />
-                    {% endif %}
-                  </a>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{ profile.user.full_name }}<small>{{ profile.user.username }}</small></h4>
-                    <p>{{ profile.user.first_name }} joined Possible City.</p>
-                    <h6>{{ profile.user.date_joined }} . on </h6>
-                  </div>
-                </div>
-                </li>
-                {% for idea in profile.user.idea_set.all %}
-                <li class="list-group-item">
-                 <div class="media">
-                  <a class="pull-left profile-img" href="#">
-                    {% if profile.photo %}
-                    <img src={{ profile.photo.url }} style="height:64px; width:64px" />
-                    {% endif %}
-                  </a>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{ profile.full_name }}<small>{{ profile.user.username }}</small></h4>
-                    <p><a href="{{ idea.get_absolute_url }}">{{ idea.tagline }}</a></p>
-                    <h6>{{ idea.floated }} on <a href="{{ idea.lot.get_absolute_url }}">{{ idea.lot }}</a></h6>
-                  </div>
-                </div>
-                </li>
-                {% endfor %}
-          
-            </ul>
         </div>
-    </section> 
+</header>
+<div class="container profile">
+    <div class="row">
+        <div class="col-lg-3 col-12">
+            <div class="panel">
+                <div class="row margin-bottom-20">
+                    <div class="col-6 col-lg-12">
+                        <div class="profile-pic">
+                            <img class="profile-pic"
+                            {% if profile.photo %}
+                            src="{% thumbnail profile.photo '400x400' crop %}"
+                            {% else %}
+                            src="{% static 'img/profile.png' %}"
+                            {% endif %}
+                            />
+                        </div>
+                        <div class="col-6 col-lg-12">
+                            <div>
+                                <label for="id_photo">Edit Profile Photo:</label>
+                                    {% formfield form.photo %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="col-lg-9 col-12">
+            <div class="panel"> 
+                <h5>What do you want to create in your city?</h5>
+                <div class="input-group controls">
+                <span class="input-group-addon">I want to:</span>
+                    {% formfield form.about %}
+                </div>
+                {% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
+                <br>
+                 <small>Examples:</small>
+                    {% get_latest profiles.Profile 5 as latest_profiles %}
+                    <ul>
+                    {% for profile in latest_profiles %}
+                    {% if profile.about %}
+                        <li><small>
+                        {% if profile.first_name %}{{ profile.first_name }}{% else %}{{ profile.user }}{% endif %} wants to
+                        {{ profile.about }}</small></li>
+                        {% endif %}
+                    {% endfor %}  
+                    </ul>
+                    <hr>
+                    <div>
+                    {% formrow form.first_name using "floppyforms/rows/bootstrap.html" %}
+                    {% formrow form.last_name using "floppyforms/rows/bootstrap.html" %}
+                    {% formrow form.phone using "floppyforms/rows/bootstrap.html" %}
+                    {% formrow form.website using "floppyforms/rows/bootstrap.html" %}
+                    {% formrow form.twitter using "floppyforms/rows/bootstrap.html" %}
+                    {% formrow form.is_public using "floppyforms/rows/bootstrap.html" %}
+                    </div>
+                    <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">{% trans "Update your profile" %}</button>
+                    <a href="{{ profile.get_absolute_url}}" class="btn btn-default">Cancel</a>
+                </div>
+                </div>
+             </div>
+        </section> 
+ {% endform %}
 </form>
-    
+   
 {% endblock %}

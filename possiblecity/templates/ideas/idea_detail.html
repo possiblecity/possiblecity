@@ -25,11 +25,13 @@
             <div class="row margin-bottom-20">
                     <div class="col-6 col-lg-12">
                         <div class="profile-pic">
-                        {% if idea.user.profile.photo %}
-                            <img class="profile-pic" src="{{ idea.user.profile.photo.url }}" />
-                        {% else %}
-                            <img class="profile-pic" src="{% static 'img/profile.png' %}" />
-                        {% endif %}
+                            <a href="{% url 'profiles_profile_detail' idea.user.username %}">
+                            {% if idea.user.profile.photo %}
+                                <img class="profile-pic" src="{% thumbnail idea.user.profile.photo '400x400' crop %}" />
+                            {% else %}
+                                <img class="profile-pic" src="{% static 'img/profile.png' %}" />
+                            {% endif %}
+                            </a>
                         </div>
                     </div>
                     <div class="col-6 col-lg-12">
@@ -51,11 +53,6 @@
                             <br/>
                         {% endif %}
                         </p>
-                        <div class="hidden-sm">
-                            <hr/>
-                            <h5>Skills</h5> 
-                            <span class="label label-info">Add Skills</span>
-                        </div>
 
                         <hr/>
                         {% if request.user == idea.user.profile.user %}

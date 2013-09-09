@@ -33,10 +33,10 @@
                     <div class="col-lg-4">
                         {% if idea.get_lead_image %}
                         <a href="{{ idea.get_absolute_url }}">
-                        <img src="{% thumbnail idea.get_lead_image.file '300x300' crop %}">
+                        <img src="{% thumbnail idea.get_lead_image.file '400x400' crop %}">
                         </a>
                         {% endif %}
-                         {% if idea.title %}
+                        {% if idea.title %}
                         <h5>{{ idea.title }}</h5>
                         {% endif %}
                         <h4><i class="icon-map-marker"></i>
@@ -72,7 +72,7 @@
                                 <img class="media-object"  
                                 alt="{{ idea.user }}" 
                                 {% if idea.user.profile.photo %}
-                                src="{{ idea.user.profile.photo.url }}" 
+                                src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
                                 {% else %}
                                 src="{% static 'img/profile.png' %}"
                                 {% endif %} 

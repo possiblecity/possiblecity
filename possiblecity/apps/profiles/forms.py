@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 
 from .models import Profile
 
+
+class SimpleFilelInput(forms.ClearableFileInput):
+    template_name = 'floppyforms/widgets/image_button.html'
+
+class TwitterTextInput(forms.TextInput):
+    template_name = 'floppyforms/widgets/twitter.html'
+
 class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
@@ -12,12 +19,23 @@ class ProfileForm(forms.ModelForm):
         except User.DoesNotExist:
             pass
 
-    first_name = forms.CharField()
-    last_name = forms.CharField()
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'about', 'photo', 'phone', 'website', 'twitter', 'is_public')
+        widgets = {
+            'about': forms.Textarea(attrs={'rows': 2, 'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class':'form-control'}),
+            'last_name': forms.TextInput(attrs={'class':'form-control'}),
+            'phone': forms.TextInput(attrs={'class':'form-control'}),
+            'website': forms.URLInput(attrs={'class':'form-control'}),
+            'twitter': TwitterTextInput(),
+            'is_public': forms.CheckboxInput(attrs={'class':'form-control'}),
+            'photo': SimpleFilelInput(),
+        }
+        
 
     def save(self, *args, **kwargs):
         """

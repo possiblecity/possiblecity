@@ -6,6 +6,7 @@
 
 {% load floppyforms %}
 {% load phileo_tags %}
+{% load thumbnail %}
 
 {% load possiblecity_tags %}
 
@@ -13,9 +14,6 @@
 {% block body %}
     {% block sidebar %}
     <div class="sidebar ideas-lot-info-sidebar">
-        <div class="close-button pull-right">
-            <a href="#" type="button" class="close ">&times;</a>
-         </div>
         <header class="text-center">
             <h1>Featured Ideas</h1>
         </header>
@@ -29,27 +27,26 @@
                   <li class="list-group-item">
                   {% if idea.get_lead_image %}
                     <a href="{{ idea.get_absolute_url }}">
-                        <img src="{{ idea.get_lead_image.file.url }}">
+                        <img src="{% thumbnail idea.get_lead_image.file '400x400' crop %}">
                     </a>
                   {% endif %}
-                  <h6>
-                  Submitted by 
-                  {% if idea.user.first_name %}
-                    {{ idea.user.profile.full_name }}
-                  {% else %}
-                    {{ idea.user.username }}
-                  {% endif %}
-                  <small>on</small>
-                  {% for lot in idea.lots.all %}
-                  <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                    {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
-                  {% endfor %}
-                  <h6>
                   {% if idea.title %}
-                  <h5>{{ idea.title }}</h5>
-                  {% endif %}
-                  <h4>{{ idea.tagline }}</h4>
-                  <p>{{ idea.description_html|safe }}</p>
+                        <h5>{{ idea.title }}</h5>
+                        {% endif %}
+                        {% if idea.lots.all %}
+                        <h4><i class="icon-map-marker"></i>
+                        {% for lot in idea.lots.all %}
+                            <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                            {% if lot.address %}
+                            {{ lot.address }}
+                            {% else %}
+                            Lot #{{ lot.id }}
+                            {% endif %}
+                            </a>{% if not forloop.last %}, {% endif %} 
+                        {% endfor %}
+                        </h4>
+                        {% endif %}
+                        <p>{{ idea.tagline }}</p>
                 </li>
                 {% endfor %}
               </ul>
@@ -169,13 +166,13 @@
     function zoomToFeature(e) {
           var layer = e.target;
           center=(layer.getBounds().getCenter());
-          map.setView(center, 17, { animate: true });
+          map.setView(center, 16, { animate: true });
     }
 
     function zoomToMarker(e) {
           var marker = e.target;
           center=(marker.getLatLng());
-          map.setView(center, 17, { animate: true });
+          map.setView(center, 16, { animate: true });
     }
 
 

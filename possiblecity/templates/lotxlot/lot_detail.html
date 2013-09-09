@@ -6,13 +6,11 @@
 {% load floppyforms %}
 {% load phileo_tags %}
 {% load possiblecity_tags %}
+{% load thumbnail %}
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block sidebar %}
     <div class="sidebar ideas-lot-info-sidebar">
-        <div class="close-button pull-right">
-            <a href="#" type="button" class="close ">&times;</a>
-         </div>
         <header class="lot-id-header text-center">
             <h1>Lot #{{ lot.id }}</h1>
             <h2><i class="icon-map-marker"></i> {{ lot.address }}</h2>
@@ -176,7 +174,7 @@
 
           var content = '<center><h3>{{ lot.address }}</h3>' +
                         '<p><i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;Ownership:  </i> <strong>'  + ownership + '</strong></p>' +
-                        '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong>{{ lot.get_area }} sq. ft.</strong></p>' +
+                        '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong></p>' +
                         '<p><i class="icon-lightbulb icon-large"> &nbsp;&nbsp;Ideas:</i> <strong>{{ lot.idea_set.count }}</strong></p></center>';
 
           var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});

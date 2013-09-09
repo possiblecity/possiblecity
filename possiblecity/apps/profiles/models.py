@@ -28,5 +28,4 @@ class Profile(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        kwargs = {"username": self.user.username}
-        return reverse("profiles_profile_detail", kwargs=kwargs)
+        return ("profiles_profile_detail", (), {"username": self.user.username} )
