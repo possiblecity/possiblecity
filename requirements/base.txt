@@ -26,7 +26,7 @@ django-localflavor #localization add-ons
 
 easy-thumbnails
 django-taggit #tags
-django-user-accounts==1.0b14 #user authetication & accounts
+django-user-accounts==1.0b15 #user authetication & accounts
 django-social-auth==0.7.23 #social authentication
 metron==1.1 #analytics tools
 phileo
