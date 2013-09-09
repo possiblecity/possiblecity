@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class="modal fade" id="logout-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                        
+            <div class="modal-body">
+                          
+                <form method="POST" action="{% url "account_logout" %}" class="form-horizontal">
+                    <legend>{% trans "Log out" %}</legend>
+                    <fieldset>
+                        {% csrf_token %}
+                        <p>{% trans "Are you sure you want to log out?" %}</p>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">{% trans "Log out" %}</button>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,30 @@
+<div class="modal fade" id="login-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                        
+            <div class="modal-body">
+                          
+                <div>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <center style="padding:30px 0">
+                    <p>
+                        <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-facebook icon-large">&nbsp;&nbsp;Sign in with Facebook</i></a>
+                    </p>
+                    <hr>
+                    <p>
+                        <a href="{% url "socialauth_begin" "twitter" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-twitter icon-large">  Sign in with <strong>Twitter</strong></i></a>
+                    </p>
+
+                    <hr>
+                    <p>
+                        <a href="{% url "account_login" %}" target="_top" class="btn btn-default">
+                        <i class="icon-envelope">  Sign In with Email</i></a>
+                    </p>
+                </center>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
