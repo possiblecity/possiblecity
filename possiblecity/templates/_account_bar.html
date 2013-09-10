@@ -30,10 +30,10 @@
                 </ul>
             </li>
         {% else %}
-            <li><a data-toggle="modal" data-target="#login-modal" href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
+            <li><a data-toggle="modal" data-target="#login-modal" href="#login-modal">{% trans "Log in" %}</a></li>
             {% if ACCOUNT_OPEN_SIGNUP %}
             <li>
-                <a data-toggle="modal" data-target="#signup-modal" href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></li>
+                <a data-toggle="modal" data-target="#signup-modal" href="#signup-modal">{% trans "Sign up" %}</a></li>
             {% endif %}
         {% endif %}
     </ul>

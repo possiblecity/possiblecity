@@ -61,9 +61,13 @@
              {% endblock navbar_base %}
 	     {% block body_base %}
 	     <section>
+                {% block messages %}
          	{% include "_messages.html" %}
+                {% endblock messages %}
+                <div class="content">
                 {% block body %}
             	{% endblock body %}
+                </div>
 	     </section>
 	     {% endblock body_base %}
          {% block footer_base %}
