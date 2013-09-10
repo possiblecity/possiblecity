@@ -236,14 +236,13 @@ SOCIAL_AUTH_ASSOCIATE_BY_MAIL = False
 SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 SOCIAL_AUTH_PIPELINE = [
     "libs.pipeline.prevent_duplicates",
-    
     "social_auth.backends.pipeline.social.social_auth_user",
     "social_auth.backends.pipeline.user.get_username",
     "social_auth.backends.pipeline.user.create_user",
     "social_auth.backends.pipeline.social.associate_user",
     "social_auth.backends.pipeline.social.load_extra_data",
     "social_auth.backends.pipeline.user.update_user_details",
-    
+    "libs.pipeline.get_user_avatar"  
 ]
 
 TWITTER_CONSUMER_KEY = os.environ.get("TWITTER_CONSUMER_KEY", "")
@@ -258,13 +257,11 @@ FACEBOOK_EXTENDED_PERMISSIONS = [
 FACEBOOK_EXTRA_DATA = [
     ("first_name", "first_name"),
     ("last_name", "last_name"),
-    ("picture", "photo"),
 ]
 
 TWITTER_EXTRA_DATA = [
     ("name", "name"),
     ("screen_name", "screen_name"),
-    ("profile_image_url", "photo"),
 ]
 
 

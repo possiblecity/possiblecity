@@ -24,7 +24,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'about', 'photo', 'phone', 'website', 'twitter', 'is_public')
+        fields = ('first_name', 'last_name', 'about', 'photo', 'phone', 'website', 'twitter')
         widgets = {
             'about': forms.Textarea(attrs={'rows': 2, 'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class':'form-control'}),
@@ -32,7 +32,6 @@ class ProfileForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Not publicly displayed'}),
             'website': forms.URLInput(attrs={'class':'form-control', 'placeholder': 'Include http://'}),
             'twitter': TwitterTextInput(),
-            'is_public': forms.CheckboxInput(attrs={'class':'form-control'}),
             'photo': SimpleFilelInput(),
         }
         
