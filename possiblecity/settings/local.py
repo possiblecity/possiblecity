@@ -16,19 +16,7 @@ DEBUG = True
 # Email Configuration
 #==============================================================================
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.webfaction.com')
-
-EMAIL_HOST_PASSWORD = environ.get('DJANGO_EMAIL_PASSWORD', '')
-
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', 'possiblecity')
-
-EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
-
-SERVER_EMAIL = 'info@possiblecity.co'
-
-DEFAULT_FROM_EMAIL = 'info@possiblecity.co'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #==============================================================================
 # Caching

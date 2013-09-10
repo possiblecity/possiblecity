@@ -1,8 +1,18 @@
 # settings/production.py
 
-from os import environ
+import os
+
+from django.core.exceptions import ImproperlyConfigured
 
 from base import *
+
+def get_env_variable(var_name):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = msg % var_name
+        raise ImproperlyConfigured(error_msg)
+
 
 #==============================================================================
 # Site
@@ -18,25 +28,25 @@ ALLOWED_HOSTS = ['possiblecity.co', 'www.possiblecity.co', 'smtp.webfaction.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-EMAIL_HOST = environ.get('DJANGO_EMAIL_HOST', 'smtp.webfaction.com')
+EMAIL_HOST = 'smtp.webfaction.com'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-password
-EMAIL_HOST_PASSWORD = environ.get('DJANGO_EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_PASSWORD = get_env_variable('DJANGO_EMAIL_HOST_PASSWORD')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-user
-EMAIL_HOST_USER = environ.get('DJANGO_EMAIL_HOST_USER', 'possiblecity')
+EMAIL_HOST_USER = 'possiblecity'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-EMAIL_PORT = environ.get('DJANGO_EMAIL_PORT', '587')
+EMAIL_PORT = '587'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-EMAIL_USE_TLS = environ.get('DJANGO_EMAIL_USE_TLS', 'True')
+EMAIL_USE_TLS = 'True'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
 EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-SERVER_EMAIL = 'info@possiblecity.co'
+SERVER_EMAIL = 'admin@possiblecity.co'
 
 DEFAULT_FROM_EMAIL = 'info@possiblecity.co'
 
