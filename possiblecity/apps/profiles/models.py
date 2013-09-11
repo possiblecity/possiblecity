@@ -8,13 +8,17 @@ from localflavor.us.models import PhoneNumberField
 class Profile(models.Model):
     
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    about = models.CharField(max_length=140)
+    about = models.CharField(max_length=140, blank=True)
     photo = models.ImageField(upload_to='images/profiles', blank=True, null=True)
     phone = PhoneNumberField(blank=True)
     website = models.URLField(blank=True)
     twitter = models.CharField(max_length=100, blank=True)
 
     is_public = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('-id',)    
+
 
     @property
     def full_name(self):

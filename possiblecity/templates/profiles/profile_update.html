@@ -23,7 +23,7 @@ Profile for {{ profile.user.username }}
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-12 margin-bottom-20">
-                    <h1>Edit Your Profile</small></h1>
+                    <h1>Edit Your Profile</h1>
                 </div>
             </div>
         </div>
@@ -68,9 +68,9 @@ Profile for {{ profile.user.username }}
                     {% for profile in latest_profiles %}
                     {% if profile.about %}
                         <li><small>
-                        {% if profile.first_name %}{{ profile.first_name }}{% else %}{{ profile.user }}{% endif %} wants to
+                        {% if profile.user.first_name %}{{ profile.user.first_name }}{% else %}{{ profile.user }}{% endif %} wants to
                         {{ profile.about }}</small></li>
-                        {% endif %}
+                    {% endif %}
                     {% endfor %}  
                     </ul>
                     <hr>

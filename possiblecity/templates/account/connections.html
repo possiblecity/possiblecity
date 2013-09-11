@@ -22,8 +22,12 @@
             
             <p>
                 {% if social_auth.twitter %}
-                    <a class="btn btn-default" 
-                    href="{% url "socialauth_disconnect" "twitter" %}?next={% url "account_social_connections"%}">Disconnect Twitter</a>
+                <span class="disconnect">
+                <form action="{% url "socialauth_disconnect" "twitter" %}" method="post">
+                   {% csrf_token %}
+                   <button type="submit" class="btn btn-default">Disconnect Twitter</button>
+                </form>
+                </span>
                 {% else %}
                     <a class="btn btn-primary" 
                     href="{% url "socialauth_begin" "twitter" %}?next={% url "account_social_connections" %}">Connect Twitter</a>
@@ -36,8 +40,12 @@
             
             <p>
                 {% if social_auth.facebook %}
-                    <a class="btn btn-default" 
-                    href="{% url "socialauth_disconnect" "facebook" %}?next={% url "account_social_connections" %}">Disconnect Facebook</a>
+                <span class="disconnect">
+                    <form action="{% url "socialauth_disconnect" "facebook" %}" method="post">
+                         {% csrf_token %}
+                         <button type="submit" class="btn btn-default">Disconnect Facebook</button>
+                    </form>
+                </span>
                 {% else %}
                     <a class="btn btn-primary" 
                     href="{% url "socialauth_begin" "facebook" %}?next={% url "account_social_connections" %}">

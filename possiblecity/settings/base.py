@@ -235,6 +235,8 @@ LOGIN_REDIRECT_URL = reverse_lazy('profiles_profile_login')
 LOGIN_ERROR_URL = "/account/social/connections/"
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = False
 SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/account/social/connections'
+
 SOCIAL_AUTH_PIPELINE = [
     "libs.pipeline.prevent_duplicates",
     
