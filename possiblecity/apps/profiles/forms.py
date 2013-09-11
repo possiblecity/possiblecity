@@ -5,7 +5,7 @@ from .models import Profile
 
 
 class SimpleFilelInput(forms.ClearableFileInput):
-    template_name = 'floppyforms/widgets/image_button.html'
+    template_name = 'floppyforms/widgets/bootstrap_file.html'
 
 class TwitterTextInput(forms.TextInput):
     template_name = 'floppyforms/widgets/twitter.html'
