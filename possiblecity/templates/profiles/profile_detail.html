@@ -141,11 +141,11 @@ Profile for {{ profile.user.username }}
                   </a>
                   <div class="media-body">
                     <h4 class="media-heading">
-                                {% if idea.user.first_name %}
-                                    {{ profile.full_name }}
-                                {% else %}
-                                   {{ profile.user.username }}
-                                {% endif %}
+                        {% if profile.user.first_name %}
+                            {{ profile.full_name }}
+                        {% else %}
+                            {{ profile.user.username }}
+                        {% endif %}
                      </h4>
                     <p>{% if profile.user.first_name %}
                             {{ profile.full_name}}

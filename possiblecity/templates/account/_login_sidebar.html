@@ -3,16 +3,16 @@
 	<h5>Don't have an account?</h5>
 	<hr>
 	<p>
-        <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-facebook icon-large">&nbsp;&nbsp;Sign up with <strong>Facebook</strong></i></a>
+        <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-facebook icon-large"></i> &nbsp;&nbsp;Sign up with <strong>Facebook</strong></a>
     </p>
     
      <p>
-    	<a href="{% url "socialauth_begin" "twitter" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-twitter icon-large">  Sign up with <strong>Twitter</strong></i></a>
+    	<a href="{% url "socialauth_begin" "twitter" %}?next={{ request.path }}" target="_top" class="btn btn-primary"><i class="icon-twitter icon-large">  </i>Sign up with <strong>Twitter</strong></a>
      </p>
 
      
        <p>
          <a href="{% url "account_signup" %}" target="_top" class="btn btn-default">
-           <i class="icon-envelope">  Sign up with Email</i></a>
+           <i class="icon-envelope">  </i>Sign up with Email</a>
        </p>
  </div>
