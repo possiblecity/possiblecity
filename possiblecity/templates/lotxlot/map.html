@@ -131,11 +131,11 @@
                 }
 
                 var html = '<center><h3>' + properties.address + '</h3>' +
-                        '<p><i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;Ownership:  </i> <strong>'  + ownership + '</strong></p>' +
-                        '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong> sq. ft.</strong></p>' +
-                        '<p><i class="icon-lightbulb icon-large"> &nbsp;&nbsp;Ideas:</i> <strong></strong></p>' +
+                        '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong> sq. ft.</strong>' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;ideas' +
                         '<p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
-                           '" class="btn btn-default">View/Add Ideas</a><center>';
+                           '" class="btn btn-default">View/Add Ideas</a></p><center>';
                 return html;
             }
        });
