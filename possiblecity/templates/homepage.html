@@ -42,7 +42,7 @@
                     {% if idea.lots.all %}
                     <h4>
                     {% for lot in idea.lots.all %}
-                    <i class="icon-map-marker">{{ lot.address }}</i>{% if not forloop.last %}, {% endif %}
+                    <i class="icon-map-marker"> {{ lot.address }}</i>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                     </h4>
                     {% endif %}
