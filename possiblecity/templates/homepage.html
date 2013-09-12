@@ -39,16 +39,14 @@
                  </a>
                   <div class="carousel-caption">
                     <h3>{{ idea.title }}</h3>
-                    <p>{{ idea.tagline }}</p>
                     {% if idea.lots.all %}
-                    <p>
+                    <h4>
                     {% for lot in idea.lots.all %}
-                    <strong class="icon-map-marker">
-                       {{ lot.address }}
-                        </strong>{% if not forloop.last %}, {% endif %}
+                    <i class="icon-map-marker">{{ lot.address }}</i>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
-                    </p>
+                    </h4>
                     {% endif %}
+                    <p>{{ idea.tagline }}</p>
                   </div>
                 </div>
                 {% endfor %}
