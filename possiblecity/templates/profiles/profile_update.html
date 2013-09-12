@@ -57,22 +57,24 @@ Profile for {{ profile.user.username }}
             <div class="panel"> 
                 <div class="form-group">
                     {% formrow form.about using "floppyforms/rows/about.html" %}
-                    <p class="pull-right"><span id="chars">140 characters max</span></p>
+                    <p class="pull-right" style="font-style:normal; font-weight:bold; color:#999"><span id="chars">140 characters max</span> characters left</p>
                 </div>
                 <br />
-                 <small>Examples:</small>
+                <div style="color: #999">
+                Recently posted:
                     {% get_latest profiles.Profile 5 as latest_profiles %}
                     <ul>
                     {% for profile in latest_profiles %}
                     {% if profile.about %}
-                        <li><small>
+                        <li>
                         {% if profile.user.first_name %}{{ profile.user.first_name }}{% else %}{{ profile.user }}{% endif %} wants to
-                        {{ profile.about }}</small></li>
+                        {{ profile.about }}</li>
                     {% endif %}
                     {% endfor %}  
                     </ul>
+                 </div>
                     <hr>
-                    <div>
+                    <div class="margin-bottom-20">
                     {% formrow form.first_name using "floppyforms/rows/bootstrap.html" %}
                     {% formrow form.last_name using "floppyforms/rows/bootstrap.html" %}
                     {% formrow form.phone using "floppyforms/rows/bootstrap.html" %}
@@ -114,6 +116,7 @@ Profile for {{ profile.user.username }}
     });
 })(jQuery);
 
+var elem = $("#chars");
 $("#id_about").limiter(140, elem);
 </script>
 {% endblock extra_body %}
