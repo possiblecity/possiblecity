@@ -35,18 +35,19 @@
                           {% else %}
                             {{ idea.get_absolute_url }}
                           {% endif %}">
-                  <img src="{% thumbnail idea.get_lead_image.file '1170x490' crop %}" alt="{{ idea.title }}">
+                  <img src="{% thumbnail idea.get_lead_image.file '1170x490' crop upscale quality=100  %}" alt="{{ idea.title }}">
                  </a>
                   <div class="carousel-caption">
                     <h3>{{ idea.title }}</h3>
                     <p>{{ idea.tagline }}</p>
                     {% if idea.lots.all %}
+                    <p>
                     {% for lot in idea.lots.all %}
-                    <p><strong class="icon-map-marker">
+                    <strong class="icon-map-marker">
                        {{ lot.address }}
                         </strong>{% if not forloop.last %}, {% endif %}
-                    </p>
                     {% endfor %}
+                    </p>
                     {% endif %}
                   </div>
                 </div>
