@@ -120,8 +120,6 @@
                             </span>
                             {% endif %}
                           </h6>
-                          
-                           <p>&nbsp;&nbsp;
                       </div>
                     </div>
                   </li>
@@ -132,15 +130,15 @@
             <div class="tab-pane fade" id="info">
              <div class="lot-info-table"> 
                <table class="table">
-                  <thead>
-                    
-                  </thead>
-                  
                   <tbody>
                   <tr>
                     <tr>
                       <th>Ownership:</th>
                       <td>{% if lot.is_public %}Public{% else %}Private{% endif %}</td>
+                    </tr>
+                    <tr>
+                      <th>Status:</th>
+                      <td>Vacant (unverified)</td>
                     </tr>
                     <th>Neighborhood:</th>
                     <td>{{ lot.profile.neighborhood }}</td>
@@ -149,6 +147,15 @@
                     <th>Size:</th>
                     <td>{{ lot.get_sqft|floatformat:0 }} sq. ft. ({{ lot.get_acres|floatformat:2 }} acres)</td>
                   </tr>
+                  <tr>
+                    <th>Basereg #:</th>
+                    <td>{{ lot.profile.basereg }}</td>
+                  </tr>
+                  <tr>
+                    <th>OPA #:</th>
+                    <td>{{ lot.profile.opa_code }}</td>
+                  </tr>
+
                  </tbody>
                 </table>
                 </div><!--/lot-info -->
