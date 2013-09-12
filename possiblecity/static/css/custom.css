@@ -234,27 +234,25 @@ body.lotxlot .navbar-nav > .nav-map a, body.ideas .navbar-nav > .nav-ideas a, bo
 /* Homepage */
 
 .homepage-intro {
-	width: 67%; 
 	position:absolute; top:0px; 
-	left:40px; 
-	color: white; 
-	font-size:18px; 
-	text-shadow: 0 2px 4px 
-	rgba(0, 0, 0, 0.9);
+	left:10px; 
+	color: white;
+	background: transparent; 
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+	border: none;
 }
 
-.homepage-intro > h1 {
-	font-size: 4em;
-	font-weight: 600;
+.jumbotron h1 {
+	font-size: 63px;
 }
 
-.homepage-intro > h2 {
-	font-size: 2.5em;
-	font-weight: 600;
+.jumbotron h2 {
+	margin:0;
+	padding:0;
 }
 
 #featured-idea-slideshow {
-	border-radius: 12px; 
+	border-radius: 6px; 
 	overflow: hidden;
 	margin-bottom: 20px;
 }
