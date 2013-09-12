@@ -55,13 +55,9 @@ Profile for {{ profile.user.username }}
         </div>
         <section class="col-lg-9 col-12">
             <div class="panel"> 
-                <h5>What do you want to create in your city?</h5>
-                <div class="input-group controls">
-                <span class="input-group-addon">I want to:</span>
-                    {% formfield form.about %}
-                </div>
-                {% block errors %}{% include "floppyforms/errors.html" with errors=field.errors %}{% endblock %}
-                <br>
+                <div class="form-group">
+                    {% formrow form.about using "floppyforms/rows/about.html" %}
+                 </div>
                  <small>Examples:</small>
                     {% get_latest profiles.Profile 5 as latest_profiles %}
                     <ul>

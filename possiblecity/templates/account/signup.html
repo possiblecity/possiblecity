@@ -14,7 +14,7 @@
 
         <div class="col-lg-9 col-12">
             <div class="panel">
-                <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" class="form-horizontal"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                <form id="signup_form" method="post" action="{% url "account_signup" %}" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
                     <legend>{% trans "Sign up" %}</legend>
                     <fieldset>
                         {% csrf_token %}
