@@ -15,89 +15,97 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-12">
-            <div class="jumbotron hero-image-homepage">
-                <h1>Possible City</h1>
-                <p>Reimagining Philadelphia's vacant lots</p>
-               <!-- <p>Possible City is a platform that maps and 
-                  connects vacant lots to the people with the ideas, skills, 
-                  and collective resources to turn forgotten spaces into productive places.</p>-->
-            </div>
+            {% get_latest_featured ideas.Idea 3 as featured_ideas %}
+            <div id="featured-idea-slideshow" class="carousel slide">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                {% for idea in featured_ideas %}
+                <li data-target="#featured_idea_slideshow" data-slide-to="{{ forloop.counter }}"></li>
+                {% endfor %}
+              </ol>
 
-        </div>
-    </div>
-
-    <div class="panel">
-        <div class="row ">
-            <div class="col-lg-12 col-12">
-                <h2>Vacant Lot Possibilities</h2>
-                <div class="row margin-bottom-20">
-                    {% get_latest_featured ideas.Idea 3 as featured_ideas %}
-                    {% for idea in featured_ideas %}
-                    <div class="col-lg-4">
-                        {% if idea.get_lead_image %}
-                        <a href="{{ idea.get_absolute_url }}">
-                        <img src="{% thumbnail idea.get_lead_image.file '400x400' crop %}">
-                        </a>
-                        {% endif %}
-                        {% if idea.title %}
-                        <h5>{{ idea.title }}</h5>
-                        {% endif %}
-                        <h4><i class="icon-map-marker"></i>
-                        {% for lot in idea.lots.all %}
-                            <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                            {% if lot.address %}
-                            {{ lot.address }}
-                            {% else %}
-                            Lot #{{ lot.id }}
-                            {% endif %}
-                            </a>{% if not forloop.last %}, {% endif %} 
-                        {% endfor %}
-                        </h4>
-                        <p>{{ idea.tagline }}</p>
-                    </div>
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+                {% for idea in featured_ideas %}
+                <div class="item {% if forloop.first %}active{% endif %}">
+                 <a href="{% if idea.lots.all %}
+                           {% with idea.lots.all|first as lot %}
+                            {% url 'lotxlot_lot_detail' lot.id %}#idea-{{ idea.id }}
+                           {% endwith %}
+                          {% else %}
+                            {{ idea.get_absolute_url }}
+                          {% endif %}">
+                  <img src="{% thumbnail idea.get_lead_image.file '1170x490' crop %}" alt="{{ idea.title }}">
+                 </a>
+                  <div class="carousel-caption">
+                    <h3>{{ idea.title }}</h3>
+                    <p>{{ idea.tagline }}</p>
+                    {% if idea.lots.all %}
+                    {% for lot in idea.lots.all %}
+                    <p><strong class="icon-map-marker">
+                       {{ lot.address }}
+                        </strong>{% if not forloop.last %}, {% endif %}
+                    </p>
                     {% endfor %}
+                    {% endif %}
+                  </div>
                 </div>
+                {% endfor %}
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#featured-idea-slideshow" data-slide="prev">
+                <span class="icon-prev"></span>
+              </a>
+              <a class="right carousel-control" href="#featured-idea-slideshow" data-slide="next">
+                <span class="icon-next"></span>
+              </a>
             </div>
+
+
+            <div class="homepage-intro">
+                <h1>Possible City</h1>
+                <h2>Reimagining Philadelphia's vacant lots</h2>
+            </div>
+
         </div>
     </div>
-    
     <div class="panel latest-ideas">
         <div class="row ">
             <div class="col-lg-12 col-12">
                 <h2>Latest Ideas</h2>
+                {% get_latest ideas.Idea 6 as latest_ideas %}
+                {% for idea in latest_ideas %}
+                {% if forloop.first or forloop.counter|divisibleby:"4" %}
                 <div class="row margin-bottom-20">
-                    {% get_latest ideas.Idea 4 as latest_ideas %}
-                    {% for idea in latest_ideas %}
-                    <div class="col-lg-6">
-                        <div class="row">  
+                {% endif %} 
+                    <div class="col-lg-4">
+                        <div class="row">
                             <div class="col-lg-4">
                                 <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
-                                <img class="media-object"  
-                                alt="{{ idea.user }}" 
-                                {% if idea.user.profile.photo %}
-                                src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
-                                {% else %}
-                                src="{% static 'img/profile.png' %}"
-                                {% endif %} 
-                                />
-                              </a>
+                                    <img class="media-object"  
+                                        alt="{{ idea.user }}" 
+                                        {% if idea.user.profile.photo %}
+                                        src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
+                                        {% else %}
+                                        src="{% static 'img/profile.png' %}"
+                                        {% endif %} 
+                                    />
+                                </a>
                             </div>
                             <div class="col-lg-8">
                                 <h4 class="media-heading">
-                                {% if idea.user.first_name %}
-                                    {{ idea.user.profile.full_name }}
-                                {% else %}
-                                   {{ idea.user.username }}
-                                {% endif %}
-                                <small>on</small>
-                                {% for lot in idea.lots.all %}
-                                <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                                {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
-                                {% endfor %}
+                                    {% if idea.user.first_name %}
+                                        {{ idea.user.profile.full_name }}
+                                    {% else %}
+                                        {{ idea.user.username }}
+                                    {% endif %}
+                                    <small>on</small>
+                                    {% for lot in idea.lots.all %}
+                                    <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                                        {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
+                                        {% endfor %}
                                 </h4>
-                                 {% if idea.title %}
-                                 <h5>{{ idea.title }}</h5>
-                                {% endif %}
                                 <p>{{ idea.tagline }}</p>
                                 <h6>Via {{ idea.get_via_display }}
                                     {% if idea.get_via_display == "Twitter" %}
@@ -109,28 +117,30 @@
                                     {% elif idea.get_via_display == "Instagram" %}
                                     <i class="icon-instagram"></i>
                                     {% endif %}
-                                    &nbsp;•&nbsp; Floated {{ idea.floated|ago }}
+                                    &nbsp;•&nbsp; {{ idea.floated|ago }}
                                     {% if request.user.is_authenticated %}
                                     &nbsp;•&nbsp; {% phileo_widget request.user idea %}
                                     {% else %}
                                     <span class="phileo">
-                                          &nbsp;•&nbsp;
+                                        &nbsp;•&nbsp;
                                         <a data-toggle="modal" data-target="#login-modal" href="#login-modal">
                                              Like
                                         </a>
                                         &nbsp;•&nbsp;
                                         <i class="{% if idea|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
-                                             <span class="count">
-                                             {{ idea|likes_count }}
-                                             </span>
+                                        <span class="count">
+                                            {{ idea|likes_count }}
+                                        </span>
                                     </span>
                                     {% endif %}
+                                </h6> 
                             </div>
-                            
                         </div>
                     </div>
-                    {% endfor %}
+                {% if forloop.counter|divisibleby:"3" %}
                 </div>
+                {% endif %} 
+                {% endfor %}
             </div>
         </div>
     </div>

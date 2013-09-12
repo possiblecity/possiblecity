@@ -63,7 +63,7 @@
                     </div>
                   </li>
                   {% for idea in lot.idea_set.all %}
-                  <li class="list-group-item">
+                  <li class="list-group-item" id="idea-{{ idea.id }}">
                     <div class="media">
                       <a class="pull-left profile-img" href="{{ idea.user.profile.get_absolute_url }}">
                         <img class="media-object"  
@@ -77,12 +77,18 @@
                       </a>
                       <div class="media-body">
                         <h4 class="media-heading">
+                        <i class="icon-comment-alt"></i>&nbsp;
                         {% if idea.user.first_name %}
                             {{ idea.user.profile.full_name }}
                         {% else %}
                            {{ idea.user.username }}
                         {% endif %}
                         </h4>
+                        {% if idea.get_lead_image %}
+                        <a href="{{ idea.get_absolute_url }}">
+                        <img src="{% thumbnail idea.get_lead_image.file '300x125' crop %}" alt="{{ idea.title }}" />
+                        </a>
+                        {% endif %}
                         {% if idea.title %}
                         <h5>{{ idea.title }}</h5>
                         {% endif %}
@@ -97,7 +103,7 @@
                             {% elif idea.get_via_display == "Instagram" %}
                             <i class="icon-instagram"></i>
                             {% endif %}
-                            &nbsp;•&nbsp; Floated {{ idea.floated|ago }}
+                            &nbsp;•&nbsp; {{ idea.floated|ago }}
                             {% if request.user.is_authenticated %}
                                 &nbsp;•&nbsp; {% phileo_widget request.user idea %}
                             {% else %}

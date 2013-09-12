@@ -233,22 +233,30 @@ body.lotxlot .navbar-nav > .nav-map a, body.ideas .navbar-nav > .nav-ideas a, bo
 /***************************************************************************/
 /* Homepage */
 
-.hero-image-homepage {
-	background: #000000 url(../img/hero-image-homepage.png);
-	height: 500px;
-	color: #ffffff;
+.homepage-intro {
+	width: 67%; 
+	position:absolute; top:0px; 
+	left:40px; 
+	color: white; 
+	font-size:18px; 
+	text-shadow: 0 2px 4px 
+	rgba(0, 0, 0, 0.9);
 }
 
-.hero-image-homepage p {
-	font-size: 35px;
+.homepage-intro > h1 {
+	font-size: 4em;
 	font-weight: 600;
 }
 
-.quotation-icon {
-	width: 30px;
-	height: 15px;
-	float: left;
-	padding-right: 10px;
+.homepage-intro > h2 {
+	font-size: 2.5em;
+	font-weight: 600;
+}
+
+#featured-idea-slideshow {
+	border-radius: 12px; 
+	overflow: hidden;
+	margin-bottom: 20px;
 }
 
 /***************************************************************************/
