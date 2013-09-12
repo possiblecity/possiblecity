@@ -20,7 +20,7 @@
               <!-- Indicators -->
               <ol class="carousel-indicators">
                 {% for idea in featured_ideas %}
-                <li data-target="#featured_idea_slideshow" data-slide-to="{{ forloop.counter }}"></li>
+                <li class="{% if forloop.first %}active{% endif %}" data-target="#featured_idea_slideshow" data-slide-to="{{ forloop.counter }}"></li>
                 {% endfor %}
               </ol>
 
