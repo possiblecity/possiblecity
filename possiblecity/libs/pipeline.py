@@ -37,25 +37,26 @@ def import_friends(backend, uid, user=None, *args, **kwargs):
 def get_user_avatar(backend, details, response, social_user, uid,\
                 user, *args, **kwargs):
 
-    try:
-        url = None
-        if getattr(backend, 'name', None) == 'facebook':
-            url = "http://graph.facebook.com/%s/picture?width=400&height=400" % response['id']
+    url = None
+    if getattr(backend, 'name', None) == 'facebook':
+        url = "http://graph.facebook.com/%s/picture?type=large" % response['id']
 
-        elif getattr(backend, 'name', None) == 'twitter':
-            url = response.get('profile_image_url', '')
+    elif getattr(backend, 'name', None) == 'twitter':
+        url = response.get('profile_image_url', '').replace('_normal', '')
 
-        if url:
-            social_user.extra_data['photo'] = url
-            social_user.save()
-            avatar = requests.get(url)
-            profile = Profile.get_or_create(user=user)
+    if url:
+        backend = getattr(backend, 'name', None)
+        social_user.extra_data['photo'] = url
+        social_user.save()
 
-            filename = "%s_%s.jpg" % ('file', 'name')
+def update_user_profile(user, social_user, uid, backend, *args, **kwargs):
+    profile = Profile.objects.get(user=user)
+    url = social_user.extra_data['photo']
+    avatar = requests.get(url)
+    filename = "%s_%s.jpg" % (user.username, getattr(backend, 'name', None))
+    profile.photo.save(filename, ContentFile(avatar.content))
+    profile.save()
 
-            profile.photo.save(filename, ContentFile(avatar.content))          
-            profile.save()
-    
-    except:
-        pass
+
+
         

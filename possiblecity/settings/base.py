@@ -245,7 +245,8 @@ SOCIAL_AUTH_PIPELINE = [
     "social_auth.backends.pipeline.social.associate_user",
     "social_auth.backends.pipeline.social.load_extra_data",
     "social_auth.backends.pipeline.user.update_user_details",
-    "libs.pipeline.get_user_avatar"  
+    "libs.pipeline.get_user_avatar",
+    "libs.pipeline.update_user_profile"
 ]
 
 TWITTER_CONSUMER_KEY = os.environ.get("TWITTER_CONSUMER_KEY", "")

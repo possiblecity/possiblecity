@@ -21,7 +21,7 @@ Profile for {{ profile.user.username }}
                     <div class="col-6 col-lg-12">
                         <div class="profile-pic">
                         {% if profile.photo %}
-                            <img class="profile-pic" src="{% thumbnail profile.photo '400x400' crop %}" />
+                            <img class="profile-pic" src="{% thumbnail profile.photo '400x400' crop upscale %}" />
                         {% else %}
                             <img class="profile-pic" src="{% static 'img/profile.png' %}" />
                         {% endif %}
@@ -77,9 +77,10 @@ Profile for {{ profile.user.username }}
                             <img class="media-object"  
                                 alt="{{ idea.user.username }}" 
                                 {% if idea.user.profile.photo %}
-                                src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" 
+                                src="{% thumbnail idea.user.profile.photo '64x64' crop upscale %}" 
                                 {% else %}
                                 src="{% static 'img/profile.png' %}"
+                                width="64" height="64"
                                 {% endif %} 
                                 />
                         </a>
@@ -133,17 +134,18 @@ Profile for {{ profile.user.username }}
                         </li>
                 {% endfor %}
                 <li class="list-group-item">
-                 <div class="media">
-                  <a class="pull-left profile-img" href="#">
-                    <img class="media-object"  
+                    <div class="media">
+                        <a class="pull-left profile-img" href="#">
+                            <img class="media-object"  
                                 alt="{{ idea.user.username }}" 
                                 {% if profile.photo %}
-                                src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" 
+                                src="{% thumbnail profile.photo '64x64' crop upscale %}" 
                                 {% else %}
                                 src="{% static 'img/profile.png' %}"
+                                width="64" height="64"
                                 {% endif %} 
                                 />
-                  </a>
+                    </a>
                   <div class="media-body">
                     <h4 class="media-heading">
                         {% if profile.user.first_name %}
