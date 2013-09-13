@@ -50,15 +50,13 @@ def get_user_avatar(backend, details, response, social_user, uid,\
         social_user.save()
 
 def update_user_profile(user, social_user, uid, backend, *args, **kwargs):
-    if user.is_new:
-        profile = Profile.objects.get(user=user)
+    profile = Profile.objects.get(user=user)
+    if not profile.photo:
         url = social_user.extra_data['photo']
         avatar = requests.get(url)
         filename = "%s_%s.jpg" % (user.username, getattr(backend, 'name', None))
         profile.photo.save(filename, ContentFile(avatar.content))
         profile.save()
-    else:
-        pass
 
 
 
