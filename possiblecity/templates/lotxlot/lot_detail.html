@@ -199,3 +199,10 @@
 
 </script>
 {% endblock extra_map_js %}
+{% block extra_body %}
+<script type="text/javascript" src="{% static 'js/limiter.js' %}"> </script>
+<script>
+var elem = $("#chars");
+$("#id_about").limiter(140, elem);
+</script>
+{% endblock extra_body %}

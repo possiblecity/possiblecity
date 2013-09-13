@@ -75,13 +75,13 @@ Profile for {{ profile.user.username }}
                     <div class="media">
                         <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
                             <img class="media-object"  
-                                alt="64x64" 
+                                alt="{{ idea.user.username }}" 
                                 {% if idea.user.profile.photo %}
-                                src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
+                                src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" 
                                 {% else %}
                                 src="{% static 'img/profile.png' %}"
                                 {% endif %} 
-                                style="width: 64px; height: 64px;" />
+                                />
                         </a>
                         <div class="media-body">
                             <h4 class="media-heading">
@@ -135,9 +135,14 @@ Profile for {{ profile.user.username }}
                 <li class="list-group-item">
                  <div class="media">
                   <a class="pull-left profile-img" href="#">
-                    {% if profile.photo %}
-                    <img src={{ profile.photo.url }} style="width:64px; height:64px" />
-                    {% endif %}
+                    <img class="media-object"  
+                                alt="{{ idea.user.username }}" 
+                                {% if profile.photo %}
+                                src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" 
+                                {% else %}
+                                src="{% static 'img/profile.png' %}"
+                                {% endif %} 
+                                />
                   </a>
                   <div class="media-body">
                     <h4 class="media-heading">
