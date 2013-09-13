@@ -1,9 +1,15 @@
+import requests
+
 from django.shortcuts import redirect
 
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
+from django.template.defaultfilters import slugify
 
 from social_auth.models import UserSocialAuth
+
+from apps.profiles.models import Profile
 
 from .tasks import ProcessSocialNetwork
 
@@ -26,3 +32,30 @@ def prevent_duplicates(backend, uid, user=None, *args, **kwargs):
 
 def import_friends(backend, uid, user=None, *args, **kwargs):
     ProcessSocialNetwork.delay(user_pk=user.pk, provider=backend.name)
+
+
+def get_user_avatar(backend, details, response, social_user, uid,\
+                user, *args, **kwargs):
+
+    try:
+        url = None
+        if getattr(backend, 'name', None) == 'facebook':
+            url = "http://graph.facebook.com/%s/picture?width=400&height=400" % response['id']
+
+        elif getattr(backend, 'name', None) == 'twitter':
+            url = response.get('profile_image_url', '')
+
+        if url:
+            social_user.extra_data['photo'] = url
+            social_user.save()
+            avatar = requests.get(url)
+            profile = Profile.get_or_create(user=user)
+
+            filename = "%s_%s.jpg" % ('file', 'name')
+
+            profile.photo.save(filename, ContentFile(avatar.content))          
+            profile.save()
+    
+    except:
+        pass
+        
