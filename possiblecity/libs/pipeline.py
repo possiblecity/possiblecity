@@ -57,6 +57,8 @@ def update_user_profile(user, social_user, uid, backend, *args, **kwargs):
         filename = "%s_%s.jpg" % (user.username, getattr(backend, 'name', None))
         profile.photo.save(filename, ContentFile(avatar.content))
         profile.save()
+    else:
+        pass
 
 
 
