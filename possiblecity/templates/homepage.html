@@ -37,7 +37,7 @@
                           {% endif %}">
                   <img src="{% thumbnail idea.get_lead_image.file '1170x490' crop upscale quality=100  %}" alt="{{ idea.title }}">
                  </a>
-                  <div class="carousel-caption">
+                  <div class="carousel-caption hidden-xs">
                     <h3>{{ idea.title }}</h3>
                     {% if idea.lots.all %}
                     <h4>
@@ -46,7 +46,7 @@
                     {% endfor %}
                     </h4>
                     {% endif %}
-                    <p class="hidden-xs">{{ idea.tagline }}</p>
+                    <p>{{ idea.tagline }}</p>
                   </div>
                 </div>
                 {% endfor %}

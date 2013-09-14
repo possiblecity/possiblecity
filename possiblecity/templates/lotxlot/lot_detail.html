@@ -186,9 +186,9 @@
           var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
           var content = '<center><h3>{{ lot.address }}</h3>' +
-                        '<p><i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;Ownership:  </i> <strong>'  + ownership + '</strong></p>' +
-                        '<p><i class="icon-resize-full icon-large "> &nbsp;&nbsp;Size:</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong></p>' +
-                        '<p><i class="icon-lightbulb icon-large"> &nbsp;&nbsp;Ideas:</i> <strong>{{ lot.idea_set.count }}</strong></p></center>';
+                        '<i class="icon-large ' + ownership_icon + '">&nbsp;&nbsp;</i> <strong>'  + ownership + '</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '<i class="icon-resize-full icon-large "> &nbsp;&nbsp;</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '<i class="icon-lightbulb icon-large"> &nbsp;&nbsp;</i> <strong>{{ lot.idea_set.count }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;</center>';
 
           var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
 
