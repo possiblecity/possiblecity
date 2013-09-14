@@ -227,6 +227,10 @@ body.lotxlot .navbar-nav > .nav-map a, body.ideas .navbar-nav > .nav-ideas a, bo
 	background-color: #BEE0EA;
 }
 
+.navbar-toggle .icon-bar {
+	background:#ccc;
+}
+
 
 
 
