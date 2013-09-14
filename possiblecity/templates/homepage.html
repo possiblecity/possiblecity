@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-lg-12 col-12">
             {% get_latest_featured ideas.Idea 5 as featured_ideas %}
-            <div id="featured-idea-slideshow" class="carousel slide hidden-xs">
+            <div id="featured-idea-slideshow" class="carousel slide">
               <!-- Indicators -->
               <ol class="carousel-indicators">
                 {% for idea in featured_ideas %}
@@ -70,17 +70,17 @@
         </div>
     </div>
     <div class="panel latest-ideas">
-        <div class="row ">
+        <div class="row">
             <div class="col-lg-12 col-12">
-                <h2>Latest Ideas</h2>
+                <h2 class="margin-bottom-20">Latest Ideas</h2>
                 {% get_latest ideas.Idea 6 as latest_ideas %}
                 {% for idea in latest_ideas %}
                 {% if forloop.first or forloop.counter|divisibleby:"4" %}
-                <div class="row margin-bottom-20">
+                <div class="row">
                 {% endif %} 
-                    <div class="col-lg-4">
-                        <div class="row">
-                            <div class="col-lg-4">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="row margin-bottom-20">
+                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3">
                                 <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
                                     <img class="media-object"  
                                         alt="{{ idea.user }}" 
@@ -92,7 +92,7 @@
                                     />
                                 </a>
                             </div>
-                            <div class="col-lg-8">
+                            <div class="col-lg-8 col-md-8 col-sm-9 col-xs-9">
                                 <h4 class="media-heading">
                                     {% if idea.user.first_name %}
                                         {{ idea.user.profile.full_name }}
