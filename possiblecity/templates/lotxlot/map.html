@@ -38,16 +38,6 @@
                         <h5>{{ idea.title }}</h5>
                     {% endif %}
                         <h4>
-                        {% if idea.user.first_name %}
-                           <small>by</small>
-                           <a href="{{ idea.user.profile.get_absolute_url}}">
-                            {{ idea.user.profile.full_name }}
-                           </a>
-                        {% else %}
-                            {{ idea.user.username }}
-                        {% endif %}
-                        {% if idea.lots.all %}
-                            <small>on</small>
                             {% for lot in idea.lots.all %}
                             <i class="icon-map-marker"></i>
                             <a href="{% url 'lotxlot_lot_detail' lot.id %}">
@@ -57,6 +47,17 @@
                         </h4>
             
                         <p>{{ idea.tagline }}</p>
+                        <p>Floated by {% if idea.user.first_name %}
+                           <a href="{{ idea.user.profile.get_absolute_url}}">
+                            {{ idea.user.profile.full_name }}
+                           </a>
+                        {% else %}
+                          <a href="{{ idea.user.profile.get_absolute_url}}">
+                            {{ idea.user.username }}
+                          </a>
+                        {% endif %}
+                        {% if idea.lots.all %}
+                            <small>on</small>
                         <h6>Via {{ idea.get_via_display }}
                             {% if idea.get_via_display == "Twitter" %}
                             <i class="icon-twitter"></i>
@@ -67,7 +68,7 @@
                             {% elif idea.get_via_display == "Instagram" %}
                             <i class="icon-instagram"></i>
                             {% endif %}
-                            &nbsp;•&nbsp; Floated {{ idea.floated|ago }}
+                            &nbsp;•&nbsp; {{ idea.floated|ago }}
                             {% if request.user.is_authenticated %}
                             &nbsp;•&nbsp; {% phileo_widget request.user idea %}
                             {% else %}
