@@ -168,9 +168,11 @@
 
                 var html = '<center><h3>' + properties.address + '</h3>' +
                         '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong> sq. ft.</strong>' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;ideas' +
-                        '<p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong>' +
+                        properties.size.toFixed(0) + ' sq. ft.</strong>' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;<strong>' +
+                        properties.idea_count +
+                        '</strong><p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
                            '" class="btn btn-default">View/Add Ideas</a></p><center>';
                 return html;
             }

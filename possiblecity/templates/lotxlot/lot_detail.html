@@ -185,7 +185,7 @@
           var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
           var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
-          var content = '<center><h3>{{ lot.address }}</h3>' +
+          var content = '<center><h3><i class="icon-map-marker"></i> {{ lot.address }}</h3>' +
                         '<i class="icon-large ' + ownership_icon + '">&nbsp;</i> <strong>'  + ownership + '</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
                         '<i class="icon-resize-full icon-large ">&nbsp;</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
                         '<i class="icon-lightbulb icon-large">&nbsp;</i> <strong>{{ lot.idea_set.count }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;</center>';
