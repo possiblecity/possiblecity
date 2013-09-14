@@ -26,14 +26,14 @@
                   {% for idea in featured_ideas %}
                   <li class="list-group-item">
                   <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-4">
                       {% if idea.get_lead_image %}
                         <a href="{{ idea.get_absolute_url }}">
                         <img src="{% thumbnail idea.get_lead_image.file '400x400' crop %}">
                         </a>
                         {% endif %}
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-8">
                     {% if idea.title %}
                         <h5>{{ idea.title }}</h5>
                     {% endif %}
@@ -46,7 +46,8 @@
                         </h4>
             
                         <p>{{ idea.tagline }}</p>
-                        <p>Floated by {% if idea.user.first_name %}
+                      
+                        <h6>Floated by {% if idea.user.first_name %}
                            <a href="{{ idea.user.profile.get_absolute_url}}">
                             {{ idea.user.profile.full_name }}
                            </a>
@@ -55,9 +56,8 @@
                             {{ idea.user.username }}
                           </a>
                         {% endif %}
-                        {% if idea.lots.all %}
-                            <small>on</small>
-                        <h6>Via {{ idea.get_via_display }}
+                        &nbsp;•&nbsp; {{ idea.floated|ago }}
+                        &nbsp;•&nbsp; via {{ idea.get_via_display }}
                             {% if idea.get_via_display == "Twitter" %}
                             <i class="icon-twitter"></i>
                             {% elif idea.get_via_display == "Text" %}
@@ -67,7 +67,6 @@
                             {% elif idea.get_via_display == "Instagram" %}
                             <i class="icon-instagram"></i>
                             {% endif %}
-                            &nbsp;•&nbsp; {{ idea.floated|ago }}
                             {% if request.user.is_authenticated %}
                             &nbsp;•&nbsp; {% phileo_widget request.user idea %}
                             {% else %}
