@@ -9,13 +9,12 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
-from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, PublicLotApiViewSet, PrivateLotApiViewSet
+from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet
 from apps.philadelphia.views import NeighborhoodApiViewSet
 
 router = routers.DefaultRouter()
-router.register(r'lots/vacant', LotApiViewSet, base_name='api-lot')
-router.register(r'lots/public', PublicLotApiViewSet, base_name='api-public-lot')
-router.register(r'lots/private', PrivateLotApiViewSet, base_name='api-private-lot')
+router.register(r'lots/vacant/polys', LotApiViewSet, base_name='api-lot')
+router.register(r'lots/vacant/points', LotPointApiViewSet, base_name='api-lot-point')
 router.register(r'lots/ideas', LotIdeaApiViewSet, base_name='api-lot-idea')
 router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name='api-neighborhood')
 

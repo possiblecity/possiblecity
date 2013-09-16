@@ -41,24 +41,36 @@
 
     // Prep the background tile layer
     var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-t3op9nm9/{z}/{x}/{y}.png';
+
+    var gridTileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.vacant_lots/{z}/{x}/{y}.png';
+    var gridSmTileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.vacant_lots_sm/{z}/{x}/{y}.png';
+
     var tileAttribution = 'Data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors, Design &copy; MapBox';
+
     var streets = L.tileLayer(tileUrl, {
         attribution: tileAttribution,
-    });
+        minZoom: 11,
+        maxZoom: 20
+    }).addTo(map);
+
+     var grid = L.tileLayer(gridTileUrl, {
+        attribution: tileAttribution,
+        minZoom: 11,
+        maxZoom: 13
+    }).addTo(map);
+
 
     var satellite = new L.BingLayer("AkMn2LxPfhhzZYlWu_HlNh_ZZ4q0oySIz9_PEDJ5G9gxydOak7EyQ6HUyOScx04f");
 
 
     // Set the center on Philadelphia
-    var offset = new L.LatLng(39.96, -75.08)
+    var offset = new L.LatLng(39.97, -75.11)
     var philadelphia = new L.LatLng(39.9522, -75.1642);
     
     {% block map_setview %}
     map.setView(offset, 12);
     {% endblock map_setview %}
 
-
-    map.addLayer(streets);
 
     var emptyMarkerStyle = {
         opacity: 0,
@@ -71,6 +83,14 @@
         "opacity": 1.0,
         "weight": 2,
         "color":"#68C4EA",
+    };
+
+    var pinkStyle = {
+        "fillColor":"#cd00cd",
+        "fillOpacity": 0.0,
+        "opacity": 1.0,
+        "weight": 2,
+        "color":"#cd00cd",
     };
 
     var yellowStyle = {

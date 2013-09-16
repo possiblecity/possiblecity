@@ -117,6 +117,9 @@ class PrivateLotApiViewSet(LotApiViewSet):
            is_visible=True).filter(
            is_public=False).prefetch_related('idea_set')
 
+class LotPointApiViewSet(LotApiViewSet):
+    serializer_class = LotPointSerializer
+    
     
 class LotIdeaApiViewSet(viewsets.ReadOnlyModelViewSet):
     """

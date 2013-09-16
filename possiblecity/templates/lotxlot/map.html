@@ -101,7 +101,7 @@
    var neighborhoods = L.geoJson.ajax(
       '{% url "api-neighborhood-list" %}?format=json', {
         onEachFeature: onEachNeighborhood,
-        style: blueStyle,
+        style: pinkStyle,
       }).addTo(map);
 
     var ideas = L.geoJson.ajax(
@@ -122,7 +122,7 @@
       var vacant_lots = new lvector.Custom({
             map: map,
             url: "{% url 'api-lot-list' %}",            
-            scaleRange: [15, 20],
+            scaleRange: [16, 20],
             showAll: false,
             singlePopup: true,
             symbology : {
@@ -177,8 +177,6 @@
                 return html;
             }
        });
-
-
    
  
     function onEachNeighborhood(feature, layer) {
@@ -202,19 +200,25 @@
     }
 
     function zoomToFeature(e) {
+          map.removeLayer(grid);
           var layer = e.target;
           center=(layer.getBounds().getCenter());
-          map.setView(center, 16, { animate: true });
+          map.setView(center, 17, { animate: true });
     }
 
     function zoomToMarker(e) {
+          map.removeLayer(grid);
           var marker = e.target;
           center=(marker.getLatLng());
-          map.setView(center, 16, { animate: true });
+          map.setView(center, 17, { animate: true });
     }
 
 
-    function onZoomend(){
+    function onZoomend() {
+       if (map.getZoom()>=13) {
+          map.addLayer(neighborhoods);
+       }
+
        if (map.getZoom()>=16) {
            map.removeLayer(neighborhoods);
        };
@@ -232,13 +236,12 @@
        };
 
        if (map.getZoom()>=19) {
-           map.removeLayer(streets);
-           map.addLayer(satellite);
+           //map.removeLayer(streets);
+           //map.addLayer(satellite);
        }
 
-       if (map.getZoom()<19) {
-           map.addLayer(streets);
-           map.removeLayer(satellite);
+       if (map.getZoom()<14) {
+           map.addLayer(grid);
        }
     }   
 
