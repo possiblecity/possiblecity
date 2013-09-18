@@ -73,7 +73,7 @@ Profile for {{ profile.user.username }}
                 {% for idea in profile.user.idea_set.all %}
                 <li id="example-idea-select" class="list-group-item">
                     <div class="media">
-                        <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
+                        <span class="pull-left profile-img"">
                             <img class="media-object"  
                                 alt="{{ idea.user.username }}" 
                                 {% if idea.user.profile.photo %}
@@ -83,7 +83,7 @@ Profile for {{ profile.user.username }}
                                 width="64" height="64"
                                 {% endif %} 
                                 />
-                        </a>
+                        </span>
                         <div class="media-body">
                             <h4 class="media-heading">
                                 {% if idea.user.first_name %}
@@ -135,7 +135,7 @@ Profile for {{ profile.user.username }}
                 {% endfor %}
                 <li class="list-group-item">
                     <div class="media">
-                        <a class="pull-left profile-img" href="#">
+                        <span class="pull-left profile-img">
                             <img class="media-object"  
                                 alt="{{ idea.user.username }}" 
                                 {% if profile.photo %}
@@ -145,7 +145,7 @@ Profile for {{ profile.user.username }}
                                 width="64" height="64"
                                 {% endif %} 
                                 />
-                    </a>
+                    </span>
                   <div class="media-body">
                     <h4 class="media-heading">
                         {% if profile.user.first_name %}
