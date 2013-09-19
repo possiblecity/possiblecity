@@ -28,7 +28,7 @@
                   <li class="list-group-item">
                     <div class="media">
                      {% if request.user.is_authenticated %}
-                      <a class="pull-left profile-img" href="{{ request.user.profile.get_absolute_url }}">
+                      <span class="pull-left profile-img" >
                       <img class="media-object"  
                            {% if request.user.profile.photo %}
                            src="{{ request.user.profile.photo.url }}"
@@ -37,7 +37,7 @@
                            {% endif %}
                            alt="{{ request.user }}" 
                            style="width: 64px; height: 64px;" />
-                      </a>
+                      </span>
                       {% else %}
                       <span class="pull-left profile-img">
                       <img class="media-object"
@@ -64,8 +64,12 @@
                   </li>
                   {% for idea in lot.idea_set.all %}
                   <li class="list-group-item" id="idea-{{ idea.id }}">
-                    <div class="media">
+                    <div class="media"> 
+                    {% if idea.user.profile.is_public %}
                       <a class="pull-left profile-img" href="{{ idea.user.profile.get_absolute_url }}">
+                    {% else %}
+                      <span class="pull-left profile-img">
+                    {% endif %}                    
                         <img class="media-object"  
                         alt="{{ idea.user }}" 
                         {% if idea.user.profile.photo %}
@@ -74,7 +78,11 @@
                         src="{% static 'img/profile.png' %}"
                         {% endif %} 
                         style="width: 64px; height: 64px;" />
+                    {% if idea.user.profile.is_public %}
                       </a>
+                    {% else %}
+                      </span>
+                    {% endif %}
                       <div class="media-body">
                         <h4 class="media-heading">
                         <i class="icon-comment-alt"></i>&nbsp;

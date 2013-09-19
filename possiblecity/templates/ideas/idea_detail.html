@@ -25,13 +25,17 @@
             <div class="row margin-bottom-20">
                     <div class="col-6 col-lg-12">
                         <div class="profile-pic">
+                            {% if idea.user.profile.is_public %}
                             <a href="{% url 'profiles_profile_detail' idea.user.username %}">
+                            {% endif %}
                             {% if idea.user.profile.photo %}
                                 <img class="profile-pic" src="{% thumbnail idea.user.profile.photo '400x400' crop %}" />
                             {% else %}
                                 <img class="profile-pic" src="{% static 'img/profile.png' %}" />
                             {% endif %}
+                            {% if idea.user.profile.is_public %}
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-6 col-lg-12">
