@@ -314,7 +314,6 @@ THIRD_PARTY_APPS = (
     'rest_framework_gis',
     
     'floppyforms',
-    'django_forms_bootstrap', # template form tools
     'django_js_reverse' # javascript url tools
 )
 
