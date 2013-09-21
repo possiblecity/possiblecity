@@ -59,6 +59,7 @@ urlpatterns = patterns('',
 
     # places
     url(r'^lots/', include('apps.lotxlot.urls')),
+    url(r'^lotxlot/', RedirectView.as_view(url='/lots/')),
 
 
     # js urls

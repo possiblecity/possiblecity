@@ -47,8 +47,12 @@
                         {% for idea in ideas %}
                         <li id="example-idea-select" class="list-group-item">
                             <div class="media">
+                              {% if idea.user.profile.is_public %}
                               <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
-                                <img class="media-object"  
+                              {% else %}
+                              <span class="pull-left profile-img">
+                              {% endif %}  
+                              <img class="media-object"  
                                 alt="64x64" 
                                 {% if idea.user.profile.photo %}
                                 src="{% thumbnail idea.user.profile.photo '400x400' crop %}" 
@@ -56,7 +60,11 @@
                                 src="{% static 'img/profile.png' %}"
                                 {% endif %} 
                                 style="width: 64px; height: 64px;" />
-                              </a>
+                             {% if idea.user.profile.is_public %}
+                             </a>
+                             {% else %}
+                             </span>
+                             {% endif %}
                               <div class="media-body">
                                 <h4 class="media-heading">
                                 {% if idea.user.first_name %}
