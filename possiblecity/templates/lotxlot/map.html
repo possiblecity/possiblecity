@@ -90,18 +90,18 @@
           </div>
         </div>
     {% endblock sidebar %}
+  </div>
 {% endblock body %}
 
 {% block map_js %}
 <script>
    
-    map.fire('dataloading');
-
+  map.fire('dataloading');
     
    var neighborhoods = L.geoJson.ajax(
       '{% url "api-neighborhood-list" %}?format=json', {
         onEachFeature: onEachNeighborhood,
-        style: pinkStyle,
+        style: neighborhoodStyle,
       }).addTo(map);
 
     var ideas = L.geoJson.ajax(
@@ -114,7 +114,7 @@
            var labelIcon = L.divIcon({className: 'idea-label', html: labelText,  iconSize:null});
            //var lot = {% if lot.id %}{{ lot.id }}{% else %}0{% endif %}
            //if (feature.properties.id != lot) {
-             return L.marker(latlng, {riseOnHover: true, icon: labelIcon});
+           return L.marker(latlng, {riseOnHover: true, icon: labelIcon});
            //};
         },
       })
@@ -189,14 +189,30 @@
                        '&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i> ' + 
                        feature.properties.idea_count + '</strong>';
        var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
+       //var marker = L.marker(center);
        var marker = L.marker(center, {riseOnHover: true, icon: labelIcon});
-       neighborhoods.addLayer(marker);
+       var label = layer.bindLabel(labelText).addTo(map);
+       //neighborhoods.addLayer(marker);
+       (function(layer, properties) {
+       
+         layer.on("mouseover", function (e) {
+           layer.setStyle(highlightStyle);
+           //neighborhoods.addLayer(marker);
+         });
+         
+         layer.on("mouseout", function (e) {
+           layer.setStyle(neighborhoodStyle); 
+           //neighborhoods.removeLayer(marker);
+         });
+
+       })(layer, feature.properties);
+       
        layer.on({
           click: zoomToFeature
         });
-       marker.on({
-          click:zoomToMarker
-       });
+       //marker.on({
+          //click:zoomToMarker
+       //});
     }
 
     function zoomToFeature(e) {
