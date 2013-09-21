@@ -31,6 +31,10 @@ upper_kensington = 'upper_kensington/upper_kensington_pwd_parcels.shp'
 west_kensington = 'west_kensington/west_kensington_pwd_parcels.shp'
 east_kensington = 'east_kensington/east_kensington_pwd_parcels.shp'
 fairhill = 'fairhill/fairhill_pwd_parcels.shp'
+brewerytown = 'brewerytown/brewerytown_pwd_parcels.shp'
+hunting_park = 'hunting_park/hunting_park_pwd_parcels.shp'
+harrowgate = 'harrowgate/harrowgate_pwd_parcels.shp'
+strawberry_mansion = 'strawberry_mansion/strawberry_mansion_pwd_parcels.shp'
 
 
 def _get_filepath(file):
