@@ -36,8 +36,8 @@ def fetch_json(url, params, timeout=300):
     Source should be a valid REST url.
     """
     cache_key = url + "?" + urlencode(params)
-    if len(cache_key) > 250:
-        cache_key = cache_key[:250]
+    if len(cache_key) > 200:
+        cache_key = cache_key[:200]
     cached = cache.get(cache_key)
     content = ""
     
@@ -45,8 +45,8 @@ def fetch_json(url, params, timeout=300):
         data = requests.get(url, params=params)
         if (data.ok):
             cache_key = str(data.url)
-            if len(cache_key) > 250:
-                cache_key = cache_key[:250]
+            if len(cache_key) > 200:
+                cache_key = cache_key[:200]
             cache.set(cache_key, data.text, timeout)
             content = data.text
         else:
