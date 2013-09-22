@@ -7,7 +7,6 @@ import requests
 from geopy import geocoders
 from urllib import urlencode
 
-from django.config import settings
 from django.contrib.gis.geos import Point
 from django.core.cache import cache
 
