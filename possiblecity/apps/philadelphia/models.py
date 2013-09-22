@@ -53,10 +53,13 @@ class LotProfile(models.Model):
     neighborhood = models.ForeignKey(Neighborhood, null=True, blank=True)
 
     def get_neighborhood(self):
-        pnt = self.pwd_parcel.point_on_surface
-        qs = Neighborhood.objects.filter(bounds__contains=pnt)
-        return qs[0]
-
+        try:
+            pnt = self.pwd_parcel.point_on_surface
+            qs = Neighborhood.objects.filter(bounds__contains=pnt)
+            return qs[0]
+        except:
+            pass
+            
     def __unicode__(self):
         return u'%s' % self.lot
 
