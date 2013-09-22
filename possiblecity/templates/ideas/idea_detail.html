@@ -29,7 +29,7 @@
                             <a href="{% url 'profiles_profile_detail' idea.user.username %}">
                             {% endif %}
                             {% if idea.user.profile.photo %}
-                                <img class="profile-pic" src="{% thumbnail idea.user.profile.photo '400x400' crop %}" />
+                                <img class="profile-pic" src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
                             {% else %}
                                 <img class="profile-pic" src="{% static 'img/profile.png' %}" />
                             {% endif %}
@@ -64,38 +64,10 @@
                         {% endif %}
 
                         <h5>Liked by</h5>
-                        {% who_likes idea as idea_likes %}
                         <div class="row">
+                        {% who_likes idea as idea_likes %}
                         {% for like in idea_likes %}
-                            <div class="col-lg-6">
-                            {{ like.user }}
-                            {% if like.user.profile.is_public %}
-                                <a href="{% url 'profiles_profile_detail' like.user.username %}"
-                                {% if like.user.first_name %}
-                                   title="{{ like.user.profile.full_name }}"
-                                {% else %}
-                                   title="{{ like.user.username }}"
-                                {% endif %}
-                                 >
-                            {% endif %}
-                                <img class="media-object"  
-                               {% if like.user.profile.photo %}
-                               src="{% thumbnail like.user.profile.photo '100x100' crop upscale %}}"
-                               {% else %}
-                               src="{% static 'img/profile.png' %}"
-                               {% endif %}
-                               {% if like.user.first_name %}
-                               alt="{{ like.user.profile.full_name }}" 
-                               title="{{ like.user.profile.full_name }}"
-                               {% else %}
-                               alt="{{ like.user.username }}" 
-                               title="{{ like.user.username }}"
-                               {% endif %}
-                            />
-                            {% if like.user.profile.is_public %}
-                                </a>
-                            {% endif %}
-                            </div>
+                            <div class="col-lg-6">{% render_like like %}</div>
                         {% endfor %}
                         </div>
                     </div>

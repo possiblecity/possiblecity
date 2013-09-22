@@ -1,0 +1,26 @@
+
+{% load staticfiles %}
+{% load thumbnail %}
+
+<div class="profile-pic">
+{% if user.profile.is_public %}
+	<a href="{% url 'profiles_profile_detail' user.username %}">
+{% endif %}
+	 <img class="profile-pic"
+	 {% if user.profile.photo %}
+    	  src="{% thumbnail user.profile.photo '200x200' crop upscale %}"
+	 {% else %}
+          src="{% static 'img/profile.png' %}"
+	 {% endif %}
+	 {% if user.first_name %}
+    	  alt="{{ user.profile.full_name }}"
+    	  title="{{ user.profile.full_name }}"
+	 {% else %}
+         alt="{{ user.username }}"
+    	 title="{{ user.username }}"
+	 {% endif %}
+	 >
+{% if user.profile.is_public %}
+    </a>
+{% endif %}
+</div>
