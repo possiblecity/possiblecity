@@ -58,8 +58,8 @@ class LotProfile(models.Model):
             qs = Neighborhood.objects.filter(bounds__contains=pnt)
             return qs[0]
         except:
-            pass
-            
+            return ''
+
     def __unicode__(self):
         return u'%s' % self.lot
 
@@ -78,9 +78,13 @@ def lot_profile_post_save(sender, **kwargs):
     # if this is a new instance of parcel, 
     # create and populate the related Lot
     if created:
+        try:
+            coord = lot_profile.pwd_parcel.point_on_surface
+        except:
+            coord = None
         lot = Lot(address=lot_profile.address.title(),
             bounds=lot_profile.pwd_parcel, 
-            coord=lot_profile.pwd_parcel.point_on_surface,
+            coord=coord,
             city='Philadelphia', state='PA', country='US',)
         lot.save()
         lot_profile.lot = lot
