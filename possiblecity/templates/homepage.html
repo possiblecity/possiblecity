@@ -27,7 +27,7 @@
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
                 {% for idea in featured_ideas %}
-                <div class="item {% if forloop.first %}active{% endif %}">
+                <div id="{{ forloop.counter }}" class="item {% if forloop.first %}active{% endif %}">
                  <a href="{% if idea.lots.all %}
                            {% with idea.lots.all|first as lot %}
                             {% url 'lotxlot_lot_detail' lot.id %}#idea-{{ idea.id }}

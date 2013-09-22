@@ -64,12 +64,16 @@
                         {% endif %}
 
                         <h5>Liked by</h5>
-                        <div class="row">
                         {% who_likes idea as idea_likes %}
                         {% for like in idea_likes %}
-                            <div class="col-lg-6">{% render_like like %}</div>
+                            {% if forloop.first or forloop.counter|divisibleby:"3" %}
+                            <div class="row">
+                            {% endif %} 
+                                <div class="col-lg-6">{% render_like like %}</div>
+                             {% if forloop.counter|divisibleby:"2" %}
+                            </div>
+                            {% endif %} 
                         {% endfor %}
-                        </div>
                     </div>
                 </div>
         </div>

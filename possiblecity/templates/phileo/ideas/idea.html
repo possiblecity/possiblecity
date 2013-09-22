@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% load thumbnail %}
 
-<div class="profile-pic">
 {% if user.profile.is_public %}
 	<a href="{% url 'profiles_profile_detail' user.username %}">
 {% endif %}
@@ -23,4 +22,3 @@
 {% if user.profile.is_public %}
     </a>
 {% endif %}
-</div>
