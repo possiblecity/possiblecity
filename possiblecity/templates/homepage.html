@@ -81,9 +81,11 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <div class="row margin-bottom-20">
                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3">
-                                {% if idea.user.profile.is_public %}
+                            {% if idea.user.profile.is_public %}
                                 <a class="pull-left profile-img" href="{% url 'profiles_profile_detail' idea.user.username %}">
-                                {% endif %}
+                            {% else %}
+                                <span class="pull-left profile-img">
+                            {% endif %}   
                                 <img class="media-object"  
                                         alt="{{ idea.user }}" 
                                         {% if idea.user.profile.photo %}
@@ -92,9 +94,11 @@
                                         src="{% static 'img/profile.png' %}"
                                         {% endif %} 
                                     />
-                                {% if idea.user.profile.is_public %}
+                            {% if idea.user.profile.is_public %}
                                 </a>
-                                {% endif %}
+                            {% else %}
+                                </span>
+                            {% endif %}
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-9 col-xs-9">
                                 <h4 class="media-heading">
