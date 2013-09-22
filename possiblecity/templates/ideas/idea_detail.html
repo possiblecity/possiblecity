@@ -68,6 +68,7 @@
                         <div class="row">
                         {% for like in idea_likes %}
                             <div class="col-lg-6">
+                            {{ like.user }}
                             {% if like.user.profile.is_public %}
                                 <a href="{% url 'profiles_profile_detail' like.user.username %}"
                                 {% if like.user.first_name %}
@@ -79,7 +80,7 @@
                             {% endif %}
                                 <img class="media-object"  
                                {% if like.user.profile.photo %}
-                               src="{% thumbnail idea.user.profile.photo '100x100' crop upscale %}}"
+                               src="{% thumbnail like.user.profile.photo '100x100' crop upscale %}}"
                                {% else %}
                                src="{% static 'img/profile.png' %}"
                                {% endif %}
