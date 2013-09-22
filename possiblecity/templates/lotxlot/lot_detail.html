@@ -136,6 +136,7 @@
             </div>
             <div class="tab-pane fade" id="info">
              <div class="lot-info-table"> 
+             <img src="http://maps.googleapis.com/maps/api/streetview?size=500x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false">
                <table class="table">
                   <tbody>
                     <tr>
@@ -177,7 +178,7 @@
 
                  </tbody>
                 </table>
-                <p>Is there an error in our data? <a href="mailto:data@possiblecity.co?subject={{ lot.id }} - {{ lot.address }}">Let us know!</a>
+                <p>Is there an error in our data? <a href="mailto:data@possiblecity.co?subject={{ lot.id }} - {{ lot.address }}">Let us know!</a></p>
                 </div><!--/lot-info -->
           </div><!-- /#sidebar-tabs-content -->
           </div>

@@ -1,7 +1,7 @@
 # lotxlot/utils.py
 import gc
 import json
-import md5
+import hashlib
 import requests
 
 from geopy import geocoders
