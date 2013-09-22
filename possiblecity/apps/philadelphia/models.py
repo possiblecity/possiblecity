@@ -74,7 +74,7 @@ class LotProfile(models.Model):
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"OWNER1, OWNER2, BLDG_CODE, BLDG_DESC, IMPERV_AREA ", "f":"json"}
 
-        data =  fetch_json(source, params)
+        data =  fetch_json(source, params, 604800)
 
         if "features" in data:
             features = data["features"]

@@ -7,6 +7,7 @@ import requests
 from geopy import geocoders
 from urllib import urlencode
 
+from django.config import settings
 from django.contrib.gis.geos import Point
 from django.core.cache import cache
 
@@ -29,7 +30,7 @@ def geocode_address(address):
 
     return point
 
-def fetch_json(url, params):
+def fetch_json(url, params, timeout=300):
     """
     Gets data from a REST source and returns a python dictionary.
     If the result is already in cache, it returns cached data.
@@ -46,7 +47,7 @@ def fetch_json(url, params):
         if (data.ok):
             m = md5.new()
             cache_key = m.update(str(data.url))
-            cache.set(cache_key, data.text)
+            cache.set(cache_key, data.text, timeout)
             content = data.text
         else:
             data.raise_for_status()
