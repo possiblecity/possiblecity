@@ -189,20 +189,15 @@
                        '&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i> ' + 
                        feature.properties.idea_count + '</strong>';
        var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
-       //var marker = L.marker(center);
-       //var marker = L.marker(center, {riseOnHover: true, icon: labelIcon});
-       var label = layer.bindLabel(labelText).addTo(map);
-       //neighborhoods.addLayer(marker);
+       var label = layer.bindLabel(labelText);
        (function(layer, properties) {
        
          layer.on("mouseover", function (e) {
            layer.setStyle(highlightStyle);
-           //neighborhoods.addLayer(marker);
          });
          
          layer.on("mouseout", function (e) {
            layer.setStyle(neighborhoodStyle); 
-           //neighborhoods.removeLayer(marker);
          });
 
        })(layer, feature.properties);

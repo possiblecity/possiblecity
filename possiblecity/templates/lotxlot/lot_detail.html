@@ -202,6 +202,7 @@
           L.marker(center, {riseOnHover: true}).bindPopup(content).addTo(map).openPopup();
 
           map.fire('dataload');
+          map.removeLayer(neighborhoods);
     });
 
 </script>
