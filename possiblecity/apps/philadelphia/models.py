@@ -58,7 +58,7 @@ class LotProfile(models.Model):
             qs = Neighborhood.objects.filter(bounds__contains=pnt)
             return qs[0]
         except:
-            return ''
+            return None
 
     def __unicode__(self):
         return u'%s' % self.lot
