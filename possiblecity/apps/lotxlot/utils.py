@@ -1,6 +1,7 @@
 # lotxlot/utils.py
 import gc
 import json
+import md5
 import requests
 
 from geopy import geocoders
@@ -35,13 +36,17 @@ def fetch_json(url, params):
     Source should be a valid REST url.
     """
     cache_key = url + "?" + urlencode(params)
+    m = md5.new()
+    cache_key = m.update(cache_key)
     cached = cache.get(cache_key)
     content = ""
     
     if not cached:
         data = requests.get(url, params=params)
         if (data.ok):
-            cache.set(str(data.url), data.text)
+            m = md5.new()
+            cache_key = m.update(str(data.url))
+            cache.set(cache_key, data.text)
             content = data.text
         else:
             data.raise_for_status()

@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.db.models import Count, Sum
 
 from apps.lotxlot.models import Lot
+from apps.lotxlot.utils import fetch_json
 
 class Neighborhood(models.Model):
     """
@@ -63,6 +64,40 @@ class LotProfile(models.Model):
          pnt = self.get_center()
          qs = Neighborhood.objects.filter(bounds__contains=pnt)
          return qs[0]
+
+    def get_address_data(self):
+        pnt = self.get_center()
+        lon = pnt.x
+        lat = pnt.y
+        source = settings.PHL_DATA["ADDRESSES"] + "query"
+        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
+                  "outFields":"OWNER1, OWNER2, BLDG_CODE, BLDG_DESC, IMPERV_AREA ", "f":"json"}
+
+        data =  fetch_json(source, params)
+
+        if "features" in data:
+            features = data["features"]
+            if features:
+                if features[0]:
+                    return features[0]["attributes"]
+
+    @property
+    def owner(self):
+        owner = self.get_address_data()["OWNER1"]
+        if self.get_address_data()["OWNER2"]:
+            owner = owner + " / " + self.get_address_data()["OWNER2"]
+
+        return owner
+
+    @property
+    def building_description(self):
+        return "%s (%s)" % (self.get_address_data()["BLDG_DESC"], self.get_address_data()["BLDG_CODE"])
+
+    @property
+    def impervious_area(self):
+        return "%s sq ft" % (self.get_address_data()["IMPERV_AREA"])
+
 
     def __unicode__(self):
         return u'%s' % self.lot

@@ -112,8 +112,8 @@ def get_basereg():
 
     queryset = queryset_iterator(LotProfile.objects.filter(basereg__exact=''))
     for lot_profile in queryset:
-        lon = lot_profile.pwd_parcel.point_on_surface.x
-        lat = lot_profile.pwd_parcel.point_on_surface.y
+        lon = lot_profile.get_center().x
+        lat = lot_profile.get_center().y
         source = settings.PHL_DATA["PAPL_PARCELS"] + "query"
         params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
