@@ -120,7 +120,7 @@ class PrivateLotApiViewSet(LotApiViewSet):
     
 class LotIdeaApiViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows Lots with Ideas to be consumed as.
+    API endpoint that allows Lots with Ideas to be consumed as geojson.
     """
     queryset = Lot.objects.exclude(idea=None).prefetch_related('idea_set')
     serializer_class = LotPointSerializer

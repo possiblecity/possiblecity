@@ -8,12 +8,13 @@ from .serializers import NeighborhoodSerializer
 
 class NeighborhoodApiViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint that allows Lots with Ideas to be consumed as.
+    API endpoint that allows Neighborhoods to be consumed as geojson.
     """
     queryset = Neighborhood.objects.filter(
                    name__in=['POINT_BREEZE', 'TIOGA', 'NICETOWN', 
                              'UPPER_KENSINGTON', 'EAST_KENSINGTON',
                              'WEST_KENSINGTON', 'OLD KENSINGTON',
-                             'FAIRHILL', 'MCGUIRE' ])
+                             'FAIRHILL', 'MCGUIRE', 'STRAWBERRY_MANSION',
+                             'HARROWGATE', 'BREWERYTOWN', 'HUNTING_PARK' ])
     serializer_class = NeighborhoodSerializer
     paginate_by = None
