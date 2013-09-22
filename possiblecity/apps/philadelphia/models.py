@@ -84,15 +84,15 @@ class LotProfile(models.Model):
 
     @property
     def owner(self):
-        owner = self.get_address_data()["OWNER1"]
+        owner = self.get_address_data()["OWNER1"].title()
         if self.get_address_data()["OWNER2"]:
-            owner = owner + " / " + self.get_address_data()["OWNER2"]
+            owner = owner + " / " + self.get_address_data()["OWNER2"].title()
 
         return owner
 
     @property
     def building_description(self):
-        return "%s (%s)" % (self.get_address_data()["BLDG_DESC"], self.get_address_data()["BLDG_CODE"])
+        return "%s (%s)" % (self.get_address_data()["BLDG_DESC"].title(), self.get_address_data()["BLDG_CODE"])
 
     @property
     def impervious_area(self):

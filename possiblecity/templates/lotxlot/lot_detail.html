@@ -138,21 +138,33 @@
              <div class="lot-info-table"> 
                <table class="table">
                   <tbody>
-                  <tr>
+                    <tr>
+                      <th>Status:</th>
+                      <td>Vacant (unverified)</td>
+                    </tr>
+                    <tr>
+                      <th>Neighborhood:</th>
+                      <td>{{ lot.profile.neighborhood }}</td>
+                    </tr>
                     <tr>
                       <th>Ownership:</th>
                       <td>{% if lot.is_public %}Public{% else %}Private{% endif %}</td>
                     </tr>
                     <tr>
-                      <th>Status:</th>
-                      <td>Vacant (unverified)</td>
+                      <th>Owner:</th>
+                      <td>{{ lot.profile.owner }}</td>
                     </tr>
-                    <th>Neighborhood:</th>
-                    <td>{{ lot.profile.neighborhood }}</td>
-                  </tr>
-                  <tr>
+                    <tr>
                     <th>Size:</th>
                     <td>{{ lot.get_sqft|floatformat:0 }} sq. ft. ({{ lot.get_acres|floatformat:2 }} acres)</td>
+                  </tr>
+                  <tr>
+                    <th>Impervious Area:</th>
+                    <td>{{ lot.profile.impervious_area }}</td>
+                  </tr>
+                  <tr>
+                    <th>Building Description:</th>
+                    <td>{{ lot.profile.building_description }}</td>
                   </tr>
                   <tr>
                     <th>Basereg #:</th>
@@ -165,6 +177,7 @@
 
                  </tbody>
                 </table>
+                <p>Is there an error in our data? <a href="mailto:data@possiblecity.co?subject={{ lot.id }} - {{ lot.address }}">Let us know!</a>
                 </div><!--/lot-info -->
           </div><!-- /#sidebar-tabs-content -->
           </div>
