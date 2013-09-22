@@ -93,7 +93,7 @@
                         </h4>
                         {% if idea.get_lead_image %}
                         <a href="{{ idea.get_absolute_url }}">
-                        <img src="{% thumbnail idea.get_lead_image.file '300x125' crop %}" alt="{{ idea.title }}" />
+                        <img src="{% thumbnail idea.get_lead_image.file '300x150' crop %}" alt="{{ idea.title }}" />
                         </a>
                         {% endif %}
                         {% if idea.title %}

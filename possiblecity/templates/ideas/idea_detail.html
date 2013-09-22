@@ -62,6 +62,41 @@
                         {% if request.user == idea.user.profile.user %}
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit your idea' %}</a>
                         {% endif %}
+
+                        <h5>Liked by</h5>
+                        {% who_likes idea as idea_likes %}
+                        <div class="row">
+                        {% for like in idea_likes %}
+                            <div class="col-lg-6">
+                            {% if like.user.profile.is_public %}
+                                <a href="{% url 'profiles_profile_detail' like.user.username %}"
+                                {% if like.user.first_name %}
+                                   title="{{ like.user.profile.full_name }}"
+                                {% else %}
+                                   title="{{ like.user.username }}"
+                                {% endif %}
+                                 >
+                            {% endif %}
+                                <img class="media-object"  
+                               {% if like.user.profile.photo %}
+                               src="{% thumbnail idea.user.profile.photo '100x100' crop upscale %}}"
+                               {% else %}
+                               src="{% static 'img/profile.png' %}"
+                               {% endif %}
+                               {% if like.user.first_name %}
+                               alt="{{ like.user.profile.full_name }}" 
+                               title="{{ like.user.profile.full_name }}"
+                               {% else %}
+                               alt="{{ like.user.username }}" 
+                               title="{{ like.user.username }}"
+                               {% endif %}
+                            />
+                            {% if like.user.profile.is_public %}
+                                </a>
+                            {% endif %}
+                            </div>
+                        {% endfor %}
+                        </div>
                     </div>
                 </div>
         </div>
