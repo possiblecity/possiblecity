@@ -3,6 +3,7 @@ from django.contrib.gis.geos import Polygon
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic.base import View, TemplateView
+from django.views.generic.list import ListView
 from django.views.generic.detail import SingleObjectMixin, DetailView
 from django.views.generic.edit import FormView
 
@@ -39,7 +40,6 @@ class BBoxMixin(object):
         return queryset
 
 ########## HTML Views ##########
-
 class LotDisplay(DetailView):
     model = Lot
 
@@ -121,7 +121,7 @@ class LotPointApiViewSet(LotApiViewSet):
     serializer_class = LotPointSerializer
     
     
-class LotIdeaApiViewSet(viewsets.ReadOnlyModelViewSet):
+class LotIdeaApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots with Ideas to be consumed as geojson.
     """

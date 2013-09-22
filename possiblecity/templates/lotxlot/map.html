@@ -190,7 +190,7 @@
                        feature.properties.idea_count + '</strong>';
        var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
        //var marker = L.marker(center);
-       var marker = L.marker(center, {riseOnHover: true, icon: labelIcon});
+       //var marker = L.marker(center, {riseOnHover: true, icon: labelIcon});
        var label = layer.bindLabel(labelText).addTo(map);
        //neighborhoods.addLayer(marker);
        (function(layer, properties) {
@@ -220,6 +220,7 @@
           var layer = e.target;
           center=(layer.getBounds().getCenter());
           map.setView(center, 17, { animate: true });
+          layer.setStyle(neighborhoodStyle); 
     }
 
     function zoomToMarker(e) {
