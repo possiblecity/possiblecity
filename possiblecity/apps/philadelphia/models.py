@@ -54,9 +54,10 @@ class LotProfile(models.Model):
 
     def get_center(self):
         try:
-            pnt = self.pwd_parcel.point_on_surface
+            center = self.pwd_parcel.point_on_surface
         except:
-            pnt = self.pwd_parcel.centroid
+            center = self.pwd_parcel.centroid
+        return center
 
     def get_neighborhood(self):
          pnt = self.get_center()
