@@ -52,13 +52,16 @@ class LotProfile(models.Model):
     lot = models.OneToOneField(Lot, null=True, blank=True, related_name='profile')
     neighborhood = models.ForeignKey(Neighborhood, null=True, blank=True)
 
-    def get_neighborhood(self):
+    def get_center(self):
         try:
             pnt = self.pwd_parcel.point_on_surface
-            qs = Neighborhood.objects.filter(bounds__contains=pnt)
-            return qs[0]
         except:
-            return None
+            pnt = self.pwd_parcel.centroid
+
+    def get_neighborhood(self):
+         pnt = self.get_center()
+         qs = Neighborhood.objects.filter(bounds__contains=pnt)
+         return qs[0]
 
     def __unicode__(self):
         return u'%s' % self.lot
@@ -78,13 +81,9 @@ def lot_profile_post_save(sender, **kwargs):
     # if this is a new instance of parcel, 
     # create and populate the related Lot
     if created:
-        try:
-            coord = lot_profile.pwd_parcel.point_on_surface
-        except:
-            coord = None
         lot = Lot(address=lot_profile.address.title(),
             bounds=lot_profile.pwd_parcel, 
-            coord=coord,
+            coord=lot_profile.get_center(),
             city='Philadelphia', state='PA', country='US',)
         lot.save()
         lot_profile.lot = lot
