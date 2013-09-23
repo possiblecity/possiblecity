@@ -62,14 +62,6 @@
                         {% if request.user == idea.user.profile.user %}
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit your idea' %}</a>
                         {% endif %}
-
-                        <h5>Liked by</h5>
-                        <div class="row">
-                        {% who_likes idea as idea_likes %}
-                        {% for like in idea_likes %}
-                            <div class="col-lg-6 margin-bottom-20">{% render_like like %}</div>
-                        {% endfor %}
-                        </div>
                     </div>
                 </div>
         </div>
