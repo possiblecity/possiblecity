@@ -41,10 +41,10 @@
                     <div class="col-6 col-lg-12">
                         <h5>Floated by</h5>
                         <h3>
-                        {% if idea.user.profile.user.first_name %}
+                        {% if idea.user.first_name %}
                             {{ idea.user.profile.full_name}}
                         {% else %}
-                            {{ idea.user.user.username }}
+                            {{ idea.user.username }}
                         {% endif %}
                         </h3>
                         <p>
