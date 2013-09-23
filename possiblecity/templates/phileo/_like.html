@@ -1,11 +1,1 @@
-{% if user.profile.is_public %}
-	<a href="{% url 'profiles_profile_detail' user.username %}">
-{% endif %}
-	{% if user.first_name %}
-    	{{ user.profile.full_name }}
-	{% else %}
-         {{ user.username }}
-    {% endif %}
-{% if user.profile.is_public %}
-	</a>
-{% endif %}
+{{ instance }}
