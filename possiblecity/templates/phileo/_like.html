@@ -1,5 +1,11 @@
-{% if instance.get_absolute_url %}
-	<a class="phileo phileo-{{ like.type }}" href="{{ instance.get_absolute_url }}">{{ instance }}</a>
-{% else %}
-	<span class="phileo phileo-{{ like.type }}">{{ instance }}</span>
+{% if user.profile.is_public %}
+	<a href="{% url 'profiles_profile_detail' user.username %}">
+{% endif %}
+	{% if user.first_name %}
+    	{{ user.profile.full_name }}
+	{% else %}
+         {{ user.username }}
+    {% endif %}
+{% if user.profile.is_public %}
+	</a>
 {% endif %}
