@@ -139,6 +139,9 @@
                     {{ lot.address }}
                   </a>
                </h4>
+              <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+              <img src="http://maps.googleapis.com/maps/api/streetview?size=300x300&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+              </a>              
               {% endfor %}
            </div>
         </div>
