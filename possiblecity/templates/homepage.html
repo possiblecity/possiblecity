@@ -109,9 +109,14 @@
                                     {% endif %}
                                     <small>on</small>
                                     {% for lot in idea.lots.all %}
+                                    {% if forloop.first %}
                                     <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                                        {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
-                                        {% endfor %}
+                                        {{ lot.address }}</a>
+                                    {% if forloop.revcounter0 %} 
+                                    <small>(+ {{ forloop.revcounter0 }} more)</small>
+                                    {% endif %}
+                                    {% endif %} 
+                                    {% endfor %}
                                 </h4>
                                 <p>{{ idea.tagline }}</p>
                                 <h6>Via {{ idea.get_via_display }}

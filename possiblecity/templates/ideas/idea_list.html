@@ -75,8 +75,13 @@
                                 {% if idea.lots.all %}
                                 <small>on</small>
                                 {% for lot in idea.lots.all %}
-                                <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                                {{ lot.address }}</a>{% if not forloop.last %}, {% endif %} 
+                                    {% if forloop.first %}
+                                    <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                                        {{ lot.address }}</a>
+                                    {% if forloop.revcounter0 %}
+                                    <small>(+ {{ forloop.revcounter0 }} more)</small>
+                                    {% endif %}
+                                    {% endif %}
                                 {% endfor %}
                                 {% endif %}
                                 </h4>
