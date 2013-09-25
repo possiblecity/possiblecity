@@ -20,14 +20,14 @@
               <!-- Indicators -->
               <ol class="carousel-indicators">
                 {% for idea in featured_ideas %}
-                <li class="{% if forloop.first %}active{% endif %}" data-target="#featured_idea_slideshow" data-slide-to="{{ forloop.counter }}"></li>
+                <li class="{% if forloop.first %}active{% endif %}" data-target="#featured-idea-slideshow" data-slide-to="{{ forloop.counter0 }}"></li>
                 {% endfor %}
               </ol>
 
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
                 {% for idea in featured_ideas %}
-                <div id="{{ forloop.counter }}" class="item {% if forloop.first %}active{% endif %}">
+                <div id="{{ forloop.counter0 }}" class="item {% if forloop.first %}active{% endif %}">
                  <a href="{% if idea.lots.all %}
                            {% with idea.lots.all|first as lot %}
                             {% url 'lotxlot_lot_detail' lot.id %}#idea-{{ idea.id }}

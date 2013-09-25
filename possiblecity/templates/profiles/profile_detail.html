@@ -35,20 +35,36 @@ Profile for {{ profile.user.username }}
                             {{ profile.user.username }}
                         {% endif %}
                         </h3>
-                        <p>
-                        {% if profile.website %}
-                            {{ profile.website|urlize }}<br/>
-                        {% endif %}
-                        {% if profile.twitter %}
-                            <a href="http://www.twitter.com/{{ profile.twitter }}">
-                            {{ profile.twitter }}</a>
-                            <br/>
-                        {% endif %}
-                        </p>
-
-                        <hr/>
                         {% if request.user == profile.user %}
+                        <hr/>
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
+                        {% endif %}
+                        <hr>
+                        <h5>Contact</h5>
+
+                        {% if request.user.is_authenticated %}
+                        <p>
+                            {% if profile.twitter %}
+                            <a href="http://www.twitter.com/{{ profile.twitter }}">
+                            @{{ profile.twitter }}</a>
+                            <br/>
+                            {% endif %}
+                            {% if profile.user.email %}
+                               <a href="mailto:{{ profile.user.email }}" >{{ profile.user.email }}</a>
+                            {% endif %}
+                            {% if profile.website %}
+                                {{ profile.website|urlize }}<br/>
+                            {% endif %}
+                           </p>
+                        {% else %}
+                        <p><a href="{% url 'account_signup' %}">
+                           Sign up</a> with Possible City to contact 
+                           {% if profile.user.first_name %}
+                           {{ profile.user.first_name }}.
+                           {% else %}
+                           {{ profile.user.username }}. 
+                           {% endif %}
+                        </p>
                         {% endif %}
                     </div>
                 </div>
