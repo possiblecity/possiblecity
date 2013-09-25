@@ -14,6 +14,9 @@
         <div class="row">
             <div class="col-sm-4 col-lg-12 col-12 margin-bottom-20">
                 <h1>{{ idea.title }}</h1>
+                  {% for tag in idea.tags.all %} 
+                  <span class="label label-info">{{ tag.name }}</span>
+                  {% endfor %}
             </div>
                
         </div>
@@ -58,14 +61,19 @@
                                 <br/>
                             {% endif %}
                             </p>
-
-                            <hr/>
                             {% if request.user == idea.user.profile.user %}
                             <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit your idea' %}</a>
                             {% endif %}
+                            {% if idea.grounded %}
+                            <hr>
+                            <h5>Grounded in</h5>
+                            <h4>{{ idea.grounded|date:"Y" }}</h4>
+                            {% endif %}
+                            {% who_likes idea as idea_likes %}
+                            {% if idea_likes %}
+                            <hr>                           
                             <h5>Liked by</h5>
                             <div class="row">
-                            {% who_likes idea as idea_likes %}
                             {% for like in idea_likes %}
                                 <div class="col-lg-6 col-12 margin-bottom-20">
                                     {% if like.sender.profile.is_public %}
@@ -91,6 +99,7 @@
                                 </div>
                             {% endfor %}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -120,6 +129,18 @@
                 {% endblock comments %}
             </div>
             {% endblock project %}
+        </div>
+        <div class="col-lg-3 col-12">
+           <div class="panel">
+              <h5>Location</h5>
+              {% for lot in idea.lots.all %}
+              <h4><i class="icon-map-marker"></i>
+                  <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                    {{ lot.address }}
+                  </a>
+               </h4>
+              {% endfor %}
+           </div>
         </div>
     </div>
 </section>
