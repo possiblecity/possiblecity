@@ -107,15 +107,13 @@
     var ideas = L.geoJson.ajax(
       '{% url "api-lot-idea-list" %}?format=json', {
         pointToLayer: function (feature, latlng) {
-           var labelText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id) +
+           var iconText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id) +
                             '"><i class="icon-comment icon-3x"></i>' +
                             '<strong> ' + 
                              feature.properties.idea_set.length + '</strong></a>';
-           var labelIcon = L.divIcon({className: 'idea-label', html: labelText,  iconSize:null});
-           //var lot = {% if lot.id %}{{ lot.id }}{% else %}0{% endif %}
-           //if (feature.properties.id != lot) {
-           return L.marker(latlng, {riseOnHover: true, icon: labelIcon});
-           //};
+           var labelText = '<strong>' + feature.properties.address + '</strong>';
+           var labelIcon = L.divIcon({className: 'idea-label', html: iconText,  iconSize:null});
+           return L.marker(latlng, {riseOnHover: true, icon: labelIcon}).bindLabel(labelText).addTo(map);
         },
       })
 
@@ -191,15 +189,17 @@
        var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
        var label = layer.bindLabel(labelText);
        (function(layer, properties) {
-       
-         layer.on("mouseover", function (e) {
-           layer.setStyle(highlightStyle);
-         });
+           layer.on("mouseover", function (e) {
+             if (map.getZoom() < 15) {
+               layer.setStyle(highlightStyle);
+             }
+           });
          
-         layer.on("mouseout", function (e) {
-           layer.setStyle(neighborhoodStyle); 
-         });
-
+           layer.on("mouseout", function (e) {
+             if (map.getZoom() < 15) {
+               layer.setStyle(neighborhoodStyle); 
+             }
+           });
        })(layer, feature.properties);
        
        layer.on({
@@ -240,11 +240,11 @@
        };
   
        if (map.getZoom()<15) {
-           map.removeLayer(ideas);
+           //map.removeLayer(ideas);
        }
 
        if (map.getZoom()>=15) {
-           map.addLayer(ideas);
+          // map.addLayer(ideas);
        };
 
        if (map.getZoom()>=19) {
