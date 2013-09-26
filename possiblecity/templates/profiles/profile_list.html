@@ -27,9 +27,29 @@
         <div class="row">
             {% autopaginate profiles %}
             {% for profile in profiles %}
-            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
                 <div class="thumbnail margin-bottom-20">
-                    <div class="profile-pic">
+                    <div class="profile-pic profile-popover"
+                         data-toggle="tooltip"
+                         {% if profile.about %}
+                         data-content="{% if profile.user.first_name %}{{ profile.user.first_name }} 
+                                       {% else %}{{ profile.user.username }}{% endif %}
+                                       wants to {{ profile.about }}"
+                         {% else %}
+                         data-content="{% if profile.user.first_name %}
+                                       {{ profile.full_name }}
+                                       {% else %}
+                                       {{ profile.user.username }}
+                                       {% endif %} is still working on it."
+                         {% endif %}
+                         data-animation="true"
+                         data-placement="auto top"
+                         data-trigger="hover"
+                         title="{% if profile.user.first_name %}
+                                       {{ profile.full_name }}
+                                       {% else %}
+                                       {{ profile.user.username }}
+                                       {% endif %}">
                         <a href="{% url 'profiles_profile_detail' profile.user.username %}">
                         {% if profile.photo %}
                             <img class="profile-pic" src="{% thumbnail profile.photo '400x400' crop upscale %}" />
@@ -38,17 +58,14 @@
                         {% endif %}
                             </a>
                     </div>
-                    <h4>
-                    {% if profile.user.first_name %}
-                        {{ profile.full_name}}
-                    {% else %}
-                        {{ profile.user.username }}
-                    {% endif %}
-                    </strong>
-                    </h4>
                 </div>
             </div>
           {% endfor %}
         </div>
     </section>
 {% endblock body %}
+{% block extra_body %}
+<script>
+$('.profile-popover').popover();
+</script>
+{% endblock %}
