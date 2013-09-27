@@ -22,7 +22,10 @@ class Profile(models.Model):
 
     @property
     def full_name(self):
-        return u'%s %s' % (self.user.first_name, self.user.last_name)
+        if self.user.first_name:
+            return u'%s %s' % (self.user.first_name, self.user.last_name)
+        else:
+            return self.user.username
         
     def __unicode__(self):
         if self.user.first_name:
