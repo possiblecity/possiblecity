@@ -456,6 +456,14 @@ REST_FRAMEWORK = {
 PHILEO_LIKABLE_MODELS = {
     "profiles.Profile": {},
     "ideas.Idea": {},
+    "lotxlot.Lot": {
+        "css_class_on": "icon-bookmark",
+        "css_class_off": "icon-bookmark-empty",
+        'like_text_on': 'Unmark',
+        'like_text_off': 'Bookmark',
+        'count_text_singular': 'bookmark',
+        'count_text_plural': 'bookmarks'
+    }
 }
 
 

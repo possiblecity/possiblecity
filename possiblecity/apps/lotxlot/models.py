@@ -36,7 +36,7 @@ class Lot(models.Model):
     objects = models.GeoManager()
 
     class Meta:
-        pass
+        ordering = ('id',)
         #unique_together = ('address', 'city', 'state')
 
     def get_sqft(self): 
@@ -44,7 +44,7 @@ class Lot(models.Model):
         Returns the area in sq ft. 
         """ 
         # Convert our geographic polygons (in WGS84)
-        # into a local projection for New York (here EPSG:32118) 
+        # into a local projection 
         try:
             return self.bounds.transform(102729, clone=True).area
         except Exception:
@@ -52,10 +52,10 @@ class Lot(models.Model):
 
     def get_acres(self): 
         """ 
-        Returns the area in sq ft. 
+        Returns the area in acres 
         """ 
         # Convert our geographic polygons (in WGS84)
-        # into a local projection for New York (here EPSG:32118) 
+        # into a local projection
         try:
             return self.bounds.transform(102729, clone=True).area * 0.00002295684
         except Exception:

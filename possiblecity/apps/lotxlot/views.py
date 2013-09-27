@@ -92,6 +92,14 @@ class LotIndexView(TemplateView):
     template_name='lotxlot/map.html'
 
 
+class LotOrNotListView(ListView):
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True)
+    template_name = 'lotxlot/lot_or_not.html'
+
+class LotOrNotSizeAscListView(LotOrNotListView):
+    queryset = Lot.objects.filter(is_vacant=True, is_visible=True).order_by('bounds')
+
+
 ########## API Views ##########
 
 
