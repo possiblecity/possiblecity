@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # about
-    url(r'^about/', include('about.urls')),
+    url(r'^about/', include('apps.about.urls')),
     
     # blog
     #url(r'^blog/', include('apps.text.urls')),
