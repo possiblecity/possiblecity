@@ -319,6 +319,7 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'apps.about', # about page
     'apps.core', # general helpers
     #'apps.text', # blog
     'apps.profiles', # user profiles

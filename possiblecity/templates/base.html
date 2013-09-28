@@ -49,6 +49,7 @@
                           <li class="nav-map"><a href="{% url 'lotxlot' %}">Map</a></li>
                           <li class="nav-ideas"><a href="{% url 'ideas_idea_list' %}">Ideas</a></li>
                           <li class="nav-people"><a href="{% url 'profiles_profile_list' %}">People</a></li>
+                          <li class="nav-about"><a href="{% url 'about' %}">About</a></li>
                       </ul>
                     {% endblock nav %}
                     {% block account_bar %}
@@ -66,7 +67,7 @@
                 {% endblock messages %}
                 <div class="content">
                 {% block body %}
-            	{% endblock body %}
+            	   {% endblock body %}
                 </div>
 	     </section>
 	     {% endblock body_base %}

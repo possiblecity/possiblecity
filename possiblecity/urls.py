@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # about
-    #url(r'^about/$', RedirectView.as_view(url='/blog/2012/oct/10/introducing-possible-city/'),name='about'),
+    url(r'^about/', include('about.urls')),
     
     # blog
     #url(r'^blog/', include('apps.text.urls')),

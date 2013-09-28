@@ -21,9 +21,9 @@ Profile for {{ profile.user.username }}
                     <div class="col-6 col-lg-12">
                         <div class="profile-pic">
                         {% if profile.photo %}
-                            <img class="profile-pic" src="{% thumbnail profile.photo '400x400' crop upscale %}" />
+                            <img src="{% thumbnail profile.photo '400x400' crop upscale %}" />
                         {% else %}
-                            <img class="profile-pic" src="{% static 'img/profile.png' %}" />
+                            <img src="{% static 'img/profile.png' %}" />
                         {% endif %}
                         </div>
                     </div>
