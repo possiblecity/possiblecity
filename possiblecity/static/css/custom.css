@@ -935,6 +935,149 @@ opacity: 0.6;
 
 
 
+/***************************************************************************/
+/* ABOUT PAGE */
+
+.about h1 {
+	text-transform: uppercase;
+	font-size: 60px;
+	margin-bottom: 10px;
+}
+
+.about-hero p {
+	font-size: 40px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.about h2 {
+	text-transform: uppercase;
+	font-size: 45px;
+}
+
+
+
+.team img {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+
+}
+
+.about h5 {
+	margin-bottom: 5px;
+}
+
+.margin-bottom-20 {
+	margin-bottom: -0px;
+}
+
+.padding-left-30 {
+	padding-left: 30px;
+}
+
+.panel-body {
+	margin-top: 25px;
+}
+
+.panel-heading {
+	padding: 10px 15px;
+	margin: -15px -15px -17px;
+	background-color: #ffffff;
+}
+
+.panel-heading {
+	border-bottom: 0px;
+}
+
+.panel-default {
+	border: 0px;
+	margin-bottom: -10px;
+}
+
+.panel-body {
+	margin-top: 5px;
+}
+
+.board-of-advisors h5 {
+	margin-bottom: 0px;
+	display: inline;
+	padding-right: 5px; 
+}
+
+.board-of-advisors p {
+	margin-top: 10px;
+}
+
+.margin-bottom--10px {
+	margin-bottom: 5px;
+}
+
+
+
+.board-of-advisors h6 {
+	text-transform: uppercase;
+	display: inline;
+
+}
+
+.panel-group, #accordion {
+	border-bottom: 0px;
+}
+
+.margin-top--10 {
+	margin-top: -10px;
+}
+
+.lot-images .col-lg-2 {
+	padding-right: 5px;
+	padding-left: 5px;
+	
+}
+
+.lot-images .col-lg-4 {
+	padding-right: 5px;
+	padding-left: 5px;
+	height: 179px;
+}
+
+.lot-images .col-lg-4 img {
+	height: 178px;
+	width: 100%;
+}
+
+.lot-images .lot-images-row {
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+}
+
+.lot-images {
+	margin-top: 40px;
+}
+
+
+
+.lot-image-text {
+	background-color: #68C4EA;
+	color: #ffffff;
+	height: 178px;
+	padding-left: 5px;
+	padding-right: 5px;
+
+}
+
+.lot-image-text p {
+	font-size: 20px;
+	text-transform: uppercase;
+	margin-left: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20%;
+}
+
+
+
 
 
 
