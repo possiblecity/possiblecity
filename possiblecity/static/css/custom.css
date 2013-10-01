@@ -51,7 +51,8 @@ input[type="password"] {
 }
 
 
-.panel {
+.panel.activity {
+	
   padding: 15px;
   margin-bottom: 20px;
   background-color: #ffffff;
@@ -59,6 +60,7 @@ input[type="password"] {
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+
 }
 
 div.content {
@@ -192,7 +194,7 @@ form p {
 }
 
 .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus, {
-	color: #555555;
+	color: #fff;
 	background-color: #BEE0EA;
 }
 
@@ -214,7 +216,7 @@ background-color: #BEE0EA;
 }
 
 .navbar-nav > li > a:hover {
-	color: #555555;
+	color: #fff;
 	background-color: transparent;
 }
 
@@ -226,8 +228,8 @@ body.lotxlot .navbar-nav > .nav-map a,
 body.ideas .navbar-nav > .nav-ideas a, 
 body.people .navbar-nav > .nav-people a,
 body.about .navbar-nav > .nav-about a {
-	color: #555555;
-	background-color: #BEE0EA;
+	color: #fff;
+	background-color: #78cef1;
 }
 
 .navbar-toggle .icon-bar {
@@ -296,6 +298,19 @@ body.about .navbar-nav > .nav-about a {
 	border-right:1px solid #dddddd;
 	border-left:1px solid #dddddd;
 }
+
+
+/***************************************************************************/
+/* FOOTER */
+
+footer {
+	margin: 20px 0;
+}
+
+footer p {
+	margin-bottom: 20px;
+}
+
 
 
 /***************************************************************************/
@@ -616,25 +631,7 @@ padding-left: 0px;
 	text-align:center; 
 }
 
-/***************************************************************************/
-/* ABOUT */
 
-.stats p.lead {
-  margin-bottom: 0;
-  text-align: center;
-  font-size: 21px;
-}
-
-.stats h5 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.stats {
-  padding: 20px;
-  background: white;
-  text-align: center;
-}
 
 
 /***************************************************************************/
@@ -850,7 +847,7 @@ opacity: 0.6;
 		background-color: #F3F3F3;
 	}
 
-	.ideas-page-panel {
+	.panel.ideas-page-panel {
 		padding: 15px;
 		padding-top: 0px;
 	}
@@ -944,7 +941,7 @@ opacity: 0.6;
 	margin-bottom: 10px;
 }
 
-.about-hero p {
+p.lead-big {
 	font-size: 40px;
 	padding-left: 100px;
 	padding-right: 100px;
@@ -953,50 +950,17 @@ opacity: 0.6;
 .about h2 {
 	text-transform: uppercase;
 	font-size: 45px;
+	margin-bottom: 20px;
 }
 
-
-
-.team img {
+.team img, .partners img {
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
-
 }
 
 .about h5 {
 	margin-bottom: 5px;
-}
-
-.margin-bottom-20 {
-	margin-bottom: -0px;
-}
-
-.padding-left-30 {
-	padding-left: 30px;
-}
-
-.panel-body {
-	margin-top: 25px;
-}
-
-.panel-heading {
-	padding: 10px 15px;
-	margin: -15px -15px -17px;
-	background-color: #ffffff;
-}
-
-.panel-heading {
-	border-bottom: 0px;
-}
-
-.panel-default {
-	border: 0px;
-	margin-bottom: -10px;
-}
-
-.panel-body {
-	margin-top: 5px;
 }
 
 .board-of-advisors h5 {
@@ -1009,9 +973,6 @@ opacity: 0.6;
 	margin-top: 10px;
 }
 
-.margin-bottom--10px {
-	margin-bottom: 5px;
-}
 
 
 
@@ -1025,10 +986,8 @@ opacity: 0.6;
 	border-bottom: 0px;
 }
 
-.margin-top--10 {
-	margin-top: -10px;
-}
 
+/*
 .lot-images .col-lg-2 {
 	padding-right: 5px;
 	padding-left: 5px;
@@ -1046,11 +1005,15 @@ opacity: 0.6;
 	width: 100%;
 }
 
+*/
+
 .lot-images .lot-images-row {
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-bottom: 10px;
 }
+
+
 
 .lot-images {
 	margin-top: 40px;
@@ -1069,14 +1032,25 @@ opacity: 0.6;
 
 .lot-image-text p {
 	font-size: 20px;
-	text-transform: uppercase;
 	margin-left: 0px;
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-top: 20%;
+	padding-top: 40px;
 }
 
 
+
+.panel.panel-about {
+	
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+
+}
 
 
 
@@ -1247,7 +1221,7 @@ opacity: 0.6;
 	.sidebar {
 		position: absolute;
 		right: 0;
-		top: 51px;
+		top: 50px;
 		bottom: 0;
 		width: 400px;
 		padding-top: 10px;
@@ -1323,6 +1297,31 @@ opacity: 0.6;
 	
 	.ideas-page-neighborhoods-panel-md-devices {
 		display: none;
+	}
+
+
+
+
+	/***************************************************************************/
+	/* ABOUT PAGE */
+
+	.about h1 {
+		font-size: 50px;
+	}
+
+	p.lead-big {
+		font-size: 35px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.about h2 {
+		font-size: 45px;
+	}
+
+
+	.lot-images-row .col-xs-12 {
+		margin: 10px 0;
 	}
 
 
