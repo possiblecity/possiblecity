@@ -29,10 +29,20 @@
         <div class="row">
           <div class="col-sm-8">
             <p class="lead">Take ownership over a lot in your neighborhood and post signs to facilitate a community discussion! We have English and Spanish versions available. Download the signs <a href="{% static 'files/possible_city_lot_signs.zip' %}">here</a>, and contact us for help: <a href="mailto:volunteer@possiblecity.co">volunteer@possiblecity.co</a></p>
-
+            {% if not request.user.is_authenticated %}
+            <hr>
             <p class="lead">Sign up and create a profile to add ideas, explore potential spaces, and find people to 
-            help you rebuild your neighborhood and city.</p>
-            <p></p>
+            help build your neighborhood and city.</p>
+            <br>
+             <p>
+               <a href="{% url "socialauth_begin" "facebook" %}?next={{ request.path }}" target="_top" class="btn btn-lg btn-primary"><i class="icon-facebook icon-large"> </i>&nbsp;&nbsp;Sign in with <strong>Facebook</strong></a>&nbsp;&nbsp;
+                   
+              <a href="{% url "socialauth_begin" "twitter" %}?next={{ request.path }}" target="_top" class="btn btn-lg btn-primary"><i class="icon-twitter icon-large"></i> Sign in with <strong>Twitter</strong></a>&nbsp;&nbsp;
+        
+              <a href="{% url "account_signup" %}" target="_top" class="btn btn-lg btn-default">
+              <i class="icon-envelope">  </i>Sign In with Email</a>
+            </p>
+            {% endif %}
           </div>
           <div class="col-sm-4">
             <div class="panel panel-default">
@@ -60,11 +70,19 @@
               <p>Jamie is a documentary filmmaker who also heads Kensington Renewal, an organization that seeks to rehabilitate blighted properties into owner occupied homes.</p>    
           </div>
           <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+            <img src="{% static 'img/profiles/tonnetta.jpg' %}">
+            <h4 class="text-center">Tonnetta Graham</h4>
+            <h5 class="text-center">Strawberry Mansion CDC</h5>
+            <p class="text-center"><a href="http://www.strawberrymansioncdc.org/">strawberrymansioncdc.org</a></p>
+                    
+            <p>Tonnetta is a dedicated educator and President of Strawberry Mansion CDC, who also serves on the Strawberry Mansion NAC Executive Board and as Treasurer of the Friends of East Park.</p>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
             <img src="{% static 'img/profiles/claudia.jpg' %}">
             <h4 class="text-center">Claudia Sherrod</h4>
-            <h5 class="text-center">Hunting Park United</h5>
-            <p class="text-center"><a href="#">huntingpark.org</a></p>
-            <p>Ryan lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+            <h5 class="text-center">South Philadelphia H.O.M.E.S</h5>
+            <p class="text-center"><a href="http://www.sphinc.com/">sphinc.com</a></p>
+            <p>Claudia is the Executive Director of South Philadelphia H.O.M.E.S., an organization whose mission is to serve the needs of those who live and work in the South Philadelphia/Point Breeze community.</p>
           </div>
           <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
               <img src="{% static 'img/profiles/ryan_kellermeyer.jpg' %}">
@@ -75,18 +93,10 @@
               <p>Ryan is a strategic projects manager who is also an active organizer in Hunting Park, running a community mailing list, new media classes for youths, and local fundraising efforts. </p>
           </div>
           <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-            <img src="{% static 'img/profiles/tonnetta.jpg' %}">
-            <h4 class="text-center">Tonnetta Graham</h4>
-            <h5 class="text-center">SMCDC</h5>
-            <p class="text-center"><a href="http://www.strawberrymansioncdc.org/">strawberrymansioncdc.org</a></p>
-                    
-            <p>Tonnetta is a dedicated educator and President of Strawberry Mansion CDC, who also serves on the Strawberry Mansion NAC Executive Board and as Treasurer of the Friends of East Park.</p>
-          </div>
-          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
             <img src="{% static 'img/profiles/majeedah.jpg' %}">
             <h4 class="text-center">Majeedah Rashid</h4>
             <h5 class="text-center">Nicetown CDC</h5>
-            <p class="text-center"><a href="#">huntingpark.org</a></p>
+            <p class="text-center"><a href="http://www.nicetowncdc.org/">nicetowncdc.org</a></p>
             
             <p>Majeedah is the COO of Nicetown CDC, where she has led development of affordable apartments and commercial space. She has also served on the Advisory Board of the Mayor’s Office of Community Services.</p>
 
@@ -95,7 +105,7 @@
             <img src="{% static 'img/profiles/verna_tyner.jpg' %}">
             <h4 class="text-center">Verna Tyner</h4>
             <h5 class="text-center">Tioga United</h5>
-            <p class="text-center"><a href="#">huntingpark.org</a></p>
+            <p class="text-center"><a href="http://www.tiogaunited.org/">tiogaunited.org</a></p>
             
             <p>Verna has worked as chief of staff for several Philadelphia councilman over the past 16 years, in addition to heading Tioga United, an organization striving to help North Philly rebuild itself.</p>
 
@@ -122,7 +132,7 @@
           <div class="col-sm-6 col-lg-3">
             <div class="text-center"><img src="{% static 'img/profiles/cary_filter.jpg' %}"></div>
             <h4 class="text-center">Cary Betagole</h4>
-            <h5 class="text-center">Community Organizer/Co-Founder</h5>
+            <h5 class="text-center">Community Organizer / Co-Founder</h5>
             <p class="text-center"><a href="mailto:cary@possiblecity.co">cary@possiblecity.co</a></p>
             <p>Cary is excited to be a part of a team that’s developing tools we’ll use to add & retain value within our communities. In the past, he’s worked in digital marketing, newspaper & magazine journalism, music management, and the startup world. He currently freelances for Technically Philly. Cary, Ben, and Justin co-founded <a href="http://blissbit.org">Blissbit</a>, a design agency and thinktank focusing on social impact.</p>
           </div>
@@ -130,7 +140,7 @@
           <div class="col-sm-6 col-lg-3">
             <div class="text-center"><img src="{% static 'img/profiles/justin_filter.jpg' %}"></div>
             <h4 class="text-center">Justin Broglie</h4>
-            <h5 class="text-center">Web Developer/Co-Founder</h5>
+            <h5 class="text-center">Web Developer / Co-Founder</h5>
             <p class="text-center"><a href="mailto:justin@possiblecity.co">justin@possiblecity.co</a></p>
             <p>Justin spent most of his youth asking the big questions and dreaming up solutions to the world's problems. He believes in the essential interconnectedness of all of life, and is passionate about harnessing the power of technology to create social impact. Justin studied Digital Media Design at UPenn. </p>
           </div>
@@ -138,7 +148,7 @@
           <div class="col-sm-6 col-lg-3">
             <div class="text-center"><img src="{% static 'img/profiles/ben_filter.jpg' %}"></div>
             <h4 class="text-center">Ben Rodigas</h4>
-            <h5 class="text-center">UI/UX Designer/Co-Founder</h5>
+            <h5 class="text-center">UI/UX Designer / Co-Founder</h5>
             <p class="text-center"><a href="mailto:ben@possiblecity.co">ben@possiblecity.co</a></p>
             <p>Ben began his design career in Australia where he worked as an Experience Architect for asuccessful customer experience consultancy. He then worked as a UX Designer for Comcast where he designed interfaces for mobile, web, and TV. Ben is fascinated by design and its potential to be used for personal and social transformation. Ben spends his free time volunteering for non-profits, meditating, and learning how to do awesome AcroYoga moves with his friends.</p>
           </div>
