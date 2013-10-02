@@ -10,427 +10,143 @@
 
 {% block body %}
 
-<div class="container about">
-      
-      
+<div class="about container">
+  <section class="heading row">
+    <div class="col-lg-12 col-12">
+      <div class="panel about-hero panel-about">
+          <h1 class="text-center">About</h1>
+          <p class="text-center lead-big">Possible City is a collaborative platform that connects <a href="{% url 'profiles_profile_list' %}">people</a>, <a href="{% url 'ideas_idea_list' %}">imagination</a>, skills, and collective resources to transform abandoned <a href="{% url 'lotxlot' %}">spaces</a> into generative places.</p>
+            <hr>
+                <p class="lead text-center">We're building community dialogue around abandoned spaces with a focus on confronting the digital divide, by posting physical signage on vacant lots to prompt ideas from residents via text, tweet and write-in paper form. At the same time we're engaging artists, designers, urban farmers and small business people to float ideas of their own - and helping them find the constituencies, resources, and people they need to get their projects on the ground.</p>
+      </div><!--.panel-->
+    </div><!--.row -->
+  </section><!--.row.heading-->
 
-      <div class="row heading">
-    
-        <div class="col-lg-12 col-12">
+  <section class="help row">
+    <div class="col-lg-12 col-12">
+      <div class="panel panel-about">
+        <h2 class="text-center">Help build the Possible City</h2>
+        <div class="row">
+          <div class="col-sm-8">
+            <p class="lead">Take ownership over a lot in your neighborhood and post signs to facilitate a community discussion! We have English and Spanish versions available. Download the signs <a href="{% static 'files/possible_city_lot_signs.zip' %}">here</a>, and contact us for help: <a href="mailto:volunteer@possiblecity.co">volunteer@possiblecity.co</a></p>
 
-          <div class="panel about-hero panel-about">
-            <h1 class="text-center">Possible City</h1>
-            <p class="text-center lead-big">Reimagining Philadelphia's forgotten spaces to meet the needs of its communities.</p>
-
-
-            <div class="row lot-images">
-      
-
-
-          
-            
-
-              <div class="row lot-images-row">
-      
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                  <img src="{% static 'img/lot_images/lot_image_600x300_0002_IMG_1708.jpg' %}">
+            <p class="lead">Sign up and create a profile to add ideas, explore potential spaces, and find people to 
+            help you rebuild your neighborhood and city.</p>
+            <p></p>
+          </div>
+          <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <img src="{% static 'img/lot_images/lot_sign_nicetown.jpg' %}">
                 </div>
-
-                
-
-                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-                  <div class="lot-image-text text-center">
-                    <p>We put up signs on vacant lots to engage the community</p>
-                  </div>
-                </div>
-
-  
-
-                  <div class="col-lg-2 col-sm-4 col-xs-6">
-                    <img src="{% static 'img/lot_images/Lot_image_sqaure_0002_IMG_1697.jpg' %}">
-                  </div>
-
-                  <div class="col-lg-2 col-sm-4 col-xs-6">
-                    <img src="{% static 'img/lot_images/Lot_image_sqaure_0011_IMG_1681.jpg' %}">
-                  </div> 
-
-
-
-                  <div class="col-lg-2 col-sm-4 col-xs-6 hidden-xs">
-                    <img src="{% static 'img/lot_images/Lot_image_sqaure_0017_IMG_0046.jpg' %}">
-                  </div>
-
-
-
-                
-
-              </div>
-
-
-              
-
-              <div class="row lot-images-row">
-      
-
-                <div class="col-lg-2 col-sm-4 col-xs-6">
-                  <img src="{% static 'img/lot_images/Lot_image_square_IMG_1789.jpg' %}">
-                </div>
-
-                <div class="col-lg-2 col-sm-4 col-xs-6">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0022_IMG_0041.jpg' %}">
-                </div>
-
-              
-                 <div class="col-lg-2 col-sm-4 col-xs-4 hidden-xs">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0023_Layer.jpg' %}">
-                </div>
-
-                <div class="col-lg-4 col-sm-4 col-xs-12">
-                  <img src="{% static 'img/lot_images/lot_image_600x300_IMG_1686.jpg' %}">
-                </div>
-                
-
-                <div class="col-lg-2 col-sm-4 col-xs-6 hidden-xs">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0016_IMG_0047.jpg' %}">
-                </div>
-
-                
-
-              </div>
-
-
-              <div class="row lot-images-row">
-      
-                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 ">
-                  <div class="lot-image-text text-center">
-                    <p>We collaborate with local community organizations</p>
-                  </div>
-                </div>
-
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                  <img src="{% static 'img/lot_images/lot_image_600x300_0004_IMG_1702.jpg' %}">
-                </div>
-
-                
-
-                <div class="col-lg-2 col-sm-2 col-xs-6">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0015_IMG_0048.jpg' %}">
-                </div>
-
-                <div class="col-lg-2 col-sm-2 col-xs-6 visible-xs">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0004_IMG_1695.jpg' %}">
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-                  <div class="lot-image-text text-center">
-                    <p>We unite bottom-up advocacy with top-down planning</p>
-                  </div>
-                </div>
-
-                <div class="col-lg-2 col-xs-2 hidden-xs">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0004_IMG_1695.jpg' %}">
-                </div>
-
-                
-
-              </div>
-
-              <div class="row lot-images-row">
-      
-
-                <div class="col-lg-2 col-xs-2">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0006_IMG_1693.jpg' %}">
-                </div>
-
-                <div class="col-lg-2 col-xs-2">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0007_IMG_1691.jpg' %}">
-                </div>
-
-                <div class="col-lg-2 col-xs-2">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0008_IMG_1687.jpg' %}">
-                </div>
-
-                 <div class="col-lg-2 col-xs-2">
-                  <img src="{% static 'img/lot_images/Lot_image_sqaure_0003_IMG_1696.jpg' %}">
-                </div>
-                
-
-                <div class="col-lg-4 col-xs-4">
-                  <img src="{% static 'img/lot_images/lot_image_600x300_0000_IMG_1710.jpg' %}">
-                </div>
-
-                
-
-              </div>
-
-
-              
-
-
-
-          
-
-
-
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-
-
-
-      <hr/>
-
-
-      <div class="row">
-        <div class="col-sm-8">
-          <p class="lead">Possible City is a collaborative platform that connects <a href="{% url 'profiles_profile_list' %}">people</a>, with the <a href="{% url 'ideas_idea_list' %}">imagination</a>, skills, and collective resources to transform abandoned <a href="{% url 'lotxlot' %}">spaces</a> into productive places. Initially, we're building community dialogue around open spaces with a focus on confronting the digital divide, by posting physical signage on vacant lots to prompt ideas from residents via text, tweet and write-in paper form. All the while, we're engaging artists, urban designers, urban farmers and small business people to float ideas of their own. </p>  
-
-
-
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h3 class="panel-title">Get Involved!</h3>
-            </div>
-            <div class="panel-body">
-
-            Want to support the cause? Take ownership over a lot in your neighborhood and post signs to facilitate a community discussion! We have English and Spanish versions available. Download the signs <a href="{% static 'files/possible_city_lot_signs.zip' %}">here</a>, and contact us for help: <a href="mailto:volunteer@possiblecity.co">volunteer@possiblecity.co</a>
-
-
-            </div>
+  <section class="partners row">
+    <div class="col-lg-12 col-12">
+      <div class="panel panel-about">
+        <h2 class="text-center">Partners</h2>
+        <div class="row">
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+            <img src="{% static 'img/profiles/jamie_moffett.jpg' %}">
+              <h4 class="text-center">Jamie Moffett</h4>
+              <h5 class="text-center">Kensington Renewal</h5>
+              <p class="text-center"><a href="http://kensingtonrenewal.com/">kensingtonrenewal.com</a></p>
+                    
+              <p>Jamie is a documentary filmmaker who also heads Kensington Renewal, an organization that seeks to rehabilitate blighted properties into owner occupied homes.</p>    
           </div>
-
-
-        </div>
-        <div class="col-sm-4">
-          
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <img src="{% static 'img/lot_images/lot_sign_nicetown.jpg' %}">
-            </div>
-
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+            <img src="{% static 'img/profiles/claudia.jpg' %}">
+            <h4 class="text-center">Claudia Sherrod</h4>
+            <h5 class="text-center">Hunting Park United</h5>
+            <p class="text-center"><a href="#">huntingpark.org</a></p>
+            <p>Ryan lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+              <img src="{% static 'img/profiles/ryan_kellermeyer.jpg' %}">
+              <h4 class="text-center">Ryan Kellermeyer</h4>
+              <h5 class="text-center">Hunting Park United</h5>
+              <p class="text-center"><a href="http://www.huntingpark.org">huntingpark.org</a></p>
+                    
+              <p>Ryan is a strategic projects manager who is also an active organizer in Hunting Park, running a community mailing list, new media classes for youths, and local fundraising efforts. </p>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+            <img src="{% static 'img/profiles/tonnetta.jpg' %}">
+            <h4 class="text-center">Tonnetta Graham</h4>
+            <h5 class="text-center">SMCDC</h5>
+            <p class="text-center"><a href="http://www.strawberrymansioncdc.org/">strawberrymansioncdc.org</a></p>
+                    
+            <p>Tonnetta is a dedicated educator and President of Strawberry Mansion CDC, who also serves on the Strawberry Mansion NAC Executive Board and as Treasurer of the Friends of East Park.</p>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+            <img src="{% static 'img/profiles/majeedah.jpg' %}">
+            <h4 class="text-center">Majeedah Rashid</h4>
+            <h5 class="text-center">Nicetown CDC</h5>
+            <p class="text-center"><a href="#">huntingpark.org</a></p>
             
+            <p>Majeedah is the COO of Nicetown CDC, where she has led development of affordable apartments and commercial space. She has also served on the Advisory Board of the Mayor’s Office of Community Services.</p>
+
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+            <img src="{% static 'img/profiles/verna_tyner.jpg' %}">
+            <h4 class="text-center">Verna Tyner</h4>
+            <h5 class="text-center">Tioga United</h5>
+            <p class="text-center"><a href="#">huntingpark.org</a></p>
+            
+            <p>Verna has worked as chief of staff for several Philadelphia councilman over the past 16 years, in addition to heading Tioga United, an organization striving to help North Philly rebuild itself.</p>
+
+
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="row team">
+    <div class="col-lg-12 col-12">
+      <div class="panel panel-about">
+        <h2 class="text-center">Team</h2>
+        <div class="row">
+          <div class="col-sm-6 col-lg-3">
+              <div class="text-center"><img src="{% static 'img/profiles/doug_filter.jpg' %}"></div>
+              <h4 class="text-center">Douglas Meehan</h4>
+              <h5 class="text-center">Urban Designer / Founder</h5>
+              <p class="text-center"><a href="mailto:doug@possiblecity.co">doug@possiblecity.co</a></p>
+                  
+              <p>Douglas is an urban designer who has worked on projects ranging from small scale urban landscapes to ASLA award-winning large scale park masterplans. He has a Master in City Planning and a Master in Landscape Architecture from the University of Pennsylvania School of Design. Prior to attending graduate school, Douglas worked for six years as a web designer and developer, most recently as Senior Web Designer at Travelocity.com. Douglas is interested in developing interfaces between the virtual and physical worlds to empower individuals and communities to imagine and create sustaining and sustainable living environments. </p>
           </div>
 
+          <div class="col-sm-6 col-lg-3">
+            <div class="text-center"><img src="{% static 'img/profiles/cary_filter.jpg' %}"></div>
+            <h4 class="text-center">Cary Betagole</h4>
+            <h5 class="text-center">Community Organizer/Co-Founder</h5>
+            <p class="text-center"><a href="mailto:cary@possiblecity.co">cary@possiblecity.co</a></p>
+            <p>Cary is excited to be a part of a team that’s developing tools we’ll use to add & retain value within our communities. In the past, he’s worked in digital marketing, newspaper & magazine journalism, music management, and the startup world. He currently freelances for Technically Philly. Cary, Ben, and Justin co-founded <a href="http://blissbit.org">Blissbit</a>, a design agency and thinktank focusing on social impact.</p>
+          </div>
 
-          
+          <div class="col-sm-6 col-lg-3">
+            <div class="text-center"><img src="{% static 'img/profiles/justin_filter.jpg' %}"></div>
+            <h4 class="text-center">Justin Broglie</h4>
+            <h5 class="text-center">Web Developer/Co-Founder</h5>
+            <p class="text-center"><a href="mailto:justin@possiblecity.co">justin@possiblecity.co</a></p>
+            <p>Justin spent most of his youth asking the big questions and dreaming up solutions to the world's problems. He believes in the essential interconnectedness of all of life, and is passionate about harnessing the power of technology to create social impact. Justin studied Digital Media Design at UPenn. </p>
+          </div>
 
-        </div>
-
-
-
-
-
-
-
+          <div class="col-sm-6 col-lg-3">
+            <div class="text-center"><img src="{% static 'img/profiles/ben_filter.jpg' %}"></div>
+            <h4 class="text-center">Ben Rodigas</h4>
+            <h5 class="text-center">UI/UX Designer/Co-Founder</h5>
+            <p class="text-center"><a href="mailto:ben@possiblecity.co">ben@possiblecity.co</a></p>
+            <p>Ben began his design career in Australia where he worked as an Experience Architect for asuccessful customer experience consultancy. He then worked as a UX Designer for Comcast where he designed interfaces for mobile, web, and TV. Ben is fascinated by design and its potential to be used for personal and social transformation. Ben spends his free time volunteering for non-profits, meditating, and learning how to do awesome AcroYoga moves with his friends.</p>
+          </div>
         </div><!--.row -->
-
-
-
-          </div><!--.panel -->
-          
-
-
-
-
-        </div>
-
-
-
-
-      
-
-
-
-      </div><!--.row.heading-->
-
-
-
-
-      <div class="row partners">
-    
-
-            <div class="panel panel-about">
-              <h2 class="text-center">Partners</h2>
-
-                
-                <div class="row">
-
-      
-                <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-                  <img src="{% static 'img/profiles/jamie_moffett.jpg' %}">
-                  <h4 class="text-center">Jamie Moffett</h4>
-                  <h5 class="text-center">Kensington Renewal</h5>
-                  <p class="text-center"><a href="#">huntingpark.org</a></p>
-                  
-                  <p>Jamie is a documentary filmmaker who also heads Kensington Renewal, an organization that seeks to rehabilitate blighted properties into owner occupied homes.</p>
-
-            
-                </div>
-
-
-                <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-                  <img src="{% static 'img/profiles/ryan_kellermeyer.jpg' %}">
-                  <h4 class="text-center">Ryan Kellermeyer</h4>
-                  <h5 class="text-center">Hunting Park United</h5>
-                  <p class="text-center"><a href="#">huntingpark.org</a></p>
-                  
-                  <p>Ryan is a strategic projects manager who is also an active organizer in Hunting Park, running a community mailing list, new media classes for youths, and local fundraising efforts. </p>
-
-            
-                </div>
-
-
-                <!--
-                <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-                  <img src="{% static 'img/profiles/claudia.jpg' %}">
-                  <h4 class="text-center">Claudia Sherrod</h4>
-                  <h5 class="text-center">Hunting Park United</h5>
-                  <p class="text-center"><a href="#">huntingpark.org</a></p>
-                  
-                  <p>Ryan lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-
-            
-                </div>
-                -->
-
-
-                <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-                  <img src="{% static 'img/profiles/tonnetta.jpg' %}">
-                  <h4 class="text-center">Tonnetta Graham</h4>
-                  <h5 class="text-center">Strawberry Mansion CDC</h5>
-                  <p class="text-center"><a href="#">huntingpark.org</a></p>
-                  
-                  <p>Tonnetta is a dedicated educator and President of Strawberry Mansion CDC, who also serves on the Strawberry Mansion NAC Executive Board and as Treasurer of the Friends of East Park. </p>
-
-            
-                </div>
-
-
-                <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-                  <img src="{% static 'img/profiles/majeedah.jpg' %}">
-                  <h4 class="text-center">Majeedah Rashid</h4>
-                  <h5 class="text-center">Nicetown CDC</h5>
-                  <p class="text-center"><a href="#">huntingpark.org</a></p>
-                  
-                  <p>Majeedah is the COO of Nicetown CDC, where she has led development of affordable apartments and commercial space. She has also served on the Advisory Board of the Mayor’s Office of Community Services.</p>
-
-                </div>
-
-
-                <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
-                  <img src="{% static 'img/profiles/verna_tyner.jpg' %}">
-                  <h4 class="text-center">Verna Tyner</h4>
-                  <h5 class="text-center">Tioga United</h5>
-                  <p class="text-center"><a href="#">huntingpark.org</a></p>
-                  
-                  <p>Verna has worked as chief of staff for several Philadelphia councilman over the past 16 years, in addition to heading Tioga United, an organization striving to help North Philly rebuild itself.</p>
-
-
-                </div>
-
-
-                
-
-
-              </div><!--.row -->
-              
-            </div>
-
-
-
-      </div><!--.row.partners-->
-
-
-
-      
-
-
-
-
-
-      
-
-
-
-
-
-
-      
-
-
-
-
-
-
-
-
-      <div class="row team">
-      
-        <div class="col-lg-12 col-12">
-
-          <div class="panel panel-about">
-            <h2 class="text-center">Team</h2>
-
-              <div class="row">
-      
-
-                <div class="col-sm-6 col-lg-3">
-                  <div class="text-center"><img src="{% static 'img/profiles/doug_filter.jpg' %}"></div>
-                  <h4 class="text-center">Douglas Meehan</h4>
-                  <h5 class="text-center">Urban Planner / Architect</h5>
-                  <p class="text-center"><a href="mailto:doug@possiblecity.co">doug@possiblecity.co</a></p>
-                  
-                  <p>Douglas is an urban designer who has worked on projects ranging from small scale urban landscapes to ASLA award-winning large scale park masterplans, and from community outreach to concept design to construction. He has a Master in City Planning and a Master in Landscape Architecture from the University of Pennsylvania School of Design. Prior to attending graduate school, Douglas worked for six years as a web designer and developer, most recently as Director of Interface Development at Site59.com, and Senior Web Designer at Travelocity.com. Douglas is interested in developing interfaces between the virtual and physical worlds to empower individuals and communities to imagine and create sustaining and sustainable living environments. </p>
-
-            
-                </div>
-
-
-                <div class="col-sm-6 col-lg-3">
-                  <div class="text-center"><img src="{% static 'img/profiles/cary_filter.jpg' %}"></div>
-                  <h4 class="text-center">Cary Betagole</h4>
-                  <h5 class="text-center">Community Organizer</h5>
-                  <p class="text-center"><a href="mailto:cary@possiblecity.co">cary@possiblecity.co</a></p>
-                  <p>Cary is excited to be a part of a team that’s developing tools we’ll use to add & retain value within our communities. In the past, he’s worked in digital marketing, newspaper & magazine journalism, music management, and the startup world. He currently freelances for Technically Philly. Cary, Ben, and Justin co-founded <a href="http://blissbit.org">Blissbit</a>, a design agency and thinktank focusing on social impact.</p>
-
-            
-                </div>
-
-
-                <div class="col-sm-6 col-lg-3">
-                  <div class="text-center"><img src="{% static 'img/profiles/justin_filter.jpg' %}"></div>
-                  <h4 class="text-center">Justin Broglie</h4>
-                  <h5 class="text-center">Web Developer</h5>
-                  <p class="text-center"><a href="mailto:justin@possiblecity.co">justin@possiblecity.co</a></p>
-                  <p>Justin spent most of his youth asking the big questions and dreaming up solutions to the world's problems. He believes in the essential interconnectedness of all of life, and is passionate about harnessing the power of technology to create social impact. Justin studied Digital Media Design at UPenn. </p>
-
-            
-                </div>
-
-
-
-                <div class="col-sm-6 col-lg-3">
-                  <div class="text-center"><img src="{% static 'img/profiles/ben_filter.jpg' %}"></div>
-                  <h4 class="text-center">Ben Rodigas</h4>
-                  <h5 class="text-center">UI/UX Designer</h5>
-                  <p class="text-center"><a href="mailto:ben@possiblecity.co">ben@possiblecity.co</a></p>
-                  <p>Ben began his design career in Australia where he worked as an Experience Architect for asuccessful customer experience consultancy. He then worked as a UX Designer for Comcast where he designed interfaces for mobile, web, and TV. Ben is fascinated by design and its potential to be used for personal and social transformation. Ben spends his free time volunteering for non-profits, meditating, and learning how to do awesome AcroYoga moves with his friends.</p>
-
-            
-                </div>
-
-
-              </div><!--.row -->
-
-          </div>
-
-        </div>
-
       </div>
-
-
-
-
-  </div>
+    </div>
+  </section>
+</div>
 
 
 
