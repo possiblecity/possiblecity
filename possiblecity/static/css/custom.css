@@ -1007,10 +1007,10 @@ p.lead-big {
 
 */
 
-.lot-images .lot-images-row {
+.lot-images-row {
 	padding-left: 20px;
 	padding-right: 20px;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 }
 
 
@@ -1323,6 +1323,16 @@ p.lead-big {
 	.lot-images-row .col-xs-12 {
 		margin: 10px 0;
 	}
+
+	.lot-images-row .col-xs-6 {
+		margin-bottom: 30px;
+	}
+
+	.lot-images-row {
+		margin-bottom: 0px;
+	}
+
+
 
 
 	/***************************************************************************/
