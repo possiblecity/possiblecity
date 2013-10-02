@@ -16,7 +16,7 @@ Django>=1.5
 # django third party modules
 south #database migrations
 django-supervisor #process management
-django-celery #async tasks
+django-celery-with-redis #async tasks
 django-compressor #static file compression
 django-pagination #pagination
 django-positions #auto ordering field

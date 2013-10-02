@@ -4,6 +4,8 @@ import os
 
 from django.core.exceptions import ImproperlyConfigured
 
+from celery.schedules import crontab
+
 from base import *
 
 
@@ -52,3 +54,13 @@ INSTALLED_APPS += (
     'memcache_status',
 )
 
+#==============================================================================
+#  Celery
+#==============================================================================
+
+
+BROKER_URL = 'redis://localhost:14484/0'
+CELERY_RESULT_BACKEND = 'database'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERYBEAT_PIDFILE = '/tmp/celerybeat.pid'
+CELERYBEAT_SCHEDULE = {} # Will add tasks later

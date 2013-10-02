@@ -4,6 +4,8 @@ import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
+from djcelery import setup_loader
+
 from django.core.urlresolvers import reverse_lazy
 
 #==============================================================================
@@ -415,30 +417,16 @@ CACHES = {
 # ASync
 #==============================================================================
 
-# Celery
+BROKER_URL = "redis://localhost:6379/0"
 
-BROKER_TRANSPORT = "redis"
-BROKER_HOST = "localhost"
-BROKER_PORT = 6379
-BROKER_VHOST = "0"
-BROKER_PASSWORD = ""
-BROKER_POOL_LIMIT = 10
+# See: http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
+CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 
-CELERY_RESULT_BACKEND = "redis"
-CELERY_REDIS_HOST = "localhost"
-CELERY_REDIS_PORT = 6379
-CELERY_REDIS_PASSWORD = ""
-CELERYD_HIJACK_ROOT_LOGGER = False
-CELERYD_LOG_LEVEL = "INFO"
-CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-CELERY_IGNORE_RESULT = True
-CELERY_SEND_TASK_ERROR_EMAILS = True
-CELERY_DISABLE_RATE_LIMITS = True
-CELERY_TASK_PUBLISH_RETRY = True
-CELERY_TASK_RESULT_EXPIRES = 7 * 24 * 60 * 60  # 7 Days
-CELERYD_TASK_TIME_LIMIT = 120
-CELERYD_TASK_SOFT_TIME_LIMIT = 120
+# See: http://docs.celeryproject.org/en/master/configuration.html#std:setting-CELERY_CHORD_PROPAGATES
+CELERY_CHORD_PROPAGATES = True
 
+# See: http://celery.github.com/celery/django/
+setup_loader()
 
 #==============================================================================
 # API
