@@ -51,7 +51,8 @@ input[type="password"] {
 }
 
 
-.panel {
+.panel.activity {
+	
   padding: 15px;
   margin-bottom: 20px;
   background-color: #ffffff;
@@ -59,6 +60,7 @@ input[type="password"] {
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+
 }
 
 div.content {
@@ -192,7 +194,7 @@ form p {
 }
 
 .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus, {
-	color: #555555;
+	color: #fff;
 	background-color: #BEE0EA;
 }
 
@@ -214,7 +216,7 @@ background-color: #BEE0EA;
 }
 
 .navbar-nav > li > a:hover {
-	color: #555555;
+	color: #fff;
 	background-color: transparent;
 }
 
@@ -226,8 +228,8 @@ body.lotxlot .navbar-nav > .nav-map a,
 body.ideas .navbar-nav > .nav-ideas a, 
 body.people .navbar-nav > .nav-people a,
 body.about .navbar-nav > .nav-about a {
-	color: #555555;
-	background-color: #BEE0EA;
+	color: #fff;
+	background-color: #78cef1;
 }
 
 .navbar-toggle .icon-bar {
@@ -296,6 +298,19 @@ body.about .navbar-nav > .nav-about a {
 	border-right:1px solid #dddddd;
 	border-left:1px solid #dddddd;
 }
+
+
+/***************************************************************************/
+/* FOOTER */
+
+footer {
+	margin: 20px 0;
+}
+
+footer p {
+	margin-bottom: 20px;
+}
+
 
 
 /***************************************************************************/
@@ -616,25 +631,7 @@ padding-left: 0px;
 	text-align:center; 
 }
 
-/***************************************************************************/
-/* ABOUT */
 
-.stats p.lead {
-  margin-bottom: 0;
-  text-align: center;
-  font-size: 21px;
-}
-
-.stats h5 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.stats {
-  padding: 20px;
-  background: white;
-  text-align: center;
-}
 
 
 /***************************************************************************/
@@ -850,7 +847,7 @@ opacity: 0.6;
 		background-color: #F3F3F3;
 	}
 
-	.ideas-page-panel {
+	.panel.ideas-page-panel {
 		padding: 15px;
 		padding-top: 0px;
 	}
@@ -934,6 +931,126 @@ opacity: 0.6;
 
 
 
+
+/***************************************************************************/
+/* ABOUT PAGE */
+
+.about h1 {
+	text-transform: uppercase;
+	font-size: 60px;
+	margin-bottom: 10px;
+}
+
+p.lead-big {
+	font-size: 40px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.about h2 {
+	text-transform: uppercase;
+	font-size: 45px;
+	margin-bottom: 20px;
+}
+
+.team img, .partners img {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+.about h5 {
+	margin-bottom: 5px;
+}
+
+.board-of-advisors h5 {
+	margin-bottom: 0px;
+	display: inline;
+	padding-right: 5px; 
+}
+
+.board-of-advisors p {
+	margin-top: 10px;
+}
+
+
+
+
+.board-of-advisors h6 {
+	text-transform: uppercase;
+	display: inline;
+
+}
+
+.panel-group, #accordion {
+	border-bottom: 0px;
+}
+
+
+/*
+.lot-images .col-lg-2 {
+	padding-right: 5px;
+	padding-left: 5px;
+	
+}
+
+.lot-images .col-lg-4 {
+	padding-right: 5px;
+	padding-left: 5px;
+	height: 179px;
+}
+
+.lot-images .col-lg-4 img {
+	height: 178px;
+	width: 100%;
+}
+
+*/
+
+.lot-images .lot-images-row {
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+}
+
+
+
+.lot-images {
+	margin-top: 40px;
+}
+
+
+
+.lot-image-text {
+	background-color: #68C4EA;
+	color: #ffffff;
+	height: 178px;
+	padding-left: 5px;
+	padding-right: 5px;
+
+}
+
+.lot-image-text p {
+	font-size: 20px;
+	margin-left: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 40px;
+}
+
+
+
+.panel.panel-about {
+	
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+
+}
 
 
 
@@ -1104,7 +1221,7 @@ opacity: 0.6;
 	.sidebar {
 		position: absolute;
 		right: 0;
-		top: 51px;
+		top: 50px;
 		bottom: 0;
 		width: 400px;
 		padding-top: 10px;
@@ -1180,6 +1297,31 @@ opacity: 0.6;
 	
 	.ideas-page-neighborhoods-panel-md-devices {
 		display: none;
+	}
+
+
+
+
+	/***************************************************************************/
+	/* ABOUT PAGE */
+
+	.about h1 {
+		font-size: 50px;
+	}
+
+	p.lead-big {
+		font-size: 35px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.about h2 {
+		font-size: 45px;
+	}
+
+
+	.lot-images-row .col-xs-12 {
+		margin: 10px 0;
 	}
 
 
