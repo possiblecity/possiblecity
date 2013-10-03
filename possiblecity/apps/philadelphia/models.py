@@ -1,4 +1,5 @@
 # philadelphia/models.py
+import urllib
 
 from django.conf import settings
 from django.contrib.gis.db import models
@@ -65,22 +66,91 @@ class LotProfile(models.Model):
          qs = Neighborhood.objects.filter(bounds__contains=pnt)
          return qs[0]
 
-    def get_address_data(self):
+    def get_data_by_point(self, datasource):
         pnt = self.get_center()
         lon = pnt.x
         lat = pnt.y
-        source = settings.PHL_DATA["ADDRESSES"] + "query"
+        source = datasource + "query"
         params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
-                  "outFields":"OWNER1, OWNER2, BLDG_CODE, BLDG_DESC, IMPERV_AREA ", "f":"json"}
+                  "outFields":"*", "f":"json"}
 
-        data =  fetch_json(source, params, 604800)
+        try:
+            data =  fetch_json(source, params, 604800)
 
-        if "features" in data:
-            features = data["features"]
-            if features:
-                if features[0]:
-                    return features[0]["attributes"]
+            if "features" in data:
+                features = data["features"]
+                if features:
+                    if features[0]:
+                        return features[0]["attributes"]
+        except:
+            return None
+    
+    def get_data_by_envelope(self, datasource):
+        envelope = ', '.join(map(str, self.get_center().buffer(0.00008).extent))
+        source = datasource + "query"
+        params = {"geometry":"%s" % envelope, "geometryType":"esriGeometryEnvelope", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelContains",
+                  "outFields":"*", "f":"json"}
+        try:
+            data =  fetch_json(source, params, 604800)
+            if "features" in data:
+                features = data["features"]
+                return features
+        except:
+            return None
+    
+
+    def get_address_data(self):
+        return self.get_data_by_point(settings.PHL_DATA["ADDRESSES"])
+
+    def get_zoning_base(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_BASE"])
+
+    def get_zoning_overlay(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_OVERLAY"])
+
+    def get_zoning_flood(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_FLOOD"])
+
+    def get_zoning_slope(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_SLOPE"])
+
+    def get_service_council(self):
+        return self.get_data_by_point(settings.PHL_DATA["SERVICE_COUNCIL"])
+
+    def get_service_planning(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_PLANNING"])
+
+    def get_service_census(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_CENSUS"])
+
+    def get_service_ward(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_WARD"])
+
+    def get_violations(self):
+        return self.get_data_by_envelope(settings.PHL_DATA["VACANCY_VIOLATIONS"])
+
+    def get_licenses(self):
+        return self.get_data_by_envelope(settings.PHL_DATA["VACANCY_LICENSES"])
+
+    def get_opa_data(self):
+        source = settings.PHL_DATA["ADDRESS_API"] + urllib.quote_plus(self.address)
+        params = ''
+
+        try:
+            data =  fetch_json(source, params, 604800)
+            if "property" in data:
+                return data["property"]
+        except:
+            return None
+
+    def get_papl_listing(self):
+        return self.get_data_by_envelope(settings.PHL_DATA["PAPL_LISTINGS"])
+
+    @property
+    def violation_set(self):
+        pass
 
     @property
     def owner(self):

@@ -477,10 +477,21 @@ PHL_DATA = {
     'PAPL_ASSETS': 'http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/1/',
     'PAPL_PARCELS': 'http://gis.phila.gov/ArcGIS/rest/services/RDA/PAPL_Web/MapServer/2/',
     'PAPL_WEB':	'http://secure.phila.gov/PAPLPublicWeb/',
+    'SERVICE_ZIP': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/24/',
+    'SERVICE_PHILLYRISING': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/16/',
+    'SERVICE_COUNCIL': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/2/',
+    'SERVICE_PLANNING': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/21/'
+    'SERVICE_CENSUS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/0/',
+    'SERVICE_BLOCKGROUP': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/1/',
+    'SERVICE_WARDS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/11/',
     'VACANCY': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/', 
     'VACANCY_APPEALS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/0/',
     'VACANCY_LICENSES': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2/',
     'VACANCY_DEMOLITIONS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/4/',
     'VACANCY_DEMOLITION_PERMITS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/6/',
-    'VACANCY_VIOLATIONS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8/'
+    'VACANCY_VIOLATIONS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/8/',
+    'ZONING_BASE': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ZoningMap/MapServer/6/',
+    'ZONING_OVERLAY': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ZoningMap/MapServer/1/',
+    'ZONING_FLOOD': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ZoningMap/MapServer/3/',
+    'ZONING_SLOPE': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ZoningMap/MapServer/2/',
 }
