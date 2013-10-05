@@ -47,10 +47,11 @@ Profile for {{ profile.user.username }}
                             {% if profile.twitter %}
                             <a href="http://www.twitter.com/{{ profile.twitter }}">
                             @{{ profile.twitter }}</a>
-                            <br/>
+                            <br>
                             {% endif %}
                             {% if profile.user.email %}
                                <a href="mailto:{{ profile.user.email }}" >{{ profile.user.email }}</a>
+                            <br>
                             {% endif %}
                             {% if profile.website %}
                                 {{ profile.website|urlize }}<br/>
