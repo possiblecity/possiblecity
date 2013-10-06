@@ -47,12 +47,16 @@ class LotProfile(models.Model):
 
     basereg = models.CharField(max_length=10, blank=True) 
     opa_code = models.CharField( max_length=10, blank=True)
+    brt_id = models.CharField( max_length=10, blank=True)
     address = models.CharField(max_length=255, blank=True)
     
     pwd_parcel = models.MultiPolygonField(srid=4326)
 
     lot = models.OneToOneField(Lot, null=True, blank=True, related_name='profile')
     neighborhood = models.ForeignKey(Neighborhood, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True) 
 
     def get_center(self):
         try:
@@ -68,7 +72,7 @@ class LotProfile(models.Model):
 
     def get_data_by_address(self, datasource, search_field, timeout=604800):
         source = datasource + "query"
-        params = {"where":"%s=%s" % (search_field, self.address),
+        params = {"where":"%s=%s" % (search_field, urllib.quote_plus(self.address)),
                   "returnGeometry":"false",
                   "outFields":"*", "f":"json"}
 
