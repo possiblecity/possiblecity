@@ -164,12 +164,24 @@
                     <td>{{ lot.profile.building_description }}</td>
                   </tr>
                   <tr>
+                    <th>Land Use Designation:</th>
+                    <td>{{ lot.profile.land_use }}</td>
+                  </tr>
+                  <tr>
+                    <th>Zoning Designation:</th>
+                    <td>{{ lot.profile.zoning_base }}</td>
+                  </tr>
+                  <tr>
                     <th>Basereg #:</th>
                     <td>{{ lot.profile.basereg }}</td>
                   </tr>
                   <tr>
                     <th>Address Code:</th>
                     <td>{{ lot.profile.opa_code }}</td>
+                  </tr>
+                  <tr>
+                    <th>BRT/OPA #:</th>
+                    <td><a href="http://opa.phila.gov/opa.apps/Search/SearchResults.aspx?id={{ lot.profile.opa_code}}">{{ lot.profile.brt_id }}</a></td>
                   </tr>
 
                  </tbody>
