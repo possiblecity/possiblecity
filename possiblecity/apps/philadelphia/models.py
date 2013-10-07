@@ -46,8 +46,8 @@ class LotProfile(models.Model):
     objects = models.GeoManager()
 
     basereg = models.CharField(max_length=10, blank=True) 
-    opa_code = models.CharField( max_length=10, blank=True)
-    brt_id = models.CharField( max_length=10, blank=True)
+    opa_code = models.CharField(max_length=10, blank=True)
+    brt_id = models.CharField(max_length=10, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True)
     
     pwd_parcel = models.MultiPolygonField(srid=4326)

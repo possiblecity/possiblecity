@@ -21,7 +21,6 @@ def delete_duplicate_lots():
         else:
             print row.address
 
-
 def check_landuse_vacancy():
     """
     Check landuse data source to get vacancy status. 
@@ -131,6 +130,42 @@ def get_basereg():
                         attributes = features[0]["attributes"]
                         lot_profile.basereg = attributes["BASEREG"]
                         lot_profile.save(update_fields=["basereg",])
+                        print("%s: %s updated" % (lot_profile.id, lot_profile.address))
+                    else:
+                        print("%s" % (lot.id))
+            else:
+                print("No features for %s" % (lot.id))
+        else:
+            print("No Data")
+
+def get_brt():
+    """
+    Check address data source to get brt number.
+    Update database accordingly.
+    """
+    from .models import LotProfile
+
+    queryset = queryset_iterator(LotProfile.objects.filter(brt_id__exact=''))
+    for lot_profile in queryset:
+        lon = lot_profile.get_center().x
+        lat = lot_profile.get_center().y
+        source = settings.PHL_DATA["ADDRESSES"] + "query"
+        params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
+                  "outFields":"BRT_ID", "f":"json"}
+
+        data =  fetch_json(source, params)
+
+        if data:
+            if "error" in data:
+                print(data["error"]["details"])
+            elif "features" in data:
+                features = data["features"]
+                if features:
+                    if features[0]:
+                        attributes = features[0]["attributes"]
+                        lot_profile.brt_id = attributes["BRT_ID"]
+                        lot_profile.save(update_fields=["brt_id",])
                         print("%s: %s updated" % (lot_profile.id, lot_profile.address))
                     else:
                         print("%s" % (lot.id))
