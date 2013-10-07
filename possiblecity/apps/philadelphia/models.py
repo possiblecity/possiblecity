@@ -1,4 +1,5 @@
 # philadelphia/models.py
+import urllib
 
 from django.conf import settings
 from django.contrib.gis.db import models
@@ -46,12 +47,16 @@ class LotProfile(models.Model):
 
     basereg = models.CharField(max_length=10, blank=True) 
     opa_code = models.CharField( max_length=10, blank=True)
+    brt_id = models.CharField( max_length=10, blank=True)
     address = models.CharField(max_length=255, blank=True)
     
     pwd_parcel = models.MultiPolygonField(srid=4326)
 
     lot = models.OneToOneField(Lot, null=True, blank=True, related_name='profile')
     neighborhood = models.ForeignKey(Neighborhood, null=True, blank=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True) 
 
     def get_center(self):
         try:
@@ -65,23 +70,130 @@ class LotProfile(models.Model):
          qs = Neighborhood.objects.filter(bounds__contains=pnt)
          return qs[0]
 
-    def get_address_data(self):
+    def get_data_by_address(self, datasource, search_field, timeout=604800):
+        source = datasource + "query"
+        params = {"where":"%s=%s" % (search_field, urllib.quote_plus(self.address)),
+                  "returnGeometry":"false",
+                  "outFields":"*", "f":"json"}
+
+        try:
+            data =  fetch_json(source, params, timeout)
+            if "features" in data:
+                features = data["features"]
+                if features:
+                    if features[0]:
+                        return features[0]["attributes"]
+        except:
+            return None
+
+
+    def get_data_by_point(self, datasource, timeout=604800):
         pnt = self.get_center()
         lon = pnt.x
         lat = pnt.y
-        source = settings.PHL_DATA["ADDRESSES"] + "query"
+        source = datasource + "query"
         params = {"geometry":"%f, %f" % (lon, lat), "geometryType":"esriGeometryPoint", 
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
-                  "outFields":"OWNER1, OWNER2, BLDG_CODE, BLDG_DESC, IMPERV_AREA ", "f":"json"}
+                  "outFields":"*", "f":"json"}
 
-        data =  fetch_json(source, params, 604800)
+        try:
+            data =  fetch_json(source, params, timeout)
 
-        if "features" in data:
-            features = data["features"]
-            if features:
-                if features[0]:
-                    return features[0]["attributes"]
+            if "features" in data:
+                features = data["features"]
+                if features:
+                    if features[0]:
+                        return features[0]["attributes"]
+        except:
+            return None
+    
+    def get_data_by_envelope(self, datasource, timeout=604800):
+        envelope = ', '.join(map(str, self.get_center().buffer(0.00008).extent))
+        source = datasource + "query"
+        params = {"geometry":"%s" % envelope, "geometryType":"esriGeometryEnvelope", 
+                  "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelContains",
+                  "outFields":"*", "f":"json"}
+        try:
+            data =  fetch_json(source, params, timeout)
+            if "features" in data:
+                features = data["features"]
+                return features
+        except:
+            return None
 
+    def get_address_data(self):
+        return self.get_data_by_point(settings.PHL_DATA["ADDRESSES"])
+
+    def get_landuse_data(self):
+        return self.get_data_by_point(settings.PHL_DATA["LAND_USE"], 2628000)
+
+    def get_zoning_base(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_BASE"], 2628000)
+
+    def get_zoning_overlay(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_OVERLAY"], 2628000)
+
+    def get_zoning_flood(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_FLOOD"], 2628000)
+
+    def get_zoning_slope(self):
+        return self.get_data_by_point(settings.PHL_DATA["ZONING_SLOPE"], 2628000)
+
+    def get_service_council(self):
+        return self.get_data_by_point(settings.PHL_DATA["SERVICE_COUNCIL"], 2628000)
+
+    def get_service_planning(self):
+        return self.get_data_by_point(settings.PHL_DATA["SERVICE_PLANNING"], 2628000)
+
+    def get_service_census(self):
+        return self.get_data_by_point(settings.PHL_DATA["SERVICE_CENSUS"], 2628000)
+
+    def get_service_ward(self):
+        return self.get_data_by_point(settings.PHL_DATA["SERVICE_WARD"], 2628000)
+
+    def get_licenses(self):
+        return self.get_data_by_envelope(settings.PHL_DATA["VACANCY_LICENSES"])
+
+    def get_violations(self):
+        data = self.get_data_by_address(
+                   settings.PHL_DATA["VACANCY_VIOLATIONS"], 'VIOLATION_ADDRESS')
+        if data:
+            return data
+        else:
+            return self.get_data_by_envelope(settings.PHL_DATA["VACANCY_VIOLATIONS"])
+
+    def get_opa_data(self):
+        source = settings.PHL_DATA["ADDRESS_API"] + urllib.quote_plus(self.address)
+        params = ''
+
+        try:
+            data =  fetch_json(source, params, 604800)
+            if "property" in data:
+                return data["property"]
+        except:
+            return None
+
+    def get_papl_listing(self):
+        return self.get_data_by_envelope(settings.PHL_DATA["PAPL_LISTINGS"])
+
+    @property
+    def violation_set(self):
+        pass
+
+    @property
+    def has_violation(self):
+        if self.get_violations():
+            return True
+        else:
+            return False
+
+    @property
+    def has_license(self):
+        if self.get_licenses():
+            return True
+        else:
+            return False
+      
     @property
     def owner(self):
         owner = self.get_address_data()["OWNER1"].title()
@@ -98,6 +210,27 @@ class LotProfile(models.Model):
     def impervious_area(self):
         return "%s sq ft" % (self.get_address_data()["IMPERV_AREA"])
 
+    @property
+    def land_use(self):
+        if self.get_landuse_data()["C_DIG3DESC"]: 
+            return self.get_landuse_data()["C_DIG3DESC"]
+        elif self.get_landuse_data()["C_DIG2DESC"]:
+            return self.get_landuse_data()["C_DIG2DESC"]
+        else:
+             return self.get_landuse_data()["C_DIG1DESC"]
+
+    @property
+    def zoning_base(self):
+        return self.get_zoning_base()["LONG_CODE"]
+
+    @property
+    def council_district(self):
+        return self.get_council_district()['DIST_NUM']
+
+    @property
+    def latest_violation(self):
+        if self.get_violations():
+            return self.get_violations()[0]
 
     def __unicode__(self):
         return u'%s' % self.lot
