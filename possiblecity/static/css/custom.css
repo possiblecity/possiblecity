@@ -266,6 +266,26 @@ body.about .navbar-nav > .nav-about a {
 	margin-bottom: 20px;
 }
 
+
+
+.latest-ideas-homepage img {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.latest-ideas-homepage h4, .latest-ideas-homepage p {
+	display: inline;
+}
+
+
+/***************************************************************************/
+/* Featured Projects */
+
+.featured-projects h4 {
+	margin-bottom: 5px;
+}
+
 /***************************************************************************/
 /* MAP STYLES */
 
@@ -1198,13 +1218,25 @@ p.lead-big {
 	}
 
 
+	.latest-ideas-homepage .col-sm-6 {
+	width: 24.85%;
+	float: left;
+	}
+
+	.latest-ideas-homepage h4 {
+	font-size: 14px;
+	}
+
+
 
 }
 
 
 
-@media (min-width: 769px) {
+@media (min-width: 750px) {
 
+
+	
 
 	.profile-edit-save-button-2 {
 		display: none;
@@ -1298,6 +1330,7 @@ p.lead-big {
 	.ideas-page-neighborhoods-panel-md-devices {
 		display: none;
 	}
+
 
 
 
