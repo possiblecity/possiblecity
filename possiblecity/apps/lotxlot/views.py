@@ -125,7 +125,7 @@ class LotIdeaApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots with Ideas to be consumed as geojson.
     """
-    queryset = Lot.objects.exclude(idea=None).prefetch_related('idea_set')
+    queryset = Lot.objects.filter(idea__isnull=False).prefetch_related('idea_set')
     serializer_class = LotPointSerializer
     
     paginate_by = None
