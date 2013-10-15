@@ -130,11 +130,10 @@
                                 
                                 <h4 class="media-heading">
                                     {% if idea.user.first_name %}
-                                        {{ idea.user.profile.full_name }}
+                                        {{ idea.user.profile.full_name}}:
                                     {% else %}
-                                        {{ idea.user.username }}
+                                        {{ idea.user.username}}:
                                     {% endif %}
-                                    :
                                 </h4>
                                 <p>{{ idea.tagline }}</p>
                                 <h6>Via {{ idea.get_via_display }}

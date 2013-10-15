@@ -1327,8 +1327,22 @@ p.lead-big {
 
 @media (max-width: 768px) {
 	
+
 	.ideas-page-neighborhoods-panel-md-devices {
 		display: none;
+	}
+
+	.navbar-nav > li > a {
+	font-size: 18px;
+	}
+
+	.dropdown-toggle {
+		float: left;
+	}
+
+	.mobile-account-bar-dropdown {
+		float: left !important;
+		margin-top: -10px;
 	}
 
 
