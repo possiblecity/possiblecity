@@ -15,8 +15,15 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-12">
-            {% get_latest_featured ideas.Idea 1 as featured_ideas %}
+             {% get_latest_featured ideas.Idea 6 as featured_ideas %}
             <div id="featured-idea-slideshow" class="carousel slide">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                {% for idea in featured_ideas %}
+                <li class="{% if forloop.first %}active{% endif %}" data-target="#featured-idea-slideshow" data-slide-to="{{ forloop.counter0 }}"></li>
+                {% endfor %}
+              </ol>
+
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
                 {% for idea in featured_ideas %}
@@ -44,6 +51,14 @@
                 </div>
                 {% endfor %}
               </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#featured-idea-slideshow" data-slide="prev">
+                <span class="icon-prev"></span>
+              </a>
+              <a class="right carousel-control" href="#featured-idea-slideshow" data-slide="next">
+                <span class="icon-next"></span>
+              </a>
             </div>
 
 
@@ -52,37 +67,6 @@
                 <h2>Reimagining Philadelphia's vacant spaces</h2>
             </div>
 
-        </div>
-    </div>
-    
-
-    <!-- Featured Ideas -->
-    <div class="panel featured-projects">
-        <div class="row">
-            <div class="col-lg-12 col-12">
-                <h2 class="margin-bottom-20">Featured Projects</h2>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="../static/img/lot_images/little_berlin.jpg">
-                        <h4><a href ="http://possiblecity.co/ideas/explore/idea/a-4-year-project-to-transform-the-empty-lot-betwee/">Little Berlin's Fairgrounds</a></h4>
-                        <p>A project by little berlin to transform the empty lot between Boston and York Streets into an urban outdoor artspace.</p>
-
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="../static/img/lot_images/lots_of_power.jpg">
-                        <h4><a href ="http://possiblecity.co/ideas/explore/idea/lots-of-power-greening-art-lots-of-power-art-p/">Lots of Power Greening & Art</a></h4>
-                        <p>Teens work under the guidance of professional mentors to green vacant lots in the Kensington & Allegheny neighborhoods.</p>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <img src="../static/img/lot_images/free_shop_coffee_shop.jpg">
-                        <h4><a href ="http://possiblecity.co/ideas/explore/idea/freeshop-coffeeshop-a-pop-up-coffee-shop-at-10th/">FreeShop Coffee Shop</a></h4>
-                        <p>A project run by Kathryn Sclavi. She received $5,000 from the Philadelphia Redevelopment Authority to host a free coffee shop for the community on a vacant lot.</p>
-                    </div>
-
-                
-                </div>
-                
-            </div>
         </div>
     </div>
     <!-- Latest Ideas --> 
