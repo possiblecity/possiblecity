@@ -17,7 +17,6 @@
         <div class="col-lg-12 col-12">
             {% get_latest_featured ideas.Idea 1 as featured_ideas %}
             <div id="featured-idea-slideshow" class="carousel slide">
-              
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
                 {% for idea in featured_ideas %}
@@ -86,11 +85,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
     <!-- Latest Ideas --> 
     <div class="panel latest-ideas">
         <div class="row">
@@ -99,12 +93,20 @@
                 {% get_latest ideas.Idea 8 as latest_ideas %}
                 <div class="row latest-ideas-homepage">
                 {% for idea in latest_ideas %}
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
-                        <div class="idea" style="position: relative;>
-                                <a href ="{% url 'lotxlot_lot_detail' idea.lots.all.0.id %}">
-                                   <img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
-                                </a>
-                                <div style="position: absolute;
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 margin-bottom-20">
+                       <a href="{% if idea.get_lead_image %}
+                                {% url 'ideas_idea_detail' idea.slug %}
+                                {% else %}
+                                {% url 'lotxlot_lot_detail' idea.lots.all.0.id %}
+                                {% endif %}
+                               ">
+                        <div class="idea" style="position: relative;">
+                            {% if idea.get_lead_image %}
+                            <img src="{% thumbnail idea.get_lead_image.file '500x500' crop upscale quality=100  %}" alt="{{ idea.title }}">
+                            {% else %}
+                            <img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
+                            {% endif %}                                
+                            <div style="position: absolute;
                                             top:0;
                                             left:0;
                                             bottom: 0;
@@ -112,16 +114,34 @@
                                             box-sizing: border-box;
                                             text-align:center;
                                             color:rgba(255,255,255,0.9);
-                                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+                                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
                                             font-size: 24px;
                                             padding: 10px;
                                             font-weight:bold; line-height:1.0em;">
                                     {{ idea.tagline }}
-                                </div>
+                             </div>
+                             {% if idea.get_lead_image %}
+                             <span style="position:absolute; 
+                                          bottom:15px; right:0; 
+                                          background: #cccc00;
+                                          color: #fff;
+                                          font-size: 18px;
+                                          font-weight: bold;
+                                          padding: 4px 16px">Proposal</span>
+                             {% endif %}
                         </div>
+                        </a>
+                        <div class="meta" style="margin-top:10px;">
                         <h4 class="media-heading">
+                            <img class="profile-pic" style="margin-right: 10px; float: left"
+                                 alt="{{ idea.user.profile.full_name }}"
+                                 {% if idea.user.profile.photo %} 
+                                 src="{% thumbnail idea.user.profile.photo '36x36' crop upscale %}"
+                                 {% else %}
+                                 src="{% static 'img/profile.png' %}"
+                                 height="36"
+                                 {% endif %}">
                             {{ idea.user.profile.full_name}} <small>on</small>                            
-
                             <br>
                             {% for lot in idea.lots.all %}
                             {% if forloop.first %}
@@ -160,17 +180,10 @@
                             </span>
                         {% endif %}
                         </h6> 
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 {% endblock body %}
-{% block extra_body %}
-<script src="http://jquery-textfill.github.io/jquery-textfill/jquery.textfill.min.js"></script>
-<script>
-$(function(){
-  $('.textfill').textfill({maxFontPixels:30});
-});
-</script>
-{% endblock %}
