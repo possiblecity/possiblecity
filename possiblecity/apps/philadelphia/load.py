@@ -1,5 +1,8 @@
 import os
 
+import json
+import requests
+
 from django.conf import settings
 from django.contrib.gis.utils import LayerMapping
 from models import LotProfile, Neighborhood
@@ -45,5 +48,21 @@ def map(model, file, mapping, verbose=True, strict=True, progress=False, step=Fa
     lm = LayerMapping(model, data_source, mapping,
                       transform=False, encoding='iso-8859-1')
     lm.save(verbose=verbose, strict=strict, progress=progress, step=step)
+
+def load_addresses(start=0):
+    stop = start+1000
+    url = settings.PHL_DATA["ADDRESSES"] + "query"
+    params = {"where":"OBJECTID > %s AND OBJECTID < %s" % (start, stop),
+              "returnGeometry":"true",
+              "outSR":"4326",
+              "outFields":"ADDRESS, TENCODE, BRT_ID", 
+              "f":"json"}
+
+    data = requests.get(url, params=params)
+
+    lots = json.loads(data.text)[features]
+
+
+
 
 

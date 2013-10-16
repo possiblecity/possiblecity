@@ -9,9 +9,9 @@ from django.contrib.gis.geos import GEOSGeometry, MultiPolygon
 from apps.lotxlot.utils import queryset_iterator, fetch_json, has_feature
 
 def delete_duplicate_lots():
-    queryset = queryset_iterator(Lot.objects.filter(is_vacant=True)) 
+    queryset = queryset_iterator(Lot.objects.all) 
     for row in queryset:
-        if Lot.objects.filter(address__iexact=row.address).count() > 1:
+        if Lot.objects.filter(opa_code=row.opa_code).count() > 1:
             row.delete()
             print "Deleted" + row.address
         else:

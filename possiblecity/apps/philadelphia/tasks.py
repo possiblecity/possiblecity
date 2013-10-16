@@ -2,6 +2,9 @@
 
 import os
 
+import json
+import requests
+
 from django.conf import settings
 from django.contrib.gis.utils import LayerMapping
 from models import LotProfile
@@ -44,31 +47,17 @@ def check_landuse_vacancy():
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"C_DIG3", "f":"json"}
 
-        data =  fetch_json(source, params)
+        data = json.loads(requests.get(source, params=params))
 
         if data:
-            if "error" in data:
-                print(data["error"]["details"])
-            else:
-                if "features" in data:
-                    features = data["features"]
-                    if features[0]:
-                        attributes = features[0]["attributes"]
-                        if "C_DIG3" in attributes:
-                            if attributes["C_DIG3"] == 911:
-                                lot.is_vacant = True
-                                lot.save(update_fields=["is_vacant",])
-                                print("%s: %s updated" % (lot.id, lot.address))
-                            else:
-                                print("%s" % (lot.id))
-                        else:
-                            print("No C_DIG3 for %s" % (lot.id))
-                    else:
-                        print("No attributes for %s" % (lot.id))
-                else:
-                    print("No features for %s" % (lot.id))
-        else:
-            print("No Data")
+            if "features" in data:
+                features = data["features"]
+                if features[0]:
+                    attributes = features[0]["attributes"]
+                    if "C_DIG3" in attributes:
+                        if attributes["C_DIG3"] == 911:
+                            lot.is_vacant = True
+                            lot.save(update_fields=["is_vacant",])
 
 
 @task()
@@ -89,25 +78,16 @@ def check_public():
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"C_DIG3", "f":"json"}
 
-        data =  fetch_json(source, params)
+        data = json.loads(requests.get(source, params=params))
 
         if data:
-            if "error" in data:
-                print(data["error"]["details"])
-            elif "features" in data:
+            if "features" in data:
                 features = data["features"]
                 if features:
                     if features[0]:
                         lot.is_public = True
                         lot.save(update_fields=["is_public",])
-                        print("%s: %s updated" % (lot.id, lot.address))
-                    else:
-                        print("%s" % (lot.id))
-            else:
-                print("No features for %s" % (lot.id))
-        else:
-            print("No Data")
-        
+                        
 
 @task()    
 def get_basereg():
@@ -117,7 +97,7 @@ def get_basereg():
     """
     from .models import LotProfile
 
-    queryset = queryset_iterator(LotProfile.objects.filter(basereg__exact=''))
+    queryset = queryset_iterator(LotProfile.objects.filter(basereg=''))
     for lot_profile in queryset:
         lon = lot_profile.get_center().x
         lat = lot_profile.get_center().y
@@ -126,23 +106,14 @@ def get_basereg():
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"BASEREG", "f":"json"}
 
-        data =  fetch_json(source, params)
+        data = json.loads(requests.get(source, params=params))
 
         if data:
-            if "error" in data:
-                print(data["error"]["details"])
-            elif "features" in data:
+            if "features" in data:
                 features = data["features"]
                 if features:
                     if features[0]:
                         attributes = features[0]["attributes"]
                         lot_profile.basereg = attributes["BASEREG"]
                         lot_profile.save(update_fields=["basereg",])
-                        print("%s: %s updated" % (lot_profile.id, lot_profile.address))
-                    else:
-                        print("%s" % (lot.id))
-            else:
-                print("No features for %s" % (lot.id))
-        else:
-            print("No Data")
 
