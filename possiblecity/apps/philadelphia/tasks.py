@@ -1,5 +1,6 @@
 # philadelphia/tasks.py
 
+import datetime
 import os
 
 import json
@@ -10,6 +11,8 @@ from django.contrib.gis.utils import LayerMapping
 from models import LotProfile
 
 from celery import task
+
+from apps.lotxlot.utils import queryset_iterator
 
 pwd_parcel_mapping = {
     'opa_code': 'TENCODE', 
@@ -47,7 +50,9 @@ def check_landuse_vacancy():
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"C_DIG3", "f":"json"}
 
-        data = json.loads(requests.get(source, params=params))
+        req = requests.get(source, params=params)
+
+        data = json.loads(req.text)
 
         if data:
             if "features" in data:
@@ -58,7 +63,9 @@ def check_landuse_vacancy():
                         if attributes["C_DIG3"] == 911:
                             lot.is_vacant = True
                             lot.save(update_fields=["is_vacant",])
-
+                            print("updated lot %s") % lot.address
+        else:
+            print(lot.id)                                
 
 @task()
 def check_public():
@@ -78,7 +85,8 @@ def check_public():
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"C_DIG3", "f":"json"}
 
-        data = json.loads(requests.get(source, params=params))
+        req = requests.get(source, params=params)
+	data = json.loads(req.text)
 
         if data:
             if "features" in data:
@@ -87,6 +95,7 @@ def check_public():
                     if features[0]:
                         lot.is_public = True
                         lot.save(update_fields=["is_public",])
+                        print("updated lot %s") % lot.address
                         
 
 @task()    
