@@ -278,6 +278,44 @@ body.about .navbar-nav > .nav-about a {
 	display: inline;
 }
 
+.latest-ideas-homepage .idea {
+	style="position: relative;"
+}
+
+.latest-ideas-homepage .idea .tagline {
+	position: absolute;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+    text-align:center;
+    color:rgba(255,255,255,0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 1.0);
+    font-size: 24px;
+    padding: 10px;
+    font-weight:bold; l
+    line-height:1.0em;"
+}
+
+.latest-ideas-homepage .idea .meta {
+	margin-top:10px;
+}
+
+.latest-ideas-homepage .idea .meta img {
+	margin-right: 10px; float: left
+}
+
+.latest-ideas-homepage  .idea-phase {
+	position:absolute; 
+    bottom:15px; right:0; 
+    background: #cccc00;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 4px 16px
+}
+
 
 /***************************************************************************/
 /* Featured Projects */

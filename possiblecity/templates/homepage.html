@@ -54,8 +54,6 @@
                 <span class="icon-next"></span>
               </a>
             </div>
-
-
             <div class="homepage-intro jumbotron hidden-xs hidden-sm">
                 <h1>Possible City</h1>
                 <h2>Reimagining Philadelphia's vacant spaces</h2>
@@ -78,40 +76,23 @@
                                 {% url 'lotxlot_lot_detail' idea.lots.all.0.id %}
                                 {% endif %}
                                ">
-                        <div class="idea" style="position: relative;">
+                        <div class="idea">
                             {% if idea.get_lead_image %}
                             <img src="{% thumbnail idea.get_lead_image.file '500x500' crop upscale quality=100  %}" alt="{{ idea.title }}">
                             {% else %}
                             <img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
                             {% endif %}                                
-                            <div style="position: absolute;
-                                            top:0;
-                                            left:0;
-                                            bottom: 0;
-                                            right: 0;
-                                            box-sizing: border-box;
-                                            text-align:center;
-                                            color:rgba(255,255,255,0.9);
-                                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-                                            font-size: 24px;
-                                            padding: 10px;
-                                            font-weight:bold; line-height:1.0em;">
+                            <div class="tagline">
                                     {{ idea.tagline }}
                              </div>
                              {% if idea.get_lead_image %}
-                             <span style="position:absolute; 
-                                          bottom:15px; right:0; 
-                                          background: #cccc00;
-                                          color: #fff;
-                                          font-size: 18px;
-                                          font-weight: bold;
-                                          padding: 4px 16px">Proposal</span>
+                             <span class="idea-phase">Proposal</span>
                              {% endif %}
                         </div>
                         </a>
-                        <div class="meta" style="margin-top:10px;">
+                        <div class="meta">
                         <h4 class="media-heading">
-                            <img class="profile-pic" style="margin-right: 10px; float: left"
+                            <img class="profile-pic"
                                  alt="{{ idea.user.profile.full_name }}"
                                  {% if idea.user.profile.photo %} 
                                  src="{% thumbnail idea.user.profile.photo '36x36' crop upscale %}"
