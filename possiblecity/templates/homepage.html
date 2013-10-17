@@ -78,7 +78,7 @@
                                ">
                         <div class="idea">
                             {% if idea.get_lead_image %}
-                            <img src="{% thumbnail idea.get_lead_image.file '500x500' crop upscale quality=100  %}" alt="{{ idea.title }}">
+                            <img src="{% thumbnail idea.get_lead_image.file '500x500' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
                             {% else %}
                             <img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
                             {% endif %}                                
