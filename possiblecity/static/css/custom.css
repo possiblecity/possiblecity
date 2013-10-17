@@ -279,7 +279,7 @@ body.about .navbar-nav > .nav-about a {
 }
 
 .latest-ideas-homepage .idea {
-	style="position: relative;"
+	position: relative;
 }
 
 .latest-ideas-homepage .idea .tagline {
@@ -302,8 +302,9 @@ body.about .navbar-nav > .nav-about a {
 	margin-top:10px;
 }
 
-.latest-ideas-homepage .idea .meta img {
-	margin-right: 10px; float: left
+.latest-ideas-homepage .idea .meta .profile-pic {
+	margin-right: 10px; 
+	float: left;
 }
 
 .latest-ideas-homepage  .idea-phase {

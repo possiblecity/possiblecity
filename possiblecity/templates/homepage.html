@@ -83,7 +83,7 @@
                             <img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
                             {% endif %}                                
                             <div class="tagline">
-                                    {{ idea.tagline }}
+                                {{ idea.tagline }}
                              </div>
                              {% if idea.get_lead_image %}
                              <span class="idea-phase">Proposal</span>
@@ -99,7 +99,7 @@
                                  {% else %}
                                  src="{% static 'img/profile.png' %}"
                                  height="36"
-                                 {% endif %}">
+                                 {% endif %} ">
                             {{ idea.user.profile.full_name}} <small>on</small>                            
                             <br>
                             {% for lot in idea.lots.all %}
