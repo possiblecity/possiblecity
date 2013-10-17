@@ -315,6 +315,8 @@ THIRD_PARTY_APPS = (
 
     'rest_framework',
     'rest_framework_gis',
+
+    'django_twilio',
     
     'floppyforms',
     'django_js_reverse' # javascript url tools
@@ -447,6 +449,10 @@ PHILEO_LIKABLE_MODELS = {
     "profiles.Profile": {},
     "ideas.Idea": {},
 }
+
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
+TWITTER_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
+
 
 
 #==============================================================================
