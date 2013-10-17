@@ -115,7 +115,9 @@ def get_basereg():
                   "returnGeometry":"false", "inSR":"4326", "spatialRel":"esriSpatialRelWithin",
                   "outFields":"BASEREG", "f":"json"}
 
-        data = json.loads(requests.get(source, params=params))
+        req = requests.get(source, params=params)
+
+        data = json.loads(req.text)
 
         if data:
             if "features" in data:
@@ -125,4 +127,5 @@ def get_basereg():
                         attributes = features[0]["attributes"]
                         lot_profile.basereg = attributes["BASEREG"]
                         lot_profile.save(update_fields=["basereg",])
+                        print("updated lot %s") % lot_profile.address
 

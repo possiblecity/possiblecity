@@ -283,19 +283,22 @@ body.about .navbar-nav > .nav-about a {
 }
 
 .latest-ideas-homepage .idea .tagline {
-	position: absolute;
+    position: absolute;
     top:0;
     left:0;
     bottom: 0;
     right: 0;
     box-sizing: border-box;
     text-align:center;
-    color:rgba(255,255,255,0.9);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 1.0);
+    color:rgba(255,255,255,1.0);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     font-size: 24px;
     padding: 10px;
     font-weight:bold;
-    line-height:1.0em;
+    -moz-box-shadow: inset 0 0 7em #333;
+    -webkit-box-shadow: inset 0 0 7em #333;
+    box-shadow: inset 0 0 7em #333;
+    line-height:1.1em;
 }
 
 .latest-ideas-homepage .idea .meta {
