@@ -294,7 +294,7 @@ body.about .navbar-nav > .nav-about a {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 1.0);
     font-size: 24px;
     padding: 10px;
-    font-weight:bold; l
+    font-weight:bold;
     line-height:1.0em;
 }
 
@@ -302,12 +302,12 @@ body.about .navbar-nav > .nav-about a {
 	margin-top:10px;
 }
 
-.latest-ideas-homepage .idea .meta .profile-pic {
+.latest-ideas-homepage .meta .profile-pic {
 	margin-right: 10px; 
 	float: left;
 }
 
-.latest-ideas-homepage  .idea-phase {
+.latest-ideas-homepage .idea-phase {
 	position:absolute; 
     bottom:15px; right:0; 
     background: #cccc00;
