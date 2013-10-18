@@ -117,7 +117,9 @@ class LotProfile(models.Model):
             data =  fetch_json(source, params, timeout)
             if "features" in data:
                 features = data["features"]
-                return features
+                if features:
+                    if features[0]:
+                        return features[0]["attributes"]
         except:
             return None
 
@@ -167,7 +169,7 @@ class LotProfile(models.Model):
         params = ''
 
         try:
-            data =  fetch_json(source, params, 604800)
+            data = fetch_json(source, params, 604800)
             if "property" in data:
                 return data["property"]
         except:
@@ -177,8 +179,19 @@ class LotProfile(models.Model):
         return self.get_data_by_envelope(settings.PHL_DATA["PAPL_LISTINGS"])
 
     @property
+    def papl_listing(self):
+        return self.get_papl_listing()    
+
+    @property
     def violation_set(self):
         pass
+
+    @property
+    def is_for_sale(self):
+        if self.get_papl_listing():
+            return True
+        else:
+            return False
 
     @property
     def has_violation(self):
@@ -193,7 +206,31 @@ class LotProfile(models.Model):
             return True
         else:
             return False
-      
+
+    @property
+    def is_non_compliant(self):
+        if self.has_violation:
+            if self.latest_violation["VIOLATION_STATUS"] == "Not Complied":
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    @property
+    def is_land_use_vacant(self):
+        if self.land_use == "Vacant Parcels":
+            return True
+        else:
+            return False
+
+    @property
+    def is_bldg_desc_vacant(self):
+        if "Vac Land" in self.building_description:
+            return True
+        else:
+            return False         
+
     @property
     def owner(self):
         owner = self.get_address_data()["OWNER1"].title()
@@ -217,7 +254,7 @@ class LotProfile(models.Model):
         elif self.get_landuse_data()["C_DIG2DESC"]:
             return self.get_landuse_data()["C_DIG2DESC"]
         else:
-             return self.get_landuse_data()["C_DIG1DESC"]
+            return self.get_landuse_data()["C_DIG1DESC"]
 
     @property
     def zoning_base(self):
@@ -229,8 +266,22 @@ class LotProfile(models.Model):
 
     @property
     def latest_violation(self):
-        if self.get_violations():
-            return self.get_violations()[0]
+        return self.get_violations()
+
+    @property
+    def latest_license(self):
+        return self.get_licenses()
+
+    @property
+    def papl_price(self):
+        if self.get_papl_listing():
+            return self.get_papl_listing()["PRICE_STR"]
+
+    @property
+    def papl_asset_id(self):
+        if self.get_papl_listing():
+            return self.get_papl_listing()["ASSET_ID"]
+
 
     def __unicode__(self):
         return u'%s' % self.lot

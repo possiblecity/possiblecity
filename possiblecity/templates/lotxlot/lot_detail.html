@@ -137,8 +137,77 @@
             <div class="tab-pane fade" id="info">
              <div class="lot-info-table"> 
              <img src="http://maps.googleapis.com/maps/api/streetview?size=500x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
-               <table class="table">
+                  <table class="table">
                   <tbody>
+                    <tr>
+                       <td colspan="2"><h5>Vacancy Indicators</h5></td>
+                    </tr>
+	            <tr>
+                       <th>Listed For Sale By City:</th>
+                       <td>{% if lot.profile.is_for_sale %}
+                               <i style="color:green" class="icon-ok-sign"></i>
+                               &nbsp;&nbsp;
+                               <a href="http://secure.phila.gov/PAPLPublicWeb/AddAsset.aspx?AssetID={{ lot.profile.papl_listing.ASSET_ID }}">
+                               {{ lot.profile.papl_listing.PRICE_STR }}
+                               </a>
+                           {% else %}
+                               <i style="color:red" class="icon-minus-sign"></i>
+                               {% if lot.is_public %}
+                                   &nbsp;&nbsp;Not For Sale
+                               {% else %}&nbsp;&nbsp;Not Applicable
+                               {% endif %}
+                           {% endif %}
+                       </td>
+                    </tr>
+	            <tr>
+                       <th>Vacancy Violation:</th>
+                       <td>{% if lot.profile.has_violation %}
+                           <i style="color:green" class="icon-ok-sign"> </i>
+                           &nbsp;&nbsp;{{ lot.profile.latest_violation.DESCRIPTION }}
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
+                           {% endif %}
+                       </td>
+                    </tr>
+                    <tr>
+                       <th>Violation Non-Compliance:</th>
+       	       	       <td>{% if lot.profile.is_non_compliant %}
+                           <i style="color:green" class="icon-ok-sign"></i> &nbsp;&nbsp;Not Complied
+       	       	       	   {% else %}
+       	       	       	   <i style="color:red" class="icon-minus-sign"></i>
+                           {% if lot.profile.has_violation %} &nbsp;&nbsp;Complied {% else %} &nbsp;&nbsp;Not Applicable {% endif %}
+       	       	       	   {% endif %}
+                       </td>
+       	       	    </tr>
+                    <tr>
+                       <th>Vacancy License:</th>
+       	       	       <td>{% if lot.profile.get_licenses %}
+                           <i style="color:green" class="icon-ok-sign"></i>
+                           &nbsp;&nbsp;{{ lot.profile.latest_license.DESCRIPTION }}
+       	       	       	   {% else %}
+       	       	       	   <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
+       	       	       	   {% endif %}
+                       </td>
+       	       	    </tr>
+                    <tr>
+                       <th>Land Use:</th>
+                       <td>{% if lot.profile.is_land_use_vacant %}
+                           <i style="color:green" class="icon-ok-sign"></i>
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i>
+                           {% endif %}&nbsp;&nbsp;{{ lot.profile.land_use }}</td>
+                    </tr>
+                    <tr>
+                       <th>Building Description:</th>
+                       <td>{% if lot.profile.is_bldg_desc_vacant %}
+                           <i style="color:green" class="icon-ok-sign"></i>
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i>
+                           {% endif %}&nbsp;&nbsp;{{ lot.profile.building_description }}</td>
+                    </tr>
+                    <tr>
+                       <td colspan="2"><h5>General Information</h5></td>
+                    </tr>
                     <tr>
                       <th>Neighborhood:</th>
                       <td>{{ lot.profile.neighborhood }}</td>
@@ -158,14 +227,6 @@
                   <tr>
                     <th>Impervious Area:</th>
                     <td>{{ lot.profile.impervious_area }}</td>
-                  </tr>
-                  <tr>
-                    <th>Building Description:</th>
-                    <td>{{ lot.profile.building_description }}</td>
-                  </tr>
-                  <tr>
-                    <th>Land Use Designation:</th>
-                    <td>{{ lot.profile.land_use }}</td>
                   </tr>
                   <tr>
                     <th>Zoning Designation:</th>
