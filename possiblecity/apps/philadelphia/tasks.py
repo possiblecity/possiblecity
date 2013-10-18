@@ -129,3 +129,29 @@ def get_basereg():
                         lot_profile.save(update_fields=["basereg",])
                         print("updated lot %s") % lot_profile.address
 
+@task 
+def update_vacancy():
+     """
+     Check vacancy indicators and mark is_vacant 
+     appropriately
+     """
+     from apps.lotxlot.models import Lot
+    
+     queryset = queryset_iterator(Lot.objects.all())
+     for lot in queryset:
+         vacant = lot.is_vacant
+         if lot.profile.is_for_sale:
+             vacant=True
+         elif lot.profile.has_violation:
+             vacant=True
+         elif lot.profile.has_license:
+             vacant=True
+         elif lot.profile.is_land_use_vacant:
+             vacant=True
+         elif lot.profile.is_bldg_desc_vacant:
+             vacant=True
+         
+         lot.is_vacant = vacant
+         lot.save(update_fields=["is_vacant",])
+         print("updated lot %s") % lot.id
+         
