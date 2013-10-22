@@ -33,9 +33,9 @@
                                 <a href="{% url 'profiles_profile_detail' idea.user.username %}">
                                 {% endif %}
                                 {% if idea.user.profile.photo %}
-                                    <img class="profile-pic" src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
+                                    <img src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
                                 {% else %}
-                                    <img class="profile-pic" src="{% static 'img/profile.png' %}" />
+                                    <img src="{% static 'img/profile.png' %}" />
                                 {% endif %}
                                 {% if idea.user.profile.is_public %}
                                 </a>
@@ -51,16 +51,6 @@
                                 {{ idea.user.username }}
                             {% endif %}
                             </h3>
-                            <p>
-                            {% if idea.user.profile.website %}
-                                {{ idea.user.profile.website|urlize }}<br/>
-                            {% endif %}
-                            {% if profile.twitter %}
-                                <a href="http://www.twitter.com/{{ profile.twitter }}">
-                                {{ idea.user.profile.twitter }}</a>
-                                <br/>
-                            {% endif %}
-                            </p>
                             {% if request.user == idea.user.profile.user %}
                             <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit your idea' %}</a>
                             {% endif %}
@@ -110,7 +100,7 @@
                 <article id="idea">
                     {% if idea.ideavisual_set %}
                     <section class="images">
-                    <img src="{% thumbnail idea.get_lead_image.file '800x400' crop %}"
+                    <img src="{% thumbnail idea.get_lead_image.file 800x800 %}"
                          alt="{% if idea.get_lead_image.caption %}{{ idea.get_lead_image.caption }}{% else %}{{ idea.get_lead_image.title }}{% endif %}"
                          title="{{ idea.get_lead_image.title }}"/>
                     </section>

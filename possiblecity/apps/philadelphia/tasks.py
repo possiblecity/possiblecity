@@ -142,16 +142,24 @@ def update_vacancy():
          vacant = lot.is_vacant
          if lot.profile.is_for_sale:
              vacant=True
+             indicator="for sale"
          elif lot.profile.has_violation:
              vacant=True
+             indicator="violation"
          elif lot.profile.has_license:
              vacant=True
+             indicator="license"
          elif lot.profile.is_land_use_vacant:
              vacant=True
+             indicator="land use"
          elif lot.profile.is_bldg_desc_vacant:
              vacant=True
-         
+             indicator="bldg"
+         else:
+             vacant=False
+             indicator="None"
+
          lot.is_vacant = vacant
          lot.save(update_fields=["is_vacant",])
-         print("updated lot %s") % lot.id
+         print("updated lot %s: %s") % (lot.id, indicator)
          
