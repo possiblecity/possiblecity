@@ -136,8 +136,9 @@ def update_vacancy():
      appropriately
      """
      from apps.lotxlot.models import Lot
-    
-     queryset = queryset_iterator(Lot.objects.all())
+
+     t = datetime.datetime.now() - datetime.timedelta(weeks=2) 
+     queryset = queryset_iterator(Lot.objects.filter(pk__gt=270000))
      for lot in queryset:
          vacant = lot.is_vacant
          if lot.profile.is_for_sale:
@@ -160,6 +161,6 @@ def update_vacancy():
              indicator="None"
 
          lot.is_vacant = vacant
-         lot.save(update_fields=["is_vacant",])
+         lot.save(update_fields=["is_vacant", "updated"])
          print("updated lot %s: %s") % (lot.id, indicator)
          

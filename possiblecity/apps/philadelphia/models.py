@@ -241,7 +241,10 @@ class LotProfile(models.Model):
 
     @property
     def building_description(self):
-        return "%s (%s)" % (self.get_address_data()["BLDG_DESC"].title(), self.get_address_data()["BLDG_CODE"])
+        if self.get_address_data()["BLDG_DESC"]:
+            return "%s (%s)" % (self.get_address_data()["BLDG_DESC"].title(), self.get_address_data()["BLDG_CODE"])
+        else:
+            return ""
 
     @property
     def impervious_area(self):
