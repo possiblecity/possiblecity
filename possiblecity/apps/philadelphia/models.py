@@ -183,6 +183,10 @@ class LotProfile(models.Model):
         return self.get_papl_listing()    
 
     @property
+    def address_data(self):
+        return self.get_address_data()
+
+    @property
     def violation_set(self):
         pass
 
@@ -226,7 +230,7 @@ class LotProfile(models.Model):
 
     @property
     def is_bldg_desc_vacant(self):
-        if "Vac Land" in self.building_description:
+        if self.building_description and "Vac" in self.building_description:
             return True
         else:
             return False         
@@ -241,10 +245,10 @@ class LotProfile(models.Model):
 
     @property
     def building_description(self):
-        if self.get_address_data()["BLDG_DESC"]:
+        if self.get_address_data() and self.get_address_data()["BLDG_DESC"]:
             return "%s (%s)" % (self.get_address_data()["BLDG_DESC"].title(), self.get_address_data()["BLDG_CODE"])
         else:
-            return ""
+            return None
 
     @property
     def impervious_area(self):

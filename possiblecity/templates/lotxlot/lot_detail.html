@@ -147,9 +147,7 @@
                        <td>{% if lot.profile.is_for_sale %}
                                <i style="color:green" class="icon-ok-sign"></i>
                                &nbsp;&nbsp;
-                               <a href="http://secure.phila.gov/PAPLPublicWeb/AddAsset.aspx?AssetID={{ lot.profile.papl_listing.ASSET_ID }}">
                                {{ lot.profile.papl_listing.PRICE_STR }}
-                               </a>
                            {% else %}
                                <i style="color:red" class="icon-minus-sign"></i>
                                {% if lot.is_public %}

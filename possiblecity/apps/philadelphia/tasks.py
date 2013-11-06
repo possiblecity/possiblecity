@@ -137,28 +137,28 @@ def update_vacancy():
      """
      from apps.lotxlot.models import Lot
 
-     t = datetime.datetime.now() - datetime.timedelta(weeks=2) 
-     queryset = queryset_iterator(Lot.objects.filter(pk__gt=270000))
+     t = datetime.datetime.now() - datetime.timedelta(days=9) 
+     queryset = queryset_iterator(Lot.objects.filter(is_vacant=False, updated__lt=t))
      for lot in queryset:
          vacant = lot.is_vacant
-         if lot.profile.is_for_sale:
+         if lot.profile.is_bldg_desc_vacant:
              vacant=True
-             indicator="for sale"
-         elif lot.profile.has_violation:
-             vacant=True
-             indicator="violation"
-         elif lot.profile.has_license:
-             vacant=True
-             indicator="license"
+             indicator="bldg desc"
          elif lot.profile.is_land_use_vacant:
              vacant=True
              indicator="land use"
-         elif lot.profile.is_bldg_desc_vacant:
+         elif lot.profile.has_license:
              vacant=True
-             indicator="bldg"
+             indicator="license"
+         elif lot.profile.has_violation:
+             vacant=True
+             indicator="violation"
+         elif lot.profile.is_for_sale:
+             vacant=True
+             indicator="for sale"
          else:
              vacant=False
-             indicator="None"
+             indicator="Not Vacant"
 
          lot.is_vacant = vacant
          lot.save(update_fields=["is_vacant", "updated"])
