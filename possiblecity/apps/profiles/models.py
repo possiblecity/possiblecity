@@ -3,14 +3,12 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import permalink
 
-from localflavor.us.models import PhoneNumberField
-
 class Profile(models.Model):
     
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     about = models.CharField(max_length=140, blank=True)
     photo = models.ImageField(upload_to='images/profiles', blank=True, null=True)
-    phone = PhoneNumberField(blank=True)
+    phone = models.CharField(max_length=20,blank=True)
     website = models.URLField(blank=True)
     twitter = models.CharField(max_length=100, blank=True)
 
