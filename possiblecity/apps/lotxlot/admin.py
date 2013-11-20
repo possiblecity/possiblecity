@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from apps.ideas.models import Idea
 
-from .models import Lot
+from .models import Lot, Comment
 
 class IdeaInline(admin.TabularInline):
     model = Idea.lots.through
@@ -23,5 +23,12 @@ class LotAdmin(admin.ModelAdmin):
         return '%s'%(obj.profile.neighborhood)
     get_neighborhood.short_description = 'Neighborhood'
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'text', 'lot', 'user', 'via', 'updated')
+    list_editable = ('via',)
+    search_fields = ['user', 'text']
+    list_filter = ('via',)
+    raw_id_fields = ('lot', 'user' )    
 
 admin.site.register(Lot, LotAdmin)
+admin.site.register(Comment, CommentAdmin)

@@ -1,16 +1,16 @@
 # lotxlot/models.py
 
 import datetime
+import os
 
+from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 from django.core.urlresolvers import reverse
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 
-#from ..core.managers import CustomQuerySetGeoManager
 from .managers import LotQuerySet
-from .fields import AutoOneToOneField
 
 class Lot(models.Model):
     # spatial fields
@@ -32,12 +32,10 @@ class Lot(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    #objects = CustomQuerySetGeoManager(LotQuerySet)
     objects = models.GeoManager()
 
     class Meta:
         pass
-        #unique_together = ('address', 'city', 'state')
 
     def get_sqft(self): 
         """ 
@@ -87,30 +85,37 @@ class Lot(models.Model):
         super(Lot, self).save(*args, **kwargs)
 
 
-
-class BaseBoundary(models.Model):
+class Comment(models.Model):
+    """ 
+    Open-ended user input about a particular Lot
     """
-    A shape that defines an area
-    """
+    
+    VIA_WEB = 1
+    VIA_TEXT = 2
+    VIA_TWITTER = 3
+    VIA_INSTAGRAM = 4
+    VIA_CHOICES = (
+        (VIA_WEB, 'Web'),
+        (VIA_TEXT, 'Text'),
+        (VIA_TWITTER, 'Twitter'),
+        (VIA_INSTAGRAM, 'Instagram'),
+    )
+    
+    def get_upload_path(instance):
+        return os.path.join('images', 'comments', 'lot%s' % str(instance.lot.id))
 
-    lot = models.OneToOneField(Lot)
+    # content
+    text = models.TextField()
+    image = models.ImageField(blank=True, upload_to=get_upload_path)
+
+    # meta
+    lot = models.ForeignKey(Lot)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    via = models.IntegerField(choices=VIA_CHOICES, default=VIA_WEB)
+
+    #auto-generated fields
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        abstract = True
-
-
-class BaseDataSource(models.Model):
-    """
-    An abstract data source attached to a lot which may need
-    to be periodically updated
-    """
-
-    lot = models.OneToOneField(Lot)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
+    def __unicode__(self):
+        return u'%s' % self.text[:50]
