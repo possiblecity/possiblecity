@@ -328,13 +328,48 @@
             <h2>People <small>0</small></h2>
 
             <p class="margin-bottom-15">Organizers on this lot.</p>
-            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Follow this lot</a>
             
-            <!--
+
+            {% if request.user.is_authenticated %}
+              {% phileo_widget_brief request.user lot %}
+            {% else %}
+              <span class="phileo">
+                  <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary pull-right start-project-btn">+ Follow this Lot</a>
+              </span>
+            {% endif %}
+
+
+
+            
             <ul class="list-group">
 
+              {% for like in lot_likes %}
+                  <div class="col-lg-6 col-12 margin-bottom-20">
+                      {% if like.sender.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' like.sender.username %}">
+                      {% endif %}
+                      <img class="profile-pic"
+                      {% if like.sender.profile.photo %}
+                          src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
+                      {% else %}
+                          src="{% static 'img/profile.png' %}"
+                      {% endif %}
+                      {% if like.sender.first_name %}
+                          alt="{{ like.sender.profile.full_name }}"
+                          title="{{ like.sender.profile.full_name }}"
+                      {% else %}
+                          alt="{{ like.sender.username }}"
+                          title="{{ like.sender.username }}"
+                      {% endif %}
+                      >
+                      {% if like.sender.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
+              {% endfor %}
+
             </ul>
-            -->
+            
           </div>
         
 
