@@ -28,6 +28,50 @@
 	margin-right: 10px;
 }
 
+.add-comment-button {
+	margin-top: 5px;
+}
+
+.start-project-btn {
+	margin-top: -38px;
+}
+
+.follow-this-lot-btn {
+	margin-top: 10px;
+}
+
+.people img {
+		width: 60px;
+	}
+
+.people ul {
+	margin-left: 0px;
+	padding-left: 0px;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+}
+
+
+
+.people li {
+	display: inline;
+	list-style: none;
+	padding-right: 20px;
+
+}
+
+
+
+.people h5 {
+	margin-top: 0px;
+}
+
+.lot-detail-page-projects {
+	margin-bottom: 50px;
+}
+
 
 
 /***************************************************************************/
@@ -792,9 +836,6 @@ padding-left: 0px;
 	display: none;
 }
 
-.form-group {
-	max-width: 500px;
-}
 
 
 
@@ -1239,17 +1280,13 @@ p.lead-big {
 		display: none;
 	}
 
-}
-
-
-
-@media (max-width: 992px) {
 
 	
 		.sign-in-button-modal {
 		margin-top: 0px;
+	}
 		
-}
+
 
 
 	/***************************************************************************/
@@ -1263,13 +1300,18 @@ p.lead-big {
 		margin-bottom: 15px;
 	}
 
-	.form-group {
-		margin-bottom: 14px;
-	}
+	
 
 	.checkbox {
 		display: block;
 		min-height: 25px;
+	}
+
+
+	/***************************************************************************/
+	/* LOT DETAIL PAGE */
+	.lot-image-lot-detail-page {
+		margin-bottom: 15px;
 	}		
 
 
@@ -1593,7 +1635,7 @@ p.lead-big {
 
 	}
 
-	.lot-detail-page-container h1 {
+	.lot-detail h1 {
 		font-size: 30px;
 		margin-bottom: 5px;
 
@@ -1602,22 +1644,43 @@ p.lead-big {
 	.lot-detail-page-container-icons {
 		height: 20px;
 		margin-top: -10px;
-		margin-bottom: 15px;
+		margin-bottom: 10px;
 
+	}
+
+	.start-project-btn {
+		margin-top: -10px;
+	}
+
+	.container.lot-detail {
+		margin-top: 0;
+		position: absolute;
+		top: 135px;
 	}
 
 
 }
 
 
+@media (max-width: 450px) {
+	
+	
+
+	.lot-detail {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.lot-detail h1 {
+		font-size: 20px;
+	}
 
 
-
-
+	.lot-detail-page-projects {
+		margin-bottom: 50px;
+	}
 
 }
-
-
   
 
 

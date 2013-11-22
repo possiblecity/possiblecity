@@ -40,14 +40,14 @@
 
 
     <section class="lot-info row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
           <div style="position: relative">
            
 
-            <img src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
           <ul class="nav nav-pills">
   <li class="active"><a href="#ownership" data-toggle="tab">Ownership</a></li>
   <li><a href="#political" data-toggle="tab">Political</a></li>
@@ -231,10 +231,10 @@
                           {% form form using "floppyforms/layouts/simple.html" %}
                           <div class="form-actions">
                             {% if request.user.is_authenticated %}
-                            <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
+                            <button type="submit" class="btn btn-primary pull-right add-comment-button">{% trans "Add comment" %}
                             </button>
                             {% else %}
-                             <a class="btn btn-primary pull-right" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Add your comment" %}</a>
+                             <a class="btn btn-primary pull-right add-comment-button" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Add comment" %}</a>
                              {% endif %}
                           </div>
                           </form> 
@@ -317,19 +317,25 @@
 
         <div class="col-lg-6">
           
-
-           <h2>Projects <small>0</small></h2>
-        <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot. <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a></p>
-        
-
-
-        <h2>People <small>0</small></h2>
-
-        <p class="margin-bottom-15">Organizers on this lot. <a href="#" class="btn btn-primary pull-right start-project-btn">+ Follow this Lot</a></p>
-
-          <ul class="list-group">
+          <div class="lot-detail-page-projects">
+            <h2>Projects <small>0</small></h2>
+            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot. </p>
+            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
+          </div>
             
-          </ul>
+
+          <div class="people">
+            <h2>People <small>0</small></h2>
+
+            <p class="margin-bottom-15">Organizers on this lot.</p>
+            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Follow this lot</a>
+            
+            <!--
+            <ul class="list-group">
+
+            </ul>
+            -->
+          </div>
         
 
           
