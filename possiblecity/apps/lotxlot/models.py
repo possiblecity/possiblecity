@@ -85,37 +85,3 @@ class Lot(models.Model):
         super(Lot, self).save(*args, **kwargs)
 
 
-class Comment(models.Model):
-    """ 
-    Open-ended user input about a particular Lot
-    """
-    
-    VIA_WEB = 1
-    VIA_TEXT = 2
-    VIA_TWITTER = 3
-    VIA_INSTAGRAM = 4
-    VIA_CHOICES = (
-        (VIA_WEB, 'Web'),
-        (VIA_TEXT, 'Text'),
-        (VIA_TWITTER, 'Twitter'),
-        (VIA_INSTAGRAM, 'Instagram'),
-    )
-    
-    def get_upload_path(instance):
-        return os.path.join('images', 'comments', 'lot%s' % str(instance.lot.id))
-
-    # content
-    text = models.TextField()
-    image = models.ImageField(blank=True, upload_to=get_upload_path)
-
-    # meta
-    lot = models.ForeignKey(Lot)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    via = models.IntegerField(choices=VIA_CHOICES, default=VIA_WEB)
-
-    #auto-generated fields
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return u'%s' % self.text[:50]
