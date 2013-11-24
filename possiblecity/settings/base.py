@@ -446,6 +446,7 @@ REST_FRAMEWORK = {
 PHILEO_LIKABLE_MODELS = {
     "profiles.Profile": {},
     "ideas.Idea": {},
+    "lotxlot.Lot": {}
 }
 
 

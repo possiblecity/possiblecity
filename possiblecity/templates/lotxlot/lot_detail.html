@@ -9,20 +9,199 @@
 {% load thumbnail %}
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
-{% block sidebar %}
-    <div class="sidebar ideas-lot-info-sidebar">
-        <header class="lot-id-header text-center">
-            <h1>Lot #{{ lot.id }}</h1>
-            <h2><i class="icon-map-marker"></i> {{ lot.address }}</h2>
-        </header>
-        <ul id="sidebar-tabs" class="nav nav-tabs">
-          <li class="active"><a href="#ideas" data-toggle="tab">Ideas</a></li>
-          <li class=""><a href="#info" data-toggle="tab">Info</a></li>
-        </ul>
 
-        <div id="sidebar-tabs-content" class="tab-content">
-          <div class="tab-pane fade active in" id="ideas">
-            <div class="activity">
+
+{% block map %}
+  <div id="map" class="lot-detail-map"></div>
+{% endblock map %}
+
+
+{% block sidebar %}
+    
+
+
+
+
+<div class="container lot-detail">
+  <div class="panel">
+    <header class="lot-header row">
+      <div class="col-md-12">
+        <div class="lot-detail-page-container-icons">
+          <button type="button" class="close icon-border close-lot-detail" aria-hidden="true">&times;</button>
+          <a href="#" class="icon-angle-down pull-right"></a> 
+        </div>
+        <div>
+          <h1>
+             Lot #{{ lot.id }} - {{ lot.address }}
+          </h1>
+        </div>
+      </div>
+    </header>
+
+
+    <section class="lot-info row">
+        <div class="col-lg-6 col-md-6">
+          <div style="position: relative">
+           
+
+            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <ul class="nav nav-pills">
+  <li class="active"><a href="#ownership" data-toggle="tab">Ownership</a></li>
+  <li><a href="#political" data-toggle="tab">Political</a></li>
+  <li><a href="#finanical" data-toggle="tab">Finanical</a></li>
+
+
+
+  
+
+
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="ownership">
+
+    <table class="table">
+            <tbody>
+              <tr>
+                       <th>Listed For Sale By City:</th>
+                       <td>{% if lot.profile.is_for_sale %}
+                               <i style="color:green" class="icon-ok-sign"></i>
+                               &nbsp;&nbsp;
+                               {{ lot.profile.papl_listing.PRICE_STR }}
+
+                               <a href="#" class="btn btn-default btn-xs pull-right">Inquire for Purchase</a>
+                           {% else %}
+                               <i style="color:red" class="icon-minus-sign"></i>
+                               {% if lot.is_public %}
+                                   &nbsp;&nbsp;Not For Sale
+                               {% else %}&nbsp;&nbsp;Not Applicable
+                               {% endif %}
+                           {% endif %}
+                       </td>
+                    </tr>
+              <tr>
+                       <th>Vacancy Violation:</th>
+                       <td>{% if lot.profile.has_violation %}
+                           <i style="color:green" class="icon-ok-sign"> </i>
+                           &nbsp;&nbsp;{{ lot.profile.latest_violation.DESCRIPTION }}
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
+                           {% endif %}
+                       </td>
+                    </tr>
+                    <tr>
+                       <th>Violation Non-Compliance:</th>
+                       <td>{% if lot.profile.is_non_compliant %}
+                           <i style="color:green" class="icon-ok-sign"></i> &nbsp;&nbsp;Not Complied
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i>
+                           {% if lot.profile.has_violation %} &nbsp;&nbsp;Complied {% else %} &nbsp;&nbsp;Not Applicable {% endif %}
+                           {% endif %}
+                       </td>
+                    </tr>
+                    <tr>
+                       <th>Vacancy License:</th>
+                       <td>{% if lot.profile.get_licenses %}
+                           <i style="color:green" class="icon-ok-sign"></i>
+                           &nbsp;&nbsp;{{ lot.profile.latest_license.DESCRIPTION }}
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
+                           {% endif %}
+                       </td>
+                    </tr>
+                    <tr>
+                       <th>Land Use:</th>
+                       <td>{% if lot.profile.is_land_use_vacant %}
+                           <i style="color:green" class="icon-ok-sign"></i>
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i>
+                           {% endif %}&nbsp;&nbsp;{{ lot.profile.land_use }}</td>
+                    </tr>
+                    <tr>
+                       <th>Building Description:</th>
+                       <td>{% if lot.profile.is_bldg_desc_vacant %}
+                           <i style="color:green" class="icon-ok-sign"></i>
+                           {% else %}
+                           <i style="color:red" class="icon-minus-sign"></i>
+                           {% endif %}&nbsp;&nbsp;{{ lot.profile.building_description }}</td>
+                    </tr>
+        </tbody>
+    </table>
+</div>
+  
+  <div class="tab-pane" id="political">
+    <table class="table">
+                  <tbody>
+                    
+              
+                    
+                    <tr>
+                      <th>Neighborhood:</th>
+                      <td>{{ lot.profile.neighborhood }}</td>
+                    </tr>
+                    <tr>
+                      <th>Ownership:</th>
+                      <td>{% if lot.is_public %}Public{% else %}Private{% endif %}</td>
+                    </tr>
+                    <tr>
+                      <th>Owner:</th>
+                      <td>{{ lot.profile.owner }}</td>
+                    </tr>
+                    <tr>
+                    <th>Size:</th>
+                    <td>{{ lot.get_sqft|floatformat:0 }} sq. ft. ({{ lot.get_acres|floatformat:2 }} acres)</td>
+                  </tr>
+                  <tr>
+                    <th>Impervious Area:</th>
+                    <td>{{ lot.profile.impervious_area }}</td>
+                  </tr>
+                  <tr>
+                    <th>Zoning Designation:</th>
+                    <td>{{ lot.profile.zoning_base }}</td>
+                  </tr>
+                  <tr>
+                    <th>Basereg #:</th>
+                    <td>{{ lot.profile.basereg }}</td>
+                  </tr>
+                  <tr>
+                    <th>Address Code:</th>
+                    <td>{{ lot.profile.tencode }}</td>
+                  </tr>
+                  <tr>
+                    <th>BRT/OPA #:</th>
+                    <td><a href="http://opa.phila.gov/opa.apps/Search/SearchResults.aspx?id={{ lot.profile.tencode}}">{{ lot.profile.brt_id }}</a></td>
+                  </tr>
+
+                 </tbody>
+                </table>
+                <p>Is there an error in our data? <a href="mailto:data@possiblecity.co?subject={{ lot.id }} - {{ lot.address }}">Let us know!</a></p>
+
+
+
+
+  </div>
+  <div class="tab-pane" id="finanical">Financial</div>
+
+  
+</div>
+
+
+
+
+
+
+    </section>
+    <hr>
+    <section class="actions row">
+      <div class="col-lg-6 col-md-6">
+          <h2>Comments <small>0</small></h2>
+
+
+          
                 <ul class="list-group">
                   <div class="nav-tab-button text-center"></div>
                   <li class="list-group-item">
@@ -52,10 +231,10 @@
                           {% form form using "floppyforms/layouts/simple.html" %}
                           <div class="form-actions">
                             {% if request.user.is_authenticated %}
-                            <button type="submit" class="btn btn-primary pull-right">{% trans "Float your idea" %}
+                            <button type="submit" class="btn btn-primary pull-right add-comment-button">{% trans "Add comment" %}
                             </button>
                             {% else %}
-                             <a class="btn btn-primary pull-right" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Float your idea" %}</a>
+                             <a class="btn btn-primary pull-right add-comment-button" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Add comment" %}</a>
                              {% endif %}
                           </div>
                           </form> 
@@ -132,124 +311,79 @@
                   </li>
                   {% endfor %}
                 </ul>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="info">
-             <div class="lot-info-table"> 
-             <img src="http://maps.googleapis.com/maps/api/streetview?size=500x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
-                  <table class="table">
-                  <tbody>
-                    <tr>
-                       <td colspan="2"><h5>Vacancy Indicators</h5></td>
-                    </tr>
-	            <tr>
-                       <th>Listed For Sale By City:</th>
-                       <td>{% if lot.profile.is_for_sale %}
-                               <i style="color:green" class="icon-ok-sign"></i>
-                               &nbsp;&nbsp;
-                               {{ lot.profile.papl_listing.PRICE_STR }}
-                           {% else %}
-                               <i style="color:red" class="icon-minus-sign"></i>
-                               {% if lot.is_public %}
-                                   &nbsp;&nbsp;Not For Sale
-                               {% else %}&nbsp;&nbsp;Not Applicable
-                               {% endif %}
-                           {% endif %}
-                       </td>
-                    </tr>
-	            <tr>
-                       <th>Vacancy Violation:</th>
-                       <td>{% if lot.profile.has_violation %}
-                           <i style="color:green" class="icon-ok-sign"> </i>
-                           &nbsp;&nbsp;{{ lot.profile.latest_violation.DESCRIPTION }}
-                           {% else %}
-                           <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
-                           {% endif %}
-                       </td>
-                    </tr>
-                    <tr>
-                       <th>Violation Non-Compliance:</th>
-       	       	       <td>{% if lot.profile.is_non_compliant %}
-                           <i style="color:green" class="icon-ok-sign"></i> &nbsp;&nbsp;Not Complied
-       	       	       	   {% else %}
-       	       	       	   <i style="color:red" class="icon-minus-sign"></i>
-                           {% if lot.profile.has_violation %} &nbsp;&nbsp;Complied {% else %} &nbsp;&nbsp;Not Applicable {% endif %}
-       	       	       	   {% endif %}
-                       </td>
-       	       	    </tr>
-                    <tr>
-                       <th>Vacancy License:</th>
-       	       	       <td>{% if lot.profile.get_licenses %}
-                           <i style="color:green" class="icon-ok-sign"></i>
-                           &nbsp;&nbsp;{{ lot.profile.latest_license.DESCRIPTION }}
-       	       	       	   {% else %}
-       	       	       	   <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
-       	       	       	   {% endif %}
-                       </td>
-       	       	    </tr>
-                    <tr>
-                       <th>Land Use:</th>
-                       <td>{% if lot.profile.is_land_use_vacant %}
-                           <i style="color:green" class="icon-ok-sign"></i>
-                           {% else %}
-                           <i style="color:red" class="icon-minus-sign"></i>
-                           {% endif %}&nbsp;&nbsp;{{ lot.profile.land_use }}</td>
-                    </tr>
-                    <tr>
-                       <th>Building Description:</th>
-                       <td>{% if lot.profile.is_bldg_desc_vacant %}
-                           <i style="color:green" class="icon-ok-sign"></i>
-                           {% else %}
-                           <i style="color:red" class="icon-minus-sign"></i>
-                           {% endif %}&nbsp;&nbsp;{{ lot.profile.building_description }}</td>
-                    </tr>
-                    <tr>
-                       <td colspan="2"><h5>General Information</h5></td>
-                    </tr>
-                    <tr>
-                      <th>Neighborhood:</th>
-                      <td>{{ lot.profile.neighborhood }}</td>
-                    </tr>
-                    <tr>
-                      <th>Ownership:</th>
-                      <td>{% if lot.is_public %}Public{% else %}Private{% endif %}</td>
-                    </tr>
-                    <tr>
-                      <th>Owner:</th>
-                      <td>{{ lot.profile.owner }}</td>
-                    </tr>
-                    <tr>
-                    <th>Size:</th>
-                    <td>{{ lot.get_sqft|floatformat:0 }} sq. ft. ({{ lot.get_acres|floatformat:2 }} acres)</td>
-                  </tr>
-                  <tr>
-                    <th>Impervious Area:</th>
-                    <td>{{ lot.profile.impervious_area }}</td>
-                  </tr>
-                  <tr>
-                    <th>Zoning Designation:</th>
-                    <td>{{ lot.profile.zoning_base }}</td>
-                  </tr>
-                  <tr>
-                    <th>Basereg #:</th>
-                    <td>{{ lot.profile.basereg }}</td>
-                  </tr>
-                  <tr>
-                    <th>Address Code:</th>
-                    <td>{{ lot.profile.tencode }}</td>
-                  </tr>
-                  <tr>
-                    <th>BRT/OPA #:</th>
-                    <td><a href="http://opa.phila.gov/opa.apps/Search/SearchResults.aspx?id={{ lot.profile.tencode}}">{{ lot.profile.brt_id }}</a></td>
-                  </tr>
+              
+         
+        </div>
 
-                 </tbody>
-                </table>
-                <p>Is there an error in our data? <a href="mailto:data@possiblecity.co?subject={{ lot.id }} - {{ lot.address }}">Let us know!</a></p>
-                </div><!--/lot-info -->
-          </div><!-- /#sidebar-tabs-content -->
+        <div class="col-lg-6">
+          
+          <div class="lot-detail-page-projects">
+            <h2>Projects <small>0</small></h2>
+            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot. </p>
+            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
           </div>
-    </div>
+            
+
+          <div class="people">
+            <h2>People <small>0</small></h2>
+
+            <p class="margin-bottom-15">Organizers on this lot.</p>
+            
+
+            {% if request.user.is_authenticated %}
+              {% phileo_widget_brief request.user lot %}
+            {% else %}
+              <span class="phileo">
+                  <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary pull-right start-project-btn">+ Follow this Lot</a>
+              </span>
+            {% endif %}
+
+
+
+            
+            <ul class="list-group">
+
+              {% for like in lot_likes %}
+                  <div class="col-lg-6 col-12 margin-bottom-20">
+                      {% if like.sender.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' like.sender.username %}">
+                      {% endif %}
+                      <img class="profile-pic"
+                      {% if like.sender.profile.photo %}
+                          src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
+                      {% else %}
+                          src="{% static 'img/profile.png' %}"
+                      {% endif %}
+                      {% if like.sender.first_name %}
+                          alt="{{ like.sender.profile.full_name }}"
+                          title="{{ like.sender.profile.full_name }}"
+                      {% else %}
+                          alt="{{ like.sender.username }}"
+                          title="{{ like.sender.username }}"
+                      {% endif %}
+                      >
+                      {% if like.sender.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
+              {% endfor %}
+
+            </ul>
+            
+          </div>
+        
+
+          
+        </div>
+
+      </section>
+
+
+</div><!-- .panel -->
+</div> <!-- .container -->
+
+
+
 {% endblock sidebar %}
 
 {% block map_setview %}
@@ -277,6 +411,8 @@
                         '<i class="icon-large ' + ownership_icon + '">&nbsp;</i> <strong>'  + ownership + '</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
                         '<i class="icon-resize-full icon-large ">&nbsp;</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
                         '<i class="icon-lightbulb icon-large">&nbsp;</i> <strong>{{ lot.idea_set.count }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;</center>';
+
+          content = "";
 
           var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
 

@@ -1,4 +1,80 @@
 /***************************************************************************/
+/* LOT DETAIL PAGE */
+
+.container.lot-detail {
+	margin-top: 135px;
+	position: relative;
+	z-index: 1000;
+}
+
+.lot-detail h1 {
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+
+.icon-angle-down {
+	padding-right: 15px;
+	font-size: 24px;
+	padding-top: 1px;
+	color: #868686;
+
+}
+
+.lot-detail .panel {
+	background-color: rgba(255,255,255,0.9);
+}
+
+.lot-detail-page-container-icons {
+	margin-right: 10px;
+}
+
+.add-comment-button {
+	margin-top: 5px;
+}
+
+.start-project-btn {
+	margin-top: -38px;
+}
+
+.follow-this-lot-btn {
+	margin-top: 10px;
+}
+
+.people img {
+		width: 60px;
+	}
+
+.people ul {
+	margin-left: 0px;
+	padding-left: 0px;
+	padding: 10px 15px;
+	margin-bottom: -1px;
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+}
+
+
+
+.people li {
+	display: inline;
+	list-style: none;
+	padding-right: 20px;
+
+}
+
+
+
+.people h5 {
+	margin-top: 0px;
+}
+
+.lot-detail-page-projects {
+	margin-bottom: 50px;
+}
+
+
+
+/***************************************************************************/
 /* GENERAL STYLES */
 
 
@@ -335,6 +411,10 @@ body.about .navbar-nav > .nav-about a {
 #map {
 	width:100%;
 	height:100%;
+}
+
+#map.lot-detail-map {
+	height: 200px;
 }
 
 
@@ -680,6 +760,11 @@ padding-left: 0px;
 
 
 
+
+
+
+
+
 /***************************************************************************/
 /* FEATURED IDEAS */
 
@@ -751,9 +836,6 @@ padding-left: 0px;
 	display: none;
 }
 
-.form-group {
-	max-width: 500px;
-}
 
 
 
@@ -1198,17 +1280,13 @@ p.lead-big {
 		display: none;
 	}
 
-}
-
-
-
-@media (max-width: 992px) {
 
 	
 		.sign-in-button-modal {
 		margin-top: 0px;
+	}
 		
-}
+
 
 
 	/***************************************************************************/
@@ -1222,13 +1300,18 @@ p.lead-big {
 		margin-bottom: 15px;
 	}
 
-	.form-group {
-		margin-bottom: 14px;
-	}
+	
 
 	.checkbox {
 		display: block;
 		min-height: 25px;
+	}
+
+
+	/***************************************************************************/
+	/* LOT DETAIL PAGE */
+	.lot-image-lot-detail-page {
+		margin-bottom: 15px;
 	}		
 
 
@@ -1435,6 +1518,18 @@ p.lead-big {
 		margin-top: -20px;
 	}
 
+	#map.lot-detail-map {
+		position: static;
+		width: 100%;
+		height: 200px;
+		margin-top: -20px;
+	}
+
+	.container.lot-detail {
+		margin-top: 0;
+	}
+
+
 	.map-hopmepage {
 		position: static;
 		margin-top: 40px;
@@ -1521,27 +1616,71 @@ p.lead-big {
 
 	.skills-2nd-row {
 	display: none;
-}
+	}
 
 
 
 	#sign-in-modal .modal-dialog {
 	width: 370px;
+	}
+
+
+
+	/***************************************************************************/
+	/* LOT DETAIL PAGE */
+
+	.lot-detail-page-container {
+		padding-left: 0px;
+		padding-right: 0px;
+
+	}
+
+	.lot-detail h1 {
+		font-size: 30px;
+		margin-bottom: 5px;
+
+	}
+
+	.lot-detail-page-container-icons {
+		height: 20px;
+		margin-top: -10px;
+		margin-bottom: 10px;
+
+	}
+
+	.start-project-btn {
+		margin-top: -10px;
+	}
+
+	.container.lot-detail {
+		margin-top: 0;
+		position: absolute;
+		top: 135px;
+	}
+
+
 }
 
 
+@media (max-width: 450px) {
+	
+	
+
+	.lot-detail {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.lot-detail h1 {
+		font-size: 20px;
+	}
+
+
+	.lot-detail-page-projects {
+		margin-bottom: 50px;
+	}
 
 }
-
-
-
-
-
-
-
-}
-
-
   
 
 
