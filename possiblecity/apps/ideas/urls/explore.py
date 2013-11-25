@@ -1,6 +1,6 @@
 # ideas/urls/explore.py
 
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 from ..views.explore import IdeaDetailView, IdeaListView, IdeaListFeaturedView
 

@@ -1,15 +1,13 @@
 {% extends 'lotxlot/base.html' %}
 
 {% block extra_style %}
-
 {% endblock extra_style %}
 
 {% block extra_head %}
 <!-- Leaflet -->
 {% load staticfiles %}
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" /><![endif]-->
-<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 {% endblock extra_head %}
 {% block body_base %}
 
@@ -24,18 +22,28 @@
 {% endblock body_base %}
 
 {% block extra_body %}
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.css' %}" />
+<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
 <script src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster.js' %}"></script>
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.css' %}" />
-<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.label/leaflet.label.css' %}" />
 <script src="{% static 'leaflet/plugins/leaflet.label/leaflet.label.js' %}" /></script>
 <script src="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.js' %}"></script>
 <script src="{% static 'leaflet/plugins/leaflet.lvector/lvector.js' %}"></script>
 <script src="{% static 'leaflet/plugins/leaflet.lvector/Custom.js' %}"></script>
 <script src="{% static 'leaflet/plugins/leaflet.ajax/leaflet.ajax.js' %}"></script>
 <script src="{% static 'leaflet/plugins/tile/Bing.js' %}"></script>
-<script src="{% url 'js_reverse' %}" type="text/javascript"></script>
+<script src="{% static 'leaflet/plugins/leaflet.geosearch/js/l.control.geosearch.js' %}"></script>
+<script src="{% static 'leaflet/plugins/leaflet.geosearch/js/l.control.geosearch.js' %}"></script>
+<script src="{% static 'leaflet/plugins/leaflet.geosearch/js/l.geosearch.provider.google.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.markercluster/MarkerCluster.css' %}" />
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.loading/Control.Loading.css' %}" />
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.label/leaflet.label.css' %}" />
+<link rel="stylesheet" href="{% static 'leaflet/plugins/leaflet.geosearch/css/l.geosearch.css' %}" />
 <script>
+    var philadelphia = new L.LatLng(39.9522, -75.1642);
+    var southWest = new L.LatLng(39.87, -75.28);
+    var northEast = new L.LatLng(40.14, -74.96);
+    var phlBounds = new L.LatLngBounds(southWest, northEast);
+
     // Initialize the map object
     var map = new L.Map('map', {
         zoomControl: true,
@@ -48,9 +56,6 @@
     // Prep the background tile layer
     var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-t3op9nm9/{z}/{x}/{y}.png';
 
-    var gridTileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.vacant_lots/{z}/{x}/{y}.png';
-    var gridSmTileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.vacant_lots_sm/{z}/{x}/{y}.png';
-
     var tileAttribution = 'Data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors, Design &copy; MapBox';
 
     var streets = L.tileLayer(tileUrl, {
@@ -59,15 +64,15 @@
         maxZoom: 20
     }).addTo(map);
 
-     var grid = L.tileLayer(gridTileUrl, {
-        attribution: tileAttribution,
-        minZoom: 11,
-        maxZoom: 13
-    }).addTo(map);
+    var satellite = new L.BingLayer("Al_0exkMcWshayQSv6G6d87DTt5sYZOGw9aXtC_1Ef7xqyNjXY32qVSVUv-nBqGB");
 
-
-    var satellite = new L.BingLayer("AkMn2LxPfhhzZYlWu_HlNh_ZZ4q0oySIz9_PEDJ5G9gxydOak7EyQ6HUyOScx04f");
-
+    new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Google({
+                
+            }),
+            showMarker: false,
+            searchLabel: 'enter an address or neighborhood',
+        }).addTo(map);
 
     // Set the center on Philadelphia
     var offset = new L.LatLng(39.97, -75.11)

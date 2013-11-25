@@ -1,6 +1,6 @@
 # lotxlot/urls.py
 
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 

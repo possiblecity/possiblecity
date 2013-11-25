@@ -446,7 +446,14 @@ REST_FRAMEWORK = {
 PHILEO_LIKABLE_MODELS = {
     "profiles.Profile": {},
     "ideas.Idea": {},
-    "lotxlot.Lot": {}
+    "lotxlot.Lot": {
+        "css_class_on": "icon-heart",
+        "css_class_off": "icon-heart-empty",
+        "like_text_on": "Following",
+        "like_text_off": "+ Follow This Lot",
+        "count_text_singular": "follower",
+        "count_text_plural": "followers"
+    }
 }
 
 

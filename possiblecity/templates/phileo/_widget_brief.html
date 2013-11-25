@@ -1,18 +1,12 @@
-<span class="phileo">
+<div class="phileo">
     {% if can_like %}
-      <a class="ajax btn btn-primary pull-right start-project-btn"
-         data-method="post"
-         data-replace-closest=".phileo"
-         data-spinner="off"
-         href="{{ like_url }}">
-         + Follow this Lot
-         
-       </a>
-       
-       
-        <i class="{{ like_class }}"></i>
-         <span class="count">
-         {{ like_count }}
-         </span>
+        <a class="btn btn-primary ajax"
+           data-method="post"
+           data-replace-closest=".phileo"
+           data-spinner="off"
+           href="{{ like_url }}?t=b"
+           title="{{ like_text }}">
+            {{ like_text }}
+        </a>
     {% endif %}
-</span>
+</div>
