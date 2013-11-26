@@ -1,25 +1,42 @@
 {% extends "ideas/base.html" %}
 {% load i18n %}
-{% load bootstrap_tags %}
 
-{% block head_title %}Update Your Idea{% endblock head_title %}
+
+{% block head_title %}Update Your Project{% endblock head_title %}
 
 {% block body %}
-    <header>
-        <h1>Update Your Idea</h1>
-    </header>
 
-    {% if form.is_multipart %}
-    <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_update' idea.id %}">
-    {% else %}
-    <form method="POST" action="{% url 'ideas_idea_update' idea.id %}">
-    {% endif %}
-    {{ form|as_bootstrap }}
-    {% csrf_token %}
-    <div class="form-actions">
-        <a href="{% url 'ideas_idea_list' %}" class="btn">{% trans "Cancel" %}</a>
-        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+
+
+    <header class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-12 margin-bottom-20">
+                    <h1>Update Your Project</h1>
+                </div>
+            </div>
+        </div>
+</header>
+
+
+<div class="container">
+    <div class="panel">
+
+        {% if form.is_multipart %}
+        <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_update' idea.id %}">
+        {% else %}
+        <form method="POST" action="{% url 'ideas_idea_update' idea.id %}">
+        {% endif %}
+        {{ form }}
+        {% csrf_token %}
+        <div class="form-actions">
+            <a href="{% url 'ideas_idea_list' %}" class="btn">{% trans "Cancel" %}</a>
+            <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+        </div>
+        </form>
+
+
     </div>
-</form>
+</div>
 
 {% endblock body %}

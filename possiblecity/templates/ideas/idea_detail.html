@@ -89,7 +89,15 @@
                                 </div>
                             {% endfor %}
                             </div>
+
                             {% endif %}
+
+
+                            <hr/>
+
+                            <a href="{% url 'ideas_idea_update' idea.id %}">Edit this Project</a>
+
+
                         </div>
                     </div>
                 </div>
@@ -98,8 +106,10 @@
             {% block project %}
             <div class="panel">
                 <article id="idea">
-                    {% if idea.ideavisual_set %}
+                    {% if idea.get_lead_image %}
                     <section class="images">
+
+
                     <img src="{% thumbnail idea.get_lead_image.file 800x800 %}"
                          alt="{% if idea.get_lead_image.caption %}{{ idea.get_lead_image.caption }}{% else %}{{ idea.get_lead_image.title }}{% endif %}"
                          title="{{ idea.get_lead_image.title }}"/>

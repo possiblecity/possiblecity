@@ -290,6 +290,11 @@
                             <i class="icon-instagram"></i>
                             {% endif %}
                             &nbsp;•&nbsp; {{ idea.floated|ago }}
+                            &nbsp;•&nbsp;
+                            <a href="{{ idea.get_absolute_url }}">
+                              View
+                            </a>
+
                             {% if request.user.is_authenticated %}
                                 &nbsp;•&nbsp; {% phileo_widget request.user idea %}
                             {% else %}
@@ -298,6 +303,10 @@
                                 <a data-toggle="modal" data-target="#login-modal" href="#login-modal">
                                   Like
                                 </a>
+
+
+                                
+
                                 &nbsp;•&nbsp;
                                 <i class="{% if idea|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
                                 <span class="count">
@@ -319,7 +328,7 @@
           
           <div class="lot-detail-page-projects">
             <h2>Projects <small>0</small></h2>
-            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot. </p>
+            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot.</p>
             <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
           </div>
             
@@ -339,10 +348,7 @@
             {% endif %}
 
 
-
-            
-            <ul class="list-group">
-
+            <div class="row">
               {% for like in lot_likes %}
                   <div class="col-lg-6 col-12 margin-bottom-20">
                       {% if like.sender.profile.is_public %}
@@ -367,8 +373,7 @@
                       {% endif %}
                   </div>
               {% endfor %}
-
-            </ul>
+              </div>
             
           </div>
         
