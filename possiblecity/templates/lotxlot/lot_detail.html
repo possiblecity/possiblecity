@@ -241,45 +241,65 @@
                       </div>
                     </div>
                   </li>
-                  {% for idea in lot.idea_set.all %}
+                 
+                </ul>
+              
+         
+        </div>
+
+        <div class="col-lg-6">
+          
+          <div class="lot-detail-page-projects">
+          
+
+
+            <h2>Projects <small>{{ lot.idea_count }}</small></h2>
+            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot.</p>
+            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
+
+
+            <ul class="list-group">
+
+               {% for idea in lot.idea_set.all %}
                   <li class="list-group-item" id="idea-{{ idea.id }}">
                     <div class="media"> 
-                    {% if idea.user.profile.is_public %}
-                      <a class="pull-left profile-img" href="{{ idea.user.profile.get_absolute_url }}">
-                    {% else %}
-                      <span class="pull-left profile-img">
-                    {% endif %}                    
-                        <img class="media-object"  
-                        alt="{{ idea.user }}" 
-                        {% if idea.user.profile.photo %}
-                        src="{{ idea.user.profile.photo.url }}" 
-                        {% else %}
-                        src="{% static 'img/profile.png' %}"
-                        {% endif %} 
-                        style="width: 64px; height: 64px;" />
-                    {% if idea.user.profile.is_public %}
-                      </a>
-                    {% else %}
-                      </span>
-                    {% endif %}
-                      <div class="media-body">
-                        <h4 class="media-heading">
-                        {% if idea.user.first_name %}
-                            {{ idea.user.profile.full_name }}
-                        {% else %}
-                           {{ idea.user.username }}
-                        {% endif %}
-                        </h4>
-                        {% if idea.get_lead_image %}
-                        <a href="{{ idea.get_absolute_url }}">
-                        <img src="{% thumbnail idea.get_lead_image.file '300x150' crop %}" alt="{{ idea.title }}" />
+                    
+                    {% if idea.get_lead_image %}
+                        <a class="pull-left" href="{{ idea.get_absolute_url }}">
+                          <img src="{% thumbnail idea.get_lead_image.file '128x128' crop %}" alt="{{ idea.title }}" />
                         </a>
-                        {% endif %}
-                        {% if idea.title %}
-                        <h5>{{ idea.title }}</h5>
-                        {% endif %}
+                    
+
+                    {% else %}
+                      <a class="pull-left" href="{{ idea.get_absolute_url }}">
+                        <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=128x128&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+                      </a>
+                    {% endif %}
+
+
+                      <div class="media-body">
+                        <a href="{{ idea.get_absolute_url }}">
+                          <h4 class="media-heading">
+                            {% if idea.title %}
+                              {{ idea.title }}
+
+                            {% else %}
+                              Untitled Project
+                            {% endif %}
+                          </h4>
+                        </a>
+                       
+                        
                         <p>{{ idea.tagline }}</p>
-                        <h6>Via {{ idea.get_via_display }}
+                        <h6>
+                          <a href="{{ idea.user.profile.get_absolute_url }}">
+                          {% if idea.user.first_name %}
+                            {{ idea.user.profile.full_name }}
+                          {% else %}
+                             {{ idea.user.username }}
+                          {% endif %}
+                          </a> 
+                          Via {{ idea.get_via_display }}
                             {% if idea.get_via_display == "Twitter" %}
                             <i class="icon-twitter"></i>
                             {% elif idea.get_via_display == "Text" %}
@@ -319,22 +339,17 @@
                     </div>
                   </li>
                   {% endfor %}
-                </ul>
-              
-         
-        </div>
 
-        <div class="col-lg-6">
-          
-          <div class="lot-detail-page-projects">
-            <h2>Projects <small>0</small></h2>
-            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot.</p>
-            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
+                    
+                              
+                </ul>
+
+
           </div>
             
 
           <div class="people">
-            <h2>People <small>0</small></h2>
+            <h2>People <small>{{ lot|likes_count}}</small></h2>
 
             <p class="margin-bottom-15">Organizers on this lot.</p>
             
@@ -347,10 +362,11 @@
               </span>
             {% endif %}
 
-
+            {% who_likes lot as lot_likes %}
+            {% if lot_likes %}
             <div class="row">
               {% for like in lot_likes %}
-                  <div class="col-lg-6 col-12 margin-bottom-20">
+                  <div class="col-lg-2">
                       {% if like.sender.profile.is_public %}
                       <a href="{% url 'profiles_profile_detail' like.sender.username %}">
                       {% endif %}
@@ -374,6 +390,7 @@
                   </div>
               {% endfor %}
               </div>
+              {% endif %}
             
           </div>
         
