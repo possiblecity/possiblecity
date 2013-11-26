@@ -40,6 +40,9 @@
 	margin-top: 10px;
 }
 
+
+
+/*
 .people img {
 		width: 60px;
 	}
@@ -67,6 +70,8 @@
 .people h5 {
 	margin-top: 0px;
 }
+
+*/
 
 .lot-detail-page-projects {
 	margin-bottom: 50px;
@@ -536,8 +541,8 @@ width: 33.333333333333%;
 } 
 
 .ideas-page-sidebar .nav-tabs > li.active > a {
-background-color: #F3F3F3;
-border-top: none;
+	background-color: #F3F3F3;
+	border-top: none;
 }
 
 .sidebar .nav-tab-button {
@@ -610,7 +615,6 @@ padding: 15px 15px 10px 15px;
 
 .activity .list-group-item {
 	padding: 15px 30px 10px 15px;
-	cursor: pointer;
 }
 
 .panel.activity .panel-heading {
