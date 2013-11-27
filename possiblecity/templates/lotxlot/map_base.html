@@ -11,6 +11,7 @@
 {% endblock extra_head %}
 
 {% block body_class %}lotxlot map{% endblock %}
+{% block navbar_class %}navbar-fixed-top{% endblock %}
 
 {% block body_base %}
     {% block map %}
@@ -78,7 +79,7 @@
     var philadelphia = new L.LatLng(39.9522, -75.1642);
     
     {% block map_setview %}
-    map.setView(offset, 12);
+    map.setView(philadelphia, 12);
     {% endblock map_setview %}
 
 
