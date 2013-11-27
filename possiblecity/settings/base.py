@@ -480,7 +480,7 @@ PHL_DATA = {
     'SERVICE_PLANNING': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/21/',
     'SERVICE_CENSUS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/0/',
     'SERVICE_BLOCKGROUP': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/1/',
-    'SERVICE_WARDS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/11/',
+    'SERVICE_WARD': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/ServiceAreas/MapServer/11/',
     'VACANCY': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/', 
     'VACANCY_APPEALS': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/0/',
     'VACANCY_LICENSES': 'http://gis.phila.gov/ArcGIS/rest/services/PhilaGov/Vacancy/MapServer/2/',

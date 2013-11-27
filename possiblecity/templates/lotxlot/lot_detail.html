@@ -33,7 +33,7 @@
       </header>
       <section class="lot-info row">
         <div class="col-lg-6 col-md-6">
-            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x360&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
         </div>
         <div class="col-lg-6 col-md-6">
           <ul class="nav nav-pills">
@@ -41,7 +41,7 @@
             <li><a href="#ownership" data-toggle="tab">Ownership</a></li>
             <li><a href="#political" data-toggle="tab">Political</a></li>
             <li><a href="#finanical" data-toggle="tab">Finanical</a></li>
-            <li><a href="#environmental" data-toggle="tab">Environmental</a></li>
+            <li><a href="#environmental" data-toggle="tab">Enviro.</a></li>
           </ul>
 
           <!-- Tab panes -->
@@ -147,6 +147,28 @@
                   <tr>
                     <th>Zoning Designation:</th>
                     <td>{{ lot.profile.zoning_base }}</td>
+                  </tr>
+                  {% if lot.profile.zoning_overlay %}
+                  <tr>
+                    <th>Zoning Overlay:</th>
+                    <td>{{ lot.profile.zoning_overlay }}</td>
+                  </tr>
+                  {% endif %}
+                  <tr>
+                    <th>Council District:</th>
+                    <td>{{ lot.profile.council_district }}</td>
+                  </tr>
+                  <tr>
+                    <th>Planning District:</th>
+                    <td>{{ lot.profile.ward }}</td>
+                  </tr>
+                  <tr>
+                    <th>Census:</th>
+                    <td>{{ lot.profile.census.NAMELSAD10 }}</td>
+                  </tr>
+                  <tr>
+                    <th>Ward:</th>
+                    <td>{{ lot.profile.ward }}</td>
                   </tr>
                 </tbody>
               </table>

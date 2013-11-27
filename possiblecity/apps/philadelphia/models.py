@@ -268,8 +268,30 @@ class LotProfile(models.Model):
         return self.get_zoning_base()["LONG_CODE"]
 
     @property
+    def zoning_overlay(self):
+        return self.get_zoning_overlay()
+
+    @property
+    def zoning_flood(self):
+        return self.get_zoning_flood()
+
+    @property
+    def zoning_slope(self):
+        return self.get_zoning_slope()
+
+    @property
     def council_district(self):
         return self.get_council_district()['DIST_NUM']
+
+    @property
+    def planning_district(self):
+        return self.get_service_planning()
+
+    def census(self):
+        return self.get_service_census()
+
+    def ward(self):
+        return self.get_service_ward()
 
     @property
     def latest_violation(self):
