@@ -41,64 +41,62 @@
         style: neighborhoodStyle,
       }).addTo(map);
 
-      var vacant_lots = new lvector.Custom({
-            map: map,
-            url: "{% url 'api-lot-list' %}",            
-            scaleRange: [16, 20],
-            showAll: false,
-            singlePopup: true,
-            symbology : {
-                type: "unique",
-                property: "is_public",
-                values: [
-                    {
-                      value: true,
-                      vectorOptions: {
-                        fillColor: "#BAD8E4",
-                        fillOpacity: 0.6,
-                        color: "#539DBB",
-                        opacity: 1.0,
-                        weight: 1,
-                      }
-                    },
-                    {
-                      value: false,
-                      vectorOptions: {
-                        fillColor: "#539DBB",
-                        fillOpacity: 0.6,
-                        color: "#539DBB",
-                        opacity: 1.0,
-                        weight: 1,
-                      }
-                    }
-                  ]
-             },
-
-             popupTemplate: function(properties) {
-                if (properties.is_public == true) {
-                    ownership = 'Public';
-                    ownership_icon = 'icon-unlock-alt';
-                } else {
-                    ownership = 'Private';
-                    ownership_icon = 'icon-lock';
-                }
-                if (properties.is_available == true) {
-                    availability = 'For Sale';
-                } else {
-                    availabilty = 'Unknown';
-                }
-
-                var html = '<center><h3>' + properties.address + '</h3>' +
-                        '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong>' +
-                        properties.size.toFixed(0) + ' sq. ft.</strong>' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;<strong>' +
-                        properties.idea_count +
-                        '</strong><p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
-                           '" class="btn btn-default">View/Add Ideas</a></p><center>';
-                return html;
+    var vacant_lots = new lvector.Custom({
+      map: map,
+      url: "{% url 'api-lot-list' %}",            
+      scaleRange: [16, 20],
+      showAll: false,
+      singlePopup: true,
+      symbology : {
+        type: "unique",
+        property: "is_public",
+        values: [ 
+        {
+          value: true,
+          vectorOptions: {
+            fillColor: "#BAD8E4",
+            fillOpacity: 0.6,
+            color: "#539DBB",
+            opacity: 1.0,
+            weight: 1,
             }
-       });
+        }, 
+        {
+          value: false,
+          vectorOptions: {
+            fillColor: "#539DBB",
+            fillOpacity: 0.6,
+            color: "#539DBB",
+            opacity: 1.0,
+            weight: 1,
+          }
+        } ]
+      },
+      popupTemplate: function(properties) {
+        if (properties.is_public == true) {
+          ownership = 'Public';
+          ownership_icon = 'icon-unlock-alt';
+        } else {
+          ownership = 'Private';
+          ownership_icon = 'icon-lock';
+        }
+        if (properties.is_available == true) {
+          availability = 'For Sale';
+        } else {
+          availabilty = 'Unknown';
+        }
+
+        var html = '<center><h3>' + properties.address + '</h3>' +
+                   '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
+                   '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong>' +
+                    properties.size.toFixed(0) + ' sq. ft.</strong>' +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;<strong>' +
+                    properties.idea_count +
+                    '</strong><p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
+                    '" class="btn btn-default">View/Add Ideas</a></p><center>';
+        return html;
+      }
+    });
    
  
     function onEachNeighborhood(feature, layer) {

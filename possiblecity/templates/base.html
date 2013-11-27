@@ -1,122 +1,129 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
-    <head>
-        <meta charset="utf-8" />
-        <title>{% block head_title_base %}Possible City | {% block head_title %}{% endblock %}{% endblock %}</title>
-        {% block viewport %}
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% endblock %}
+  <head>
+      <meta charset="utf-8" />
+      <title>
+        {% block head_title_base %}Possible City | 
+          {% block head_title %}{% endblock head_title %}
+        {% endblock head_title_base %}</title>
+      {% block viewport %}
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% endblock viewport %}
 
-        {% block style_base %}
-            <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
-            <link href="{% static "fonts/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
-            <link href="{% static "css/animation.css" %}" rel="stylesheet">
-            <link href="{% static "css/custom.css" %}" rel="stylesheet">
-            <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
-	    {% block extra_style %}{% endblock %}
-        {% endblock style_base %}
+      {% block style_base %}
+          <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+          <link href="{% static "fonts/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
+          <link href="{% static "css/animation.css" %}" rel="stylesheet">
+          <link href="{% static "css/custom.css" %}" rel="stylesheet">
+          <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
+          {% block extra_style %}{% endblock extra_style %}
+      {% endblock style_base %}
 
-        {% block script_head %}
-            <!-- HTML5 shim, for IE6-8 support of HTML elements -->
-            <!--[if lt IE 9]>
-                <script src="{% static "js/vendor/html5shiv.js" %}"></script>
-            <![endif]-->
-        {% endblock script_head %}
+      {% block script_head %}
+          <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+          <!--[if lt IE 9]>
+              <script src="{% static "js/vendor/html5shiv.js" %}"></script>
+          <![endif]-->
+      {% endblock script_head %}
 
-        {% block extra_head_base %}
-            {% block extra_head %}{% endblock extra_head %}
-        {% endblock extra_head_base %}
-    </head>
-    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
-	    {% block navbar_base %}
-             <nav class="navbar {% block navbar_class %}{% endblock %}">
-                 <div class="container">
-                 {% block topbar %}
-                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                         <span class="icon-bar"></span>
-                         <span class="icon-bar"></span>
-                         <span class="icon-bar"></span>
-                     </button>  
+      {% block extra_head_base %}
+          {% block extra_head %}{% endblock extra_head %}
+      {% endblock extra_head_base %}
+  </head>
 
-                     {% block site_brand %}
-                     <a class="navbar-brand" href="{% url "home" %}">Possible City</a>
-                     {% endblock site_brand %}
-                     
-                    <div class="navbar-collapse collapse">
-                    {% block nav %}
-                      <ul class="nav navbar-nav">
-                          <li class="nav-ideas"><a href="{% url 'ideas_idea_list' %}">Projects</a></li>
-                          <li class="nav-map"><a href="{% url 'lotxlot' %}">Map</a></li>
-                          <li class="nav-people"><a href="{% url 'profiles_profile_list' %}">People</a></li>
-                          <li class="nav-about"><a href="{% url 'about' %}">About</a></li>
-                      </ul>
-                    {% endblock nav %}
-                    {% block account_bar %}
-	                   {% include "_account_bar.html" %}
-	                {% endblock account_bar %}
-                    </div>
-                 {% endblock topbar %}
-                 </div>
-             </nav>
-             {% endblock navbar_base %}
-	     {% block body_base %}
-	     <section>
-          {% block messages %}
-         	{% include "_messages.html" %}
-          {% endblock messages %}
-          <div class="content">
-            {% block body %}
-            {% endblock body %}
-          </div>
-	     </section>
-	     {% endblock body_base %}
-         {% block footer_base %}
-         <div class="clearfix"></div>
-         <footer class="container">
-            {% block footer %}{% include "_footer.html" %}{% endblock %}
-          </footer>
-          {% endblock footer_base %}
+  <body class="{% block body_class %}{% endblock body_class %}" id="{% block body_id %}{% endblock body_id %}">
+    {% block navbar_base %}
+    <nav class="navbar {% block navbar_class %}{% endblock navbar_class %}">
+      <div class="container">
+      {% block navbar %}
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+        </button>  
 
-        {% block script_base %}
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-            <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
-            <script src="{% static "js/ajax.js" %}"></script>
-            <script src="{% static "js/vendor/eldarion-ajax.min.js" %}"></script>
-            {% block extra_script %}{% endblock extra_script %}
-        {% endblock script_base %}
+        {% block site_brand %}
+        <a class="navbar-brand" href="{% url "home" %}">Possible City</a>
+        {% endblock site_brand %}
+         
+        <div class="navbar-collapse collapse">
+          {% block site_nav %}
+          <ul class="nav navbar-nav">
+            <li class="nav-ideas"><a href="{% url 'ideas_idea_list' %}">Projects</a></li>
+            <li class="nav-map"><a href="{% url 'lotxlot' %}">Map</a></li>
+            <li class="nav-people"><a href="{% url 'profiles_profile_list' %}">People</a></li>
+            <li class="nav-about"><a href="{% url 'about' %}">About</a></li>
+          </ul>
+          {% endblock site_nav %}
 
-        {% block extra_body_base %}
-            {% block extra_body %}{% endblock extra_body %}
-        {% endblock extra_body_base %}
-        
-        {% if request.user.is_authenticated %}
-            {% block logout_modal %}
-            {% include "account/_logout.html" %}
-            {% endblock logout_modal %}
-        {% else %}
-            {% block signup_modal %}
-            {% include "account/_signup.html" %}             
-            {% endblock signup_modal %}
-            {% block login_modal %}
-            {% include "account/_login.html" %}             
-            {% endblock login_modal %}
-        {% endif %}
-        {% block analytics %}
-        <script type="text/javascript">
+          {% block account_nav %}
+            {% include "_account_nav.html" %}
+          {% endblock account_nav %}
+        </div>
+      {% endblock navbar %}
+      </div>
+    </nav>
+    {% endblock navbar_base %}
 
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-28417563-1']);
-          _gaq.push(['_setDomainName', 'possiblecity.co']);
-          _gaq.push(['_trackPageview']);
+    {% block body_base %}
+    <section class="body-base">
+      {% block messages %}
+        {% include "_messages.html" %}
+      {% endblock messages %}
+      <div class="content">
+        {% block body %}
+        {% endblock body %}
+      </div>
+    </section>
+    {% endblock body_base %}
 
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
+    {% block footer_base %}
+    <div class="clearfix"></div>
+      <footer class="container">
+        {% block footer %}{% include "_footer.html" %}{% endblock footer %}
+      </footer>
+    {% endblock footer_base %}
 
-        </script>
-        {% endblock analytics %}
-    </body>
+    {% block script_base %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+    <script src="{% static "js/ajax.js" %}"></script>
+    <script src="{% static "js/vendor/eldarion-ajax.min.js" %}"></script>
+      {% block extra_script %}{% endblock extra_script %}
+    {% endblock script_base %}
+
+    {% block extra_body_base %}
+      {% block extra_body %}{% endblock extra_body %}
+    {% endblock extra_body_base %}
+      
+    {% if request.user.is_authenticated %}
+      {% block logout_modal %}
+        {% include "account/_logout.html" %}
+      {% endblock logout_modal %}
+    {% else %}
+        {% block signup_modal %}
+          {% include "account/_signup.html" %}             
+        {% endblock signup_modal %}
+        {% block login_modal %}
+          {% include "account/_login.html" %}             
+        {% endblock login_modal %}
+    {% endif %}
+      
+    {% block analytics %}
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28417563-1']);
+      _gaq.push(['_setDomainName', 'possiblecity.co']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+   % endblock analytics %}
+  </body>
 </html>

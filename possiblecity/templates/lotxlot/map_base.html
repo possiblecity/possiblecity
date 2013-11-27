@@ -1,24 +1,23 @@
 {% extends 'lotxlot/base.html' %}
+{% load staticfiles %}
 
 {% block extra_style %}
 {% endblock extra_style %}
 
 {% block extra_head %}
 <!-- Leaflet -->
-{% load staticfiles %}
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 {% endblock extra_head %}
-{% block body_base %}
 
+{% block body_class %}lotxlot map{% endblock %}
+
+{% block body_base %}
     {% block map %}
         <div id="map"></div>
     {% endblock map %}
-
     {% block body %}   
     {% endblock body %}
-
-
 {% endblock body_base %}
 
 {% block extra_body %}
@@ -88,7 +87,7 @@
         fillOpacity: 0
     };
 
-    var blueStyle = {
+    var parcelStyle = {
         "fillColor":"#68C4EA",
         "fillOpacity": 0.2,
         "opacity": 1.0,

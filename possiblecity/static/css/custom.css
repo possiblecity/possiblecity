@@ -211,8 +211,9 @@ form p {
 /***************************************************************************/
 /* SPACING STYLES */
 
-
-
+.margin-bottom-0 {
+	margin-bottom: 0px;
+}
 
 .margin-bottom-10 {
 	margin-bottom: 10px;
@@ -244,8 +245,8 @@ form p {
 	background: #68C4EA;
 }
 
-.margin-bottom-0 {
-	margin-bottom: 0px;
+body.map .navbar {
+	position: absolute;
 }
 
 .navbar-brand {
