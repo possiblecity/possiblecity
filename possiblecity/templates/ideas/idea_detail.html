@@ -2,6 +2,8 @@
 
 {% load i18n %}
 {% load staticfiles %}
+{% load humanize %}
+{% load floppyforms %}
 
 {% load thumbnail %}
 {% load phileo_tags %}
@@ -12,7 +14,7 @@
 <header class="page-header">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4 col-lg-12 col-12 margin-bottom-20">
+            <div class="col-xs-12">
                 <h1>{{ idea.title }}</h1>
                   {% for tag in idea.tags.all %} 
                   <span class="label label-info">{{ tag.name }}</span>
@@ -24,88 +26,32 @@
 </header>
 <section class="container">
     <div class="row">
-        <div class="col-lg-2 col-12">
-            <div class="panel">
-                <div class="row margin-bottom-20">
-                        <div class="col-6 col-lg-12">
-                            <div class="profile-pic">
-                                {% if idea.user.profile.is_public %}
-                                <a href="{% url 'profiles_profile_detail' idea.user.username %}">
-                                {% endif %}
-                                {% if idea.user.profile.photo %}
-                                    <img src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
-                                {% else %}
-                                    <img src="{% static 'img/profile.png' %}" />
-                                {% endif %}
-                                {% if idea.user.profile.is_public %}
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-6 col-lg-12">
-                            <h5>Floated by</h5>
-                            <h3>
-                            {% if idea.user.first_name %}
-                                {{ idea.user.profile.full_name}}
-                            {% else %}
-                                {{ idea.user.username }}
-                            {% endif %}
-                            </h3>
-                            {% if request.user == idea.user.profile.user %}
-                            <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit your idea' %}</a>
-                            {% endif %}
-                            {% if idea.grounded %}
-                            <hr>
-                            <h5>Grounded in</h5>
-                            <h4>{{ idea.grounded|date:"Y" }}</h4>
-                            {% endif %}
-                            {% who_likes idea as idea_likes %}
-                            {% if idea_likes %}
-                            <hr>                           
-                            <h5>Liked by</h5>
-                            <div class="row">
-                            {% for like in idea_likes %}
-                                <div class="col-lg-6 col-12 margin-bottom-20">
-                                    {% if like.sender.profile.is_public %}
-                                    <a href="{% url 'profiles_profile_detail' like.sender.username %}">
-                                    {% endif %}
-                                    <img class="profile-pic"
-                                    {% if like.sender.profile.photo %}
-                                        src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
-                                    {% else %}
-                                        src="{% static 'img/profile.png' %}"
-                                    {% endif %}
-                                    {% if like.sender.first_name %}
-                                        alt="{{ like.sender.profile.full_name }}"
-                                        title="{{ like.sender.profile.full_name }}"
-                                    {% else %}
-                                        alt="{{ like.sender.username }}"
-                                        title="{{ like.sender.username }}"
-                                    {% endif %}
-                                    >
-                                    {% if like.sender.profile.is_public %}
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-        </div>
-        <div class="col-lg-7 col-12">
+
+
+
+        <div class="col-xs-12 col-md-6">
+
+            
+
+
             {% block project %}
             <div class="panel">
+
+                {% if request.user == idea.user.profile.user or request.user.is_staff %}
+                  <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Your Project' %}</a>
+                {% endif %}
+
                 <article id="idea">
-                    {% if idea.ideavisual_set %}
+                    {% if idea.get_lead_image %}
                     <section class="images">
+
+
                     <img src="{% thumbnail idea.get_lead_image.file 800x800 %}"
                          alt="{% if idea.get_lead_image.caption %}{{ idea.get_lead_image.caption }}{% else %}{{ idea.get_lead_image.title }}{% endif %}"
                          title="{{ idea.get_lead_image.title }}"/>
                     </section>
                     {% endif %}
-                    <h2>{{ idea.tagline}}</h2>
+                    <h3>{{ idea.tagline}}</h3>
                     {% if idea.description %}
                     <section id="description">
                         {{ idea.description_html|safe }}
@@ -119,22 +65,215 @@
                 {% endblock comments %}
             </div>
             {% endblock project %}
-        </div>
-        <div class="col-lg-3 col-12">
-           <div class="panel">
-              <h5>Location</h5>
-              {% for lot in idea.lots.all %}
-              <h4><i class="icon-map-marker"></i>
-                  <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                    {{ lot.address }}
-                  </a>
-               </h4>
-              <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-              <img src="http://maps.googleapis.com/maps/api/streetview?size=300x300&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
-              </a>              
+
+
+            <div class="panel">
+                <h2>Resources</h2>
+
+
+                <h5>Location</h5>
+                <div class="row">
+                  {% for lot in idea.lots.all %}
+                  <div class="col-xs-6">
+                    <h4><i class="icon-map-marker"></i>
+                        <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                          {{ lot.address }}
+                        </a>
+                     </h4>
+                    <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                    <img src="http://maps.googleapis.com/maps/api/streetview?size=300x300&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+                    </a>   
+                  </div>           
+                  {% endfor %}
+                </div>
+            </div>
+
+
+        </div> <!-- .col-md-6 -->
+
+        <div class="col-xs-12 col-md-6">
+
+
+
+
+
+
+
+
+                <ul class="list-group people-section">
+
+            
+
+
+
+
+
+            <li class="list-group-item">
+              <h2>Project Members <small>{{idea|likes_count}}</small></h2>
+              
+    
+               
+
+              {% if request.user.is_authenticated %}
+              {% phileo_widget request.user idea %}
+              {% else %}
+                <span class="phileo">
+                    <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary top-right-btn">+ Join this Project</a>
+                </span>
+              {% endif %}
+               
+            </li>
+
+            <li class="list-group-item">
+              <h5>Initiator</h5>
+               <div class="row">
+                
+                <div class="col-xs-2">
+                  
+                  <div class="profile-pic">
+                      {% if idea.user.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' idea.user.username %}">
+                      {% endif %}
+                      {% if idea.user.profile.photo %}
+                          <img src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
+                      {% else %}
+                          <img src="{% static 'img/profile.png' %}" />
+                      {% endif %}
+                      {% if idea.user.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
+
+                </div>
+                <div class="col-xs-5">
+                  
+                  
+                  <p>
+                  {% if idea.user.first_name %}
+                    {{ idea.user.profile.full_name}}
+                {% else %}
+                    {{ idea.user.username }}
+                {% endif %}
+
+                <br>
+
+                <a href="mailto:{{idea.user.email}}">{{idea.user.email}}</a>
+
+                </p>
+                  
+                </div>
+
+                <div class="col-xs-5">
+                  
+                  <p>{{idea.floated}}</p>
+                  
+                </div>
+                
+                  
+
+
+            </li>
+
+            <li class="list-group-item">
+              <h5>Members</h5>
+
+
+              {% who_likes idea as idea_likes %}
+              {% if idea_likes %}
+              <div class="row">
+              {% for like in idea_likes %}
+                  <div class="col-xs-2">
+                      {% if like.sender.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' like.sender.username %}">
+                      {% endif %}
+                      <img class="profile-pic"
+                      {% if like.sender.profile.photo %}
+                          src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
+                      {% else %}
+                          src="{% static 'img/profile.png' %}"
+                      {% endif %}
+                      {% if like.sender.first_name %}
+                          alt="{{ like.sender.profile.full_name }}"
+                          title="{{ like.sender.profile.full_name }}"
+                      {% else %}
+                          alt="{{ like.sender.username }}"
+                          title="{{ like.sender.username }}"
+                      {% endif %}
+                      >
+                      {% if like.sender.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
               {% endfor %}
-           </div>
-        </div>
+              </div>
+
+              {% endif %}
+              
+              
+            </li>
+          </ul>
+
+
+          <div class="panel">
+            <h2>Comments</h2>
+          
+
+            <ul class="list-group">
+                  <div class="nav-tab-button text-center"></div>
+                  <li class="list-group-item">
+                    <div class="media">
+                     {% if request.user.is_authenticated %}
+                      <span class="pull-left profile-img" >
+                      <img class="media-object"  
+                           {% if request.user.profile.photo %}
+                           src="{{ request.user.profile.photo.url }}"
+                           {% else %}
+                           src="{% static 'img/profile.png' %}"
+                           {% endif %}
+                           alt="{{ request.user }}" 
+                           style="width: 64px; height: 64px;" />
+                      </span>
+                      {% else %}
+                      <span class="pull-left profile-img">
+                      <img class="media-object"
+                           alt="{{ request.user }}"
+                           src="{% static 'img/profile.png' %}" 
+                           style="width: 64px; height: 64px;" />
+                      </span>
+                      {% endif %}
+                      <div class="media-body">
+                        <form method="post" id="idea-form" action=".">
+                          {% csrf_token %}
+                          
+
+                          <div class="form-group">
+                          <div class="controls  field-tagline">
+                            <textarea name="tagline" style="height: 66px" required id="id_tagline" rows="2" placeholder="Add a Comment to this Project" cols="40" class="form-control"></textarea>
+                          </div><!--- .controls -->
+                        </div><!--- .form-group -->
+
+                          <div class="form-actions">
+                            {% if request.user.is_authenticated %}
+                            <button type="submit" class="btn btn-primary pull-right add-comment-button">{% trans "Add comment" %}
+                            </button>
+                            {% else %}
+                             <a class="btn btn-primary pull-right add-comment-button" href="{% url 'account_signup' %}" data-toggle="modal" data-target="#sign-up-modal">{% trans "Add comment" %}</a>
+                             {% endif %}
+                          </div>
+                          </form> 
+                      </div>
+                    </div>
+                  </li>
+                 
+                </ul>
+
+          </div>
+
+
+
+        </div> <!-- .col-xs-6 -->
+
+        
     </div>
 </section>
 {% endblock body %}

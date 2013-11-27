@@ -11,10 +11,10 @@ urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name='ideas/index.html'), name='ideas_index'),
 
     # user input of ideas
-    url(r'^idea/add/$', 
+    url(r'^project/add/$', 
         IdeaCreateView.as_view(), 
         name='ideas_idea_create'),
-    url(r'^idea/update/(?P<pk>[\w-]+)$', 
+    url(r'^project/update/(?P<pk>[\w-]+)$', 
         IdeaUpdateView.as_view(), 
         name='ideas_idea_update'),
 

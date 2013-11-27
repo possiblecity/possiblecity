@@ -48,7 +48,7 @@ class IdeaUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, *args, **kwargs):
         self.idea = get_object_or_404(Idea, pk=kwargs['pk'])
-        if self.idea.user.id != self.request.user.id:
+        if self.idea.user.id != self.request.user.id and not self.request.user.is_staff:
             return HttpResponseForbidden()
         return super(IdeaUpdateView, self).dispatch(*args, **kwargs)
 
