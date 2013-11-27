@@ -12,7 +12,7 @@
   {% block head_title %}Lot #{{ lot.id }} | {{ lot.address }} {% endblock head_title %}
 
   {% block map %}
-    <div id="map" class="lot-detail-map"></div>
+    <div id="map" class="minimize"></div>
   {% endblock map %}
 
  {% block sidebar %}
@@ -21,18 +21,18 @@
       <header class="lot-header row">
         <div class="col-md-12">
           <div class="lot-detail-page-container-icons">
-            <a href="#" class="minmax icon-angle-down pull-right"></a> 
+            <a href="#" title="Minimize/Maximize" class="lot-control minmax icon-angle-down pull-right"></a> 
           </div>
           <div>
             <h1>
-               Lot #{{ lot.id }} - {{ lot.address }}
+               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }}
             </h1>
           </div>
         </div>
       </header>
       <section class="lot-info row">
         <div class="col-lg-6 col-md-6">
-            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x360&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
         </div>
         <div class="col-lg-6 col-md-6">
           <ul class="nav nav-pills">
@@ -302,7 +302,6 @@
               {% endfor %}
               </div>
               {% endif %}
->>>>>>> page-template-updates
             
           </div>
 
@@ -320,7 +319,7 @@
   {% block extra_map_js %}
   <script>
       var lot = L.geoJson(null, {
-         style: blueStyle
+         style: parcelStyle
       }).addTo(map);
           
 
@@ -354,17 +353,25 @@
             map.removeLayer(neighborhoods);
       });
 
+  $('.lot-control').tooltip();
+
+  $( ".reset-location" ).click(function() {
+    var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
+    map.setView(center, map.getZoom())
+  });
  
   $( "a.minmax" ).click(function() {
     $(this).toggleClass("icon-angle-up");
     $(this).toggleClass("icon-angle-down")
     $("#map").toggleClass("maximize");
+    $("#map").toggleClass("minimize");
 
-    map.invalidateSize(true);
-    map.setView(map.getCenter(), map.getZoom())
+    map.invalidateSize({
+      animate: true,
+      debounceMoveend: true,
+      duration: 0.5,
+    });
   });
-
-  map.panTo(window.center);
 
   </script>
   {% endblock extra_map_js %}

@@ -23,6 +23,14 @@
 	color: #868686;
 }
 
+a.lot-control {
+	text-decoration: none;
+}
+
+a.reset-location {
+	font-size: .75em;
+}
+
 .lot-detail .panel {
 	background-color: rgba(255,255,255,0.8);
 }
@@ -415,18 +423,19 @@ body.about .navbar-nav > .nav-about a {
 	position: relative;
 	box-sizing: border-box;
 	padding-top: 50px;
-	height: 100%;
-	transition: height 0.5s;
+	/*transition: height 0.5s;*/
 }
 
-#map.lot-detail-map {
+.leaflet-control-container {
 	position: relative;
-	height: 290px;
 }
 
-#map.lot-detail-map.maximize {
-	height: 93%;
-	width: 100%;
+#map.minimize {
+	height: 320px;
+}
+
+#map.maximize {
+	height: 100%;
 }
 
 
@@ -451,12 +460,6 @@ body.about .navbar-nav > .nav-about a {
 .info-tab-border {
 	border-right:1px solid #dddddd;
 	border-left:1px solid #dddddd;
-}
-
-body.map footer.site-footer {
-	position: absolute;
-	bottom: 0;
-	z-index: 100000;
 }
 
 

@@ -46,12 +46,31 @@
 
     // Initialize the map object
     var map = new L.Map('map', {
-        zoomControl: true,
+        zoomControl: false,
         doubleClickZoom: true,
-        loadingControl:true,
         maxZoom: 20,
         minZoom: 11
     });
+
+    // Add our zoom control manually where we want to
+    var zoomControl = L.control.zoom({
+        position: 'topright'
+    });
+    map.addControl(zoomControl);
+
+    map.locate();
+
+
+
+    // Add our loading control in the same position and pass the 
+    // zoom control to attach to it
+    var loadingControl = L.Control.loading({
+        position: 'topright',
+        zoomControl: zoomControl
+    });
+    map.addControl(loadingControl);
+
+    
 
     // Prep the background tile layer
     var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-t3op9nm9/{z}/{x}/{y}.png';
