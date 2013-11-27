@@ -161,6 +161,14 @@ div.content {
   margin-top:20px;
 } 
 
+.positive {
+	color: green;
+}
+
+.negative {
+	color: red;
+}
+
 
 
 
@@ -762,6 +770,10 @@ padding-left: 0px;
 
 .table thead > tr > th {
 padding-left: 0px;	
+}
+
+.table td {
+	width: 50%;
 }
 
 

@@ -150,6 +150,9 @@ class LotProfile(models.Model):
     def get_service_census(self):
         return self.get_data_by_point(settings.PHL_DATA["SERVICE_CENSUS"], 2628000)
 
+    def get_service_blockgroup(self):
+        return self.get_data_by_point(settings.PHL_DATA["SERVICE_BLOCKGROUP"], 2628000)
+
     def get_service_ward(self):
         return self.get_data_by_point(settings.PHL_DATA["SERVICE_WARD"], 2628000)
 
@@ -181,6 +184,18 @@ class LotProfile(models.Model):
     @property
     def papl_listing(self):
         return self.get_papl_listing()    
+
+    @property
+    def account_mailing_address(self):
+        return self.get_opa_data()['account_information']['mailing_address']
+
+    @property
+    def account_details(self):
+        return self.get_opa_data()['account_details']
+
+    @property
+    def account_valuation(self):
+        return self.get_opa_data()['valuation_details']['2014']
 
     @property
     def address_data(self):
@@ -281,15 +296,21 @@ class LotProfile(models.Model):
 
     @property
     def council_district(self):
-        return self.get_council_district()['DIST_NUM']
+        return self.get_service_council()
 
     @property
     def planning_district(self):
         return self.get_service_planning()
 
+    @property
     def census(self):
         return self.get_service_census()
 
+    @property
+    def blockgroup(self):
+        return self.get_service_blockgroup()
+
+    @property
     def ward(self):
         return self.get_service_ward()
 

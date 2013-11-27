@@ -38,10 +38,10 @@
         <div class="col-lg-6 col-md-6">
           <ul class="nav nav-pills">
             <li class="active"><a href="#vacancy" data-toggle="tab">Vacancy</a></li>
-            <li><a href="#ownership" data-toggle="tab">Ownership</a></li>
-            <li><a href="#political" data-toggle="tab">Political</a></li>
-            <li><a href="#finanical" data-toggle="tab">Finanical</a></li>
-            <li><a href="#environmental" data-toggle="tab">Enviro.</a></li>
+            <li><a href="#ownership" data-toggle="tab">Owner</a></li>
+            <li><a href="#political" data-toggle="tab">Boundaries</a></li>
+            <li><a href="#financial" data-toggle="tab">Finance</a></li>
+            <li><a href="#environmental" data-toggle="tab">Environment</a></li>
           </ul>
 
           <!-- Tab panes -->
@@ -53,10 +53,10 @@
                     <th>Listed For Sale By City:</th>
                     <td>
                     {% if lot.profile.is_for_sale %}
-                        <i style="color:green" class="icon-ok-sign"></i>&nbsp;&nbsp;
+                        <i class="icon-ok-sign positive"></i>&nbsp;&nbsp;
                         {{ lot.profile.papl_listing.PRICE_STR }}
                     {% else %}
-                        <i style="color:red" class="icon-minus-sign"></i>
+                        <i class="icon-minus-sign negative"></i>
                         {% if lot.is_public %}
                           &nbsp;&nbsp;Not For Sale
                         {% else %}&nbsp;&nbsp;Not Applicable
@@ -67,10 +67,10 @@
                   <tr>
                     <th>Vacancy Violation:</th>
                     <td>{% if lot.profile.has_violation %}
-                        <i style="color:green" class="icon-ok-sign"> </i>
+                        <i class="icon-ok-sign positive"> </i>
                         &nbsp;&nbsp;{{ lot.profile.latest_violation.DESCRIPTION }}
                         {% else %}
-                        <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
+                        <i class="icon-minus-sign negative"></i> &nbsp;&nbsp;None
                         {% endif %}
                     </td>
                   </tr>
@@ -78,9 +78,9 @@
                     <th>Violation Non-Compliance:</th>
                     <td>
                     {% if lot.profile.is_non_compliant %}
-                      <i style="color:green" class="icon-ok-sign"></i> &nbsp;&nbsp;Not Complied
+                      <i class="icon-ok-sign positive"></i> &nbsp;&nbsp;Not Complied
                     {% else %}
-                      <i style="color:red" class="icon-minus-sign"></i>
+                      <i class="icon-minus-sign negative"></i>
                       {% if lot.profile.has_violation %} &nbsp;&nbsp;Complied {% else %} &nbsp;&nbsp;Not Applicable {% endif %}
                       {% endif %}
                     </td>
@@ -89,10 +89,10 @@
                     <th>Vacancy License:</th>
                     <td>
                       {% if lot.profile.get_licenses %}
-                      <i style="color:green" class="icon-ok-sign"></i>
+                      <i class="icon-ok-sign positive"></i>
                         &nbsp;&nbsp;{{ lot.profile.latest_license.DESCRIPTION }}
                       {% else %}
-                      <i style="color:red" class="icon-minus-sign"></i> &nbsp;&nbsp;None
+                      <i class="icon-minus-sign negative"></i> &nbsp;&nbsp;None
                       {% endif %}
                       </td>
                   </tr>
@@ -100,18 +100,18 @@
                     <th>Land Use:</th>
                     <td>
                         {% if lot.profile.is_land_use_vacant %}
-                        <i style="color:green" class="icon-ok-sign"></i>
+                        <i class="icon-ok-sign positive"></i>
                         {% else %}
-                        <i style="color:red" class="icon-minus-sign"></i>
+                        <i class="icon-minus-sign negative"></i>
                         {% endif %}&nbsp;&nbsp;{{ lot.profile.land_use }}</td>
                   </tr>
                   <tr>
                     <th>Building Description:</th>
                     <td>
                     {% if lot.profile.is_bldg_desc_vacant %}
-                      <i style="color:green" class="icon-ok-sign"></i>
+                      <i class="icon-ok-sign positive"></i>
                     {% else %}
-                      <i style="color:red" class="icon-minus-sign"></i>
+                      <i class="icon-minus-sign negative"></i>
                     {% endif %}&nbsp;&nbsp;{{ lot.profile.building_description }}</td>
                   </tr>
                 </tbody>
@@ -130,8 +130,17 @@
                     <td>{{ lot.profile.owner }}</td>
                   </tr>
                   <tr>
-                    <th>Owner Address:</th>
-                    <td>{{ lot.profile.owner }}</td>
+                    <th>Mailing Address:</th>
+                    <td>{{ lot.profile.account_mailing_address.street.0 }}<br>
+                      {{ lot.profile.account_mailing_address.street.1 }}<br>
+                      {{ lot.profile.account_mailing_address.city }}, {{ lot.profile.account_mailing_address.state }}
+                      {{ lot.profile.account_mailing_address.zip }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Owner Since:</th>
+                    <td>{{ lot.profile.account_details.sale_date }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -141,34 +150,42 @@
               <table class="table">
                 <tbody>
                   <tr>
+                    <th>Size:</th>
+                    <td>{{ lot.get_sqft|floatformat:0 }} sq. ft. ({{ lot.get_acres|floatformat:2 }} acres)</td>
+                  </tr>
+                  <tr>
                     <th>Neighborhood:</th>
                     <td>{{ lot.profile.neighborhood }}</td>
                   </tr>
                   <tr>
                     <th>Zoning Designation:</th>
-                    <td>{{ lot.profile.zoning_base }}</td>
+                    <td>{{ lot.profile.zoning_base }}: {{ lot.profile.account_details.zoning_desc }}</td>
                   </tr>
                   {% if lot.profile.zoning_overlay %}
                   <tr>
                     <th>Zoning Overlay:</th>
-                    <td>{{ lot.profile.zoning_overlay }}</td>
+                    <td>
+                      <a title="American Legal Code Section" href="{{ lot.profile.zoning_overlay.CODE_SECTION_LINK }}">
+                        {{ lot.profile.zoning_overlay.OVERLAY_NAME }}
+                      </a>
+                    </td>
                   </tr>
                   {% endif %}
                   <tr>
                     <th>Council District:</th>
-                    <td>{{ lot.profile.council_district }}</td>
+                    <td>District {{ lot.profile.council_district.DIST_NUM }}</td>
                   </tr>
                   <tr>
                     <th>Planning District:</th>
-                    <td>{{ lot.profile.ward }}</td>
+                    <td>District {{ lot.profile.planning_district.DIST_NUM }}: {{ lot.profile.planning_district.DIST_NAME }}</td>
                   </tr>
                   <tr>
                     <th>Census:</th>
-                    <td>{{ lot.profile.census.NAMELSAD10 }}</td>
+                    <td>{{ lot.profile.census.NAMELSAD10 }} {{ lot.profile.blockgroup.NAMELSAD10 }} </td>
                   </tr>
                   <tr>
                     <th>Ward:</th>
-                    <td>{{ lot.profile.ward }}</td>
+                    <td>Ward {{ lot.profile.ward.WARD_NUM }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -178,8 +195,32 @@
               <table class="table">
                 <tbody>
                   <tr>
-                    <th>BRT/OPA #:</th>
+                    <th>BRT/OPA Account #:</th>
                     <td><a href="http://opa.phila.gov/opa.apps/Search/SearchResults.aspx?id={{ lot.profile.tencode}}">{{ lot.profile.brt_id }}</a></td>
+                  </tr>
+                  <tr>
+                    <th>Last Sale Price:</th>
+                    <td>{{ lot.profile.account_details.sale_price }}</td>
+                  </tr>
+                  <tr>
+                    <th>Sale Date:</th>
+                    <td>{{ lot.profile.account_details.sale_date }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Market Value:</th>
+                    <td>{{ lot.profile.account_valuation.market_value }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Assessed Land Taxable:</th>
+                    <td>{{ lot.profile.account_valuation.assessed_land_taxable }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Assessed Improvement Taxable:</th>
+                    <td>{{ lot.profile.account_valuation.assessed_improvement_taxable }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -191,6 +232,26 @@
                   <tr>
                     <th>Impervious Area:</th>
                     <td>{{ lot.profile.impervious_area }}</td>
+                  </tr>
+                  <tr>
+                    <th>100 Year Flood Plain:</th>
+                    <td>
+                      {% if lot.profile.get_zoning_flood %}
+                        <i class="icon-ok-sign positive"></i>
+                      {% else %}
+                        <i class="icon-minus-sign negative"></i>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Steep Slopes:</th>
+                    <td>
+                      {% if lot.profile.get_zoning_slope %}
+                        <i class="icon-ok-sign positive"></i>
+                      {% else %}
+                        <i class="icon-minus-sign negative"></i>
+                      {% endif %}
+                    </td>
                   </tr>
                 </tbody>
               </table>
