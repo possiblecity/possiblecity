@@ -25,7 +25,8 @@
           </div>
           <div>
             <h1>
-               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }}
+               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }} 
+               <small>{{ lot.get_sqft|floatformat:0 }} ft<sup>2</sup></small>
             </h1>
           </div>
         </div>
@@ -332,8 +333,8 @@
             var bounds = lot.getBounds();
             map.fitBounds(bounds, {
               maxZoom:19,
+              padding:20
             });
-            map.fitBounds
 
             var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
             var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
