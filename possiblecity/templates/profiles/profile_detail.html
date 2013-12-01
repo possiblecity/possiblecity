@@ -5,6 +5,7 @@
 {% load thumbnail %}
 
 {% load phileo_tags %}
+{% load activity_tags %}
 
 {% load possiblecity_tags %}
 
@@ -15,10 +16,10 @@ Profile for {{ profile.user.username }}
 {% block body %}
 <div class="container profile">
     <div class="row">
-        <div class="col-lg-3 col-12">
+        <div class="col-md-3 col-xs-12">
             <div class="panel">
                 <div class="row margin-bottom-20">
-                    <div class="col-6 col-lg-12">
+                    <div class="col-md-12">
                         <div class="profile-pic">
                         {% if profile.photo %}
                             <img src="{% thumbnail profile.photo '400x400' crop upscale %}" />
@@ -27,21 +28,27 @@ Profile for {{ profile.user.username }}
                         {% endif %}
                         </div>
                     </div>
-                    <div class="col-6 col-lg-12">
-                        <h3>
-                        {% if profile.user.first_name %}
-                            {{ profile.full_name}}
-                        {% else %}
-                            {{ profile.user.username }}
-                        {% endif %}
-                        </h3>
+                    <div class="col-md-12">
+                        <h3>{{ profile.full_name}}</h3>
+                        <p>
                         {% if request.user == profile.user %}
-                        <hr/>
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
+                        {% else %}
+                         <a class="btn btn-primary ajax actstream" 
+                               href="{% follow_all_url user %}"
+                               data-method="post"
+                               data-replace-closest=".actstream"
+                               data-spinner="off">
+                              {% if request.user|is_following:user %}
+                                <i class="icon-ok-sign"></i>&nbsp;&nbsp;{% trans 'Following' %}
+                              {% else %}
+                                <i class="icon-plus"></i>&nbsp;&nbsp;{% trans 'Follow' %}
+                              {% endif %}
+                            </a>
                         {% endif %}
+                        </p>
                         <hr>
                         <h5>Contact</h5>
-
                         {% if request.user.is_authenticated %}
                         <p>
                             {% if profile.twitter %}
@@ -71,7 +78,7 @@ Profile for {{ profile.user.username }}
                 </div>
             </div><!-- .panel -->
         </div><!--.col-lg-3 -->
-        <div class="col-lg-9 col-12">
+        <div class="col-md-9 col-xs-12">
             {% if profile.about %}
             <div class="panel">
                 <h5>About</h5>
