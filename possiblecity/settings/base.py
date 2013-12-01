@@ -307,16 +307,17 @@ THIRD_PARTY_APPS = (
 
     'compressor', # static file optimization
     'pagination', # pagination
-    'easy_thumbnails',
+    'easy_thumbnails', # image manipulation
     
     'taggit', # tagging
     'metron', # analytics
-    'phileo', #liking
+    'phileo', # liking
+    'actstream', # activity stream, following
 
-    'rest_framework',
-    'rest_framework_gis',
+    'rest_framework', # api
+    'rest_framework_gis', # api geo add-ons
     
-    'floppyforms',
+    'floppyforms', # form tools
     'django_js_reverse' # javascript url tools
 )
 
@@ -325,10 +326,11 @@ LOCAL_APPS = (
     'apps.about', # about page
     'apps.core', # general helpers
     #'apps.text', # blog
+    'apps.comments', # comments
     'apps.profiles', # user profiles
     'apps.ideas', # user uploaded ideas
-    'apps.lotxlot',
-    'apps.philadelphia'
+    'apps.lotxlot', # lots
+    'apps.philadelphia', # philly data
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -446,14 +448,13 @@ REST_FRAMEWORK = {
 PHILEO_LIKABLE_MODELS = {
     "profiles.Profile": {},
     "ideas.Idea": {},
-    "lotxlot.Lot": {
-        "css_class_on": "icon-heart",
-        "css_class_off": "icon-heart-empty",
-        "like_text_on": "Following",
-        "like_text_off": "+ Follow This Lot",
-        "count_text_singular": "follower",
-        "count_text_plural": "followers"
-    }
+    "lotxlot.Lot": {},
+    "comments.Comment": {}
+}
+
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'lotxlot.lot', 'ideas.idea', 'phileo.like', 'comments.comment'),
+    'USE_PREFETCH': True,
 }
 
 

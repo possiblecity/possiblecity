@@ -15,7 +15,6 @@
 
 {% block body_base %}
     {% block map %}
-        <div id="map"></div>
     {% endblock map %}
     {% block body %}   
     {% endblock body %}
@@ -58,8 +57,6 @@
     });
     map.addControl(zoomControl);
 
-    //map.locate();
-
     // Add our loading control in the same position and pass the 
     // zoom control to attach to it
     var loadingControl = L.Control.loading({
@@ -68,7 +65,13 @@
     });
     map.addControl(loadingControl);
 
-    
+    new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Google({
+                
+            }),
+            showMarker: false,
+            searchLabel: 'enter an address or neighborhood',
+        }).addTo(map);
 
     // Prep the background tile layer
     var tileUrl = 'http://api.tiles.mapbox.com/v3/dmeehan.map-t3op9nm9/{z}/{x}/{y}.png';
@@ -82,23 +85,6 @@
     }).addTo(map);
 
     var satellite = new L.BingLayer("Al_0exkMcWshayQSv6G6d87DTt5sYZOGw9aXtC_1Ef7xqyNjXY32qVSVUv-nBqGB");
-
-    new L.Control.GeoSearch({
-            provider: new L.GeoSearch.Provider.Google({
-                
-            }),
-            showMarker: false,
-            searchLabel: 'enter an address or neighborhood',
-        }).addTo(map);
-
-    // Set the center on Philadelphia
-    var offset = new L.LatLng(39.97, -75.11)
-    var philadelphia = new L.LatLng(39.9522, -75.1642);
-    
-    {% block map_setview %}
-    map.setView(philadelphia, 12);
-    {% endblock map_setview %}
-
 
     var emptyMarkerStyle = {
         opacity: 0,
@@ -129,7 +115,141 @@
         "color":"#cd00cd",
     };
 
+    map.fire('dataloading');
+
+    var ideas = L.geoJson.ajax(
+      '{% url "api-lot-idea-list" %}?format=json', {
+        pointToLayer: function (feature, latlng) {
+           var iconText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id) +
+                            '"><i class="icon-comment icon-3x"></i>' +
+                            '<strong> ' + 
+                             feature.properties.idea_set.length + '</strong></a>';
+           var labelText = '<strong>' + feature.properties.address + '</strong>';
+           var labelIcon = L.divIcon({className: 'idea-label', html: iconText,  iconSize:null});
+           return L.marker(latlng, {riseOnHover: true, icon: labelIcon}).addTo(map);
+        },
+      })
+
+    var neighborhoods = L.geoJson.ajax(
+      '{% url "api-neighborhood-list" %}?format=json', {
+        onEachFeature: onEachNeighborhood,
+        style: neighborhoodStyle,
+      }).addTo(map);
+
+    var vacant_lots = new lvector.Custom({
+      map: map,
+      url: "{% url 'api-lot-list' %}",            
+      scaleRange: [16, 20],
+      showAll: false,
+      singlePopup: true,
+      symbology : {
+        type: "unique",
+        property: "is_public",
+        values: [ 
+        {
+          value: true,
+          vectorOptions: {
+            fillColor: "#BAD8E4",
+            fillOpacity: 0.6,
+            color: "#539DBB",
+            opacity: 1.0,
+            weight: 1,
+            }
+        }, 
+        {
+          value: false,
+          vectorOptions: {
+            fillColor: "#539DBB",
+            fillOpacity: 0.6,
+            color: "#539DBB",
+            opacity: 1.0,
+            weight: 1,
+          }
+        } ]
+      },
+      popupTemplate: function(properties) {
+        if (properties.is_public == true) {
+          ownership = 'Public';
+          ownership_icon = 'icon-unlock-alt';
+        } else {
+          ownership = 'Private';
+          ownership_icon = 'icon-lock';
+        }
+        if (properties.is_available == true) {
+          availability = 'For Sale';
+        } else {
+          availabilty = 'Unknown';
+        }
+
+        var html = '<center><h3>' + properties.address + '</h3>' +
+                   '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
+                   '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong>' +
+                    properties.size.toFixed(0) + ' sq. ft.</strong>' +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;<strong>' +
+                    properties.idea_count +
+                    '</strong><p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
+                    '" class="btn btn-default">View Details</a></p><center>';
+        return html;
+      }
+    });
+
+    function onEachNeighborhood(feature, layer) {
+       map.fire('dataload');
+       var bounds = layer.getBounds();
+       var center = bounds.getCenter();
+       var labelText = '<strong>' + feature.properties.map_name +
+                       '&nbsp;&nbsp;&nbsp;<i class="icon-map-marker icon-large"></i> ' + 
+                       feature.properties.vacant_lot_count +
+                       '&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i> ' + 
+                       feature.properties.idea_count + '</strong>';
+       var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
+       var label = layer.bindLabel(labelText);
+       (function(layer, properties) {
+           layer.on("mouseover", function (e) {
+             if (map.getZoom() < 15) {
+               layer.setStyle(highlightStyle);
+             }
+           });
+         
+           layer.on("mouseout", function (e) {
+             if (map.getZoom() < 15) {
+               layer.setStyle(neighborhoodStyle); 
+             }
+           });
+       })(layer, feature.properties);
+       
+       layer.on({
+          click: zoomToFeature
+        });
+    }
+
+    function zoomToFeature(e) {
+          map.removeLayer(grid);
+          var layer = e.target;
+          center=(layer.getBounds().getCenter());
+          map.setView(center, 17, { animate: true });
+          layer.setStyle(neighborhoodStyle); 
+    }
+
+    function zoomToMarker(e) {
+          map.removeLayer(grid);
+          var marker = e.target;
+          center=(marker.getLatLng());
+          map.setView(center, 17, { animate: true });
+    }
+
+     function onZoomend() {
+       if (map.getZoom()<17) {
+          map.addLayer(neighborhoods);
+       }
+
+       if (map.getZoom()>=17) {
+           map.removeLayer(neighborhoods);
+       }
+    }   
+
+    map.on('zoomend', onZoomend);
+
 </script>
-    {% block map_js %}
-    {% endblock map_js %}
+{% block extra_map_js %}{% endblock extra_map_js %}
 {% endblock extra_body %}

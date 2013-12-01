@@ -23,9 +23,9 @@ class Lot(models.Model):
     country = models.CharField(max_length=255)
     code = models.CharField(max_length=10, blank=True)
 
-    is_visible = models.BooleanField(default=True)
-    is_vacant = models.BooleanField(default=False)
-    is_public = models.BooleanField(default=False)
+    is_visible = models.BooleanField(db_index=True, default=True)
+    is_vacant = models.BooleanField(db_index=True, default=False)
+    is_public = models.BooleanField(db_index=True, default=False)
  
     #auto-generated fields
     slug = models.SlugField(max_length=255, editable=False)

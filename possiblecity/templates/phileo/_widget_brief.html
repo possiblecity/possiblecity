@@ -1,12 +1,13 @@
-<div class="phileo">
-    {% if can_like %}
-        <a class="btn btn-primary ajax"
-           data-method="post"
-           data-replace-closest=".phileo"
-           data-spinner="off"
-           href="{{ like_url }}?t=b"
-           title="{{ like_text }}">
-            {{ like_text }}
-        </a>
-    {% endif %}
-</div>
+{% if can_like %}
+  <a class="btn btn-primary ajax phileo"
+     data-method="post"
+     data-replace-closest=".phileo"
+     data-spinner="off"
+     href="{{ like_url }}?t=b"
+     title="{{ like_text }}">
+      <i class="{{ like_class }}"></i>&nbsp;&nbsp;{{ like_text }}
+      &nbsp;&nbsp;<span class="count badge badge-inverse">
+        {{ like_count }}
+      </span>
+  </a>    
+{% endif %}

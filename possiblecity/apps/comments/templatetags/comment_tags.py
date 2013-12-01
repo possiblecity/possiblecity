@@ -52,7 +52,7 @@ class BaseCommentNode(template.Node):
             object_id=obj.pk,
             content_type=ContentType.objects.get_for_model(obj)
         )
-        return comments.order_by("submit_date")
+        return comments.order_by("created")
 
 
 class CommentCountNode(BaseCommentNode):

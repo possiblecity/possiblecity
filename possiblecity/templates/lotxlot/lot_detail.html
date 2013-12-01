@@ -7,6 +7,8 @@
   {% load phileo_tags %}
   {% load thumbnail %}
   {% load possiblecity_tags %}
+  {% load comment_tags %}
+  {% load activity_tags %}
   
 
   {% block head_title %}Lot #{{ lot.id }} | {{ lot.address }} {% endblock head_title %}
@@ -15,7 +17,7 @@
     <div id="map" class="minimize"></div>
   {% endblock map %}
 
- {% block sidebar %}
+ {% block body %}
   <div class="container lot-detail">
     <div class="panel">
       <header class="lot-header row">
@@ -25,10 +27,32 @@
           </div>
           <div>
             <h1>
-               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }} 
-               <small>{{ lot.get_sqft|floatformat:0 }} ft<sup>2</sup></small>
+               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }}
             </h1>
           </div>
+          <div class="action-buttons col-xs-12 col-md-4">
+              <span class="pull-right">
+              {% if request.user.is_authenticated %}
+              {% phileo_widget_brief request.user lot %}
+              {% else %}
+              <span class="phileo">
+                <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary top-right-btn">Like</a>
+              </span>
+              {% endif %}
+              </span>
+              <div class="actstream">
+                <a class="btn btn-primary pull-right ajax" 
+                   href="{% follow_all_url lot %}"
+                   data-method="post"
+                   data-replace-closest=".actstream"
+                   data-spinner="off">
+                  {% if request.user|is_following:lot %}
+                    <i class="icon-ok-sign"></i> {% trans 'Following' %}
+                  {% else %}
+                    <i class="icon-plus"></i> {% trans 'Follow' %}
+                  {% endif %}
+                </a>
+              </div>
         </div>
       </header>
       <section class="lot-info row">
@@ -39,9 +63,9 @@
           <ul class="nav nav-pills">
             <li class="active"><a href="#vacancy" data-toggle="tab">Vacancy</a></li>
             <li><a href="#ownership" data-toggle="tab">Owner</a></li>
-            <li><a href="#political" data-toggle="tab">Boundaries</a></li>
-            <li><a href="#financial" data-toggle="tab">Finance</a></li>
-            <li><a href="#environmental" data-toggle="tab">Environment</a></li>
+            <li><a href="#political" data-toggle="tab">Spatial</a></li>
+            <li><a href="#financial" data-toggle="tab">Financial</a></li>
+            <li><a href="#environmental" data-toggle="tab">Environmental</a></li>
           </ul>
 
           <!-- Tab panes -->
@@ -262,13 +286,95 @@
       <hr>
       <section class="actions row">
         <div class="col-lg-6 col-md-6">
-          <h2>Comments <small></small></h2>
+          <h2>Comments <small>{% comment_count lot %}</small></h2>
           <ul class="list-group">
             <div class="nav-tab-button text-center"></div>
             <li class="list-group-item">
-              <div class="media">
+              <div class="media"> 
+                <span class="pull-left profile-img">            
+                  <img class="media-object"  
+                  alt="{{ request.user }}" 
+                  {% if request.user.profile.photo %}
+                  src="{{ request.user.profile.photo.url }}" 
+                  {% else %}
+                  src="{% static 'img/profile.png' %}"
+                  {% endif %} 
+                  style="width: 64px; height: 64px;" />
+                </span>
+                <div class="media-body">
+                  {% comment_form lot as comment_form %}
+                  <form method="post" id="comment-form" action=".">
+                    {% csrf_token %}
+                    {{ comment_form }}
+                    <div class="form-actions">
+                      <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
+                      </button>
+                    </div>
+                  </form> 
+                </div>
               </div>
             </li>
+            {% comments lot as comments %}
+            {% for comment in comments %}
+            <li class="list-group-item" id="comment-{{ comment.id }}">
+              <div class="media"> 
+              {% if comment.user.profile.is_public %}
+                <a class="pull-left profile-img" href="{{ comment.user.profile.get_absolute_url }}">
+              {% else %}
+                <span class="pull-left profile-img">
+              {% endif %}                    
+                  <img class="media-object"  
+                  alt="{{ comment.user }}" 
+                  {% if comment.user.profile.photo %}
+                  src="{{ comment.user.profile.photo.url }}" 
+                  {% else %}
+                  src="{% static 'img/profile.png' %}"
+                  {% endif %} 
+                  style="width: 64px; height: 64px;" />
+              {% if comment.user.profile.is_public %}
+                </a>
+              {% else %}
+                </span>
+              {% endif %}
+                <div class="media-body">
+                  <h4 class="media-heading">
+                    {{ comment.user.profile.full_name }}
+                  </h4>
+                  {% if comment.image %}
+                  <img src="{% thumbnail comment.image '300x150' crop %}" alt="{{ comment.text }}" />
+                  {% endif %}
+                  <p>{{ comment.text }}</p>
+                  <h6>Via {{ comment.get_via_display }}
+                      {% if comment.get_via_display == "Twitter" %}
+                      <i class="icon-twitter"></i>
+                      {% elif comment.get_via_display == "Text" %}
+                      <i class="icon-mobile-phone"></i>
+                      {% elif comment.get_via_display == "Web" %}
+                      <i class="icon-globe"></i>
+                      {% elif comment.get_via_display == "Instagram" %}
+                      <i class="icon-instagram"></i>
+                      {% endif %}
+                      &nbsp;•&nbsp; {{ comment.created }}
+                      {% if request.user.is_authenticated %}
+                          &nbsp;•&nbsp; {% phileo_widget request.user comment %}
+                      {% else %}
+                      <span class="phileo">
+                          &nbsp;•&nbsp;
+                          <a data-toggle="modal" data-target="#login-modal" href="#login-modal">
+                            Like
+                          </a>
+                          &nbsp;•&nbsp;
+                          <i class="{% if comment|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
+                          <span class="count">
+                              {{ comment|likes_count }}
+                          </span>
+                      </span>
+                      {% endif %}
+                    </h6>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
           </ul>    
           </div>
         <div class="col-lg-6">
@@ -394,11 +500,7 @@
 
   </div><!-- .panel -->
   </div> <!-- .container -->
-  {% endblock sidebar %}
-
-  {% block map_setview %}
-
-  {% endblock map_setview %}
+  {% endblock body %}
 
   {% block extra_map_js %}
   <script>
@@ -410,52 +512,52 @@
       var lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json';
 
       $.getJSON(lot_url, function(data){
-            map.fire('dataloading');
-            lot.addData(data);
-            var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
-            var bounds = lot.getBounds();
-            map.fitBounds(bounds, {
-              maxZoom:19,
-              padding:20
-            });
-
-            var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
-            var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
-
-            var content = '<center><h3><i class="icon-map-marker"></i> {{ lot.address }}</h3>' +
-                          '<i class="icon-large ' + ownership_icon + '">&nbsp;</i> <strong>'  + ownership + '</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
-                          '<i class="icon-resize-full icon-large ">&nbsp;</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
-                          '<i class="icon-lightbulb icon-large">&nbsp;</i> <strong>{{ lot.idea_set.count }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;</center>';
-
-            content = "";
-
-            var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
-
-            L.marker(center, {riseOnHover: true}).addTo(map);
-
-            map.fire('dataload');
-            map.removeLayer(neighborhoods);
+        map.fire('dataloading');
+        lot.addData(data);
+        var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
+        var bounds = lot.getBounds();
+        map.fitBounds(bounds, {
+        maxZoom:19,
+        padding:20
       });
 
-  $('.lot-control').tooltip();
+      var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
+      var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
-  $( ".reset-location" ).click(function() {
-    var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
-    map.setView(center, map.getZoom())
-  });
- 
-  $( "a.minmax" ).click(function() {
-    $(this).toggleClass("icon-angle-up");
-    $(this).toggleClass("icon-angle-down")
-    $("#map").toggleClass("maximize");
-    $("#map").toggleClass("minimize");
+      var content = '<center><h3><i class="icon-map-marker"></i> {{ lot.address }}</h3>' +
+                    '<i class="icon-large ' + ownership_icon + '">&nbsp;</i> <strong>'  + ownership + '</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                    '<i class="icon-resize-full icon-large ">&nbsp;</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                    '<i class="icon-lightbulb icon-large">&nbsp;</i> <strong>{{ lot.idea_set.count }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;</center>';
 
-    map.invalidateSize({
-      animate: true,
-      debounceMoveend: true,
-      duration: 0.5,
-    });
-  });
+      content = "";
+
+      var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
+
+      L.marker(center, {riseOnHover: true}).addTo(map);
+
+      map.fire('dataload');
+      map.removeLayer(neighborhoods);
+      });
+
+      $('.lot-control').tooltip();
+
+      $( ".reset-location" ).click(function() {
+        var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
+        map.setView(center, map.getZoom())
+      });
+     
+      $( "a.minmax" ).click(function() {
+        $(this).toggleClass("icon-angle-up");
+        $(this).toggleClass("icon-angle-down")
+        $("#map").toggleClass("maximize");
+        $("#map").toggleClass("minimize");
+
+        map.invalidateSize({
+          animate: true,
+          debounceMoveend: true,
+          duration: 0.5,
+        });
+      });
 
   </script>
   {% endblock extra_map_js %}

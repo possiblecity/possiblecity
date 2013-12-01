@@ -1,7 +1,5 @@
 # python modules
-gunicorn # server
 psycopg2 # postgres bindings
-python-memcached # memcached bindings
 redis #data store
 pillow #image manipulation
 requests #http library
@@ -11,10 +9,10 @@ markdown
 twitter #twitter api
 
 
-Django>=1.5
+Django==1.5.5
 
 # django third party modules
-south #database migrations
+south==0.8.4 #database migrations
 django-supervisor #process management
 django-celery-with-redis #async tasks
 django-compressor #static file compression
@@ -24,13 +22,15 @@ django-localflavor #localization add-ons
 -e git://github.com/brack3t/django-braces.git#egg=django-braces
 -e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
 
-easy-thumbnails
-django-taggit #tags
-django-user-accounts==1.0b14 #user authetication & accounts
-django-social-auth==0.7.23 #social authentication
+easy-thumbnails==1.4 # image manipulation
+django-taggit==0.11.1 #tags
+django-user-accounts==1.0b17 #user authetication & accounts
+django-social-auth==0.7.28 #social authentication
 metron==1.1 #analytics tools
 phileo
+django-activity-stream==0.4.5beta1
 
 django-floppyforms # form tools
+django-crispy-forms # form tools
 django-js-reverse #use url tags in javascript
 

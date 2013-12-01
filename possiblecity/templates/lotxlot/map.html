@@ -12,175 +12,38 @@
 
 {% block head_title %}Lot {{ lot.address }} {% endblock head_title %}
 {% block body %}
-    {% block sidebar %}
-    {% endblock sidebar %}
+    {% block map %}
+    <div id="map" class="maximize"></div>
+    {% endblock map %}
 {% endblock body %}
 
-{% block map_js %}
+{% block extra_map_js %}
 <script>
    
-  map.fire('dataloading');
+  map.locate();
 
-  var ideas = L.geoJson.ajax(
-      '{% url "api-lot-idea-list" %}?format=json', {
-        pointToLayer: function (feature, latlng) {
-           var iconText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id) +
-                            '"><i class="icon-comment icon-3x"></i>' +
-                            '<strong> ' + 
-                             feature.properties.idea_set.length + '</strong></a>';
-           var labelText = '<strong>' + feature.properties.address + '</strong>';
-           var labelIcon = L.divIcon({className: 'idea-label', html: iconText,  iconSize:null});
-           return L.marker(latlng, {riseOnHover: true, icon: labelIcon}).addTo(map);
-        },
-      })
-
-    
-   var neighborhoods = L.geoJson.ajax(
-      '{% url "api-neighborhood-list" %}?format=json', {
-        onEachFeature: onEachNeighborhood,
-        style: neighborhoodStyle,
-      }).addTo(map);
-
-    var vacant_lots = new lvector.Custom({
-      map: map,
-      url: "{% url 'api-lot-list' %}",            
-      scaleRange: [16, 20],
-      showAll: false,
-      singlePopup: true,
-      symbology : {
-        type: "unique",
-        property: "is_public",
-        values: [ 
-        {
-          value: true,
-          vectorOptions: {
-            fillColor: "#BAD8E4",
-            fillOpacity: 0.6,
-            color: "#539DBB",
-            opacity: 1.0,
-            weight: 1,
-            }
-        }, 
-        {
-          value: false,
-          vectorOptions: {
-            fillColor: "#539DBB",
-            fillOpacity: 0.6,
-            color: "#539DBB",
-            opacity: 1.0,
-            weight: 1,
-          }
-        } ]
-      },
-      popupTemplate: function(properties) {
-        if (properties.is_public == true) {
-          ownership = 'Public';
-          ownership_icon = 'icon-unlock-alt';
-        } else {
-          ownership = 'Private';
-          ownership_icon = 'icon-lock';
-        }
-        if (properties.is_available == true) {
-          availability = 'For Sale';
-        } else {
-          availabilty = 'Unknown';
-        }
-
-        var html = '<center><h3>' + properties.address + '</h3>' +
-                   '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
-                   '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong>' +
-                    properties.size.toFixed(0) + ' sq. ft.</strong>' +
-                    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;<strong>' +
-                    properties.idea_count +
-                    '</strong><p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
-                    '" class="btn btn-default">View Details</a></p><center>';
-        return html;
-      }
-    });
-   
- 
-    function onEachNeighborhood(feature, layer) {
-       map.fire('dataload');
-       var bounds = layer.getBounds();
-       var center = bounds.getCenter();
-       var labelText = '<strong>' + feature.properties.map_name +
-                       '&nbsp;&nbsp;&nbsp;<i class="icon-map-marker icon-large"></i> ' + 
-                       feature.properties.vacant_lot_count +
-                       '&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i> ' + 
-                       feature.properties.idea_count + '</strong>';
-       var labelIcon = L.divIcon({className: 'leaflet-label', html: labelText,  iconSize:null});
-       var label = layer.bindLabel(labelText);
-       (function(layer, properties) {
-           layer.on("mouseover", function (e) {
-             if (map.getZoom() < 15) {
-               layer.setStyle(highlightStyle);
-             }
-           });
-         
-           layer.on("mouseout", function (e) {
-             if (map.getZoom() < 15) {
-               layer.setStyle(neighborhoodStyle); 
-             }
-           });
-       })(layer, feature.properties);
-       
-       layer.on({
-          click: zoomToFeature
-        });
-       //marker.on({
-          //click:zoomToMarker
-       //});
+  function onLocationFound(e) {
+    if (phlBounds.contains(e.latlng)) {
+       center = e.latlng
+       html = '<h3>Welcome to Possible City!</h3>We think you are somewhere near here, so you can explore vacant lots starting with the ones near you. Publicly owned lots are light blue. Privately owned lots are dark blue. Search for a specific address or neighborhood using the search icon at the top left.';
+    } else {
+       center = philadelphia
+       html = '<h3>Welcome to Possible City!</h3>Looks like you are outside of Philadelphia, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publicly owned lots are light blue. Privately owned lots are dark blue. Search for a specific address or neighborhood using the search icon at the top left.';
     }
+    map.setView(center, 16);
+    L.marker(center).addTo(map).bindPopup(html).openPopup();
+        
+  }
 
-    function zoomToFeature(e) {
-          map.removeLayer(grid);
-          var layer = e.target;
-          center=(layer.getBounds().getCenter());
-          map.setView(center, 17, { animate: true });
-          layer.setStyle(neighborhoodStyle); 
-    }
+  function onLocationError(e) {
+    center = philadelphia;
+    html = '<h3>Welcome to lotxlot!</h3>We are not able to find your location, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>';
+    map.setView(center, 16);
+    L.marker(center).addTo(map).bindPopup(html).openPopup();
+  }
 
-    function zoomToMarker(e) {
-          map.removeLayer(grid);
-          var marker = e.target;
-          center=(marker.getLatLng());
-          map.setView(center, 17, { animate: true });
-    }
-
-
-    function onZoomend() {
-       if (map.getZoom()>=13) {
-          map.addLayer(neighborhoods);
-       }
-
-       if (map.getZoom()>=16) {
-           map.removeLayer(neighborhoods);
-       };
-
-       if(map.getZoom()<16){
-           map.addLayer(neighborhoods);
-       };
-  
-       if (map.getZoom()<15) {
-           //map.removeLayer(ideas);
-       }
-
-       if (map.getZoom()>=15) {
-          // map.addLayer(ideas);
-       };
-
-       if (map.getZoom()>=19) {
-           //map.removeLayer(streets);
-           //map.addLayer(satellite);
-       }
-
-       if (map.getZoom()<14) {
-           map.addLayer(grid);
-       }
-    }   
-
-    map.on('zoomend', onZoomend);
+  map.on('locationfound', onLocationFound);
+  map.on('locationerror', onLocationError); 
 
 </script>
-{% block extra_map_js %}{% endblock %}
-{% endblock map_js %}
+{% endblock extra_map_js %}

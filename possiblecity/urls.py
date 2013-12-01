@@ -23,26 +23,24 @@ from django.contrib import admin
 admin.autodiscover()
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns("",
     # admin
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r"^admin/", include(admin.site.urls)),
 
     # api
     
     url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
 
-    url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r"^api/", include(router.urls)),
+    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 
     # about
-    url(r'^about/', include('apps.about.urls')),
+    url(r"^about/", include("apps.about.urls")),
     
     # blog
     #url(r'^blog/', include('apps.text.urls')),
 
-    # people
-    #url(r"^friends/", include("apps.friends.urls")),
     url(
         r"^account/social/connections/$",
         TemplateView.as_view(template_name="account/connections.html"),
@@ -54,18 +52,22 @@ urlpatterns = patterns('',
     url(r"^people/", include("apps.profiles.urls")),   
 
     #ideas
-    url(r'^projects/float/', include('apps.ideas.urls.share')),
-    url(r'^projects/explore/', include('apps.ideas.urls.explore')),
+    url(r"^projects/float/", include("apps.ideas.urls.share")),
+    url(r"^projects/explore/", include("apps.ideas.urls.explore")),
 
     # places
-    url(r'^lots/', include('apps.lotxlot.urls')),
-    url(r'^lotxlot/', RedirectView.as_view(url='/lots/')),
+    url(r"^lots/", include("apps.lotxlot.urls")),
+    url(r"^lotxlot/", RedirectView.as_view(url="/lots/")),
 
 
     # js urls
-    url(r'^jsreverse/$', 'django_js_reverse.views.urls_js', name='js_reverse'),
+    url(r"^jsreverse/$", "django_js_reverse.views.urls_js", name="js_reverse"),
 
     url(r"^likes/", include("phileo.urls")),
+    
+    url(r"^comments/", include("apps.comments.urls")),
+
+    url(r"^activity/", include("actstream.urls")),
 )
 
 urlpatterns += staticfiles_urlpatterns()
