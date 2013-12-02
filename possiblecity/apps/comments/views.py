@@ -27,7 +27,6 @@ def dehydrate_comment(comment):
     return {
         "pk": comment.pk,
         "text": comment.text,
-        "image": comment.image,
         "created": str(comment.created)
     }
 
@@ -45,7 +44,7 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
             return HttpResponse(json.dumps({
                 "status": "OK",
                 "comment": dehydrate_comment(comment),
-                "html": render_to_string("comment/_comment.html", {
+                "html": render_to_string("comments/_comment.html", {
                     "comment": comment
                 }, context_instance=RequestContext(request))
             }), mimetype="application/json")
@@ -54,7 +53,7 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
             return HttpResponse(json.dumps({
                 "status": "ERROR",
                 "errors": form.errors,
-                "html": render_to_string("comment/_form.html", {
+                "html": render_to_string("comments/_form.html", {
                     "form": form,
                     "obj": obj
                 }, context_instance=RequestContext(request))

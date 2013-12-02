@@ -16,30 +16,28 @@
 <header class="page-header">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-8">
+            <div class="col-md-12">
                 <h1>{{ idea.title }}</h1>
                   {% for tag in idea.tags.all %} 
                   <span class="label label-info">{{ tag.name }}</span>
                   {% endfor %}
-            </div>
-            <div class="action-buttons col-xs-12 col-md-4">
-              <div class="btn-group">
-                <a class="btn btn-primary ajax" 
-                   href="{% follow_all_url idea %}"
-                   data-method="post"
-                   data-replace-closest=".actstream"
-                   data-spinner="off">
-                  {% if request.user|is_following:idea %}
-                    <i class="icon-ok-sign"></i> {% trans 'Following' %}
-                  {% else %}
-                    <i class="icon-plus"></i> {% trans 'Follow' %}
+                  <div class="btn-group pull-right">
+                    <a class="btn btn-primary" 
+                       href="{% follow_all_url idea %}?next={{ request.path }}"
+                       data-method="post"
+                       data-replace-closest=".actstream"
+                       data-spinner="off">
+                      {% if request.user|is_following:idea %}
+                        <i class="icon-ok-sign"></i> {% trans 'Following' %}
+                      {% else %}
+                        <i class="icon-plus"></i> {% trans 'Follow' %}
+                      {% endif %}
+                    </a>
+                    {% phileo_widget_brief request.user idea %}
+                    {% if request.user == idea.user.profile.user or request.user.is_staff %}
+                      <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Your Project' %}</a>
                   {% endif %}
-                </a>
-                {% phileo_widget_brief request.user idea %}
-                {% if request.user == idea.user.profile.user or request.user.is_staff %}
-                  <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Your Project' %}</a>
-              {% endif %}
-              </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -50,13 +48,40 @@
             {% block project %}
             <div class="panel">
                 <article id="idea">
-                    {% if idea.get_lead_image %}
                     <section class="images">
-                    <img src="{% thumbnail idea.get_lead_image.file 800x800 %}"
-                         alt="{% if idea.get_lead_image.caption %}{{ idea.get_lead_image.caption }}{% else %}{{ idea.get_lead_image.title }}{% endif %}"
-                         title="{{ idea.get_lead_image.title }}"/>
+                     <div id="idea-slideshow" class="carousel slide">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                          {% for image in idea.ideavisual_set.all %}
+                          <li class="{% if forloop.first %}active{% endif %}" data-target="idea-slideshow" data-slide-to="{{ forloop.counter0 }}"></li>
+                          {% endfor %}
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                          {% for image in idea.ideavisual_set.all %}
+                          <div id="{{ forloop.counter0 }}" class="item {% if forloop.first %}active{% endif %}">
+                            <img src="{% thumbnail image.file 800x800 %}"
+                                 alt="{% if image.caption %}{{ image.caption }}{% else %}{{ image.title }}{% endif %}"
+                                 title="{{ image.title }}"/>
+                           </a>
+                            <div class="carousel-caption hidden-xs">
+                              <h3>{{ image.title }}</h3>
+                              <p>{{ image.caption }}</p>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#idea-slideshow" data-slide="prev">
+                          <span class="icon-prev"></span>
+                        </a>
+                        <a class="right carousel-control" href="#idea-slideshow" data-slide="next">
+                          <span class="icon-next"></span>
+                        </a>
+                      </div>
                     </section>
-                    {% endif %}
                     <h3>{{ idea.tagline}}</h3>
                     {% if idea.description %}
                     <section id="description">
@@ -72,7 +97,7 @@
             </div>
             <div class="panel">   
               <h2>Comments <small>{% comment_count idea %}</small></h2>
-                <ul class="list-group">
+                <ul class="comment-list list-group">
                 <div class="nav-tab-button text-center"></div>
                   <li class="list-group-item">
                     <div class="media"> 
@@ -88,9 +113,9 @@
                       </span>
                       <div class="media-body">
                         {% comment_form idea as comment_form %}
-                        <form method="post" id="comment-form" action=".">
+                        <form class="ajax" data-append=".comment-list" method="post" id="comment-form" action="{% comment_target idea %}">
                           {% csrf_token %}
-                          {{ comment_form }}
+                          {% form comment_form using "floppyforms/layouts/simple.html" %}
                           <div class="form-actions">
                             <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
                             </button>
@@ -101,64 +126,7 @@
                   </li>
                   {% comments idea as comments %}
                   {% for comment in comments %}
-                  <li class="list-group-item" id="comment-{{ comment.id }}">
-                    <div class="media"> 
-                    {% if comment.user.profile.is_public %}
-                      <a class="pull-left profile-img" href="{{ comment.user.profile.get_absolute_url }}">
-                    {% else %}
-                      <span class="pull-left profile-img">
-                    {% endif %}                    
-                        <img class="media-object"  
-                        alt="{{ comment.user }}" 
-                        {% if comment.user.profile.photo %}
-                        src="{{ comment.user.profile.photo.url }}" 
-                        {% else %}
-                        src="{% static 'img/profile.png' %}"
-                        {% endif %} 
-                        style="width: 64px; height: 64px;" />
-                    {% if comment.user.profile.is_public %}
-                      </a>
-                    {% else %}
-                      </span>
-                    {% endif %}
-                      <div class="media-body">
-                        <h4 class="media-heading">
-                          {{ comment.user.profile.full_name }}
-                        </h4>
-                        {% if comment.image %}
-                        <img src="{% thumbnail comment.image '300x150' crop %}" alt="{{ comment.text }}" />
-                        {% endif %}
-                        <p>{{ comment.text }}</p>
-                        <h6>Via {{ comment.get_via_display }}
-                            {% if comment.get_via_display == "Twitter" %}
-                            <i class="icon-twitter"></i>
-                            {% elif comment.get_via_display == "Text" %}
-                            <i class="icon-mobile-phone"></i>
-                            {% elif comment.get_via_display == "Web" %}
-                            <i class="icon-globe"></i>
-                            {% elif comment.get_via_display == "Instagram" %}
-                            <i class="icon-instagram"></i>
-                            {% endif %}
-                            &nbsp;•&nbsp; {{ comment.created }}
-                            {% if request.user.is_authenticated %}
-                                &nbsp;•&nbsp; {% phileo_widget request.user comment %}
-                            {% else %}
-                            <span class="phileo">
-                                &nbsp;•&nbsp;
-                                <a data-toggle="modal" data-target="#login-modal" href="#login-modal">
-                                  Like
-                                </a>
-                                &nbsp;•&nbsp;
-                                <i class="{% if comment|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
-                                <span class="count">
-                                    {{ comment|likes_count }}
-                                </span>
-                            </span>
-                            {% endif %}
-                          </h6>
-                      </div>
-                    </div>
-                  </li>
+                  {% include "comments/_comment.html" %}
                   {% endfor %}
               </ul>    
             </div>
@@ -190,7 +158,7 @@
             <li class="list-group-item">
               <h3>Initiator</h3>
                <div class="row">  
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                   <div class="profile-pic">
                       {% if idea.user.profile.is_public %}
                       <a href="{% url 'profiles_profile_detail' idea.user.username %}">
@@ -205,7 +173,7 @@
                       {% endif %}
                   </div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-8">
                   <h4>{{ idea.user.profile.full_name}}</h4>
                   <p><a href="mailto:{{idea.user.email}}">{{ idea.user.email }}</a>
                   {% if idea.user.profile.website %}
