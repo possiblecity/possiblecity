@@ -3,7 +3,7 @@
 {% load thumbnail %}
 {% load phileo_tags %}
 
-<li class="list-group-item" id="comment-{{ comment.id }}">
+<li class="list-group-item fade in" id="comment-{{ comment.id }}">
     <div class="media"> 
     {% if comment.user.profile.is_public %}
       <a class="pull-left profile-img" href="{{ comment.user.profile.get_absolute_url }}">
