@@ -1,0 +1,63 @@
+{% load staticfiles %}
+
+{% load thumbnail %}
+{% load phileo_tags %}
+
+<li class="list-group-item" id="comment-{{ comment.id }}">
+    <div class="media"> 
+    {% if comment.user.profile.is_public %}
+      <a class="pull-left profile-img" href="{{ comment.user.profile.get_absolute_url }}">
+    {% else %}
+      <span class="pull-left profile-img">
+    {% endif %}                    
+        <img class="media-object"  
+        alt="{{ comment.user }}" 
+        {% if comment.user.profile.photo %}
+        src="{{ comment.user.profile.photo.url }}" 
+        {% else %}
+        src="{% static 'img/profile.png' %}"
+        {% endif %} 
+        style="width: 64px; height: 64px;" />
+    {% if comment.user.profile.is_public %}
+      </a>
+    {% else %}
+      </span>
+    {% endif %}
+      <div class="media-body">
+        <h4 class="media-heading">
+          {{ comment.user.profile.full_name }}
+        </h4>
+        {% if comment.image %}
+        <img src="{% thumbnail comment.image '300x150' crop %}" alt="{{ comment.text }}" />
+        {% endif %}
+        <p>{{ comment.text }}</p>
+        <h6>Via {{ comment.get_via_display }}
+            {% if comment.get_via_display == "Twitter" %}
+            <i class="icon-twitter"></i>
+            {% elif comment.get_via_display == "Text" %}
+            <i class="icon-mobile-phone"></i>
+            {% elif comment.get_via_display == "Web" %}
+            <i class="icon-globe"></i>
+            {% elif comment.get_via_display == "Instagram" %}
+            <i class="icon-instagram"></i>
+            {% endif %}
+            &nbsp;•&nbsp; {{ comment.created }}
+            {% if request.user.is_authenticated %}
+                &nbsp;•&nbsp; {% phileo_widget request.user comment %}
+            {% else %}
+            <span class="phileo">
+                &nbsp;•&nbsp;
+                <a data-toggle="modal" data-target="#login-modal" href="#login-modal">
+                  Like
+                </a>
+                &nbsp;•&nbsp;
+                <i class="{% if comment|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
+                <span class="count">
+                    {{ comment|likes_count }}
+                </span>
+            </span>
+            {% endif %}
+          </h6>
+      </div>
+    </div>
+  </li>
