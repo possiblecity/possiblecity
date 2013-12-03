@@ -14,7 +14,7 @@ class CommentForm(forms.ModelForm):
         ]
         widgets = {
             'text': forms.Textarea(attrs={'rows': 4, 'class': 'form-control', 
-                    'placeholder': 'Add a comment on this lot...'}),
+                    'placeholder': 'Add a comment...'}),
         }
 
     def __init__(self, *args, **kwargs):

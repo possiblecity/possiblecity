@@ -1,4 +1,5 @@
 # python modules
+gunicorn # server
 psycopg2 # postgres bindings
 redis #data store
 pillow #image manipulation

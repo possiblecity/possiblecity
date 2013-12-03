@@ -30,30 +30,6 @@
                <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }}
             </h1>
           </div>
-          <div class="action-buttons col-xs-12 col-md-4">
-              <span class="pull-right">
-              {% if request.user.is_authenticated %}
-              {% phileo_widget_brief request.user lot %}
-              {% else %}
-              <span class="phileo">
-                <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary top-right-btn">Like</a>
-              </span>
-              {% endif %}
-              </span>
-              <div class="actstream">
-                <a class="btn btn-primary pull-right ajax" 
-                   href="{% follow_all_url lot %}"
-                   data-method="post"
-                   data-replace-closest=".actstream"
-                   data-spinner="off">
-                  {% if request.user|is_following:lot %}
-                    <i class="icon-ok-sign"></i> {% trans 'Following' %}
-                  {% else %}
-                    <i class="icon-plus"></i> {% trans 'Follow' %}
-                  {% endif %}
-                </a>
-              </div>
-        </div>
       </header>
       <section class="lot-info row">
         <div class="col-lg-6 col-md-6">
@@ -67,9 +43,6 @@
             <li><a href="#financial" data-toggle="tab">Financial</a></li>
             <li><a href="#environmental" data-toggle="tab">Environmental</a></li>
           </ul>
-
-          
-          </div>
         </div>
       </section>
       <hr>
@@ -103,7 +76,7 @@
                 </div>
               </div>
             </li>
-            {% comments idea as comments %}
+            {% comments lot as comments %}
             {% for comment in comments %}
                 {% include "comments/_comment.html" %}
             {% endfor %}
@@ -112,7 +85,6 @@
         <div class="col-lg-6">
           <div class="lot-detail-page-projects">
             <h2>Projects <small>{{ lot.idea_count }}</small></h2>
-            <p class="margin-bottom-15">Ongoing activity to generate a new use for this lot.</p>
             <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
             <ul class="list-group">
                {% for idea in lot.idea_set.all %}

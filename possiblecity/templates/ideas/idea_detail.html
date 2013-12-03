@@ -7,6 +7,7 @@
 
 {% load thumbnail %}
 {% load phileo_tags %}
+{% load possiblecity_tags %}
 {% load comment_tags %}
 {% load activity_tags %}
 
@@ -18,44 +19,30 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ idea.title }}</h1>
+                <p>{{ idea.tagline }}</p>
                   {% for tag in idea.tags.all %} 
                   <span class="label label-info">{{ tag.name }}</span>
                   {% endfor %}
-                  <div class="btn-group pull-right">
-                    <a class="btn btn-primary" 
-                       href="{% follow_all_url idea %}?next={{ request.path }}"
-                       data-method="post"
-                       data-replace-closest=".actstream"
-                       data-spinner="off">
-                      {% if request.user|is_following:idea %}
-                        <i class="icon-ok-sign"></i> {% trans 'Following' %}
-                      {% else %}
-                        <i class="icon-plus"></i> {% trans 'Follow' %}
-                      {% endif %}
-                    </a>
-                    {% phileo_widget_brief request.user idea %}
-                    {% if request.user == idea.user.profile.user or request.user.is_staff %}
-                      <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Your Project' %}</a>
-                  {% endif %}
-                  </div>
             </div>
         </div>
     </div>
 </header>
 <section class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-8">
+        <div class="col-xs-12 col-md-6">
             {% block project %}
             <div class="panel">
                 <article id="idea">
                     <section class="images">
                      <div id="idea-slideshow" class="carousel slide">
                         <!-- Indicators -->
+                        {% if idea.ideavisual_set.all|length > 1 %}
                         <ol class="carousel-indicators">
                           {% for image in idea.ideavisual_set.all %}
                           <li class="{% if forloop.first %}active{% endif %}" data-target="idea-slideshow" data-slide-to="{{ forloop.counter0 }}"></li>
                           {% endfor %}
                         </ol>
+                        {% endif %}
 
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner">
@@ -66,7 +53,6 @@
                                  title="{{ image.title }}"/>
                            </a>
                             <div class="carousel-caption hidden-xs">
-                              <h3>{{ image.title }}</h3>
                               <p>{{ image.caption }}</p>
                             </div>
                           </div>
@@ -74,17 +60,18 @@
                         </div>
 
                         <!-- Controls -->
+                        {% if idea.ideavisual_set.all|length > 1 %}
                         <a class="left carousel-control" href="#idea-slideshow" data-slide="prev">
                           <span class="icon-prev"></span>
                         </a>
                         <a class="right carousel-control" href="#idea-slideshow" data-slide="next">
                           <span class="icon-next"></span>
                         </a>
+                        {% endif %}
                       </div>
                     </section>
-                    <h3>{{ idea.tagline}}</h3>
                     {% if idea.description %}
-                    <section id="description">
+                    <section class="description margin-top-20" >
                         {{ idea.description_html|safe }}
                     </section>
                     {% endif %}
@@ -92,14 +79,129 @@
                     <a class="btn btn-primary" href="{% url 'ideas_idea_update' idea.id %}">{% trans 'Edit Idea' %}</a>
                     {% endif %}
                 </article>
-                {% block comments %}
-                {% endblock comments %}
             </div>
-            <div class="panel">   
-              <h2>Comments <small>{% comment_count idea %}</small></h2>
-                <ul class="comment-list list-group">
-                <div class="nav-tab-button text-center"></div>
-                  <li class="list-group-item">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <h2>Project Resources</h2>
+              </li>
+              <li class="list-group-item">
+                <h5>Location</h5>
+                <div class="row">
+                {% for lot in idea.lots.all %}
+                  <div class="col-xs-6">
+                    <h4><i class="icon-map-marker"></i>
+                        <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                          {{ lot.address }}
+                        </a>
+                     </h4>
+                    <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                    <img src="http://maps.googleapis.com/maps/api/streetview?size=400x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+                    </a>   
+                  </div>           
+                {% endfor %}
+              </li>
+          </ul>
+            {% endblock project %}
+        </div> <!-- .col-md-6 -->
+        <div class="col-xs-12 col-md-6">
+        <ul class="list-group people-section">
+            <li class="list-group-item">
+              <h2>People
+                <span class="pull-right">
+                  <a class="btn btn-primary" 
+                     href="{% follow_all_url idea %}?next={{ request.path }}"
+                     data-method="post"
+                     data-replace-closest=".actstream"
+                     data-spinner="off">
+                     {% if request.user|is_following:idea %}
+                      <i class="icon-ok-sign"></i>&nbsp;&nbsp;{% trans 'Following' %}
+                     {% else %}
+                      <i class="icon-plus"></i>&nbsp;&nbsp;{% trans 'Follow' %}
+                     {% endif %}
+                  </a>
+                  {% phileo_widget_brief request.user idea %}
+                </span>
+              </h2>
+            </li>
+            <li class="list-group-item">
+              <h5>Initiator</h5>
+               <div class="row">  
+                <div class="col-xs-3">
+                  <div class="profile-pic">
+                      {% if idea.user.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' idea.user.username %}">
+                      {% endif %}
+                      {% if idea.user.profile.photo %}
+                          <img src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
+                      {% else %}
+                          <img src="{% static 'img/profile.png' %}" />
+                      {% endif %}
+                      {% if idea.user.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
+                </div>
+                <div class="col-xs-5">
+                  <p>{{ idea.user.profile.full_name}}</p>
+                  <p><a href="mailto:{{idea.user.email}}">{{ idea.user.email }}</a>
+                  {% if idea.user.profile.website %}
+                  <br>{{ idea.user.profile.website|urlize }}
+                  {% endif %}
+                  {% if idea.user.profile.twitter %}
+                  <br>{{ idea.user.profile.twitter }}
+                  {% endif %}
+                </div>
+                <div class="col-xs-4">
+                Floated on {{ idea.floated }}
+                </div>
+            </li>
+            <li class="list-group-item">
+              <h5>Followers</h5>
+            </li>
+            {% who_likes idea as idea_likes %}
+            {% if idea_likes %}
+            <li class="list-group-item">
+              <h5>Appreciators</h5>
+              <div class="row">
+              {% for like in idea_likes %}
+                  <div class="col-xs-2">
+                      {% if like.sender.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' like.sender.username %}">
+                      {% endif %}
+                      <img class="profile-pic"
+                      {% if like.sender.profile.photo %}
+                          src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
+                      {% else %}
+                          src="{% static 'img/profile.png' %}"
+                      {% endif %}
+                      {% if like.sender.first_name %}
+                          alt="{{ like.sender.profile.full_name }}"
+                          title="{{ like.sender.profile.full_name }}"
+                      {% else %}
+                          alt="{{ like.sender.username }}"
+                          title="{{ like.sender.username }}"
+                      {% endif %}
+                      >
+                      {% if like.sender.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
+              {% endfor %}
+              </div>
+            </li>
+            {% endif %}
+          </ul>
+           <div class="panel">   
+              <h2>Comments</h2>
+              <ul class="comment-list list-group">
+                  <div class="nav-tab-button text-center"></div>
+                  {% comments idea as comments %}
+                  {% for comment in comments %}
+                  {% include "comments/_comment.html" %}
+                  {% endfor %}
+              </ul>
+              <ul class="comment-form list-group">
+              <li class="list-group-item">
                     <div class="media"> 
                       <span class="pull-left profile-img">            
                         <img class="media-object"  
@@ -124,108 +226,9 @@
                       </div>
                     </div>
                   </li>
-                  {% comments idea as comments %}
-                  {% for comment in comments %}
-                  {% include "comments/_comment.html" %}
-                  {% endfor %}
               </ul>    
             </div>
-            {% endblock project %}
-        </div> <!-- .col-md-6 -->
-        <div class="col-xs-12 col-md-4">
-          <div class="panel">
-            <h2>Location</h2>
-              <div class="row">
-                {% for lot in idea.lots.all %}
-                  <div class="col-xs-12">
-                    <h4><i class="icon-map-marker"></i>
-                        <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                          {{ lot.address }}
-                        </a>
-                     </h4>
-                    <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                    <img src="http://maps.googleapis.com/maps/api/streetview?size=400x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
-                    </a>   
-                  </div>           
-                  {% endfor %}
-                </div>
-            </div>
-          <ul class="list-group people-section">
-            <li class="list-group-item">
-              <h2>People <small>{{idea|likes_count}}</small></h2>
-            </li>
-
-            <li class="list-group-item">
-              <h3>Initiator</h3>
-               <div class="row">  
-                <div class="col-xs-4">
-                  <div class="profile-pic">
-                      {% if idea.user.profile.is_public %}
-                      <a href="{% url 'profiles_profile_detail' idea.user.username %}">
-                      {% endif %}
-                      {% if idea.user.profile.photo %}
-                          <img src="{% thumbnail idea.user.profile.photo '400x400' crop upscale %}" />
-                      {% else %}
-                          <img src="{% static 'img/profile.png' %}" />
-                      {% endif %}
-                      {% if idea.user.profile.is_public %}
-                      </a>
-                      {% endif %}
-                  </div>
-                </div>
-                <div class="col-xs-8">
-                  <h4>{{ idea.user.profile.full_name}}</h4>
-                  <p><a href="mailto:{{idea.user.email}}">{{ idea.user.email }}</a>
-                  {% if idea.user.profile.website %}
-                  <br>{{ idea.user.profile.website|urlize }}
-                  {% endif %}
-                  {% if idea.user.profile.twitter %}
-                  <br>{{ idea.user.profile.twitter }}
-                  {% endif %}
-                </div>
-            </li>
-            <li class="list-group-item">
-              <h3>Appreciators</h3>
-              {% who_likes idea as idea_likes %}
-              {% if idea_likes %}
-              <div class="row">
-              {% for like in idea_likes %}
-                  <div class="col-xs-3">
-                      {% if like.sender.profile.is_public %}
-                      <a href="{% url 'profiles_profile_detail' like.sender.username %}">
-                      {% endif %}
-                      <img class="profile-pic"
-                      {% if like.sender.profile.photo %}
-                          src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
-                      {% else %}
-                          src="{% static 'img/profile.png' %}"
-                      {% endif %}
-                      {% if like.sender.first_name %}
-                          alt="{{ like.sender.profile.full_name }}"
-                          title="{{ like.sender.profile.full_name }}"
-                      {% else %}
-                          alt="{{ like.sender.username }}"
-                          title="{{ like.sender.username }}"
-                      {% endif %}
-                      >
-                      {% if like.sender.profile.is_public %}
-                      </a>
-                      {% endif %}
-                  </div>
-              {% endfor %}
-              </div>
-
-              {% endif %}
-              
-              
-            </li>
-          </ul>
-
-
-
         </div> 
-
-        
     </div>
 </section>
 {% endblock body %}
