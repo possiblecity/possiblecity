@@ -23,7 +23,7 @@
       <header class="lot-header row">
         <div class="col-md-12">
           <div class="lot-detail-page-container-icons">
-            <a href="#" title="Minimize/Maximize" class="lot-control minmax icon-angle-down pull-right"></a> 
+            <a href="#" title="Minimize" class="lot-control minmax icon-angle-down pull-right"></a> 
           </div>
           <div>
             <h1>
@@ -208,21 +208,28 @@
 
   {% block extra_map_js %}
   <script>
-      var lot = L.geoJson(null, {
+      var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
+      var padding = [100,100]
+
+      map.setView(center, 16);
+
+      var lotLayer = L.geoJson(null, {
          style: parcelStyle
       }).addTo(map);
+
+
+      L.marker(center, {riseOnHover: true}).addTo(map);
           
 
       var lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json';
 
       $.getJSON(lot_url, function(data){
         map.fire('dataloading');
-        lot.addData(data);
-        var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
-        var bounds = lot.getBounds();
+        lotLayer.addData(data);
+        var bounds = lotLayer.getBounds();
         map.fitBounds(bounds, {
-        maxZoom:19,
-        padding:20
+          maxZoom:19,
+          padding:padding
       });
 
       var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
@@ -246,13 +253,26 @@
       $('.lot-control').tooltip();
 
       $( ".reset-location" ).click(function() {
-        var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
-        map.setView(center, map.getZoom())
+        map.fitBounds(lotLayer.getBounds(), {
+          maxZoom:19,
+          padding:padding
+        })
       });
      
       $( "a.minmax" ).click(function() {
         $(this).toggleClass("icon-angle-up");
-        $(this).toggleClass("icon-angle-down")
+        $(this).toggleClass("icon-angle-down");
+        
+        if($(this).hasClass("icon-angle-down")){
+          $(this).attr('data-original-title',"Minimize");
+          $(this).attr('title',"Minimize");
+          $(".tooltip-inner").text('Minimize');
+        } else { 
+          $(this).attr('data-original-title','Maximize');
+          $(this).attr('title',"Maximize");
+          $(".tooltip-inner").text('Maximize');
+        } 
+
         $("#map").toggleClass("maximize");
         $("#map").toggleClass("minimize");
 

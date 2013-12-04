@@ -50,8 +50,8 @@ class Idea(models.Model):
     )
 
     # Idea owner manages these fields
-    title = models.CharField(max_length=100, blank=True, unique=True)
-    hashtag = models.CharField(max_length=40, blank=True, unique=True)
+    title = models.CharField(max_length=100, blank=True)
+    hashtag = models.CharField(max_length=40, blank=True)
     tagline = models.CharField(max_length=140,
          help_text="A tweet-length summary of the idea.")
     description = models.TextField(blank=True)
@@ -133,9 +133,11 @@ class IdeaVisual(models.Model):
         return os.path.join('ideas', str(instance.idea.id), 'images', filename)
 
     file = models.ImageField(upload_to = get_upload_path)   
-
     title = models.CharField(max_length=100, blank=True)
     caption = models.CharField(max_length=140, blank=True)
+
+    # relations
+    idea = models.ForeignKey(Idea)
     
     # metadata
     order = PositionField(collection='idea', default=0)

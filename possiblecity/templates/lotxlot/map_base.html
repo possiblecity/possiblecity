@@ -70,7 +70,7 @@
                 
             }),
             showMarker: false,
-            searchLabel: 'enter an address or neighborhood',
+            searchLabel: 'Enter address or neighborhood',
         }).addTo(map);
 
     // Prep the background tile layer
@@ -103,7 +103,7 @@
         "fillColor":"#cd00cd",
         "fillOpacity": 0.0,
         "opacity": 1.0,
-        "weight": 2,
+        "weight": 1,
         "color":"#cd00cd",
     };
 
@@ -139,7 +139,7 @@
     var vacant_lots = new lvector.Custom({
       map: map,
       url: "{% url 'api-lot-list' %}",            
-      scaleRange: [16, 20],
+      scaleRange: [17, 20],
       showAll: false,
       singlePopup: true,
       symbology : {
@@ -195,8 +195,8 @@
 
     function onEachNeighborhood(feature, layer) {
        map.fire('dataload');
-       var bounds = layer.getBounds();
-       var center = bounds.getCenter();
+       var layerBounds = layer.getBounds();
+       var center = layerBounds.getCenter();
        var labelText = '<strong>' + feature.properties.map_name +
                        '&nbsp;&nbsp;&nbsp;<i class="icon-map-marker icon-large"></i> ' + 
                        feature.properties.vacant_lot_count +
@@ -224,7 +224,6 @@
     }
 
     function zoomToFeature(e) {
-          map.removeLayer(grid);
           var layer = e.target;
           center=(layer.getBounds().getCenter());
           map.setView(center, 17, { animate: true });
@@ -232,18 +231,17 @@
     }
 
     function zoomToMarker(e) {
-          map.removeLayer(grid);
           var marker = e.target;
           center=(marker.getLatLng());
           map.setView(center, 17, { animate: true });
     }
 
      function onZoomend() {
-       if (map.getZoom()<17) {
+       if (map.getZoom()<16) {
           map.addLayer(neighborhoods);
        }
 
-       if (map.getZoom()>=17) {
+       if (map.getZoom()>=16) {
            map.removeLayer(neighborhoods);
        }
     }   
