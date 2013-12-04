@@ -43,14 +43,90 @@
             <li><a href="#financial" data-toggle="tab">Financial</a></li>
             <li><a href="#environmental" data-toggle="tab">Environmental</a></li>
           </ul>
-        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="vacancy">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Listed For Sale By City:</th>
+                    <td>
+                    {% if lot.profile.is_for_sale %}
+                        <i class="icon-ok-sign positive"></i>&nbsp;&nbsp;
+                        {{ lot.profile.papl_listing.PRICE_STR }}
+                    {% else %}
+                        <i class="icon-minus-sign negative"></i>
+                        {% if lot.is_public %}
+                          &nbsp;&nbsp;Not For Sale
+                        {% else %}&nbsp;&nbsp;Not Applicable
+                        {% endif %}
+                    {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Vacancy Violation:</th>
+                    <td>{% if lot.profile.has_violation %}
+                        <i class="icon-ok-sign positive"> </i>
+                        &nbsp;&nbsp;{{ lot.profile.latest_violation.DESCRIPTION }}
+                        {% else %}
+                        <i class="icon-minus-sign negative"></i> &nbsp;&nbsp;None
+                        {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Violation Non-Compliance:</th>
+                    <td>
+                    {% if lot.profile.is_non_compliant %}
+                      <i class="icon-ok-sign positive"></i> &nbsp;&nbsp;Not Complied
+                    {% else %}
+                      <i class="icon-minus-sign negative"></i>
+                      {% if lot.profile.has_violation %} &nbsp;&nbsp;Complied {% else %} &nbsp;&nbsp;Not Applicable {% endif %}
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Vacancy License:</th>
+                    <td>
+                      {% if lot.profile.get_licenses %}
+                      <i class="icon-ok-sign positive"></i>
+                        &nbsp;&nbsp;{{ lot.profile.latest_license.DESCRIPTION }}
+                      {% else %}
+                      <i class="icon-minus-sign negative"></i> &nbsp;&nbsp;None
+                      {% endif %}
+                      </td>
+                  </tr>
+                  <tr>
+                    <th>Land Use:</th>
+                    <td>
+                        {% if lot.profile.is_land_use_vacant %}
+                        <i class="icon-ok-sign positive"></i>
+                        {% else %}
+                        <i class="icon-minus-sign negative"></i>
+                        {% endif %}&nbsp;&nbsp;{{ lot.profile.land_use }}</td>
+                  </tr>
+                  <tr>
+                    <th>Building Description:</th>
+                    <td>
+                    {% if lot.profile.is_bldg_desc_vacant %}
+                      <i class="icon-ok-sign positive"></i>
+                    {% else %}
+                      <i class="icon-minus-sign negative"></i>
+                    {% endif %}&nbsp;&nbsp;{{ lot.profile.building_description }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
       </section>
-      <hr>
-      <section class="actions row">
+    </div>
+    <section class="actions">
+      <div class="row">
         <div class="col-lg-6 col-md-6">
-          <h2>Comments <small>{% comment_count lot %}</small></h2>
-          <ul class="list-group">
-            <div class="nav-tab-button text-center"></div>
+          <ul class="list-group comment-list">
+            <li class="list-group-item"><h2>Comments <small>{% comment_count lot %}</small></h2></li>
+            {% comments lot as comments %}
+            {% for comment in comments %}
+                {% include "comments/_comment.html" %}
+            {% endfor %}
+            <li class="hidden comment-placeholder"></li>
             <li class="list-group-item">
               <div class="media"> 
                 <span class="pull-left profile-img">            
@@ -65,7 +141,7 @@
                 </span>
                 <div class="media-body">
                   {% comment_form lot as comment_form %}
-                  <form method="post" id="comment-form" action="{% comment_target lot %}">
+                  <form class="ajax" data-replace=".comment-placeholder" method="post" id="comment-form" action="{% comment_target lot %}">
                     {% csrf_token %}
                     {% form comment_form using "floppyforms/layouts/simple.html" %}
                     <div class="form-actions">
@@ -76,17 +152,14 @@
                 </div>
               </div>
             </li>
-            {% comments lot as comments %}
-            {% for comment in comments %}
-                {% include "comments/_comment.html" %}
-            {% endfor %}
           </ul>    
-          </div>
+        </div>
         <div class="col-lg-6">
           <div class="lot-detail-page-projects">
-            <h2>Projects <small>{{ lot.idea_count }}</small></h2>
-            <a href="#" class="btn btn-primary pull-right start-project-btn">+ Start a Project</a>
             <ul class="list-group">
+              <li class="list-group-item">
+                <h2>Projects <small>{{ lot.idea_set.count }}</small></h2>
+              </li>
                {% for idea in lot.idea_set.all %}
                   <li class="list-group-item" id="idea-{{ idea.id }}">
                     <div class="media">           
@@ -104,7 +177,6 @@
                           <h4 class="media-heading">
                             {% if idea.title %}
                               {{ idea.title }}
-
                             {% else %}
                               Untitled Project
                             {% endif %}
@@ -153,20 +225,18 @@
                       </div>
                     </div>
                   </li>
+                  {% empty %}
+                  <li class="list-group-item">
+                    <p>There are currently no projects organized on this lot.</p>
+                    <p>Interested in starting a project here? 
+                    <a href="mailto:activate@possiblecity.co?subject=Lot #{{ lot.id }} - {{ lot.address }}">Let us know!</a></p>
+                  </li>
                   {% endfor %}        
                 </ul>
           </div>
           <div class="people">
-            <h2>People <small>{{ lot|likes_count}}</small></h2>
+            <h2>People</h2>
             <p class="margin-bottom-15">Organizers on this lot.</p>
-            {% if request.user.is_authenticated %}
-              {% phileo_widget_brief request.user lot %}
-            {% else %}
-              <span class="phileo">
-                  <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary pull-right start-project-btn">+ Follow this Lot</a>
-              </span>
-            {% endif %}
-
             {% who_likes lot as lot_likes %}
             {% if lot_likes %}
             <div class="row">
@@ -198,11 +268,11 @@
               {% endif %}
             
           </div>
+      </div>
+    </section>
 
-        </section>
 
-
-  </div><!-- .panel -->
+  
   </div> <!-- .container -->
   {% endblock body %}
 

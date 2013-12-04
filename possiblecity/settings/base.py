@@ -445,6 +445,16 @@ REST_FRAMEWORK = {
 # Other 3rd Party
 #==============================================================================
 
+PHILEO_DEFAULT_LIKE_CONFIG = {
+    "css_class_on": "icon-star",
+    "css_class_off": "icon-star-empty",
+    "like_text_on": "Unstar",
+    "like_text_off": "Star",
+    "count_text_singular": "star",
+    "count_text_plural": "stars"
+}
+
+
 PHILEO_LIKABLE_MODELS = {
     "profiles.Profile": {},
     "ideas.Idea": {},

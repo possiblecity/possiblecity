@@ -30,7 +30,7 @@
        center = philadelphia
        html = '<h3>Welcome to Possible City!</h3>Looks like you are outside of Philadelphia, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publicly owned lots are light blue. Privately owned lots are dark blue. Search for a specific address or neighborhood using the search icon at the top left.';
     }
-    map.setView(center, 16);
+    map.setView(center, 17);
     L.marker(center).addTo(map).bindPopup(html).openPopup();
         
   }
@@ -38,7 +38,7 @@
   function onLocationError(e) {
     center = philadelphia;
     html = '<h3>Welcome to lotxlot!</h3>We are not able to find your location, so we will start you from City Hall. Explore vacant lots from the center of the city out. Publically owned lots are yellow. Privately owned lots are blue. If you find an error in our data, <a href="mailto:info@possiblecity.com">let us know</a>';
-    map.setView(center, 16);
+    map.setView(center, 17);
     L.marker(center).addTo(map).bindPopup(html).openPopup();
   }
 
