@@ -1,0 +1,32 @@
+<table class="table">
+  <tbody>
+    <tr>
+      <th>BRT/OPA Account #:</th>
+      <td><a href="http://opa.phila.gov/opa.apps/Search/SearchResults.aspx?id={{ lot.profile.tencode}}">{{ lot.profile.brt_id }}</a></td>
+    </tr>
+    <tr>
+      <th>Last Sale Price:</th>
+      <td>{{ lot.profile.account_details.sale_price }}</td>
+    </tr>
+    <tr>
+      <th>Sale Date:</th>
+      <td>{{ lot.profile.account_details.sale_date }}
+      </td>
+    </tr>
+    <tr>
+      <th>Market Value:</th>
+      <td>{{ lot.profile.account_valuation.market_value }}
+      </td>
+    </tr>
+    <tr>
+      <th>Assessed Land Taxable:</th>
+      <td>{{ lot.profile.account_valuation.assessed_land_taxable }}
+      </td>
+    </tr>
+    <tr>
+      <th>Assessed Improvement Taxable:</th>
+      <td>{{ lot.profile.account_valuation.assessed_improvement_taxable }}
+      </td>
+    </tr>
+  </tbody>
+</table>

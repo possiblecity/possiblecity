@@ -1,0 +1,50 @@
+ {% extends "lotxlot/base.html" %}
+
+{% load staticfiles %}
+{% load pagination_tags %}
+{% load phileo_tags %}
+{% load thumbnail %}
+
+{% load possiblecity_tags %}
+
+{% block head_title %}Lots{% endblock head_title %}
+
+{% block body %}
+{% autopaginate lot_list %}
+    <header class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 margin-bottom-20">
+                    <h1>Lots<small>{{ lot_list.count }}</small></h1>
+                    <nav class="pull-right">
+                    {% paginate %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="panel">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="{% url "lotxlot_lot_list" %}">All Lots</a></li>
+                        <li><a href="{% url "lotxlot_lot_list_vacant" %}">Vacant Lots</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-9 col-xs-12">
+                <div class="panel">
+                	<div class="row">
+                		{% for lot in lot_list %}
+                		<div class="col-md-3">
+                			<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ lot.coord.y }},{{ lot.coord.x }}&sensor=false&fov=105">
+                		</div>
+                		{% endfor %}
+                	</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+{% endblock body %}

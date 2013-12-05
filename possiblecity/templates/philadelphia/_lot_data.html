@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<ul class="nav nav-pills">
+	<li class="active"><a href="#vacancy" data-toggle="tab">Vacancy</a></li>
+	<li><a href="#owner" data-toggle="tab">Owner</a></li>
+	<li><a href="#spatial" data-toggle="tab">Spatial</a></li>
+	<!--<li><a href="#financial" data-toggle="tab">Financial</a></li>-->
+	<li><a href="#environmental" data-toggle="tab">Environmental</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="vacancy">
+    	{% include "philadelphia/_vacancy.html" %}
+    </div>
+    <div class="tab-pane" id="owner">
+     	{% include "philadelphia/_owner.html" %}
+    </div>
+    <div class="tab-pane" id="spatial">
+    	{% include "philadelphia/_spatial.html" %}
+    </div>
+    <div class="tab-pane" id="environmental">
+    	{% include "philadelphia/_environmental.html" %}
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<table class="table">
+  <tbody>
+    <tr>
+      <th>Impervious Area:</th>
+      <td>{{ lot.profile.impervious_area }}</td>
+    </tr>
+    <tr>
+      <th>100 Year Flood Plain:</th>
+      <td>
+        {% if lot.profile.get_zoning_flood %}
+        <i class="icon-ok-sign positive"></i>
+        {% else %}
+        <i class="icon-minus-sign negative"></i>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>Steep Slopes:</th>
+      <td>
+        {% if lot.profile.get_zoning_slope %}
+        <i class="icon-ok-sign positive"></i>
+        {% else %}
+        <i class="icon-minus-sign negative"></i>
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>

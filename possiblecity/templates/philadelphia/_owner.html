@@ -1,0 +1,12 @@
+<table class="table">
+  <tbody>
+    <tr>
+      <th>Ownership:</th>
+      <td>{% if lot.is_public %}Public{% else %}Private{% endif %}</td>
+    </tr>
+    <tr>
+      <th>Owner:</th>
+      <td>{{ lot.profile.owner }}</td>
+    </tr>
+  </tbody>
+</table>
