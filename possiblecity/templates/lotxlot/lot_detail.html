@@ -24,6 +24,20 @@
         <div class="col-md-12">
           <div class="lot-detail-page-container-icons">
             <a href="#" title="Minimize" class="lot-control minmax icon-angle-down pull-right"></a> 
+            <span class="pull-right" style="padding-right:30px;">
+             {% if request.user.is_authenticated %}
+                      {% phileo_widget_brief request.user lot %}
+                      {% else %}
+                      <span class="phileo active">
+                          <a class="btn btn-primary data-toggle="modal" data-target="#login-modal" href="#login-modal">
+                              <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
+                              <span class="count badge">
+                              {{ idea|likes_count }}
+                          </span>
+                          </a>
+                    
+                      {% endif %}
+              </span>
           </div>
           <div>
             <h1>
@@ -36,88 +50,11 @@
             <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
         </div>
         <div class="col-lg-6 col-md-6">
-          <ul class="nav nav-pills">
-            <li class="active"><a href="#vacancy" data-toggle="tab">Vacancy</a></li>
-            <li><a href="#ownership" data-toggle="tab">Owner</a></li>
-            <li><a href="#political" data-toggle="tab">Spatial</a></li>
-            <li><a href="#financial" data-toggle="tab">Financial</a></li>
-            <li><a href="#environmental" data-toggle="tab">Environmental</a></li>
-          </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="vacancy">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <th>Listed For Sale By City:</th>
-                    <td>
-                    {% if lot.profile.is_for_sale %}
-                        <i class="icon-ok-sign positive"></i>&nbsp;&nbsp;
-                        {{ lot.profile.papl_listing.PRICE_STR }}
-                    {% else %}
-                        <i class="icon-minus-sign negative"></i>
-                        {% if lot.is_public %}
-                          &nbsp;&nbsp;Not For Sale
-                        {% else %}&nbsp;&nbsp;Not Applicable
-                        {% endif %}
-                    {% endif %}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Vacancy Violation:</th>
-                    <td>{% if lot.profile.has_violation %}
-                        <i class="icon-ok-sign positive"> </i>
-                        &nbsp;&nbsp;{{ lot.profile.latest_violation.DESCRIPTION }}
-                        {% else %}
-                        <i class="icon-minus-sign negative"></i> &nbsp;&nbsp;None
-                        {% endif %}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Violation Non-Compliance:</th>
-                    <td>
-                    {% if lot.profile.is_non_compliant %}
-                      <i class="icon-ok-sign positive"></i> &nbsp;&nbsp;Not Complied
-                    {% else %}
-                      <i class="icon-minus-sign negative"></i>
-                      {% if lot.profile.has_violation %} &nbsp;&nbsp;Complied {% else %} &nbsp;&nbsp;Not Applicable {% endif %}
-                      {% endif %}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Vacancy License:</th>
-                    <td>
-                      {% if lot.profile.get_licenses %}
-                      <i class="icon-ok-sign positive"></i>
-                        &nbsp;&nbsp;{{ lot.profile.latest_license.DESCRIPTION }}
-                      {% else %}
-                      <i class="icon-minus-sign negative"></i> &nbsp;&nbsp;None
-                      {% endif %}
-                      </td>
-                  </tr>
-                  <tr>
-                    <th>Land Use:</th>
-                    <td>
-                        {% if lot.profile.is_land_use_vacant %}
-                        <i class="icon-ok-sign positive"></i>
-                        {% else %}
-                        <i class="icon-minus-sign negative"></i>
-                        {% endif %}&nbsp;&nbsp;{{ lot.profile.land_use }}</td>
-                  </tr>
-                  <tr>
-                    <th>Building Description:</th>
-                    <td>
-                    {% if lot.profile.is_bldg_desc_vacant %}
-                      <i class="icon-ok-sign positive"></i>
-                    {% else %}
-                      <i class="icon-minus-sign negative"></i>
-                    {% endif %}&nbsp;&nbsp;{{ lot.profile.building_description }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          {% include "philadelphia/_lot_data.html" %}
+        </div>
       </section>
     </div>
-    <section class="actions">
+    <div class="actions">
       <div class="row">
         <div class="col-lg-6 col-md-6">
           <ul class="list-group comment-list">
@@ -155,7 +92,7 @@
           </ul>    
         </div>
         <div class="col-lg-6">
-          <div class="lot-detail-page-projects">
+          <div class="projects">
             <ul class="list-group">
               <li class="list-group-item">
                 <h2>Projects <small>{{ lot.idea_set.count }}</small></h2>
@@ -233,43 +170,50 @@
                   </li>
                   {% endfor %}        
                 </ul>
-          </div>
-          <div class="people">
-            <h2>People</h2>
-            <p class="margin-bottom-15">Organizers on this lot.</p>
-            {% who_likes lot as lot_likes %}
-            {% if lot_likes %}
-            <div class="row">
-              {% for like in lot_likes %}
-                  <div class="col-lg-2">
-                      {% if like.sender.profile.is_public %}
-                      <a href="{% url 'profiles_profile_detail' like.sender.username %}">
-                      {% endif %}
-                      <img class="profile-pic"
-                      {% if like.sender.profile.photo %}
-                          src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
-                      {% else %}
-                          src="{% static 'img/profile.png' %}"
-                      {% endif %}
-                      {% if like.sender.first_name %}
-                          alt="{{ like.sender.profile.full_name }}"
-                          title="{{ like.sender.profile.full_name }}"
-                      {% else %}
-                          alt="{{ like.sender.username }}"
-                          title="{{ like.sender.username }}"
-                      {% endif %}
-                      >
-                      {% if like.sender.profile.is_public %}
-                      </a>
-                      {% endif %}
-                  </div>
-              {% endfor %}
-              </div>
-              {% endif %}
-            
-          </div>
+            </div>
+            <div class="people">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <h2>People</h2>
+                </li>
+                {% who_likes lot as lot_likes %}
+                <li class="list-group-item">
+                  <h5>Favorited</h5>
+                  <div class="row">
+                  {% for like in lot_likes %}
+                    <div class="col-lg-2">
+                        {% if like.sender.profile.is_public %}
+                        <a href="{% url 'profiles_profile_detail' like.sender.username %}">
+                        {% endif %}
+                        <img class="profile-pic"
+                        {% if like.sender.profile.photo %}
+                            src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
+                        {% else %}
+                            src="{% static 'img/profile.png' %}"
+                        {% endif %}
+                        {% if like.sender.first_name %}
+                            alt="{{ like.sender.profile.full_name }}"
+                            title="{{ like.sender.profile.full_name }}"
+                        {% else %}
+                            alt="{{ like.sender.username }}"
+                            title="{{ like.sender.username }}"
+                        {% endif %}
+                        >
+                        {% if like.sender.profile.is_public %}
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                  <div class="col-md-3">
+                     
+                 
+                     
+                    </div>
+                </div>
+              </li>
+            </ul>
+        </div>
       </div>
-    </section>
 
 
   

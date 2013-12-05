@@ -84,7 +84,14 @@ class LotDetailView(View):
 
 
 class LotIndexView(TemplateView):
-    template_name='lotxlot/map.html'
+    template_name = 'lotxlot/map.html'
+
+
+class LotListView(ListView):
+    model = Lot
+
+class LotListVacantView(ListView):
+    queryset = Lot.objects.filter(is_vacant=True)
 
 
 ########## API Views ##########
