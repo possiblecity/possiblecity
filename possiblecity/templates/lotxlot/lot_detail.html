@@ -35,7 +35,7 @@
                               {{ lot|likes_count }}
                           </span>
                           </a>
-                    
+                      </span>                    
                       {% endif %}
               </span>
           </div>
@@ -44,6 +44,7 @@
                <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> {% if lot.address %}{{ lot.address }}{% else %}Lot #{{ lot.id }}{% endif %} 
             </h1>
           </div>
+         </div>
       </header>
       <section class="lot-info row">
         <div class="col-md-6">
@@ -219,8 +220,8 @@
         </div>
         {% endif %}
       </div>
-
-
+    </div>
+  </div>
   
   </div> <!-- .container -->
   {% endblock body %}
