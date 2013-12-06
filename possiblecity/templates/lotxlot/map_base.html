@@ -181,14 +181,14 @@
           availabilty = 'Unknown';
         }
 
-        var html = '<center><h3>' + properties.address + '</h3>' +
+        var html = '<h3 style="text-align: center;"><a href="' + Urls.lotxlot_lot_detail(properties.id) + '">' +
+                    properties.address  + '</a></h3>'         +
                    '<p><i class="icon-large ' + ownership_icon + '"></i>&nbsp;&nbsp;<strong>'  + ownership + '</strong>' +
                    '&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-resize-full icon-large "></i>&nbsp;&nbsp;<strong>' +
                     properties.size.toFixed(0) + ' sq. ft.</strong>' +
                     '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-lightbulb icon-large"></i>&nbsp;&nbsp;<strong>' +
                     properties.idea_count +
-                    '</strong><p><a href="' + Urls.lotxlot_lot_detail(properties.id) +
-                    '" class="btn btn-default">View Details</a></p><center>';
+                    '</strong>';
         return html;
       }
     });

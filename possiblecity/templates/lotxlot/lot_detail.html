@@ -23,13 +23,13 @@
       <header class="lot-header row">
         <div class="col-md-12">
           <div class="lot-detail-page-container-icons">
-            <a href="#" title="Minimize" class="lot-control minmax icon-angle-down pull-right"></a> 
-            <span class="pull-right" style="padding-right:30px;">
+            <a href="#" title="Minimize" class=" lot-control minmax hidden-xs icon-angle-down pull-right"></a> 
+            <span class="btn-favorite pull-right">
              {% if request.user.is_authenticated %}
                       {% phileo_widget_brief request.user lot %}
                       {% else %}
                       <span class="phileo active">
-                          <a class="btn btn-default data-toggle="modal" data-target="#login-modal" href="#login-modal">
+                          <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-info">
                               <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
                               <span class="count badge">
                               {{ lot|likes_count }}
@@ -41,22 +41,22 @@
           </div>
           <div>
             <h1>
-               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> Lot #{{ lot.id }} - {{ lot.address }}
+               <a href="#" data-toggle="tooltip" title="Reset location" class="lot-control reset-location icon-map-marker icon-border"></a> {% if lot.address %}{{ lot.address }}{% else %}Lot #{{ lot.id }}{% endif %} 
             </h1>
           </div>
       </header>
       <section class="lot-info row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-md-6">
             <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
         </div>
-        <div class="col-lg-6 col-md-6">
+        <div class="col-md-6">
           {% include "philadelphia/_lot_data.html" %}
         </div>
       </section>
     </div>
     <div class="actions">
       <div class="row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-md-6">
           <ul class="list-group comment-list">
             <li class="list-group-item"><h2>Comments <small>{% comment_count lot %}</small></h2></li>
             {% comments lot as comments %}
@@ -77,13 +77,18 @@
                   style="width: 64px; height: 64px;" />
                 </span>
                 <div class="media-body">
-                  {% comment_form lot as comment_form %}
-                  <form class="ajax" data-replace=".comment-placeholder" method="post" id="comment-form" action="{% comment_target lot %}">
+                 {% comment_form lot as comment_form %}
+                  <form class="ajax"
+                      data-replace=".comment-placeholder" method="post" id="comment-form" action="{% comment_target lot %}">
                     {% csrf_token %}
                     {% form comment_form using "floppyforms/layouts/simple.html" %}
                     <div class="form-actions">
+                      {% if request.user.is_authenticated %} 
                       <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
                       </button>
+                      {% else %}
+                        <a data-toggle="modal" data-target="#login-modal" href="#login-modal" href="#login-modal" class="btn btn-primary pull-right">{% trans "Login to comment" %}</a>
+                      {% endif %}
                     </div>
                   </form> 
                 </div>
@@ -91,7 +96,7 @@
             </li>
           </ul>    
         </div>
-        <div class="col-lg-6">
+        <div class="col-md-6">
           <div class="projects">
             <ul class="list-group">
               <li class="list-group-item">
@@ -171,17 +176,18 @@
                   {% endfor %}        
                 </ul>
             </div>
+            {% who_likes lot as lot_likes %}
+            {% if lot_likes %}
             <div class="people">
               <ul class="list-group">
                 <li class="list-group-item">
                   <h2>People</h2>
                 </li>
-                {% who_likes lot as lot_likes %}
                 <li class="list-group-item">
-                  <h5>Favorited</h5>
+                  <h5>Favorited <small>{{ lot|likes_count }}</small></h5>
                   <div class="row">
                   {% for like in lot_likes %}
-                    <div class="col-lg-2">
+                    <div class="col-md-2 col-xs-4 col-sm-2">
                         {% if like.sender.profile.is_public %}
                         <a href="{% url 'profiles_profile_detail' like.sender.username %}">
                         {% endif %}
@@ -204,15 +210,11 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-                  <div class="col-md-3">
-                     
-                 
-                     
-                    </div>
                 </div>
               </li>
             </ul>
         </div>
+        {% endif %}
       </div>
 
 
@@ -223,9 +225,9 @@
   {% block extra_map_js %}
   <script>
       var center = new L.LatLng({{ lot.coord.y }}, {{ lot.coord.x }});
-      var padding = [100,100]
+      var padding = [0,0]
 
-      map.setView(center, 16);
+      //map.setView(center, 17);
 
       var lotLayer = L.geoJson(null, {
          style: parcelStyle
@@ -244,17 +246,14 @@
         map.fitBounds(bounds, {
           maxZoom:19,
           padding:padding
-      });
+        });
+
+        var zoom = map.getZoom() - 1;
+
+        map.setView(center, zoom);
 
       var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
       var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
-
-      var content = '<center><h3><i class="icon-map-marker"></i> {{ lot.address }}</h3>' +
-                    '<i class="icon-large ' + ownership_icon + '">&nbsp;</i> <strong>'  + ownership + '</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
-                    '<i class="icon-resize-full icon-large ">&nbsp;</i> <strong>{{ lot.get_sqft|floatformat:0 }} sq. ft.</strong>&nbsp;&nbsp;&nbsp;&nbsp;' +
-                    '<i class="icon-lightbulb icon-large">&nbsp;</i> <strong>{{ lot.idea_set.count }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;</center>';
-
-      content = "";
 
       var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
 

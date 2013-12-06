@@ -19,7 +19,7 @@
 
                     <hr>
                     <p>
-                        <a href="{% url "account_login" %}" target="_top" class="btn btn-default">
+                        <a href="{% url "account_login" %}?next={{ request.path }}" target="_top" class="btn btn-default">
                         <i class="icon-envelope">  </i>Sign In with Email</a>
                     </p>
                 </center>

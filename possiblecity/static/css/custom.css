@@ -51,6 +51,9 @@ a.reset-location {
 	margin-top: 10px;
 }
 
+.lot-detail .btn-favorite {
+	padding-right:30px;
+}
 
 
 /*
@@ -169,14 +172,18 @@ div.content {
 	color: red;
 }
 
-.nav-pills > li.active > a,
-.nav-pills > li.active > a:hover,
-.nav-pills > li.active > a:focus {
-  background-color: #68C4EA;
+.btn-info {
+	background-color: #5eb0d3;
+	border-color:#5eb0d3;
 }
 
-.btn-primary .badge {
-  color: #428bca;
+.btn-info:hover {
+	background-color: #539dbb;
+	border-color:#539dbb;
+}
+
+.btn-info .badge {
+  color: #5eb0d3;
   background-color: #fff;
 }
 
@@ -439,7 +446,6 @@ body.about .navbar-nav > .nav-about a {
 	position: relative;
 	box-sizing: border-box;
 	padding-top: 50px;
-	/*transition: height 0.5s;*/
 }
 
 .leaflet-control-container {
@@ -450,7 +456,7 @@ body.about .navbar-nav > .nav-about a {
 	height: 320px;
 }
 
-#map.maximize {
+#map.maximize, #map.fullscreen {
 	height: 100%;
 }
 
@@ -1233,23 +1239,6 @@ p.lead-big {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /***************************************************************************/
 /******************************************************* RESPONSIVE STYLES */
 
@@ -1399,13 +1388,6 @@ p.lead-big {
 		display: none;
 	}	
 
-
-	/*#map {
-		width: 100%;
-		height: 100%;
-
-	}*/
-
 	.sidebar {
 		position: absolute;
 		right: 0;
@@ -1429,13 +1411,6 @@ p.lead-big {
 		overflow: visible;
 		display: none;
 	}
-
-
-	
-	
-
-
-
 
 
 
@@ -1532,25 +1507,10 @@ p.lead-big {
 	/* MAP STYLES */
 	
 
-	/*#map {
-		width: 100%;
-
-	}*/
-
-	#map.lot-detail-map {
-		width: 100%;
-		height: 200px;
+	#map.minimize, #map.maximize {
+		height: 50%;
 	}
 
-	.container.lot-detail {
-		margin-top: 0;
-	}
-
-
-	.map-hopmepage {
-		position: static;
-		margin-top: 40px;
-	}
 
 	/***************************************************************************/
 	/* MODAL */
@@ -1646,6 +1606,7 @@ p.lead-big {
 	/***************************************************************************/
 	/* LOT DETAIL PAGE */
 
+
 	.lot-detail-page-container {
 		padding-left: 0px;
 		padding-right: 0px;
@@ -1654,25 +1615,13 @@ p.lead-big {
 
 	.lot-detail h1 {
 		font-size: 30px;
-		margin-bottom: 5px;
+		height: auto;
+		margin:0;
 
 	}
 
-	.lot-detail-page-container-icons {
-		height: 20px;
-		margin-top: -10px;
-		margin-bottom: 10px;
-
-	}
-
-	.start-project-btn {
-		margin-top: -10px;
-	}
-
-	.container.lot-detail {
-		margin-top: 0;
-		position: absolute;
-		top: 135px;
+	.lot-detail .btn-favorite {
+		padding-right:0;
 	}
 
 
@@ -1681,6 +1630,13 @@ p.lead-big {
 
 @media (max-width: 450px) {
 	
+	#map, #map.minimize, #map.maximize {
+		height: 40%;
+	}
+
+	.container.lot-detail {
+		margin-top: 0;
+	}
 
 	.lot-detail {
 		padding-left: 0px;
@@ -1688,26 +1644,13 @@ p.lead-big {
 	}
 
 	.lot-detail h1 {
-		font-size: 20px;
+		font-size: 30px;
 	}
 
-
-	.lot-detail-page-projects {
-		margin-bottom: 50px;
-	}
 
 	/***************************************************************************/
 	/* FOOTER */
 
-	.site-footer {
-		position: fixed;
-		bottom: 0;
-		z-index: 10000000;
-		width: 100%;
-		background-color: rgba(255,255,255,0.85);
-		margin: 0 0 0 0;
-		padding: 0 0 0 0;
-	}
 }
   
 

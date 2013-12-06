@@ -448,7 +448,7 @@ REST_FRAMEWORK = {
 PHILEO_DEFAULT_LIKE_CONFIG = {
     "css_class_on": "icon-star",
     "css_class_off": "icon-star-empty",
-    "like_text_on": "Unfavorite",
+    "like_text_on": "Favorited",
     "like_text_off": "Favorite",
     "count_text_singular": "favorite",
     "count_text_plural": "favorites"

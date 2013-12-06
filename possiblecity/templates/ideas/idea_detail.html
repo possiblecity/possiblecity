@@ -18,28 +18,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 margin-bottom-20">
-                <h1>{{ idea.title }} 
+                <h1>{{ idea.title }}
                     <span class="pull-right">
-                    <a class="btn btn-primary" 
-                       href="{% follow_all_url idea %}?next={{ request.path }}"
-                       data-method="post"
-                       data-replace-closest=".actstream"
-                       data-spinner="off">
-                       {% if request.user|is_following:idea %}
-                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;{% trans 'Following' %}
-                       {% else %}
-                        <i class="icon-plus"></i>&nbsp;&nbsp;{% trans 'Follow' %}
-                       {% endif %}
-                    </a>
                     {% if request.user.is_authenticated %}
                     {% phileo_widget_brief request.user idea %}
                     {% else %}
                     <span class="phileo active">
-                        <a class="btn btn-primary data-toggle="modal" data-target="#login-modal" href="#login-modal">
-                            <i class="{% if idea|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}">&nbsp;&nbsp;</i>Like&nbsp;&nbsp;
+                        <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-info" >
+                            <i class="icon-star-empty">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
                             <span class="count badge">
                             {{ idea|likes_count }}
-                        </span>
+                            </span>
                         </a>
                     </span>
                     {% endif %}
@@ -167,16 +156,14 @@
                   {% endif %}
                 </div>
                 <div class="col-xs-4">
-                Floated on {{ idea.floated }}
+                   <p>Floated on {{ idea.floated }}
+                   {% if idea.grounded %}<br>Grounded on {{ idea.grounded }}{% endif %}</p>
                 </div>
-            </li>
-            <li class="list-group-item">
-              <h5>Followers</h5>
             </li>
             {% who_likes idea as idea_likes %}
             {% if idea_likes %}
             <li class="list-group-item">
-              <h5>Appreciators</h5>
+              <h5>Favorited</h5>
               <div class="row">
               {% for like in idea_likes %}
                   <div class="col-xs-2">
@@ -206,17 +193,14 @@
             </li>
             {% endif %}
           </ul>
-           <div class="panel">   
-              <h2>Comments</h2>
-              <ul class="comment-list list-group">
-                  <div class="nav-tab-button text-center"></div>
+           <ul class="list-group">   
+              <li class="list-group-item"><h2>Comments <small>{% comment_count idea %}</small></h2></li>
                   {% comments idea as comments %}
                   {% for comment in comments %}
                   {% include "comments/_comment.html" %}
                   {% endfor %}
-              </ul>
-              <ul class="comment-form list-group">
-              <li class="list-group-item">
+              <li class="hidden comment-placeholder"></li>
+              <li class="comment-form list-group-item">
                     <div class="media"> 
                       <span class="pull-left profile-img">            
                         <img class="media-object"  
@@ -230,12 +214,17 @@
                       </span>
                       <div class="media-body">
                         {% comment_form idea as comment_form %}
-                        <form class="ajax" data-append=".comment-list" method="post" id="comment-form" action="{% comment_target idea %}">
+                        <form class="ajax"
+                            data-replace=".comment-placeholder" method="post" id="comment-form" action="{% comment_target idea %}">
                           {% csrf_token %}
                           {% form comment_form using "floppyforms/layouts/simple.html" %}
                           <div class="form-actions">
+                            {% if request.user.is_authenticated %} 
                             <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
                             </button>
+                            {% else %}
+                              <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-primary pull-right">{% trans "Login to comment" %}</a>
+                            {% endif %}
                           </div>
                         </form> 
                       </div>
