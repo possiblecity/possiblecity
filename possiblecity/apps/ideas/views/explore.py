@@ -12,7 +12,7 @@ class IdeaDetailView(DetailView):
     context_object_name = "idea"
 
 class IdeaListView(ListView):
-    queryset = Idea.objects.all().select_related()
+    queryset = Idea.objects.all.select_related()
     context_object_name = "ideas"
 
 class IdeaListWithinFeature(IdeaListView):

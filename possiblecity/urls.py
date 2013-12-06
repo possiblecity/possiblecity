@@ -52,8 +52,7 @@ urlpatterns = patterns("",
     url(r"^people/", include("apps.profiles.urls")),   
 
     #ideas
-    url(r"^projects/float/", include("apps.ideas.urls.share")),
-    url(r"^projects/explore/", include("apps.ideas.urls.explore")),
+    url(r"^projects/", include("apps.ideas.urls")),
 
     # places
     url(r"^lots/", include("apps.lotxlot.urls")),
