@@ -33,18 +33,6 @@ Profile for {{ profile.user.username }}
                         <p>
                         {% if request.user == profile.user %}
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
-                        {% else %}
-                         <a class="btn btn-primary ajax actstream" 
-                               href="{% follow_all_url user %}"
-                               data-method="post"
-                               data-replace-closest=".actstream"
-                               data-spinner="off">
-                              {% if request.user|is_following:user %}
-                                <i class="icon-ok-sign"></i>&nbsp;&nbsp;{% trans 'Following' %}
-                              {% else %}
-                                <i class="icon-plus"></i>&nbsp;&nbsp;{% trans 'Follow' %}
-                              {% endif %}
-                            </a>
                         {% endif %}
                         </p>
                         <hr>

@@ -63,6 +63,7 @@
             {% block project %}
             <div class="panel">
                 <article id="idea">
+                   {% if idea.ideavisual_set.all %}
                     <section class="images">
                      <div id="idea-slideshow" class="carousel slide">
                         <!-- Indicators -->
@@ -100,6 +101,7 @@
                         {% endif %}
                       </div>
                     </section>
+                    {% endif %}
                     {% if idea.description %}
                     <section class="description margin-top-20" >
                         {{ idea.description_html|safe }}

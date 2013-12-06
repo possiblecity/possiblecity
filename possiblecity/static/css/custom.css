@@ -175,6 +175,11 @@ div.content {
   background-color: #68C4EA;
 }
 
+.btn-primary .badge {
+  color: #428bca;
+  background-color: #fff;
+}
+
 /***************************************************************************/
 /* TYPOGRAPHY */
 

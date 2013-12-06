@@ -29,10 +29,10 @@
                       {% phileo_widget_brief request.user lot %}
                       {% else %}
                       <span class="phileo active">
-                          <a class="btn btn-primary data-toggle="modal" data-target="#login-modal" href="#login-modal">
+                          <a class="btn btn-default data-toggle="modal" data-target="#login-modal" href="#login-modal">
                               <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
                               <span class="count badge">
-                              {{ idea|likes_count }}
+                              {{ lot|likes_count }}
                           </span>
                           </a>
                     
