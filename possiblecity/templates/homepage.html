@@ -65,7 +65,7 @@
     <div class="panel latest-ideas">
         <div class="row">
             <div class="col-lg-12 col-12">
-                <h2 class="margin-bottom-20">Latest Ideas</h2>
+                <h2 class="margin-bottom-20">Latest Projects</h2>
                 {% get_latest ideas.Idea 8 as latest_ideas %}
                 <div class="row latest-ideas-homepage">
                 {% for idea in latest_ideas %}
@@ -85,7 +85,9 @@
                             <div class="tagline">
                                 {{ idea.tagline }}
                              </div>
-                             {% if idea.get_lead_image %}
+                             {% if idea.grounded %}
+                             <span class="idea-phase">Active</span>
+                             {% else %}
                              <span class="idea-phase">Proposal</span>
                              {% endif %}
                         </div>

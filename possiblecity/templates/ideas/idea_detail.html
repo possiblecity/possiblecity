@@ -38,6 +38,9 @@
                       {% endif %}
                   </span>
                 </h1>
+                {% if idea.hashtag %}
+                <h4>{{ idea.hashtag }}</h4>
+                {% endif %}
                 <p>{{ idea.tagline }} </p>
                   {% for tag in idea.tags.all %} 
                   <span class="label label-info">{{ tag.name }}</span>
@@ -94,6 +97,10 @@
                     {% if idea.description %}
                     <section class="description margin-top-20" >
                         {{ idea.description_html|safe }}
+                        {% if idea.website %}
+                        <h5>Website</h5>
+                        <p>{{ idea.website|urlize }}</p>
+                        {% endif %}
                     </section>
                     {% endif %}
                 </article>
@@ -166,7 +173,7 @@
               <h5>Favorited</h5>
               <div class="row">
               {% for like in idea_likes %}
-                  <div class="col-xs-2">
+                  <div class="col-md-2 col-xs-3">
                       {% if like.sender.profile.is_public %}
                       <a href="{% url 'profiles_profile_detail' like.sender.username %}">
                       {% endif %}
