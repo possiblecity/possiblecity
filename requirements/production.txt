@@ -3,7 +3,6 @@
 # includes the base.txt requirements file
 -r base.txt 
 
-gunicorn # server
 python-memcached # memcached bindings
 django-memcache-status
 

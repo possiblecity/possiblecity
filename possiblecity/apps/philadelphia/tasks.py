@@ -137,7 +137,7 @@ def update_vacancy():
      """
      from apps.lotxlot.models import Lot
 
-     t = datetime.datetime.now() - datetime.timedelta(days=9) 
+     t = datetime.datetime.now() - datetime.timedelta(days=14) 
      queryset = queryset_iterator(Lot.objects.filter(is_vacant=False, updated__lt=t))
      for lot in queryset:
          vacant = lot.is_vacant
