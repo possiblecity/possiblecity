@@ -193,13 +193,15 @@
             </li>
             {% endif %}
           </ul>
-           <ul class="list-group">   
+          <div class="panel" style="margin:0; padding:0;">
+            <ul class="comment-list list-group">   
               <li class="list-group-item"><h2>Comments <small>{% comment_count idea %}</small></h2></li>
                   {% comments idea as comments %}
                   {% for comment in comments %}
                   {% include "comments/_comment.html" %}
                   {% endfor %}
-              <li class="hidden comment-placeholder"></li>
+            </ul>
+            <ul class="comment-form list-group">
               <li class="comment-form list-group-item">
                     <div class="media"> 
                       <span class="pull-left profile-img">            
@@ -215,7 +217,7 @@
                       <div class="media-body">
                         {% comment_form idea as comment_form %}
                         <form class="ajax"
-                            data-replace=".comment-placeholder" method="post" id="comment-form" action="{% comment_target idea %}">
+                            data-append=".comment-list" method="post" id="comment-form" action="{% comment_target idea %}">
                           {% csrf_token %}
                           {% form comment_form using "floppyforms/layouts/simple.html" %}
                           <div class="form-actions">
@@ -230,7 +232,8 @@
                       </div>
                     </div>
                   </li>
-              </ul>    
+              </ul>
+              </div>    
             </div>
         </div> 
     </div>

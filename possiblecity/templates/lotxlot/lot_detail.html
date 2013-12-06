@@ -57,44 +57,47 @@
     <div class="actions">
       <div class="row">
         <div class="col-md-6">
-          <ul class="list-group comment-list">
-            <li class="list-group-item"><h2>Comments <small>{% comment_count lot %}</small></h2></li>
-            {% comments lot as comments %}
-            {% for comment in comments %}
-                {% include "comments/_comment.html" %}
-            {% endfor %}
-            <li class="hidden comment-placeholder"></li>
-            <li class="list-group-item">
-              <div class="media"> 
-                <span class="pull-left profile-img">            
-                  <img class="media-object"  
-                  alt="{{ request.user }}" 
-                  {% if request.user.profile.photo %}
-                  src="{{ request.user.profile.photo.url }}" 
-                  {% else %}
-                  src="{% static 'img/profile.png' %}"
-                  {% endif %} 
-                  style="width: 64px; height: 64px;" />
-                </span>
-                <div class="media-body">
-                 {% comment_form lot as comment_form %}
-                  <form class="ajax"
-                      data-replace=".comment-placeholder" method="post" id="comment-form" action="{% comment_target lot %}">
-                    {% csrf_token %}
-                    {% form comment_form using "floppyforms/layouts/simple.html" %}
-                    <div class="form-actions">
-                      {% if request.user.is_authenticated %} 
-                      <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
-                      </button>
-                      {% else %}
-                        <a data-toggle="modal" data-target="#login-modal" href="#login-modal" href="#login-modal" class="btn btn-primary pull-right">{% trans "Login to comment" %}</a>
-                      {% endif %}
-                    </div>
-                  </form> 
+          <div class="panel" style="margin:0; padding:0;">
+            <ul class="list-group comment-list">
+              <li class="list-group-item"><h2>Comments <small>{% comment_count lot %}</small></h2></li>
+              {% comments lot as comments %}
+              {% for comment in comments %}
+                  {% include "comments/_comment.html" %}
+              {% endfor %}
+            </ul>
+            <ul class="list-group comment-form">
+              <li class="list-group-item">
+                <div class="media"> 
+                  <span class="pull-left profile-img">            
+                    <img class="media-object"  
+                    alt="{{ request.user }}" 
+                    {% if request.user.profile.photo %}
+                    src="{{ request.user.profile.photo.url }}" 
+                    {% else %}
+                    src="{% static 'img/profile.png' %}"
+                    {% endif %} 
+                    style="width: 64px; height: 64px;" />
+                  </span>
+                  <div class="media-body">
+                   {% comment_form lot as comment_form %}
+                    <form class="ajax"
+                        data-append=".comment-list" method="post" id="comment-form" action="{% comment_target lot %}">
+                      {% csrf_token %}
+                      {% form comment_form using "floppyforms/layouts/simple.html" %}
+                      <div class="form-actions">
+                        {% if request.user.is_authenticated %} 
+                        <button type="submit" class="btn btn-primary pull-right">{% trans "Add your comment" %}
+                        </button>
+                        {% else %}
+                          <a data-toggle="modal" data-target="#login-modal" href="#login-modal" href="#login-modal" class="btn btn-primary pull-right">{% trans "Login to comment" %}</a>
+                        {% endif %}
+                      </div>
+                    </form> 
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>    
+              </li>
+            </ul> 
+          </div>   
         </div>
         <div class="col-md-6">
           <div class="projects">
@@ -294,6 +297,11 @@
           debounceMoveend: true,
           duration: 0.5,
         });
+      });
+
+      $(document).on("eldarion-ajax:success", [data-prepend-inner], function(evt, $el, data) {
+        var $node = $($el.data("prepend-inner"));
+        $node.data(data.html + $node.html());
       });
 
   </script>
