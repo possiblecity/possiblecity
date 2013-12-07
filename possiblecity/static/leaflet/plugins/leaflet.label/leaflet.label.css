@@ -1,34 +1,53 @@
-.idea-label, .idea-label-selected {
+.idea-label {
+  background:transparent;
+  border:none;
+  top: -21px;
+  left: -5px;
+  text-align: center;
+  z-index: -1;
+}
+
+.idea-label i {
+  color: #cccc00;
+}
+
+
+.comment-label, .comment-label-selected {
   background:transparent;
   border:none;
   top: -35px;
-  left: -5px;
+  left: -2px;
   text-align: center;
   z-index: 6;
 }
 
-.idea-label a, .idea-label-selected a {
+.comment-label a, .comment-label-selected a {
   text-decoration:none;
 }
 
-.idea-label i, .idea-label h4, .idea-label-selected i {
+.comment-label i, .comment-label h4, .comment-label-selected i {
   color: #cd00cd;
   color: rgba(205, 0, 205, 0.7);
 
 }
 
-.idea-label-selected h4 {
+.comment-label-selected h4 {
   color: #fff;
 }
 
-.idea-label strong, .idea-label-selected strong {
+.comment-label strong, .comment-label-selected strong {
   color: #fff;
   position: absolute; 
   left: 14px; 
   top: 9px;
 }
 
-.idea-label:before, .idea-label-selected:before {
+.double-digit strong, .double-digit strong { 
+  left: 12px; 
+  top: 9px;
+}
+
+.comment-label:before, .comment-label-selected:before {
   border:none;
 }
 

@@ -1,6 +1,7 @@
 # lotxlot/views.py
 from django.contrib.gis.geos import Polygon
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.views.generic.base import View, TemplateView
 from django.views.generic.list import ListView
@@ -132,6 +133,23 @@ class LotIdeaApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     
     paginate_by = None
 
+class LotCommentApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows Lots with comments to be consumed as geojson.
+    """
+    queryset = Lot.objects.filter(comments__isnull=False)
+    serializer_class = LotPointSerializer
+    
+    paginate_by = None
+
+class LotActivityApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows Lots with comments to be consumed as geojson.
+    """
+    queryset = Lot.objects.filter(Q(comments__isnull=False) | Q(idea__isnull=False))
+    serializer_class = LotPointSerializer
+    
+    paginate_by = None
 
 
 

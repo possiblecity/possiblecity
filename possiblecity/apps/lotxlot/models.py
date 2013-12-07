@@ -4,11 +4,14 @@ import datetime
 import os
 
 from django.conf import settings
+from django.contrib.contenttypes import generic
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 from django.core.urlresolvers import reverse
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
+
+from apps.comments.models import Comment
 
 from .managers import LotQuerySet
 
@@ -23,6 +26,7 @@ class Lot(models.Model):
     country = models.CharField(max_length=255)
     code = models.CharField(max_length=10, blank=True)
 
+    # meta fields
     is_visible = models.BooleanField(db_index=True, default=True)
     is_vacant = models.BooleanField(db_index=True, default=False)
     is_public = models.BooleanField(db_index=True, default=False)
@@ -32,10 +36,18 @@ class Lot(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    comments = generic.GenericRelation(Comment)
+
     objects = models.GeoManager()
 
     class Meta:
         pass
+
+    @property 
+    def activity_count(self):
+        comments = self.comments.count()
+        ideas = self.idea_set.count()
+        return comments + ideas
 
     def get_sqft(self): 
         """ 

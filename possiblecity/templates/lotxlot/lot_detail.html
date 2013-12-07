@@ -236,11 +236,9 @@
 
       var lotLayer = L.geoJson(null, {
          style: parcelStyle
-      }).addTo(map);
-
+      }).addTo(map)
 
       L.marker(center, {riseOnHover: true}).addTo(map);
-          
 
       var lot_url = '{% url "api-lot-detail" lot.id %}' + '?format=json';
 

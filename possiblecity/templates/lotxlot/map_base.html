@@ -117,18 +117,25 @@
 
     map.fire('dataloading');
 
-    var ideas = L.geoJson.ajax(
-      '{% url "api-lot-idea-list" %}?format=json', {
+    var activity = L.geoJson.ajax(
+      '{% url "api-lot-activity-list" %}?format=json', {
         pointToLayer: function (feature, latlng) {
            var iconText = '<a href="' + Urls.lotxlot_lot_detail(feature.properties.id) +
                             '"><i class="icon-comment icon-3x"></i>' +
-                            '<strong> ' + 
-                             feature.properties.idea_set.length + '</strong></a>';
+                            '<strong>' + 
+                             feature.properties.activity_count + '</strong></a>';
            var labelText = '<strong>' + feature.properties.address + '</strong>';
-           var labelIcon = L.divIcon({className: 'idea-label', html: iconText,  iconSize:null});
+           if (feature.properties.activity_count > 10) {
+              labelClass = 'comment-label double-digit';
+           } else {
+              labelClass = 'comment-label';
+           }
+           var labelIcon = L.divIcon({className: labelClass, html: iconText,  iconSize:null});
            return L.marker(latlng, {riseOnHover: true, icon: labelIcon}).addTo(map);
         },
       })
+
+    activity.bringToBack();
 
     var neighborhoods = L.geoJson.ajax(
       '{% url "api-neighborhood-list" %}?format=json', {
