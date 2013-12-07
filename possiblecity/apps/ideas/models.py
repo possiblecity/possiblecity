@@ -76,7 +76,7 @@ class Idea(models.Model):
     enable_comments = models.BooleanField(default=True)
     moderate_comments = models.BooleanField(default=True)
     featured = models.BooleanField(default=False)
-    grounded = models.DateField("date grounded", blank=True, null=True)
+    grounded = models.DateTimeField("date grounded", blank=True, null=True)
     floated = models.DateTimeField("date floated", 
         blank=True, null=True)
 
