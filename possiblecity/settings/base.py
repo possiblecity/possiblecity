@@ -78,7 +78,7 @@ TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True    #internationalization machinery
 USE_L10N = True    #format dates, numbers and calendars according to locale
-USE_TZ = False
+USE_TZ = True
 
 
 
