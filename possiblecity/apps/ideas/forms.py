@@ -17,10 +17,11 @@ class IdeaVisualForm(forms.ModelForm):
 class SimpleIdeaForm(forms.ModelForm):
     class Meta:
         model = Idea
-        fields = ('tagline',)
+        fields = ('title', 'tagline', 'description')
         widgets = {
             'tagline': forms.Textarea(attrs={'rows': 2, 'class': 'form-control', 
-            	'placeholder': 'Add your comment to this lot'}),
+            	'placeholder': 'Add the tagline of your project'}),
+            'description': forms.Textarea(attrs={'rows': 8, 'class': 'form-control'}),
         }
 
 class AddIdeaForm(forms.Form):

@@ -21,6 +21,7 @@
 
 <div class="container">
     <div class="panel">
+        
 
         {% if form.is_multipart %}
         <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_create' %}">
@@ -30,8 +31,9 @@
         {{ form }}
         {% csrf_token %}
         <div class="form-actions">
-            <a href="{% url 'ideas_idea_list' %}" class="btn">{% trans "Cancel" %}</a>
+            
             <button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
+            <a href="{% url 'ideas_idea_list' %}" class="btn btn-default">{% trans "Cancel" %}</a>
         </div>
         </form>
 

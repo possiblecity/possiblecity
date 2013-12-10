@@ -53,7 +53,7 @@ class Idea(models.Model):
     title = models.CharField(max_length=100, blank=True)
     hashtag = models.CharField(max_length=40, blank=True)
     tagline = models.CharField(max_length=140,
-         help_text="A tweet-length summary of the idea.")
+         help_text="A tweet-length summary of the project.")
     description = models.TextField(blank=True)
     video = models.URLField(blank=True,
         help_text="The url of a YouTube or Vimeo video for this project.")
