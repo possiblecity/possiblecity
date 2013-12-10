@@ -60,7 +60,7 @@ class Idea(models.Model):
     website = models.URLField(blank=True,
           help_text="The website or Facebook Page for this project.")
 
-    lots = models.ManyToManyField(Lot, blank=True, null=True)
+    lots = models.ManyToManyField(Lot, blank=True, null=True, related_name="ideas")
 
     # Categorization
     tags = TaggableManager(blank=True)

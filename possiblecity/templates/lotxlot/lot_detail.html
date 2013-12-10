@@ -105,9 +105,9 @@
           <div class="projects">
             <ul class="list-group">
               <li class="list-group-item">
-                <h2>Projects <small>{{ lot.idea_set.count }}</small></h2>
+                <h2>Projects <small>{{ lot.ideas.count }}</small></h2>
               </li>
-               {% for idea in lot.idea_set.all %}
+               {% for idea in lot.ideas.all %}
                   <li class="list-group-item" id="idea-{{ idea.id }}">
                     <div class="media">           
                     {% if idea.get_lead_image %}
