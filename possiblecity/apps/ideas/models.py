@@ -68,7 +68,7 @@ class Idea(models.Model):
     # Site admin manages these fields
     user = models.ForeignKey(settings.AUTH_USER_MODEL, help_text="The owner of the idea.", blank=True, null=True)
     via = models.IntegerField(choices=VIA_CHOICES, default=VIA_WEB)
-    slug = models.SlugField(unique=True, editable=False)
+    slug = models.SlugField(unique=True, editable=True)
     status = models.IntegerField(choices=STATUS_CHOICES, 
         default=STATUS_PUBLISHED,
         help_text="Only ideas with published status \

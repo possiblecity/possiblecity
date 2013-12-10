@@ -30,8 +30,9 @@
         {{ form }}
         {% csrf_token %}
         <div class="form-actions">
-            <a href="{% url 'ideas_idea_list' %}" class="btn">{% trans "Cancel" %}</a>
+            
             <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+            <a href="{% url 'ideas_idea_list' %}" class="btn btn-default">{% trans "Cancel" %}</a>
         </div>
         </form>
 

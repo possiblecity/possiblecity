@@ -25,7 +25,7 @@ class IdeaCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-        self.object.slug = str(slugify(form.cleaned_data['tagline']))
+        # self.object.slug = str(slugify(form.cleaned_data['tagline']))
         self.object.featured = False
         self.object.enable_comments = True
         self.object.moderate_comments = False
