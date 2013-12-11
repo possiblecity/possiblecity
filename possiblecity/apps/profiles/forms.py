@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 
-class SimpleFilelInput(forms.ClearableFileInput):
+class SimpleFileInput(forms.ClearableFileInput):
     template_name = 'floppyforms/widgets/bootstrap_file.html'
 
 class TwitterTextInput(forms.TextInput):
@@ -31,8 +31,9 @@ class ProfileForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'class':'form-control'}),
             'phone': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Not publicly displayed'}),
             'website': forms.URLInput(attrs={'class':'form-control', 'placeholder': 'Include http://'}),
-            'twitter': TwitterTextInput(),
-            'photo': SimpleFilelInput(),
+            #'twitter': TwitterTextInput(),
+            'twitter': forms.TextInput(attrs={'class':'form-control'}),
+            'photo': SimpleFileInput(),
         }
         
 
