@@ -21,6 +21,11 @@ router.register(r'lots/activity', LotCommentApiViewSet, base_name='api-lot-activ
 router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name='api-neighborhood')
 
 
+
+import autocomplete_light
+# import every app/autocomplete_light_registry.py
+autocomplete_light.autodiscover()
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -68,6 +73,9 @@ urlpatterns = patterns("",
     url(r"^comments/", include("apps.comments.urls")),
 
     url(r"^activity/", include("actstream.urls")),
+
+    # autocomplete forms
+    url(r'^autocomplete/', include('autocomplete_light.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

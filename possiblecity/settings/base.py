@@ -294,6 +294,9 @@ DJANGO_APPS = (
     # Admin panel and documentation:
     'django.contrib.admin',
     # 'django.contrib.admindocs',
+
+    # autocomplete forms
+    'autocomplete_light'
 )
 
 THIRD_PARTY_APPS = (
