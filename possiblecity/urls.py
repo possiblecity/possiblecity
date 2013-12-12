@@ -24,9 +24,11 @@ router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name
 
 import autocomplete_light
 # import every app/autocomplete_light_registry.py
+# autocomplete_light.registry.autocomplete_model_base = LotAutocomplete
 autocomplete_light.autodiscover()
 
 from django.contrib import admin
+
 admin.autodiscover()
 
 

@@ -6,11 +6,10 @@ from django import forms
 
 import floppyforms as forms
 
-from .models import Idea, IdeaVisual, Lot
+from .models import Idea, IdeaVisual
 
 
 
-LOT_CHOICES = ('110914')
 
 
 # class SimpleFilelInput(forms.ClearableFileInput):
@@ -20,6 +19,7 @@ class IdeaForm(forms.ModelForm):
     class Meta:
         model = Idea
         fields = ('title', 'tagline', 'description', 'slug', 'lots')
+
         widgets = {
             'tagline': forms.Textarea(attrs={'rows': 2, 'class': 'form-control', 
                 'placeholder': 'Add the tagline of your project'}),
