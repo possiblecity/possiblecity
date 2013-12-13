@@ -1,4 +1,7 @@
 # urls.py
+import autocomplete_light
+# import every app/autocomplete_light_registry.py
+autocomplete_light.autodiscover()
 
 from django.conf import settings
 from django.conf.urls import patterns, include, url
@@ -20,15 +23,7 @@ router.register(r'lots/comments', LotCommentApiViewSet, base_name='api-lot-comme
 router.register(r'lots/activity', LotCommentApiViewSet, base_name='api-lot-activity')
 router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name='api-neighborhood')
 
-
-
-import autocomplete_light
-# import every app/autocomplete_light_registry.py
-# autocomplete_light.registry.autocomplete_model_base = LotAutocomplete
-autocomplete_light.autodiscover()
-
 from django.contrib import admin
-
 admin.autodiscover()
 
 

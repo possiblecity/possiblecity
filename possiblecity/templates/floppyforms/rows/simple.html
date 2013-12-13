@@ -1,4 +1,6 @@
-{% load floppyforms %}{% block row %}{% for field in fields %}
+{% load floppyforms %}
+{% block row %}
+{% for field in fields %}
 <div class="form-group{% if field.errors %} error has-error{% endif %}">
     {% with classes=field.css_classes label=label|default:field.label help_text=help_text|default:field.help_text %}
     {% block field %}

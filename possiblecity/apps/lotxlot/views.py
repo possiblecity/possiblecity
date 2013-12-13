@@ -102,7 +102,7 @@ class LotApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots to be consumed as geojson
     """
-    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('idea_set')
+    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('ideas')
     serializer_class = LotSerializer
     renderer_classes = (JSONRenderer, JSONPRenderer)
     filters = (InBBOXFilter,)
@@ -112,13 +112,13 @@ class PublicLotApiViewSet(LotApiViewSet):
     queryset = Lot.objects.filter(
            is_vacant=True).filter(
            is_visible=True).filter(
-           is_public=True).prefetch_related('idea_set')
+           is_public=True).prefetch_related('ideas')
 
 class PrivateLotApiViewSet(LotApiViewSet):
     queryset = Lot.objects.filter(
            is_vacant=True).filter(
            is_visible=True).filter(
-           is_public=False).prefetch_related('idea_set')
+           is_public=False).prefetch_related('ideas')
 
 class LotPointApiViewSet(LotApiViewSet):
     serializer_class = LotPointSerializer
@@ -128,7 +128,7 @@ class LotIdeaApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots with Ideas to be consumed as geojson.
     """
-    queryset = Lot.objects.filter(idea__isnull=False).prefetch_related('idea_set')
+    queryset = Lot.objects.filter(ideas__isnull=False).prefetch_related('ideas')
     serializer_class = LotPointSerializer
     
     paginate_by = None
@@ -146,7 +146,7 @@ class LotActivityApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots with comments to be consumed as geojson.
     """
-    queryset = Lot.objects.filter(Q(comments__isnull=False) | Q(idea__isnull=False))
+    queryset = Lot.objects.filter(Q(comments__isnull=False) | Q(ideas__isnull=False))
     serializer_class = LotPointSerializer
     
     paginate_by = None

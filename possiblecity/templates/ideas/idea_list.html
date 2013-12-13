@@ -13,8 +13,8 @@
     <header class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 col-12 margin-bottom-20">
-                    <h1>Projects Feed <small>{{ ideas.count }}</small></h1>
+                <div class="col-sm-4 col-md-12 margin-bottom-20">
+                    <h1>Projects <small>{{ ideas.count }}</small></h1>
                 </div>
                 <div class="col-sm-7  margin-bottom-20 ideas-page-neighborhoods-panel-md-devices">
                     <nav class="panel">
@@ -31,17 +31,17 @@
     </header>
     <section class="container">
         <div class="row">
-            <div class="col-lg-2 col-12">
+            <div class="col-md-3 col-12">
                 <div class="panel ideas-page-neighborhoods-panel-xs-lg-devices">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#">All Activity</a></li>
+                        <li class="active"><a href="#">All Projects</a></li>
                         <!--<li><a href="#">Kensington</a></li>
                         <li><a href="#">Point Breeze</a></li>
                         <li><a href="#">Tioga</a></li>-->
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-6 col-12">
+            <div class="col-md-6 col-12">
                 <div class="panel ideas-page-panel activity">
                     
                     <ul class="list-group">
@@ -54,7 +54,7 @@
                         </a>
                     {% else %}
                       <a class="pull-left" href="{{ idea.get_absolute_url }}">
-                        <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=128x128&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+                        <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=128x128&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
                       </a>
                     {% endif %}
                                     <div class="media-body">
@@ -70,11 +70,9 @@
                                         <p>{{ idea.tagline }}</p>
                                         <h6>
                                             <a href="{{ idea.user.profile.get_absolute_url }}">
-                                            {% if idea.user.first_name %}
+                                            
                                             {{ idea.user.profile.full_name }}
-                                            {% else %}
-                                             {{ idea.user.username }}
-                                            {% endif %}
+                                            
                                             </a> 
                                             Via {{ idea.get_via_display }}
                                             {% if idea.get_via_display == "Twitter" %}
@@ -100,7 +98,7 @@
                                                   Like
                                                 </a>
                                                 &nbsp;•&nbsp;
-                                                <i class="{% if idea|likes_count > 0 %}icon-heart{% else %}icon-heart-empty{% endif %}"></i>
+                                                <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}"></i>
                                                 <span class="count">
                                                     {{ idea|likes_count }}
                                                 </span>
@@ -113,9 +111,6 @@
                             {% empty %}
                         {% endfor %}        
                     </ul>
-
-
-
                 </div>
             </div>
         </div>

@@ -18,14 +18,14 @@ from ..models import Idea, IdeaVisual
 from ..forms import IdeaForm, IdeaVisualForm, SimpleIdeaForm
 
 class IdeaCreateView(LoginRequiredMixin, CreateView):
-    form_class = SimpleIdeaForm
+    form_class = IdeaForm
     template_name = 'ideas/idea_create.html'
     success_url = reverse_lazy('ideas_idea_list')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-        # self.object.slug = str(slugify(form.cleaned_data['tagline']))
+        self.object.slug = str(slugify(form.cleaned_data['tagline']))
         self.object.featured = False
         self.object.enable_comments = True
         self.object.moderate_comments = False

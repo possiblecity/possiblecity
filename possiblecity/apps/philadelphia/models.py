@@ -29,7 +29,7 @@ class Neighborhood(models.Model):
         qs = Lot.objects.filter(
             is_vacant=True).filter(
             coord__within=self.bounds).annotate(
-            num_ideas=Count('idea')).aggregate(Sum('num_ideas'))
+            num_ideas=Count('ideas')).aggregate(Sum('num_ideas'))
         return qs["num_ideas__sum"]
 
 

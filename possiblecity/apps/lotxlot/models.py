@@ -46,7 +46,7 @@ class Lot(models.Model):
     @property 
     def activity_count(self):
         comments = self.comments.count()
-        ideas = self.idea_set.count()
+        ideas = self.ideas.count()
         return comments + ideas
 
     def get_sqft(self): 
