@@ -15,7 +15,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from braces.views import LoginRequiredMixin
 
 from ..models import Idea, IdeaVisual
-from ..forms import IdeaForm, IdeaVisualForm, SimpleIdeaForm
+from ..forms import IdeaForm, IdeaVisualForm
 
 class IdeaCreateView(LoginRequiredMixin, CreateView):
     form_class = IdeaForm
@@ -31,7 +31,10 @@ class IdeaCreateView(LoginRequiredMixin, CreateView):
         self.object.moderate_comments = False
         self.object.status = Idea.STATUS_PUBLISHED
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+        if self.object.status == Idea.STATUS_PUBLISHED:
+            return HttpResponseRedirect(self.object.get_absolute_url())
+        else:
+            return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, *args, **kwargs):
         context_data = super(IdeaCreateView, self).get_context_data(
