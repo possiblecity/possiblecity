@@ -5,6 +5,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
 
+from actstream import action
+
+from .signals import commented
+
 class Comment(models.Model):
     """
     Open-ended user input.
@@ -43,3 +47,10 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.text[:50]
+
+
+def comment_action(sender, comment=None, target=None, **kwargs):
+    action.send(comment.user, verb=u'commented', action_object=comment, 
+            target=comment.content_object)
+
+commented.connect(comment_action)

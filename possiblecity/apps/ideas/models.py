@@ -8,14 +8,17 @@ from django.conf import settings
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.db.models import permalink
+from django.db.models.signals import post_save
 from django.utils.text import slugify
 
+from actstream import action
 from positions.fields import PositionField
 from taggit.managers import TaggableManager
 
 from apps.lotxlot.models import Lot
 
 from .managers import IdeaQuerySet
+from .signals import idea_created, idea_updated
 
 class Idea(models.Model):
     """
@@ -119,7 +122,10 @@ class Idea(models.Model):
         super(Idea, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return u'%s' % (self.tagline)
+        if self.title:
+            return u'%s' % (self.title)
+        else:
+            return u'%s' % (self.tagline)
        
     @permalink
     def get_absolute_url(self):
@@ -165,6 +171,7 @@ class IdeaVisual(models.Model):
                 
         return super(IdeaVisual, self).save(*args, **kwargs)
 
+
 class IdeaFile(models.Model):
     """
     A file related to a project
@@ -192,4 +199,14 @@ class IdeaFile(models.Model):
             return u'%s' % self.title
         else:
             return u'%s' % self.filename
+
+
+def idea_created_action(sender, idea=None, target=None, **kwargs):
+    action.send(idea.user, verb=u'created the project', target=idea)
+
+def idea_updated_action(sender, idea=None, target=None, **kwargs):
+    action.send(idea.user, verb=u'updated the project', target=idea)
+
+idea_created.connect(idea_created_action)
+idea_updated.connect(idea_updated_action)
 

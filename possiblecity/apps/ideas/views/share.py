@@ -16,6 +16,7 @@ from braces.views import LoginRequiredMixin
 
 from ..models import Idea, IdeaVisual
 from ..forms import IdeaForm, IdeaVisualForm, SimpleIdeaForm
+from ..signals import idea_created, idea_updated
 
 class IdeaCreateView(LoginRequiredMixin, CreateView):
     form_class = SimpleIdeaForm
@@ -25,12 +26,16 @@ class IdeaCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-        self.object.slug = str(slugify(form.cleaned_data['tagline']))
+        if self.object.title:
+            self.object.slug = str(slugify(form.cleaned_data['title']))
+        else:
+            self.object.slug = str(slugify(form.cleaned_data['tagline']))
         self.object.featured = False
         self.object.enable_comments = True
         self.object.moderate_comments = False
         self.object.status = Idea.STATUS_PUBLISHED
         self.object.save()
+        idea_created.send(sender=self, idea=self.object, request=self.request)
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, *args, **kwargs):
@@ -56,6 +61,7 @@ class IdeaUpdateView(LoginRequiredMixin, UpdateView):
         self.object = form.save(commit=False)
         self.object.status = Idea.STATUS_PUBLISHED
         self.object.save()
+        idea_updated.send(sender=self, idea=self.object, request=self.request)
         if self.object.status == Idea.STATUS_PUBLISHED:
             return HttpResponseRedirect(self.object.get_absolute_url())
         else:
