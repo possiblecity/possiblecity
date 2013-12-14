@@ -8,7 +8,6 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import SingleObjectMixin, DetailView
 from django.views.generic.edit import FormView
 
-
 from rest_framework import viewsets, filters
 from rest_framework.exceptions import APIException
 from rest_framework.renderers import JSONRenderer, JSONPRenderer
@@ -22,6 +21,8 @@ from .models import Lot
 from .utils import fetch_json
 
 from .serializers import LotSerializer, LotPointSerializer
+
+
 
 ########## Mixins ##########
 
@@ -40,7 +41,10 @@ class BBoxMixin(object):
             queryset = queryset.filter(coord__contained=poly)
         return queryset
 
+
+
 ########## HTML Views ##########
+
 class LotDisplay(DetailView):
     model = Lot
 
@@ -84,7 +88,7 @@ class LotDetailView(View):
         return view(request, *args, **kwargs)
 
 
-class LotIndexView(TemplateView):
+class LotMapView(TemplateView):
     template_name = 'lotxlot/map.html'
 
 
@@ -92,33 +96,27 @@ class LotListView(ListView):
     model = Lot
 
 class LotListVacantView(ListView):
-    queryset = Lot.objects.filter(is_vacant=True)
+    queryset = Lot.objects.visible.vacant()
+
 
 
 ########## API Views ##########
-
 
 class LotApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots to be consumed as geojson
     """
-    queryset = Lot.objects.filter(is_vacant=True).filter(is_visible=True).prefetch_related('ideas')
+    queryset = Lot.objects.visible().prefetch_related('ideas')
     serializer_class = LotSerializer
     renderer_classes = (JSONRenderer, JSONPRenderer)
     filters = (InBBOXFilter,)
     paginate_by = None
 
 class PublicLotApiViewSet(LotApiViewSet):
-    queryset = Lot.objects.filter(
-           is_vacant=True).filter(
-           is_visible=True).filter(
-           is_public=True).prefetch_related('ideas')
+    queryset = Lot.objects.visible().vacant().public().prefetch_related('ideas')
 
 class PrivateLotApiViewSet(LotApiViewSet):
-    queryset = Lot.objects.filter(
-           is_vacant=True).filter(
-           is_visible=True).filter(
-           is_public=False).prefetch_related('ideas')
+    queryset = Lot.objects.visible().vacant().private().prefetch_related('ideas')
 
 class LotPointApiViewSet(LotApiViewSet):
     serializer_class = LotPointSerializer
@@ -137,7 +135,7 @@ class LotCommentApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots with comments to be consumed as geojson.
     """
-    queryset = Lot.objects.filter(comments__isnull=False)
+    queryset = Lot.objects.visible().filter(comments__isnull=False)
     serializer_class = LotPointSerializer
     
     paginate_by = None
@@ -146,7 +144,7 @@ class LotActivityApiViewSet(BBoxMixin, viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows Lots with comments to be consumed as geojson.
     """
-    queryset = Lot.objects.filter(Q(comments__isnull=False) | Q(ideas__isnull=False))
+    queryset = Lot.objects.visible().filter(Q(comments__isnull=False) | Q(ideas__isnull=False))
     serializer_class = LotPointSerializer
     
     paginate_by = None
