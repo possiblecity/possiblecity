@@ -11,6 +11,7 @@ import autocomplete_light
 autocomplete_light.autodiscover()
 admin.autodiscover()
 
+# api machinery
 from rest_framework import routers
 from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, LotCommentApiViewSet
 from apps.philadelphia.views import NeighborhoodApiViewSet
@@ -26,13 +27,12 @@ router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name
 
 urlpatterns = patterns("",
     # admin
-    #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r"^admin/", include(admin.site.urls)),
 
-    # api
-    
+    # homepage
     url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
 
+    # api 
     url(r"^api/", include(router.urls)),
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 
@@ -42,6 +42,7 @@ urlpatterns = patterns("",
     # blog
     #url(r'^blog/', include('apps.text.urls')),
 
+    # social auth
     url(
         r"^account/social/connections/$",
         TemplateView.as_view(template_name="account/connections.html"),
@@ -52,7 +53,7 @@ urlpatterns = patterns("",
     url(r"^account/", include("account.urls")),   
     url(r"^people/", include("apps.profiles.urls")),   
 
-    #ideas
+    # ideas
     url(r"^projects/", include("apps.ideas.urls")),
 
     # places
