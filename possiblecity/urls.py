@@ -1,15 +1,15 @@
 # urls.py
-import autocomplete_light
-# import every app/autocomplete_light_registry.py
-autocomplete_light.autodiscover()
-
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
-from django.contrib.auth.decorators import login_required
+from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
+
+import autocomplete_light
+
+autocomplete_light.autodiscover()
+admin.autodiscover()
 
 from rest_framework import routers
 from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, LotCommentApiViewSet
@@ -22,9 +22,6 @@ router.register(r'lots/ideas', LotIdeaApiViewSet, base_name='api-lot-idea')
 router.register(r'lots/comments', LotCommentApiViewSet, base_name='api-lot-comment')
 router.register(r'lots/activity', LotCommentApiViewSet, base_name='api-lot-activity')
 router.register(r'philadelphia/neighborhoods', NeighborhoodApiViewSet, base_name='api-neighborhood')
-
-from django.contrib import admin
-admin.autodiscover()
 
 
 urlpatterns = patterns("",
