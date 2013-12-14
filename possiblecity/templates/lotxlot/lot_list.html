@@ -1,5 +1,6 @@
  {% extends "lotxlot/base.html" %}
 
+{% load humanize %}
 {% load staticfiles %}
 {% load pagination_tags %}
 {% load phileo_tags %}
@@ -10,15 +11,12 @@
 {% block head_title %}Lots{% endblock head_title %}
 
 {% block body %}
-{% autopaginate lot_list %}
+{% autopaginate lot_list 30 %}
     <header class="page-header">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 margin-bottom-20">
-                    <h1>Lots<small>{{ lot_list.count }}</small></h1>
-                    <nav class="pull-right">
-                    {% paginate %}
-                    </nav>
+                    <h1>Lots <small>{{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ paginator.count }}</small></h1>
                 </div>
             </div>
         </div>
@@ -34,15 +32,19 @@
                 </nav>
             </div>
             <div class="col-md-9 col-xs-12">
-                <div class="panel">
-                	<div class="row">
-                		{% for lot in lot_list %}
-                		<div class="col-md-3">
-                			<img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ lot.coord.y }},{{ lot.coord.x }}&sensor=false&fov=105">
-                		</div>
-                		{% endfor %}
-                	</div>
-                </div>
+            	<div class="row">
+            		{% for lot in lot_list %}
+            		<div class="col-md-4">
+                        <div class="panel">
+                			<a href="{{ lot.get_absolute_url }}" title="{{ lot.address }}"><img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ lot.coord.y }},{{ lot.coord.x }}&sensor=false&fov=105"></a>
+                            <h4>{{ lot.address }}</h4>
+                        </div>
+            		</div>
+            		{% endfor %}
+            	</div>
+                <nav class="pull-right">
+                    {% paginate %}
+                </nav>
             </div>
         </div>
         </div>

@@ -54,7 +54,7 @@ class Lot(models.Model):
 
     comments = generic.GenericRelation(Comment)
 
-    objects = PassThroughManager.for_queryset(LotQuerySet)()
+    objects = PassThroughManager.for_queryset_class(LotQuerySet)()
 
     class Meta:
         pass
