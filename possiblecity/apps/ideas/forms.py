@@ -12,10 +12,6 @@ class IdeaForm(forms.ModelForm):
         fields = ('title', 'hashtag', 'tagline', 'description', 'lots', 'website', 'video')
 
         widgets = {
-            'tagline': forms.Textarea(attrs={'rows': 2, 'class': 'form-control', 
-                    'placeholder': 'A tweet-length summary of your project'}),
-            'description': forms.Textarea(attrs={'rows': 8, 'class': 'form-control', 
-                    'placeholder': 'A longer description of you project'}),
             'lots': autocomplete_light.MultipleChoiceWidget('LotAutocomplete')
         }
 

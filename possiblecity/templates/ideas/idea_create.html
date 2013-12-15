@@ -1,14 +1,11 @@
 {% extends "ideas/base.html" %}
 {% load i18n %}
-
+{% load floppyforms %}
 
 {% block head_title %}Create a Project{% endblock head_title %}
 
 {% block body %}
-
-
-
-    <header class="page-header">
+<header class="page-header">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-12 margin-bottom-20">
@@ -17,21 +14,16 @@
             </div>
         </div>
 </header>
-
-
 <div class="container">
     <div class="panel">
-        
-
         {% if form.is_multipart %}
         <form method="POST" enctype="multipart/form-data" action="{% url 'ideas_idea_create' %}">
         {% else %}
         <form method="POST" action="{% url 'ideas_idea_create' %}">
         {% endif %}
-        {{ form }}
         {% csrf_token %}
-        <div class="form-actions">
-            
+        {{ form }}
+        <div class="form-actions"> 
             <button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
             <a href="{% url 'ideas_idea_list' %}" class="btn btn-default">{% trans "Cancel" %}</a>
         </div>
@@ -42,3 +34,6 @@
 </div>
 
 {% endblock body %}
+{% block extra_body %}
+{% include 'autocomplete_light/static.html' %}
+{% endblock extra_body %}

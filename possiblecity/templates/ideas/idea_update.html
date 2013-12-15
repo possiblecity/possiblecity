@@ -27,10 +27,9 @@
         {% else %}
         <form method="POST" action="{% url 'ideas_idea_update' idea.id %}">
         {% endif %}
-        {{ form }}
         {% csrf_token %}
-        <div class="form-actions">
-            
+        {{ form }}
+        <div class="form-actions">  
             <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
             <a href="{% url 'ideas_idea_list' %}" class="btn btn-default">{% trans "Cancel" %}</a>
         </div>
@@ -41,3 +40,6 @@
 </div>
 
 {% endblock body %}
+{% block extra_body %}
+{% include 'autocomplete_light/static.html' %}
+{% endblock extra_body %}

@@ -30,6 +30,7 @@ class ProfileDetailView(DetailView):
         if not profile.is_public:
             if self.profile_user != self.request.user:
                 profile = None
+                raise Http404
         
         return profile
 
