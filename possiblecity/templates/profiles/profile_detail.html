@@ -33,6 +33,14 @@ Profile for {{ profile.user.username }}
                         <p>
                         {% if request.user == profile.user %}
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
+                        {% else %}
+                         <a class="btn btn-info" href="{% follow_all_url profile.user %}?next={{ request.path }}">
+                            {% if request.user|is_following:profile.user %}
+                            <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
+                            {% else %}
+                            <i class="icon-plus"></i>&nbsp;&nbsp;Follow
+                            {% endif %}
+                        </a>
                         {% endif %}
                         </p>
                         <hr>
@@ -80,12 +88,58 @@ Profile for {{ profile.user.username }}
             <div class="panel-heading">
               <h5 class="">Activity</h5>
             </div>
-        
+            {{ activity }}
             <ul class="list-group">
+                {% for action in activity_stream %}
+                <li class="list-group-item">
+                    <div class="media">
+                        <span class="pull-left profile-img">
+                            <img class="media-object"  
+                                alt="" 
+                                {% if action.actor.profile.photo %}
+                                src="{% thumbnail action.actor.profile.photo '64x64' crop upscale %}" 
+                                {% else %}
+                                src="{% static 'img/profile.png' %}"
+                                width="64" height="64"
+                                {% endif %} 
+                                />
+                        </span>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                {% if action.actor.get_absolute_url %}
+                                    <a href="{{ action.actor.get_absolute_url }}">{{ action.actor.profile.full_name }}</a>
+                                {% else %}
+                                    <a href="{{ action.actor_url }}">{{ action.actor.profile.full_name }}</a>{% endif %}
+                                <small>{{ action.verb }}
+                                {% if action.action_object and action.target %}on{% endif %}</small>
+                                    {% if action.target %}
+                                        {% if action.target.get_absolute_url %}
+                                            <a href="{{ action.target.get_absolute_url }}">
+                                                {% if action.target.profile %}
+                                                    {{ action.target.profile.full_name }} 
+                                                {% else %}
+                                                    {{ action.target }} 
+                                                {% endif %} 
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ action.target_url }}">
+                                                {{ action.target }}
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                               </h4> 
+                               {% if action.action_object.text  %}
+                                    <p>{{ action.action_object.text }}</p>
+                               {% endif %}
+                               <h6>{{ action.timestamp|timesince }} {% trans "ago" %}</h6>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
                 {% for idea in profile.user.idea_set.all %}
                 <li id="example-idea-select" class="list-group-item">
                     <div class="media">
-                        <span class="pull-left profile-img"">
+                        <span class="pull-left profile-img">
                             <img class="media-object"  
                                 alt="{{ idea.user.username }}" 
                                 {% if idea.user.profile.photo %}

@@ -8,7 +8,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+from actstream.models import actor_stream, user_stream
 from braces.views import LoginRequiredMixin
+
 from .models import Profile
 from .forms import ProfileForm
 
@@ -24,9 +26,6 @@ class ProfileDetailView(DetailView):
         self.profile_user = get_object_or_404(User, username=self.username)
         profile = get_object_or_404(Profile, user=self.profile_user)
         
-        #if not self.request.user.has_perm("can_view", obj=profile):
-        #    raise Http404
-        
         if not profile.is_public:
             if self.profile_user != self.request.user:
                 profile = None
@@ -41,6 +40,16 @@ class ProfileDetailView(DetailView):
             "is_current": is_current,
             "profile_user": self.profile_user,
         }
+
+        if is_current:
+            ctx.update({
+                "activity_stream": user_stream(self.profile_user)
+            })
+        else:
+            ctx.update({
+                "activity_stream": actor_stream(self.profile_user)
+            })
+
         ctx.update(super(ProfileDetailView, self).get_context_data(**kwargs))
         
         return ctx
