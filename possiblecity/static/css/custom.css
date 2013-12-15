@@ -152,6 +152,12 @@ textarea {
 	height: 200px;
 }
 
+.has-error input[type="text"],
+.has-error input[type="password"],
+.has-error textarea {
+	border-color: #b94a48;
+}
+
 
 .panel {
 	
@@ -226,7 +232,7 @@ h5 {
 }
 
 .form-group {
-	margin-bottom: 5px;
+	margin-bottom: 20px;
 }
 
 .no-activity h4 {
