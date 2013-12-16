@@ -6,17 +6,19 @@ from actstream.models import Action
 
 from apps.ideas.models import Idea
 
-class HomepageView(ListView):    
-    queryset = Idea.objects.filter(featured=True)[:8]
-    context_object = "ideas"
+class HomepageView(ListView):
+    queryset = Idea.objects.filter(featured=True)
+    context_object = "featured_ideas"
     template_name = "homepage.html"
 
     def get_context_data(self, **kwargs):
-        
-        ctx = {
-            "activity_stream": Action.objects.filter(public=True)[:8]
+        # Call the base implementation first to get a context
+        context = super(HomepageView, self).get_context_data(**kwargs)
+        extra_context = {
+            'idea': Idea.objects.filter(featured=True).order_by('?')[0],
+            'activity_stream': Action.objects.filter(public=True)[:8]
         }
 
-        ctx.update(super(HomePageView, self).get_context_data(**kwargs))
+        context.update(extra_context)
         
-        return ctx
+        return context
