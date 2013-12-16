@@ -7,6 +7,7 @@
 {% load thumbnail %}
 
 {% load possiblecity_tags %}
+{% load lotxlot_tags %}
 
 {% block head_title %}Lots{% endblock head_title %}
 
@@ -15,8 +16,15 @@
     <header class="page-header">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 margin-bottom-20">
-                    <h1>Lots <small>{{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ paginator.count }}</small></h1>
+                <div class="col-md-6">
+                    <h1>Lots <small>{{ paginator.count|intcomma }}</small></h1>
+                </div>
+                <div class="col-md-6 pull-right">
+                    <p class="pull-right">Showing <strong>{{ page_obj.start_index }} - {{ page_obj.end_index }}
+                    </strong> of <strong>{{ paginator.count|intcomma }}</strong></p>
+                    <div class="pull-right">
+                    {% paginate %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,7 +44,8 @@
             		{% for lot in lot_list %}
             		<div class="col-md-4">
                         <div class="panel">
-                			<a href="{{ lot.get_absolute_url }}" title="{{ lot.address }}"><img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ lot.coord.y }},{{ lot.coord.x }}&sensor=false&fov=105"></a>
+                			<a href="{{ lot.get_absolute_url }}" title="{{ lot.address }}">
+                            <img src="{% google_image_url lot 500 500 %}" alt="Google image for {{ lot.address }}"></a>
                             <h4>{{ lot.address }}</h4>
                         </div>
             		</div>

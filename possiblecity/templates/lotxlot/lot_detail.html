@@ -9,6 +9,7 @@
   {% load possiblecity_tags %}
   {% load comment_tags %}
   {% load activity_tags %}
+  {% load lotxlot_tags %}
   
 
   {% block head_title %}Lot #{{ lot.id }} | {{ lot.address }} {% endblock head_title %}
@@ -49,7 +50,9 @@
       </header>
       <section class="lot-info row">
         <div class="col-md-6">
-            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+            <img class="lot-image-lot-detail-page" 
+                 src="{% google_image_url lot 800 400 %}"
+                 alt="Google Streetview for {{ lot.address }}">
         </div>
         <div class="col-md-6">
           {% include "philadelphia/_lot_data.html" %}
@@ -260,8 +263,6 @@
       var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
       var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
-      var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
-
       L.marker(center, {riseOnHover: true}).addTo(map);
 
       map.fire('dataload');
@@ -301,10 +302,6 @@
         });
       });
 
-      $(document).on("eldarion-ajax:success", [data-prepend-inner], function(evt, $el, data) {
-        var $node = $($el.data("prepend-inner"));
-        $node.data(data.html + $node.html());
-      });
 
   </script>
   {% endblock extra_map_js %}
