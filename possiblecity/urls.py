@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
+from apps.core.views import HomepageView
 from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, LotCommentApiViewSet
 from apps.philadelphia.views import NeighborhoodApiViewSet
 
@@ -32,7 +33,7 @@ urlpatterns = patterns("",
 
     # api
     
-    url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
+    url(r"^$", HomepageView.as_view(), name="home"),
 
     url(r"^api/", include(router.urls)),
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
