@@ -112,8 +112,9 @@
               <li class="list-group-item">
                 <h5>Location</h5>
                 <div class="row">
+                {% if idea.lots.all %}
                 {% for lot in idea.lots.all %}
-                  <div class="col-xs-6">
+                  <div class="col-xs-6"
                     <h4><i class="icon-map-marker"></i>
                         <a href="{% url 'lotxlot_lot_detail' lot.id %}">
                           {{ lot.address }}
@@ -124,6 +125,13 @@
                     </a>   
                   </div>           
                 {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                        <h4>Suggest a location</h4>
+                        <p>This project needs a home! Use the comments to suggest a location,
+                           or contact us at <a href="mailto:info@possiblecity.co">info@possiblecity.co</a></p>
+                    </div>
+                {% endif %}
               </li>
           </ul>
             {% endblock project %}
@@ -215,7 +223,7 @@
                         <img class="media-object"  
                         alt="{{ request.user }}" 
                         {% if request.user.profile.photo %}
-                        src="{{ request.user.profile.photo.url }}" 
+                        src="{% thumbnail request.user.profile.photo '200x200' crop upscale %}"
                         {% else %}
                         src="{% static 'img/profile.png' %}"
                         {% endif %} 
