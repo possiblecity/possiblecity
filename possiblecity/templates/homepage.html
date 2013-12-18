@@ -70,12 +70,7 @@
                 <div class="row latest-ideas-homepage">
                 {% for idea in latest_ideas %}
                     <div class="col-lg-3 col-md-4 col-xs-12  margin-bottom-20">
-                       <a href="{% if idea.get_lead_image %}
-                                {% url 'ideas_idea_detail' idea.slug %}
-                                {% else %}
-                                {% url 'lotxlot_lot_detail' idea.lots.all.0.id %}
-                                {% endif %}
-                               ">
+                       <a href="{% url 'ideas_idea_detail' idea.slug %} ">
                         <div class="idea">
                             {% if idea.get_lead_image %}
                             <img src="{% thumbnail idea.get_lead_image.file '500x500' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
@@ -103,17 +98,21 @@
                                  height="36"
                                  {% endif %}
                                  >
-                            {{ idea.user.profile.full_name}} <small>on</small>                            
-                            <br>
-                            {% for lot in idea.lots.all %}
-                            {% if forloop.first %}
-                            <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                                {{ lot.address }}</a>
-                                {% if forloop.revcounter0 %} 
-                                <small>(+ {{ forloop.revcounter0 }} more)</small>
-                                {% endif %}
-                            {% endif %} 
-                            {% endfor %}
+                            {{ idea.user.profile.full_name}}
+                            {% if idea.lots.all %}
+                                <small>on</small>                            
+                                {% for lot in idea.lots.all %}
+                                <br>
+                                {% if forloop.first %}
+                                    <a href="{% url 'lotxlot_lot_detail' lot.id %}">
+                                    {{ lot.address }}
+                                    </a>
+                                    {% if forloop.revcounter0 %} 
+                                    <small>(+ {{ forloop.revcounter0 }} more)</small>
+                                    {% endif %}
+                               {% endif %} 
+                               {% endfor %}
+                            {% endif %}
                         </h4>
                         <h6 style="clear:both">Via {{ idea.get_via_display }}
                         {% if idea.get_via_display == "Twitter" %}
