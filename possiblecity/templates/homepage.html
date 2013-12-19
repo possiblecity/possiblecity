@@ -62,8 +62,7 @@
                              {% endif %}
                         </div>
                         </a>
-                        <h3>{{ idea.title }}</h3>
-                        <p>{{ idea.tagline }}</p>
+                        <h3><a href="{% url 'ideas_idea_detail' idea.slug %}">{{ idea.title }}</a></h3>
                         <div class="meta">
                         <h4 class="media-heading">
                             <img class="profile-pic"
