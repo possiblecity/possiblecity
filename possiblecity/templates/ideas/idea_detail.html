@@ -20,7 +20,14 @@
             <div class="col-md-12 margin-bottom-20">
                 <h1>{{ idea.title }}
                     <span class="pull-right">
-                    <a class="btn btn-info" href="{% follow_all_url idea %}?next={{ request.path }}">
+                    <a class="follow-button btn btn-info" 
+                       data-toggle="tooltip" 
+                       {% if request.user|is_following:idea %}
+                          title="Unfollow this idea's activity"
+                       {% else %}
+                          title="Follow this idea's activity on your profile page"
+                       {% endif %}
+                       href="{% follow_all_url idea %}?next={{ request.path }}">
                     {% if request.user|is_following:idea %}
                         <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
                     {% else %}
@@ -261,3 +268,8 @@
     </div>
 </section>
 {% endblock body %}
+{% block extra_body %}
+<script>
+$('.follow-button').tooltip();
+</script>
+{% endblock extra_body %}

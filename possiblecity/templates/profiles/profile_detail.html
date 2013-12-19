@@ -32,9 +32,16 @@ Profile for {{ profile.user.username }}
                         <h3>{{ profile.full_name}}</h3>
                         <p>
                         {% if request.user == profile.user %}
-                        <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
+                        <a class="btn btn-primary edit-profile-lg-devices" 
+                           data-toggle="tooltip" 
+                           {% if request.user|is_following:user %}
+                             title="Unfollow this agent's activity"
+                           {% else %}
+                             title="Follow this agent's activity on your profile page"
+                           {% endif %}
+                           href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
                         {% else %}
-                         <a class="btn btn-info" href="{% follow_url profile.user %}?next={{ request.path }}">
+                         <a class="follow-button btn btn-info" href="{% follow_url profile.user %}?next={{ request.path }}">
                             {% if request.user|is_following:profile.user %}
                             <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
                             {% else %}
@@ -175,3 +182,8 @@ Profile for {{ profile.user.username }}
     </section> 
     
 {% endblock %}
+{% block extra_body %}
+<script>
+$('.follow-button').tooltip();
+</script>
+{% endblock extra_body %}
