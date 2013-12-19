@@ -51,7 +51,7 @@
                 <h2 class="margin-bottom-20">Featured Projects</h2>
                 <div class="row latest-ideas-homepage">
                 {% for idea in featured_ideas %}
-                    <div class="col-lg-4 col-md-4 col-xs-12  margin-bottom-20">
+                    <div class="col-lg-4 col-md-6 col-xs-12  margin-bottom-20">
                        <a href="{% url 'ideas_idea_detail' idea.slug %}">
                         <div class="idea">
                             <img src="{% thumbnail idea.get_lead_image.file '400x226' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
