@@ -26,6 +26,13 @@
           <div class="lot-detail-page-container-icons">
             <a href="#" title="Minimize" class=" lot-control minmax hidden-xs icon-angle-down pull-right"></a> 
             <span class="btn-favorite pull-right">
+            <a class="btn btn-info" href="{% follow_all_url lot %}?next={{ request.path }}">
+                    {% if request.user|is_following:lot %}
+                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
+                    {% else %}
+                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow
+                    {% endif %}
+                    </a>
              {% if request.user.is_authenticated %}
                       {% phileo_widget_brief request.user lot %}
                       {% else %}

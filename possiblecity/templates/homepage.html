@@ -54,7 +54,7 @@
                     <div class="col-lg-4 col-md-4 col-xs-12  margin-bottom-20">
                        <a href="{% url 'ideas_idea_detail' idea.slug %}">
                         <div class="idea">
-                            <img src="{% thumbnail idea.get_lead_image.file '400x300' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
+                            <img src="{% thumbnail idea.get_lead_image.file '400x226' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
                              {% if idea.grounded %}
                              <span class="idea-phase">Active</span>
                              {% else %}
@@ -69,7 +69,7 @@
                             <img class="profile-pic"
                                  alt="{{ idea.user.profile.full_name }}"
                                  {% if idea.user.profile.photo %} 
-                                 src=""
+                                 src="{% thumbnail idea.user.profile.photo '200x200' crop="smart" %}"
                                  {% else %}
                                  src="{% static 'img/profile.png' %}"
                                  height="36"
@@ -126,7 +126,52 @@
           <div class="row">
             <div class="col-lg-12 col-12">
                 <h2 class="margin-bottom-20">Latest Activity</h2>
-                {{ activity_stream }}
+                <div class="row">
+                {% for action in activity_stream %}
+                    <div class="col-lg-4 col-md-6 margin-bottom-20">
+                        <div class="media margin-bottom-20">
+                            <span class="pull-left profile-img">
+                                <img class="media-object"  
+                                    alt="" 
+                                    {% if action.actor.profile.photo %}
+                                    src="{% thumbnail action.actor.profile.photo '64x64' crop upscale %}" 
+                                    {% else %}
+                                    src="{% static 'img/profile.png' %}"
+                                    width="64" height="64"
+                                    {% endif %} 
+                                    />
+                            </span>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    {% if action.actor.get_absolute_url %}
+                                        <a href="{{ action.actor.get_absolute_url }}">{{ action.actor.profile.full_name }}</a>
+                                    {% else %}
+                                        <a href="{{ action.actor_url }}">{{ action.actor.profile.full_name }}</a>
+                                    {% endif %}
+                                    <small>{{ action.verb }}
+                                    {% if action.action_object and action.target %}on{% endif %}</small>
+                                    {% if action.target %}
+                                        {% if action.target.get_absolute_url %}
+                                            <a href="{{ action.target.get_absolute_url }}">
+                                                {% if action.target.profile.full_name %}
+                                                    {{ action.target.profile.full_name }} 
+                                                {% else %}
+                                                    {{ action.target }} 
+                                                {% endif %} 
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ action.target_url }}">
+                                                {{ action.target }}
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                   </h4> 
+                                   <h6>{{ action.timestamp|timesince }} {% trans "ago" %}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                  </div>
             </div>
           </div>
       </div>

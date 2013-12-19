@@ -34,7 +34,7 @@ Profile for {{ profile.user.username }}
                         {% if request.user == profile.user %}
                         <a class="btn btn-primary edit-profile-lg-devices" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
                         {% else %}
-                         <a class="btn btn-info" href="{% follow_all_url profile.user %}?next={{ request.path }}">
+                         <a class="btn btn-info" href="{% follow_url profile.user %}?next={{ request.path }}">
                             {% if request.user|is_following:profile.user %}
                             <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
                             {% else %}
@@ -108,33 +108,67 @@ Profile for {{ profile.user.username }}
                                     {% if action.actor.get_absolute_url %}
                                         <a href="{{ action.actor.get_absolute_url }}">{{ action.actor.profile.full_name }}</a>
                                     {% else %}
-                                        <a href="{{ action.actor_url }}">{{ action.actor.profile.full_name }}</a>{% endif %}
+                                        <a href="{{ action.actor_url }}">{{ action.actor.profile.full_name }}</a>
+                                    {% endif %}
                                     <small>{{ action.verb }}
                                     {% if action.action_object and action.target %}on{% endif %}</small>
-                                        {% if action.target %}
-                                            {% if action.target.get_absolute_url %}
-                                                <a href="{{ action.target.get_absolute_url }}">
-                                                    {% if action.target.profile %}
-                                                        {{ action.target.profile.full_name }} 
-                                                    {% else %}
-                                                        {{ action.target }} 
-                                                    {% endif %} 
-                                                </a>
-                                            {% else %}
-                                                <a href="{{ action.target_url }}">
-                                                    {{ action.target }}
-                                                </a>
-                                            {% endif %}
+                                    {% if action.target %}
+                                        {% if action.target.get_absolute_url %}
+                                            <a href="{{ action.target.get_absolute_url }}">
+                                                {% if action.target.profile.full_name %}
+                                                    {{ action.target.profile.full_name }} 
+                                                {% else %}
+                                                    {{ action.target }} 
+                                                {% endif %} 
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ action.target_url }}">
+                                                {{ action.target }}
+                                            </a>
                                         {% endif %}
+                                    {% endif %}
                                    </h4> 
                                    {% if action.action_object.text  %}
                                         <p>{{ action.action_object.text }}</p>
+                                   {% elif action.target.tagline %}
+                                        <p>{{ action.target.tagline }}</p>
+                                   {% elif action.target.profile.about %}
+                                        <p>{{ action.target.first_name }} wants to {{ action.target.profile.about }}</p>
+                                   {% elif action.target.text  %}
+                                        <p>{{ action.target.text }}</p>
+                                   {% elif action.target.bounds %}
+                                        <p>{{ action.target.get_sqft|floatformat:0 }} square feet, 
+                                        {% if action.target.is_public %}Public{% else %}Private{% endif %},
+                                        {% if action.target.is_vacant %}Vacant{% else %}Occupied{% endif %}
+                                        </p>
                                    {% endif %}
                                    <h6>{{ action.timestamp|timesince }} {% trans "ago" %}</h6>
                             </div>
                         </div>
                     </li>
                     {% endfor %}
+                    <li class="list-group-item">
+                        <div class="media">
+                            <span class="pull-left profile-img">
+                                <img class="media-object"  
+                                    alt="{{ idea.user.username }}" 
+                                    {% if profile.photo %}
+                                    src="{% thumbnail profile.photo '64x64' crop upscale %}" 
+                                    {% else %}
+                                    src="{% static 'img/profile.png' %}"
+                                    width="64" height="64"
+                                    {% endif %} 
+                                    />
+                        </span>
+                      <div class="media-body">
+                        <h4 class="media-heading">
+                            {{ profile.full_name }}
+                         </h4>
+                        <p>{{ profile.full_name}} joined Possible City.</p>
+                        <h6>{{ profile.user.date_joined }}</h6>
+                      </div>
+                    </div>
+                </li>
                 </ul>
             </div>
         </div>

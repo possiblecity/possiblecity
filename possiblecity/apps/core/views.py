@@ -13,9 +13,9 @@ class HomepageView(TemplateView):
         # Call the base implementation first to get a context
         context = super(HomepageView, self).get_context_data(**kwargs)
         extra_context = {
-            'featured_ideas': Idea.objects.filter(featured=True)[:3],
+            'featured_ideas': Idea.objects.filter(featured=True)[:6],
             'idea': Idea.objects.filter(featured=True).order_by('?')[0],
-            'activity_stream': Action.objects.filter(public=True)[:8]
+            'activity_stream': Action.objects.filter(public=True)[:9]
         }
 
         context.update(extra_context)
