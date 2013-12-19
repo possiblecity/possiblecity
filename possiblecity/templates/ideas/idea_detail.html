@@ -20,6 +20,13 @@
             <div class="col-md-12 margin-bottom-20">
                 <h1>{{ idea.title }}
                     <span class="pull-right">
+                    <a class="btn btn-info" href="{% follow_all_url idea %}?next={{ request.path }}">
+                    {% if request.user|is_following:idea %}
+                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
+                    {% else %}
+                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow
+                    {% endif %}
+                    </a>
                     {% if request.user.is_authenticated %}
                     {% phileo_widget_brief request.user idea %}
                     {% else %}

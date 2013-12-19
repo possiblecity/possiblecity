@@ -48,8 +48,9 @@ class Lot(models.Model):
         comments = self.comments.count()
         ideas = self.ideas.count()
         return comments + ideas
-
-    def get_sqft(self): 
+        
+        
+    def get_sqft(self):
         """ 
         Returns the area in sq ft. 
         """ 

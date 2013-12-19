@@ -8,10 +8,10 @@ from .views.share import IdeaCreateView, IdeaUpdateView
 
 urlpatterns = patterns('',
     # user input of ideas
-    url(r'^add/$',
+    url(r'^create/$',
         IdeaCreateView.as_view(),
         name='ideas_idea_create'),
-    url(r'^/update/(?P<pk>[\w-]+)$',
+    url(r'^update/(?P<pk>[\w-]+)$',
         IdeaUpdateView.as_view(),
         name='ideas_idea_update'),
 

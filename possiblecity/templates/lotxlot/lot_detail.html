@@ -9,6 +9,7 @@
   {% load possiblecity_tags %}
   {% load comment_tags %}
   {% load activity_tags %}
+  {% load lotxlot_tags %}
   
 
   {% block head_title %}Lot #{{ lot.id }} | {{ lot.address }} {% endblock head_title %}
@@ -25,6 +26,13 @@
           <div class="lot-detail-page-container-icons">
             <a href="#" title="Minimize" class=" lot-control minmax hidden-xs icon-angle-down pull-right"></a> 
             <span class="btn-favorite pull-right">
+            <a class="btn btn-info" href="{% follow_all_url lot %}?next={{ request.path }}">
+                    {% if request.user|is_following:lot %}
+                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
+                    {% else %}
+                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow
+                    {% endif %}
+                    </a>
              {% if request.user.is_authenticated %}
                       {% phileo_widget_brief request.user lot %}
                       {% else %}
@@ -49,7 +57,9 @@
       </header>
       <section class="lot-info row">
         <div class="col-md-6">
-            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+            <img class="lot-image-lot-detail-page" 
+                 src="{% google_image_url lot 800 400 %}"
+                 alt="Google Streetview for {{ lot.address }}">
         </div>
         <div class="col-md-6">
           {% include "philadelphia/_lot_data.html" %}

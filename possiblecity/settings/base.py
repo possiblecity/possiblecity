@@ -199,6 +199,10 @@ MIDDLEWARE_CLASSES = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = 'urls'
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/people/%s/" % u.username,
+}
+
 
 #==============================================================================
 # Messages
@@ -466,6 +470,14 @@ ACTSTREAM_SETTINGS = {
     'MODELS': ('auth.user', 'lotxlot.lot', 'ideas.idea', 'phileo.like', 'comments.comment'),
     'USE_PREFETCH': True,
 }
+
+
+#==============================================================================
+# API keys 
+#==============================================================================
+
+
+GOOGLE_MAPS_API_KEY = "AIzaSyAhBMUYbgpbsTpH8AnAfQwPQfqxhCoD5rM"
 
 
 #==============================================================================

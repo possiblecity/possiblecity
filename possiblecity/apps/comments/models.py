@@ -3,7 +3,12 @@ import datetime
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 from django.db import models
+
+from actstream import action
+
+from .signals import commented
 
 class Comment(models.Model):
     """
@@ -42,4 +47,23 @@ class Comment(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
-        return u'%s' % self.text[:50]
+        return u'%s...' % self.text[:50]
+
+    def get_content_object_url(self):
+        """
+        Get a URL suitable for redirecting to the content object.
+        """
+        return reverse(
+            "comments-url-redirect",
+            args=(self.content_type_id, self.object_id)
+        )
+
+    def get_absolute_url(self, anchor_pattern="#comment-%(id)s"):
+        return self.get_content_object_url() + (anchor_pattern % self.__dict__)
+
+
+def comment_action(sender, comment=None, target=None, **kwargs):
+    action.send(comment.user, verb=u'commented', action_object=comment, 
+            target=comment.content_object)
+
+commented.connect(comment_action)
