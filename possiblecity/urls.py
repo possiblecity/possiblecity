@@ -31,10 +31,10 @@ urlpatterns = patterns("",
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r"^admin/", include(admin.site.urls)),
 
-    # api
-    
+    # homepage
     url(r"^$", HomepageView.as_view(), name="home"),
 
+    # api
     url(r"^api/", include(router.urls)),
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 
@@ -44,6 +44,7 @@ urlpatterns = patterns("",
     # blog
     #url(r'^blog/', include('apps.text.urls')),
 
+    # people
     url(
         r"^account/social/connections/$",
         TemplateView.as_view(template_name="account/connections.html"),
@@ -54,7 +55,7 @@ urlpatterns = patterns("",
     url(r"^account/", include("account.urls")),   
     url(r"^people/", include("apps.profiles.urls")),   
 
-    #ideas
+    # ideas
     url(r"^projects/", include("apps.ideas.urls")),
 
     # places
@@ -69,6 +70,10 @@ urlpatterns = patterns("",
     url(r"^comments/", include("apps.comments.urls")),
 
     url(r"^activity/", include("actstream.urls")),
+
+    url(r"^notifications/", include("notification.urls")),
+
+   
 )
 
 urlpatterns += staticfiles_urlpatterns()
