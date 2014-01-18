@@ -14,35 +14,44 @@
 {% block head_title %}{{ idea.tagline }}{% endblock %}
 
 {% block body %}
+{% get_follows idea as follows %}
+{% who_likes idea as idea_likes %}
 <header class="page-header">
     <div class="container">
         <div class="row">
             <div class="col-md-12 margin-bottom-20">
                 <h1>{{ idea.title }}
                     <span class="pull-right">
-                    <a class="follow-button btn btn-info" 
-                       data-toggle="tooltip" 
-                       {% if request.user|is_following:idea %}
-                          title="Unfollow this idea's activity"
-                       {% else %}
-                          title="Follow this idea's activity on your profile page"
-                       {% endif %}
-                       href="{% follow_all_url idea %}?next={{ request.path }}">
-                    {% if request.user|is_following:idea %}
-                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
-                    {% else %}
-                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow
-                    {% endif %}
-                    </a>
+                      <a class="follow-button btn btn-info" 
+                         data-toggle="tooltip" 
+                         {% if request.user|is_following:idea %}
+                            title="Unfollow this idea's activity"
+                         {% else %}
+                            title="Follow this idea's activity on your profile page"
+                         {% endif %}
+                         href="{% follow_all_url idea %}?next={{ request.path }}">
+                      {% if request.user|is_following:idea %}
+                          <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following&nbsp;&nbsp;
+                      {% else %}
+                          <i class="icon-plus"></i>&nbsp;&nbsp;Follow&nbsp;&nbsp;
+                      {% endif %}
+                      {% if follows.count %}
+                         <span class="count badge">
+                           {{ follows.count }}
+                         </span>
+                      {% endif %}
+                      </a>
                     {% if request.user.is_authenticated %}
                     {% phileo_widget_brief request.user idea %}
                     {% else %}
                     <span class="phileo active">
                         <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-info" >
                             <i class="icon-star-empty">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
+                            {% if idea_likes.count %}
                             <span class="count badge">
-                            {{ idea|likes_count }}
+                            {{ idea_likes.count }}
                             </span>
+                            {% endif %}
                         </a>
                     </span>
                     {% endif %}
@@ -189,10 +198,9 @@
                    {% if idea.grounded %}<br>Grounded on {{ idea.grounded }}{% endif %}</p>
                 </div>
             </li>
-            {% get_follows idea as follows %}
             {% if follows %}
             <li class="list-group-item">
-              <h5>Following</h5>
+              <h5>Following <small>{{ follows.count }}</small></h5>
               <div class="row">
               {% for follow in follows %}
                   <div class="col-md-2 col-xs-3">
@@ -216,10 +224,9 @@
               </div>
             </li>
             {% endif %}
-            {% who_likes idea as idea_likes %}
             {% if idea_likes %}
             <li class="list-group-item">
-              <h5>Favorited</h5>
+              <h5>Favorited <small>{{ idea_likes.count }}</small></h5>
               <div class="row">
               {% for like in idea_likes %}
                   <div class="col-md-2 col-xs-3">

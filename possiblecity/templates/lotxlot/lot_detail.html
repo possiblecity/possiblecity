@@ -19,6 +19,8 @@
   {% endblock map %}
 
  {% block body %}
+ {% get_follows lot as follows %}
+ {% who_likes lot as lot_likes %}
   <div class="container lot-detail">
     <div class="panel">
       <header class="lot-header row">
@@ -35,9 +37,14 @@
                {% endif %}
                href="{% follow_all_url lot %}?next={{ request.path }}">
                     {% if request.user|is_following:lot %}
-                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
+                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following&nbsp;&nbsp;
                     {% else %}
-                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow
+                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow&nbsp;&nbsp;
+                    {% endif %}
+                    {% if follows.count %}
+                    <span class="count badge">
+                            {{ follows.count }}
+                            </span>
                     {% endif %}
                     </a>
              {% if request.user.is_authenticated %}
@@ -46,9 +53,11 @@
                       <span class="phileo active">
                           <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-info">
                               <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
+                              {% if lot_likes.count %}
                               <span class="count badge">
-                              {{ lot|likes_count }}
+                              {{ lot_likes.count }}
                           </span>
+                          {% endif %}
                           </a>
                       </span>                    
                       {% endif %}
@@ -200,7 +209,6 @@
                   {% endfor %}        
                 </ul>
             </div>
-            {% get_follows lot as follows %}
             {% who_likes lot as lot_likes %}
             {% if lot_likes or follows %}
             <div class="people">
@@ -210,7 +218,7 @@
                 </li>
                 {% if follows %}
                 <li class="list-group-item">
-                  <h5>Following <small>{{ lot|likes_count }}</small></h5>
+                  <h5>Following <small>{{ follows.count }}</small></h5>
                   <div class="row">
                   {% for follow in follows %}
                     <div class="col-md-2 col-xs-4 col-sm-2">
@@ -218,7 +226,7 @@
                         <a href="{% url 'profiles_profile_detail' follow.user.username %}">
                         {% endif %}
                         <img class="profile-pic"
-                        {% if like.sender.profile.photo %}
+                        {% if follow.user.profile.photo %}
                             src="{% thumbnail follow.user.profile.photo '200x200' crop upscale %}"
                         {% else %}
                             src="{% static 'img/profile.png' %}"
