@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
+
 from apps.core.views import HomepageView
 from apps.lotxlot.views import (LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, 
     LotCommentApiViewSet, VacantLotApiViewSet, VacantLotPointApiViewSet)
