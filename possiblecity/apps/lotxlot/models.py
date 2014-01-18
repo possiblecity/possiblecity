@@ -34,7 +34,7 @@ class Lot(models.Model):
     # spatial fields
     coord = models.PointField(srid=4326, blank=True)
     bounds = models.MultiPolygonField(srid=4326, blank=True)
-    area = models.FloatField(db_index=True, blank=True)
+    #area = models.FloatField(db_index=True, blank=True)
 
     address = models.CharField(db_index=True, max_length=255, blank=True)
     city = models.CharField(max_length=255)
