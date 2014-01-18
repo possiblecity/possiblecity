@@ -449,7 +449,10 @@ body.about .navbar-nav > .nav-about a {
 }
 
 .leaflet-control-container {
-	position: relative;
+}
+
+div.leaflet-top {
+	top: 50px;
 }
 
 #map.minimize {
