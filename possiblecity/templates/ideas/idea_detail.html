@@ -20,7 +20,14 @@
             <div class="col-md-12 margin-bottom-20">
                 <h1>{{ idea.title }}
                     <span class="pull-right">
-                    <a class="btn btn-info" href="{% follow_all_url idea %}?next={{ request.path }}">
+                    <a class="follow-button btn btn-info" 
+                       data-toggle="tooltip" 
+                       {% if request.user|is_following:idea %}
+                          title="Unfollow this idea's activity"
+                       {% else %}
+                          title="Follow this idea's activity on your profile page"
+                       {% endif %}
+                       href="{% follow_all_url idea %}?next={{ request.path }}">
                     {% if request.user|is_following:idea %}
                         <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
                     {% else %}
@@ -117,10 +124,11 @@
                 <h2>Project Resources</h2>
               </li>
               <li class="list-group-item">
-                <h5>Location</h5>
+                <h5>Proposed location</h5>
                 <div class="row">
+                {% if idea.lots.all %}
                 {% for lot in idea.lots.all %}
-                  <div class="col-xs-6">
+                  <div class="col-xs-6"
                     <h4><i class="icon-map-marker"></i>
                         <a href="{% url 'lotxlot_lot_detail' lot.id %}">
                           {{ lot.address }}
@@ -131,6 +139,13 @@
                     </a>   
                   </div>           
                 {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                        <h4>Suggest a location</h4>
+                        <p>This project needs a home! Use the comments to suggest a location,
+                           or contact us at <a href="mailto:info@possiblecity.co">info@possiblecity.co</a></p>
+                    </div>
+                {% endif %}
               </li>
           </ul>
             {% endblock project %}
@@ -222,7 +237,7 @@
                         <img class="media-object"  
                         alt="{{ request.user }}" 
                         {% if request.user.profile.photo %}
-                        src="{{ request.user.profile.photo.url }}" 
+                        src="{% thumbnail request.user.profile.photo '200x200' crop upscale %}"
                         {% else %}
                         src="{% static 'img/profile.png' %}"
                         {% endif %} 
@@ -255,12 +270,6 @@
 {% endblock body %}
 {% block extra_body %}
 <script>
-$(function () {
-    $("#follow_button, #unfollow_button").click(function () {
-        $.post($(this).attr("href"), {});
-        $(this).parent().find("#follow_button, #unfollow_button").toggle();
-        return false
-    });
-});
+$('.follow-button').tooltip();
 </script>
 {% endblock extra_body %}

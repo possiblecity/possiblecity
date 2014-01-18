@@ -1,48 +1,23 @@
 # possiblecity/views.py 
-# Views and Mixins for use across the project
 
-from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.core.exceptions import ImproperlyConfigured
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.http import (HttpResponseForbidden, HttpResponseRedirect,
-    HttpResponse)
-from django.utils.http import urlquote
+from django.views.generic import TemplateView
 
+from actstream.models import Action
 
-class LoginRequiredMixin(object):
-    """
-    View mixin which verifies that the user has authenticated.
+from apps.ideas.models import Idea
 
-    NOTE:
-        This should be the left-most mixin of a view.
-    """
+class HomepageView(TemplateView):
+    template_name = "homepage.html"
 
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(HomepageView, self).get_context_data(**kwargs)
+        extra_context = {
+            'featured_ideas': Idea.objects.filter(featured=True)[:3],
+            'idea': Idea.objects.filter(featured=True).order_by('?')[0],
+            'activity_stream': Action.objects.filter(public=True)[:6]
+        }
 
-class SuperuserRequiredMixin(object):
-    """
-    Mixin allows you to require a user with `is_superuser` set to True.
-    """
-    login_url = settings.LOGIN_URL  # LOGIN_URL from project settings
-    raise_exception = False  # Default whether to raise an exception to none
-    redirect_field_name = REDIRECT_FIELD_NAME  # Set by django.contrib.auth
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_superuser:  # If the user is a standard user,
-            if self.raise_exception:  # *and* if an exception was desired
-                return HttpResponseForbidden()  # return a forbidden response.
-            else:
-                # otherwise, redirect the user to the login page.
-                # Also, handily, sets the `next` GET argument for
-                # future redirects.
-                path = urlquote(request.get_full_path())
-                tup = self.login_url, self.redirect_field_name, path
-                return HttpResponseRedirect("%s?%s=%s" % tup)
-
-        return super(SuperuserRequiredMixin, self).dispatch(request,
-            *args, **kwargs)
-
+        context.update(extra_context)
+        
+        return context

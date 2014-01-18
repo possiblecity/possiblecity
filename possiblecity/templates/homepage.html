@@ -7,28 +7,19 @@
 
 {% load possiblecity_tags %}
 
-{% block head_title %}{% trans "Welcome" %}{% endblock head_title%}
+{% block head_title %}{% trans "Welcome" %}{% endblock %}
 
-{% block body_class %}home{% endblock body_class %}
+{% block body_class %}home{% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-12">
-             {% get_latest_featured ideas.Idea 6 as featured_ideas %}
             <div id="featured-idea-slideshow" class="carousel slide">
-              <!-- Indicators -->
-              <ol class="carousel-indicators">
-                {% for idea in featured_ideas %}
-                <li class="{% if forloop.first %}active{% endif %}" data-target="#featured-idea-slideshow" data-slide-to="{{ forloop.counter0 }}"></li>
-                {% endfor %}
-              </ol>
-
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
-                {% for idea in featured_ideas %}
-                <div id="{{ forloop.counter0 }}" class="item {% if forloop.first %}active{% endif %}">
-                 <a href="{% url 'ideas_idea_detail' idea.slug %}">
+                <div id="0" class="item active">
+                 <a href="{{ idea.get_absolute_url }}">
                   <img src="{% thumbnail idea.get_lead_image.file '1170x490' crop upscale quality=100  %}" alt="{{ idea.title }}">
                  </a>
                   <div class="carousel-caption hidden-xs">
@@ -43,48 +34,27 @@
                     <p>{{ idea.tagline }}</p>
                   </div>
                 </div>
-                {% endfor %}
               </div>
-
-              <!-- Controls -->
-              <a class="left carousel-control" href="#featured-idea-slideshow" data-slide="prev">
-                <span class="icon-prev"></span>
-              </a>
-              <a class="right carousel-control" href="#featured-idea-slideshow" data-slide="next">
-                <span class="icon-next"></span>
-              </a>
             </div>
             <div class="homepage-intro jumbotron hidden-xs hidden-sm">
                 <h1>Possible City</h1>
                 <h2>Reimagining Philadelphia's vacant spaces</h2>
+                <p>{{ banner_idea }}</p>
             </div>
 
         </div>
     </div>
-    <!-- Latest Ideas --> 
+    <!-- Featured Ideas --> 
     <div class="panel latest-ideas">
         <div class="row">
             <div class="col-lg-12 col-12">
-                <h2 class="margin-bottom-20">Latest Projects</h2>
-                {% get_latest ideas.Idea 8 as latest_ideas %}
+                <h2 class="margin-bottom-20">Featured Projects</h2>
                 <div class="row latest-ideas-homepage">
-                {% for idea in latest_ideas %}
-                    <div class="col-lg-3 col-md-4 col-xs-12  margin-bottom-20">
-                       <a href="{% if idea.get_lead_image %}
-                                {% url 'ideas_idea_detail' idea.slug %}
-                                {% else %}
-                                {% url 'lotxlot_lot_detail' idea.lots.all.0.id %}
-                                {% endif %}
-                               ">
+                {% for idea in featured_ideas %}
+                    <div class="col-lg-4 col-md-6 col-xs-12  margin-bottom-20">
+                       <a href="{% url 'ideas_idea_detail' idea.slug %}">
                         <div class="idea">
-                            {% if idea.get_lead_image %}
-                            <img src="{% thumbnail idea.get_lead_image.file '500x500' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
-                            {% else %}
-                            <img src="http://maps.googleapis.com/maps/api/streetview?size=500x500&location={{ idea.lots.all.0.coord.y }},{{ idea.lots.all.0.coord.x}}&sensor=false&fov=105">
-                            {% endif %}                                
-                            <div class="tagline">
-                                {{ idea.tagline }}
-                             </div>
+                            <img src="{% thumbnail idea.get_lead_image.file '400x226' crop="smart" upscale quality=100  %}" alt="{{ idea.title }}">
                              {% if idea.grounded %}
                              <span class="idea-phase">Active</span>
                              {% else %}
@@ -92,30 +62,22 @@
                              {% endif %}
                         </div>
                         </a>
+                        <h3><a href="{% url 'ideas_idea_detail' idea.slug %}">{{ idea.title }}</a></h3>
                         <div class="meta">
                         <h4 class="media-heading">
                             <img class="profile-pic"
                                  alt="{{ idea.user.profile.full_name }}"
                                  {% if idea.user.profile.photo %} 
-                                 src="{% thumbnail idea.user.profile.photo '36x36' crop upscale %}"
+                                 src="{% thumbnail idea.user.profile.photo '36x36' crop="smart" %}"
                                  {% else %}
                                  src="{% static 'img/profile.png' %}"
                                  height="36"
+                                 width="36"
                                  {% endif %}
                                  >
-                            {{ idea.user.profile.full_name}} <small>on</small>                            
-                            <br>
-                            {% for lot in idea.lots.all %}
-                            {% if forloop.first %}
-                            <a href="{% url 'lotxlot_lot_detail' lot.id %}">
-                                {{ lot.address }}</a>
-                                {% if forloop.revcounter0 %} 
-                                <small>(+ {{ forloop.revcounter0 }} more)</small>
-                                {% endif %}
-                            {% endif %} 
-                            {% endfor %}
+                            {{ idea.user.profile.full_name}}
                         </h4>
-                        <h6 style="clear:both">Via {{ idea.get_via_display }}
+                        <h6>Via {{ idea.get_via_display }}
                         {% if idea.get_via_display == "Twitter" %}
                             <i class="icon-twitter"></i>
                         {% elif idea.get_via_display == "Text" %}
@@ -147,5 +109,64 @@
                 {% endfor %}
             </div>
         </div>
+     </div>
+
+  </div>
+{% if activity_stream %}
+  <div class="panel activity">
+    <div class="row">
+      <div class="col-lg-12 col-12">
+          <h2 class="margin-bottom-20">Latest Activity</h2>
+          <div class="row">
+          {% for action in activity_stream %}
+              <div class="col-lg-4 col-md-6 margin-bottom-20">
+                  <div class="media margin-bottom-20">
+                      <span class="pull-left">
+                          <img class="media-object profile-pic"  
+                              alt="" 
+                              {% if action.actor.profile.photo %}
+                              src="{% thumbnail action.actor.profile.photo '64x64' crop upscale %}" 
+                              {% else %}
+                              src="{% static 'img/profile.png' %}"
+                              width="64" height="64"
+                              {% endif %} 
+                              />
+                      </span>
+                      <div class="media-body">
+                          <h4 class="media-heading">
+                              {% if action.actor.get_absolute_url %}
+                                  <a href="{{ action.actor.get_absolute_url }}">{{ action.actor.profile.full_name }}</a>
+                              {% else %}
+                                  <a href="{{ action.actor_url }}">{{ action.actor.profile.full_name }}</a>
+                              {% endif %}
+                              <small>{{ action.verb }}
+                              {% if action.action_object and action.target %}on{% endif %}</small>
+                              {% if action.target %}
+                                  {% if action.target.get_absolute_url %}
+                                      <a href="{{ action.target.get_absolute_url }}">
+                                          {% if action.target.profile.full_name %}
+                                              {{ action.target.profile.full_name }} 
+                                          {% else %}
+                                              {{ action.target }} 
+                                          {% endif %} 
+                                      </a>
+                                  {% else %}
+                                      <a href="{{ action.target_url }}">
+                                          {{ action.target }}
+                                      </a>
+                                  {% endif %}
+                              {% endif %}
+                             </h4> 
+                             <h6>{{ action.timestamp|timesince }} {% trans "ago" %}</h6>
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+        </div>
     </div>
+  </div>
+  {% endif %}
+</div>
+
+
 {% endblock body %}

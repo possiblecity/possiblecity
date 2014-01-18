@@ -58,7 +58,6 @@ class ProfileLoginView(LoginRequiredMixin, DetailView):
     context_object_name = "profile" 
 
     def dispatch(self, request, *args, **kwargs):
-        # check if there is some video onsite
         profile = self.get_object()
         if not profile.about:
             return HttpResponseRedirect(reverse('profiles_profile_update'))

@@ -13,7 +13,7 @@
         <img class="media-object"  
         alt="{{ comment.user }}" 
         {% if comment.user.profile.photo %}
-        src="{{ comment.user.profile.photo.url }}" 
+        src="{% thumbnail comment.user.profile.photo '200x200' crop upscale %}" 
         {% else %}
         src="{% static 'img/profile.png' %}"
         {% endif %} 

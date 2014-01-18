@@ -317,6 +317,7 @@ THIRD_PARTY_APPS = (
     'metron', # analytics
     'phileo', # liking
     'actstream', # activity stream, following
+    'notification', # notifications    
 
     'rest_framework', # api
     'rest_framework_gis', # api geo add-ons

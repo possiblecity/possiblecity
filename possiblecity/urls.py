@@ -9,12 +9,16 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
-from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, LotCommentApiViewSet
+from apps.core.views import HomepageView
+from apps.lotxlot.views import (LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, 
+    LotCommentApiViewSet, VacantLotApiViewSet, VacantLotPointApiViewSet)
 from apps.philadelphia.views import NeighborhoodApiViewSet
 
 router = routers.DefaultRouter()
-router.register(r'lots/vacant/polys', LotApiViewSet, base_name='api-lot')
-router.register(r'lots/vacant/points', LotPointApiViewSet, base_name='api-lot-point')
+router.register(r'lots/polys', LotApiViewSet, base_name='api-lot')
+router.register(r'lots/points', LotPointApiViewSet, base_name='api-lot-point')
+router.register(r'lots/vacant/polys', VacantLotApiViewSet, base_name='api-vacant-lot')
+router.register(r'lots/vacant/points', VacantLotPointApiViewSet, base_name='api-vacant-lot-point')
 router.register(r'lots/ideas', LotIdeaApiViewSet, base_name='api-lot-idea')
 router.register(r'lots/comments', LotCommentApiViewSet, base_name='api-lot-comment')
 router.register(r'lots/activity', LotCommentApiViewSet, base_name='api-lot-activity')
@@ -30,10 +34,10 @@ urlpatterns = patterns("",
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r"^admin/", include(admin.site.urls)),
 
-    # api
-    
-    url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
+    # homepage
+    url(r"^$", HomepageView.as_view(), name="home"),
 
+    # api
     url(r"^api/", include(router.urls)),
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 
@@ -43,6 +47,7 @@ urlpatterns = patterns("",
     # blog
     #url(r'^blog/', include('apps.text.urls')),
 
+    # people
     url(
         r"^account/social/connections/$",
         TemplateView.as_view(template_name="account/connections.html"),
@@ -53,7 +58,7 @@ urlpatterns = patterns("",
     url(r"^account/", include("account.urls")),   
     url(r"^people/", include("apps.profiles.urls")),   
 
-    #ideas
+    # ideas
     url(r"^projects/", include("apps.ideas.urls")),
 
     # places
@@ -68,6 +73,10 @@ urlpatterns = patterns("",
     url(r"^comments/", include("apps.comments.urls")),
 
     url(r"^activity/", include("actstream.urls")),
+
+    url(r"^notifications/", include("notification.urls")),
+
+   
 )
 
 urlpatterns += staticfiles_urlpatterns()

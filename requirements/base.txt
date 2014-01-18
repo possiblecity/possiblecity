@@ -9,7 +9,7 @@ simplejson #json tools
 markdown #plain text to html
 twitter #twitter api
 
-Django==1.5.5 #Django!
+Django==1.6.1 #Django!
 
 # django third party modules
 django-supervisor #process management
@@ -18,7 +18,6 @@ django-compressor #static file compression
 django-pagination #pagination
 django-positions #auto ordering field
 django-localflavor #localization add-ons
-django-model-utils==1.5.0 #model utilities & helpers
 django-taggit==0.11.1 #tags
 django-user-accounts==1.0b17 #user authetication & accounts
 django-social-auth==0.7.28 #social authentication
@@ -26,12 +25,13 @@ django-activity-stream==0.4.5beta1 #activity stream & following
 django-floppyforms #form tools
 django-crispy-forms #form tools
 django-js-reverse #use url tags in javascript
+django-braces #utilities
+django-rest-framework-gis #DRF GIS addons
 easy-thumbnails==1.4 #image manipulation
 metron==1.1 #analytics tools
 phileo==1.1 #liking app
 south==0.8.4 #database migrations
+django-notification
 
 # stuff thats not on PyPi
--e git://github.com/brack3t/django-braces.git#egg=django-braces #utilities
--e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis #DRF GIS addons
-
+-e git://github.com/carljm/django-model-utils.git#egg=django-model-utils #model utilities & helpers

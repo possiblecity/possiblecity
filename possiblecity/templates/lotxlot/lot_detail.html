@@ -26,6 +26,20 @@
           <div class="lot-detail-page-container-icons">
             <a href="#" title="Minimize" class=" lot-control minmax hidden-xs icon-angle-down pull-right"></a> 
             <span class="btn-favorite pull-right">
+            <a class="follow-button btn btn-info" 
+               data-toggle="tooltip" 
+               {% if request.user|is_following:lot %}
+                title="Unfollow this lot's activity"
+               {% else %}
+                title="Follow this lot's activity on your profile page"
+               {% endif %}
+               href="{% follow_all_url lot %}?next={{ request.path }}">
+                    {% if request.user|is_following:lot %}
+                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following
+                    {% else %}
+                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow
+                    {% endif %}
+                    </a>
              {% if request.user.is_authenticated %}
                       {% phileo_widget_brief request.user lot %}
                       {% else %}
@@ -240,8 +254,10 @@
       //map.setView(center, 17);
 
       var lotLayer = L.geoJson(null, {
-         style: parcelStyle
+         style: selectedStyle
       }).addTo(map)
+
+      lotLayer.bringToFront();
 
       L.marker(center, {riseOnHover: true}).addTo(map);
 
@@ -268,8 +284,6 @@
       map.fire('dataload');
       map.removeLayer(neighborhoods);
       });
-
-      $('.lot-control').tooltip();
 
       $( ".reset-location" ).click(function() {
         map.fitBounds(lotLayer.getBounds(), {
@@ -301,6 +315,9 @@
           duration: 0.5,
         });
       });
+
+      $('.lot-control').tooltip();
+      $('.follow-button').tooltip();
 
 
   </script>
