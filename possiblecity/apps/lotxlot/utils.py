@@ -73,7 +73,7 @@ def has_feature(url, params):
             return False
 
 def queryset_iterator(queryset, chunksize=1000):
-    '''''
+    '''
     Iterate over a Django Queryset ordered by the primary key
 
     This method loads a maximum of chunksize (default: 1000) rows in it's
@@ -91,6 +91,13 @@ def queryset_iterator(queryset, chunksize=1000):
             pk = row.pk
             yield row
         gc.collect()
+
+def calculate_and_save_area(lot):
+   '''
+   Calculate the area of the lot from the bounds field
+   and save the result to the area field
+   '''
+   pass
 
 # convert the projection type of a shapefile
 # ogr2ogr -t_srs <New Projection> <Output SHP file> <Original SHP file>

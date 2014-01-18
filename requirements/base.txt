@@ -1,37 +1,37 @@
 # python modules
-gunicorn # server
-psycopg2 # postgres bindings
-redis #data store
+gunicorn #server
+psycopg2 #postgres bindings
+redis #data store for celery
 pillow #image manipulation
 requests #http library
 geopy #geo tools
-simplejson
-markdown
+simplejson #json tools
+markdown #plain text to html
 twitter #twitter api
 
-
-Django==1.5.5
+Django==1.6.1 #Django!
 
 # django third party modules
-south==0.8.4 #database migrations
 django-supervisor #process management
 django-celery-with-redis #async tasks
 django-compressor #static file compression
 django-pagination #pagination
 django-positions #auto ordering field
 django-localflavor #localization add-ons
--e git://github.com/brack3t/django-braces.git#egg=django-braces
--e git://github.com/dmeehan/django-rest-framework-gis.git#egg=django-rest-framework-gis
-
-easy-thumbnails==1.4 # image manipulation
 django-taggit==0.11.1 #tags
 django-user-accounts==1.0b17 #user authetication & accounts
 django-social-auth==0.7.28 #social authentication
-metron==1.1 #analytics tools
-phileo
-django-activity-stream==0.4.5beta1
-
-django-floppyforms # form tools
-django-crispy-forms # form tools
+django-activity-stream==0.4.5beta1 #activity stream & following
+django-floppyforms #form tools
+django-crispy-forms #form tools
 django-js-reverse #use url tags in javascript
+django-braces #utilities
+djangorestframework-gis #DRF GIS addons
+easy-thumbnails==1.4 #image manipulation
+metron==1.1 #analytics tools
+phileo==1.1 #liking app
+south==0.8.4 #database migrations
 django-notification
+
+# stuff thats not on PyPi
+-e git://github.com/carljm/django-model-utils.git#egg=django-model-utils #model utilities & helpers
