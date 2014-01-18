@@ -34,4 +34,4 @@ django-activity-stream==0.4.5beta1
 django-floppyforms # form tools
 django-crispy-forms # form tools
 django-js-reverse #use url tags in javascript
-
+django-notification
