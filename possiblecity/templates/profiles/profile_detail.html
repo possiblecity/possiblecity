@@ -82,11 +82,13 @@ Profile for {{ profile.user.username }}
             </div><!-- .panel -->
         </div><!--.col-lg-3 -->
         <div class="col-md-9 col-xs-12">
-            {% if profile.about %}
-            <div class="panel">
-                <h5>About</h5>
-                <p class="lead">{{ profile.user.first_name }} wants to {{ profile.about }}</p>
-             </div><!-- .panel -->
+            {% if request.user != profile.user %}
+                {% if profile.about %}
+                <div class="panel">
+                    <h5>About</h5>
+                    <p class="lead">{{ profile.user.first_name }} wants to {{ profile.about }}</p>
+                 </div><!-- .panel -->
+                 {% endif %}
              {% endif %}
             {% if request.user == profile.user %}
             <a class="btn btn-primary edit-profile-sm-devices margin-bottom-20" href="{% url 'profiles_profile_update' %}">{% trans 'Edit Profile' %}</a>
