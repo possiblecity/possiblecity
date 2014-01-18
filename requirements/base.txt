@@ -26,7 +26,7 @@ django-floppyforms #form tools
 django-crispy-forms #form tools
 django-js-reverse #use url tags in javascript
 django-braces #utilities
-django-rest-framework-gis #DRF GIS addons
+djangorestframework-gis #DRF GIS addons
 easy-thumbnails==1.4 #image manipulation
 metron==1.1 #analytics tools
 phileo==1.1 #liking app

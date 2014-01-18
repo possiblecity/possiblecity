@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 
-from model_utils.managers import PassThroughManager
+from apps.core.managers import PassThroughGeoManager
 
 from apps.comments.models import Comment
 
@@ -54,7 +54,7 @@ class Lot(models.Model):
 
     comments = generic.GenericRelation(Comment)
 
-    objects = PassThroughManager.for_queryset_class(LotQuerySet)()
+    objects = PassThroughGeoManager.for_queryset_class(LotQuerySet)()
 
     class Meta:
         pass

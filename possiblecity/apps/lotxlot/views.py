@@ -94,14 +94,32 @@ class LotMapView(TemplateView):
 class LotListView(ListView):
     model = Lot
 
+    template_name = "lotxlot/lot_list.html"
+
+class LotListPublicView(ListView):
+    queryset = Lot.objects.visible().public()
+
+    template_name = "lotxlot/lot_list_public.html"
+
+class LotListPrivateView(ListView):
+    queryset = Lot.objects.visible().private()
+
+    template_name = "lotxlot/lot_list_private.html"
+
 class LotListVacantView(ListView):
     queryset = Lot.objects.visible().vacant()
+
+    template_name = "lotxlot/lot_list_vacant.html"
 
 class LotListVacantPublicView(ListView):
     queryset = Lot.objects.visible().vacant().public()
 
+    template_name = "lotxlot/lot_list_vacant_public.html"
+
 class LotListVacantPrivateView(ListView):
     queryset = Lot.objects.visible().vacant().private()
+
+    template_name = "lotxlot/lot_list_vacant_private.html"
 
 ########## API Views ##########
 

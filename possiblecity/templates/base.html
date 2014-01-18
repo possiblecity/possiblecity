@@ -46,11 +46,10 @@
                     <div class="navbar-collapse collapse">
                     {% block nav %}
                       <ul class="nav navbar-nav">
-                          <li class="nav-ideas"><a href="{% url 'ideas_idea_list' %}">Projects</a></li>
-                          <li class="nav-lots"><a href="{% url 'lotxlot_lot_list' %}">Lots</a></li>
-                          <li class="nav-people"><a href="{% url 'profiles_profile_list' %}">People</a></li>
                           <li class="nav-map"><a href="{% url 'lotxlot_map' %}">Map</a></li>
-                          <li class="nav-activity"><a href="">Activity</a></li>
+                          <li class="nav-ideas"><a href="{% url 'ideas_idea_list' %}">Projects</a></li>
+                          <li class="nav-lots"><a href="{% url 'lotxlot_lot_list_vacant' %}">Lots</a></li>
+                          <li class="nav-people"><a href="{% url 'profiles_profile_list' %}">People</a></li>
                           <li class="nav-about"><a href="{% url 'about' %}">About</a></li>
                       </ul>
                     {% endblock nav %}
