@@ -10,12 +10,15 @@ from django.views.generic import TemplateView, RedirectView
 
 from rest_framework import routers
 from apps.core.views import HomepageView
-from apps.lotxlot.views import LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, LotCommentApiViewSet
+from apps.lotxlot.views import (LotApiViewSet, LotIdeaApiViewSet, LotPointApiViewSet, 
+    LotCommentApiViewSet, VacantLotApiViewSet, VacantLotPointApiViewSet)
 from apps.philadelphia.views import NeighborhoodApiViewSet
 
 router = routers.DefaultRouter()
-router.register(r'lots/vacant/polys', LotApiViewSet, base_name='api-lot')
-router.register(r'lots/vacant/points', LotPointApiViewSet, base_name='api-lot-point')
+router.register(r'lots/polys', LotApiViewSet, base_name='api-lot')
+router.register(r'lots/points', LotPointApiViewSet, base_name='api-lot-point')
+router.register(r'lots/vacant/polys', VacantLotApiViewSet, base_name='api-vacant-lot')
+router.register(r'lots/vacant/points', VacantLotPointApiViewSet, base_name='api-vacant-lot-point')
 router.register(r'lots/ideas', LotIdeaApiViewSet, base_name='api-lot-idea')
 router.register(r'lots/comments', LotCommentApiViewSet, base_name='api-lot-comment')
 router.register(r'lots/activity', LotCommentApiViewSet, base_name='api-lot-activity')

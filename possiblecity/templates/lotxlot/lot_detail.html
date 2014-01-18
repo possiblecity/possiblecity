@@ -254,8 +254,10 @@
       //map.setView(center, 17);
 
       var lotLayer = L.geoJson(null, {
-         style: parcelStyle
+         style: selectedStyle
       }).addTo(map)
+
+      lotLayer.bringToFront();
 
       L.marker(center, {riseOnHover: true}).addTo(map);
 
