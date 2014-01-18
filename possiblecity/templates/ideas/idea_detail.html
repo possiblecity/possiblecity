@@ -189,6 +189,33 @@
                    {% if idea.grounded %}<br>Grounded on {{ idea.grounded }}{% endif %}</p>
                 </div>
             </li>
+            {% get_follows idea as follows %}
+            {% if follows %}
+            <li class="list-group-item">
+              <h5>Following</h5>
+              <div class="row">
+              {% for follow in follows %}
+                  <div class="col-md-2 col-xs-3">
+                      {% if follow.user.profile.is_public %}
+                      <a href="{% url 'profiles_profile_detail' follow.user.username %}">
+                      {% endif %}
+                      <img class="profile-pic"
+                      {% if follower.profile.photo %}
+                          src="{% thumbnail follow.user.profile.photo '200x200' crop upscale %}"
+                      {% else %}
+                          src="{% static 'img/profile.png' %}"
+                      {% endif %}
+                          alt="{{ follow.user.profile.full_name }}"
+                          title="{{ follow.user.profile.full_name }}"
+                      >
+                      {% if follow.user.profile.is_public %}
+                      </a>
+                      {% endif %}
+                  </div>
+              {% endfor %}
+              </div>
+            </li>
+            {% endif %}
             {% who_likes idea as idea_likes %}
             {% if idea_likes %}
             <li class="list-group-item">
@@ -205,13 +232,8 @@
                       {% else %}
                           src="{% static 'img/profile.png' %}"
                       {% endif %}
-                      {% if like.sender.first_name %}
                           alt="{{ like.sender.profile.full_name }}"
                           title="{{ like.sender.profile.full_name }}"
-                      {% else %}
-                          alt="{{ like.sender.username }}"
-                          title="{{ like.sender.username }}"
-                      {% endif %}
                       >
                       {% if like.sender.profile.is_public %}
                       </a>

@@ -1,8 +1,18 @@
 from django import template
 from django.db.models import get_model
 from django.utils.timesince import timesince
+from django.contrib.contenttypes.models import ContentType
+
+from actstream.models import Follow
 
 register = template.Library()
+
+@register.assignment_tag
+def get_follows(object):
+    return Follow.objects.filter(
+        content_type=ContentType.objects.get_for_model(object),
+        object_id=object.pk
+    )
 
 @register.filter
 #capitalise the first letter of each sentence in a string
@@ -49,6 +59,7 @@ def get_latest_featured(parser, token):
     if bits[3] != 'as':
         raise TemplateSyntaxError, "third argument to get_latest tag must be 'as'"
     return LatestFeaturedContentNode(bits[1], bits[2], bits[4])
+
     
 get_latest = register.tag(get_latest)
 get_latest_featured = register.tag(get_latest_featured)

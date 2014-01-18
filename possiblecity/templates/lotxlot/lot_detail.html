@@ -200,13 +200,41 @@
                   {% endfor %}        
                 </ul>
             </div>
+            {% get_follows lot as follows %}
             {% who_likes lot as lot_likes %}
-            {% if lot_likes %}
+            {% if lot_likes or follows %}
             <div class="people">
               <ul class="list-group">
                 <li class="list-group-item">
                   <h2>People</h2>
                 </li>
+                {% if follows %}
+                <li class="list-group-item">
+                  <h5>Following <small>{{ lot|likes_count }}</small></h5>
+                  <div class="row">
+                  {% for follow in follows %}
+                    <div class="col-md-2 col-xs-4 col-sm-2">
+                        {% if follow.user.profile.is_public %}
+                        <a href="{% url 'profiles_profile_detail' follow.user.username %}">
+                        {% endif %}
+                        <img class="profile-pic"
+                        {% if like.sender.profile.photo %}
+                            src="{% thumbnail follow.user.profile.photo '200x200' crop upscale %}"
+                        {% else %}
+                            src="{% static 'img/profile.png' %}"
+                        {% endif %}
+                            alt="{{ follow.user.profile.full_name }}"
+                            title="{{ follow.user.profile.full_name }}"
+                        >
+                        {% if follow.user.profile.is_public %}
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+              </li>
+              {% endif %}
+                {% if lot_likes %}
                 <li class="list-group-item">
                   <h5>Favorited <small>{{ lot|likes_count }}</small></h5>
                   <div class="row">
@@ -221,13 +249,8 @@
                         {% else %}
                             src="{% static 'img/profile.png' %}"
                         {% endif %}
-                        {% if like.sender.first_name %}
                             alt="{{ like.sender.profile.full_name }}"
                             title="{{ like.sender.profile.full_name }}"
-                        {% else %}
-                            alt="{{ like.sender.username }}"
-                            title="{{ like.sender.username }}"
-                        {% endif %}
                         >
                         {% if like.sender.profile.is_public %}
                         </a>
@@ -236,6 +259,7 @@
                 {% endfor %}
                 </div>
               </li>
+              {% endif %}
             </ul>
         </div>
         {% endif %}
