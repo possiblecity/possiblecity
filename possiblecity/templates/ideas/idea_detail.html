@@ -208,7 +208,7 @@
                       <a href="{% url 'profiles_profile_detail' follow.user.username %}">
                       {% endif %}
                       <img class="profile-pic"
-                      {% if follower.profile.photo %}
+                      {% if follow.user.profile.photo %}
                           src="{% thumbnail follow.user.profile.photo '200x200' crop upscale %}"
                       {% else %}
                           src="{% static 'img/profile.png' %}"
