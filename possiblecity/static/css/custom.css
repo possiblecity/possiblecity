@@ -130,6 +130,9 @@ img {
 
 input[type="text"],
 input[type="password"],
+input[type="url"],
+input[type="email"],
+input[type="phone"],
 textarea {
 	display: block;
 	width: 100%;
