@@ -39,16 +39,15 @@ class IdeaCreateView(LoginRequiredMixin, CreateView):
         self.object.moderate_comments = False
         self.object.status = Idea.STATUS_PUBLISHED
         self.object.save()
-<<<<<<< HEAD
+
         form.save_m2m()
         if self.object.status == Idea.STATUS_PUBLISHED:
             return HttpResponseRedirect(self.object.get_absolute_url())
         else:
             return HttpResponseRedirect(self.get_success_url())
-=======
+
         idea_created.send(sender=self, idea=self.object, request=self.request)
         return HttpResponseRedirect(self.get_success_url())
->>>>>>> master
 
     def get_context_data(self, *args, **kwargs):
         context_data = super(IdeaCreateView, self).get_context_data(
@@ -73,11 +72,11 @@ class IdeaUpdateView(LoginRequiredMixin, UpdateView):
         self.object = form.save(commit=False)
         self.object.status = Idea.STATUS_PUBLISHED
         self.object.save()
-<<<<<<< HEAD
+
         form.save_m2m()
-=======
+        
         idea_updated.send(sender=self, idea=self.object, request=self.request)
->>>>>>> master
+
         if self.object.status == Idea.STATUS_PUBLISHED:
             return HttpResponseRedirect(self.object.get_absolute_url())
         else:
