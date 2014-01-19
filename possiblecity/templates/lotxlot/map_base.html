@@ -10,7 +10,7 @@
 <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
 {% endblock extra_head %}
 
-{% block body_class %}lotxlot map{% endblock %}
+{% block body_class %}map{% endblock %}
 {% block navbar_class %}navbar-fixed-top{% endblock %}
 
 {% block body_base %}
@@ -99,6 +99,14 @@
         "color":"#68C4EA",
     };
 
+    var selectedStyle = {
+        "fillColor":"#cd00cd",
+        "fillOpacity": 0.0,
+        "opacity": 1.0,
+        "weight": 2,
+        "color":"#cd00cd",
+    };
+
     var neighborhoodStyle = {
         "fillColor":"#cd00cd",
         "fillOpacity": 0.0,
@@ -145,7 +153,7 @@
 
     var vacant_lots = new lvector.Custom({
       map: map,
-      url: "{% url 'api-lot-list' %}",            
+      url: "{% url 'api-vacant-lot-list' %}",            
       scaleRange: [17, 20],
       showAll: false,
       singlePopup: true,
@@ -157,9 +165,9 @@
           value: true,
           vectorOptions: {
             fillColor: "#BAD8E4",
-            fillOpacity: 0.6,
+            fillOpacity: 0.8,
             color: "#539DBB",
-            opacity: 1.0,
+            opacity: 0.4,
             weight: 1,
             }
         }, 
@@ -169,7 +177,7 @@
             fillColor: "#539DBB",
             fillOpacity: 0.6,
             color: "#539DBB",
-            opacity: 1.0,
+            opacity: 0.4,
             weight: 1,
           }
         } ]

@@ -7,20 +7,36 @@ from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
+from django.contrib.gis.db.models.query import GeoQuerySet
 from django.core.urlresolvers import reverse
 from django.db.models import permalink
 from django.template.defaultfilters import slugify
 
+from apps.core.managers import PassThroughGeoManager
+
 from apps.comments.models import Comment
 
-from .managers import LotQuerySet
+class LotQuerySet(GeoQuerySet):
+    def visible(self):
+        return self.filter(is_visible=True)
+
+    def vacant(self):
+        return self.filter(is_vacant=True)
+
+    def public(self):
+        return self.filter(is_public=True)
+
+    def private(self):
+        return self.filter(is_public=False)
+
 
 class Lot(models.Model):
     # spatial fields
     coord = models.PointField(srid=4326, blank=True)
     bounds = models.MultiPolygonField(srid=4326, blank=True)
+    #area = models.FloatField(db_index=True, blank=True)
 
-    address = models.CharField(max_length=255, blank=True)
+    address = models.CharField(db_index=True, max_length=255, blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2)
     country = models.CharField(max_length=255)
@@ -38,16 +54,29 @@ class Lot(models.Model):
 
     comments = generic.GenericRelation(Comment)
 
-    objects = models.GeoManager()
+    objects = PassThroughGeoManager.for_queryset_class(LotQuerySet)()
 
     class Meta:
         pass
 
     @property 
     def activity_count(self):
-        comments = self.comments.count()
-        ideas = self.ideas.count()
-        return comments + ideas
+        activity = self.comments.count() + self.ideas.count()
+        return activity
+
+    @property
+    def has_project(self):
+        if self.ideas:
+            return True
+        else:
+            return False
+
+    @property
+    def has_comment(self):
+        if self.comments:
+            return True
+        else:
+            return False
 
     def get_sqft(self): 
         """ 

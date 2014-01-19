@@ -9,6 +9,7 @@
   {% load possiblecity_tags %}
   {% load comment_tags %}
   {% load activity_tags %}
+  {% load lotxlot_tags %}
   
 
   {% block head_title %}Lot #{{ lot.id }} | {{ lot.address }} {% endblock head_title %}
@@ -18,6 +19,8 @@
   {% endblock map %}
 
  {% block body %}
+ {% get_follows lot as follows %}
+ {% who_likes lot as lot_likes %}
   <div class="container lot-detail">
     <div class="panel">
       <header class="lot-header row">
@@ -25,15 +28,36 @@
           <div class="lot-detail-page-container-icons">
             <a href="#" title="Minimize" class=" lot-control minmax hidden-xs icon-angle-down pull-right"></a> 
             <span class="btn-favorite pull-right">
+            <a class="follow-button btn btn-info" 
+               data-toggle="tooltip" 
+               {% if request.user|is_following:lot %}
+                title="Unfollow this lot's activity"
+               {% else %}
+                title="Follow this lot's activity on your profile page"
+               {% endif %}
+               href="{% follow_all_url lot %}?next={{ request.path }}">
+                    {% if request.user|is_following:lot %}
+                        <i class="icon-ok-sign"></i>&nbsp;&nbsp;Following&nbsp;&nbsp;
+                    {% else %}
+                        <i class="icon-plus"></i>&nbsp;&nbsp;Follow&nbsp;&nbsp;
+                    {% endif %}
+                    {% if follows.count %}
+                    <span class="count badge">
+                            {{ follows.count }}
+                            </span>
+                    {% endif %}
+                    </a>
              {% if request.user.is_authenticated %}
                       {% phileo_widget_brief request.user lot %}
                       {% else %}
                       <span class="phileo active">
                           <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-info">
                               <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
+                              {% if lot_likes.count %}
                               <span class="count badge">
-                              {{ lot|likes_count }}
+                              {{ lot_likes.count }}
                           </span>
+                          {% endif %}
                           </a>
                       </span>                    
                       {% endif %}
@@ -49,7 +73,9 @@
       </header>
       <section class="lot-info row">
         <div class="col-md-6">
-            <img class="lot-image-lot-detail-page" src="http://maps.googleapis.com/maps/api/streetview?size=800x400&location={{ lot.coord.y }},{{ lot.coord.x}}&sensor=false&fov=105">
+            <img class="lot-image-lot-detail-page" 
+                 src="{% google_image_url lot 800 400 %}"
+                 alt="Google Streetview for {{ lot.address }}">
         </div>
         <div class="col-md-6">
           {% include "philadelphia/_lot_data.html" %}
@@ -184,12 +210,39 @@
                 </ul>
             </div>
             {% who_likes lot as lot_likes %}
-            {% if lot_likes %}
+            {% if lot_likes or follows %}
             <div class="people">
               <ul class="list-group">
                 <li class="list-group-item">
                   <h2>People</h2>
                 </li>
+                {% if follows %}
+                <li class="list-group-item">
+                  <h5>Following <small>{{ follows.count }}</small></h5>
+                  <div class="row">
+                  {% for follow in follows %}
+                    <div class="col-md-2 col-xs-4 col-sm-2">
+                        {% if follow.user.profile.is_public %}
+                        <a href="{% url 'profiles_profile_detail' follow.user.username %}">
+                        {% endif %}
+                        <img class="profile-pic"
+                        {% if follow.user.profile.photo %}
+                            src="{% thumbnail follow.user.profile.photo '200x200' crop upscale %}"
+                        {% else %}
+                            src="{% static 'img/profile.png' %}"
+                        {% endif %}
+                            alt="{{ follow.user.profile.full_name }}"
+                            title="{{ follow.user.profile.full_name }}"
+                        >
+                        {% if follow.user.profile.is_public %}
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+              </li>
+              {% endif %}
+                {% if lot_likes %}
                 <li class="list-group-item">
                   <h5>Favorited <small>{{ lot|likes_count }}</small></h5>
                   <div class="row">
@@ -204,13 +257,8 @@
                         {% else %}
                             src="{% static 'img/profile.png' %}"
                         {% endif %}
-                        {% if like.sender.first_name %}
                             alt="{{ like.sender.profile.full_name }}"
                             title="{{ like.sender.profile.full_name }}"
-                        {% else %}
-                            alt="{{ like.sender.username }}"
-                            title="{{ like.sender.username }}"
-                        {% endif %}
                         >
                         {% if like.sender.profile.is_public %}
                         </a>
@@ -219,6 +267,7 @@
                 {% endfor %}
                 </div>
               </li>
+              {% endif %}
             </ul>
         </div>
         {% endif %}
@@ -237,8 +286,10 @@
       //map.setView(center, 17);
 
       var lotLayer = L.geoJson(null, {
-         style: parcelStyle
+         style: selectedStyle
       }).addTo(map)
+
+      lotLayer.bringToFront();
 
       L.marker(center, {riseOnHover: true}).addTo(map);
 
@@ -260,15 +311,11 @@
       var ownership = {% if lot.is_public %}"Public"{% else %}"Private"{% endif %}
       var ownership_icon = {% if lot.is_public %}"icon-unlock-alt"{% else %}"icon-lock"{% endif %}
 
-      var labelIcon = L.divIcon({className: 'leaflet-label leaflet-label-selected', html: content,  iconSize:null});
-
       L.marker(center, {riseOnHover: true}).addTo(map);
 
       map.fire('dataload');
       map.removeLayer(neighborhoods);
       });
-
-      $('.lot-control').tooltip();
 
       $( ".reset-location" ).click(function() {
         map.fitBounds(lotLayer.getBounds(), {
@@ -301,10 +348,9 @@
         });
       });
 
-      $(document).on("eldarion-ajax:success", [data-prepend-inner], function(evt, $el, data) {
-        var $node = $($el.data("prepend-inner"));
-        $node.data(data.html + $node.html());
-      });
+      $('.lot-control').tooltip();
+      $('.follow-button').tooltip();
+
 
   </script>
   {% endblock extra_map_js %}

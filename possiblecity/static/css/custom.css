@@ -345,7 +345,8 @@ background-color: #BEE0EA;
 	border:0;
 }
 
-body.lotxlot .navbar-nav > .nav-map a, 
+body.map .navbar-nav > .nav-map a, 
+body.lotxlot .navbar-nav > .nav-lots a, 
 body.ideas .navbar-nav > .nav-ideas a, 
 body.people .navbar-nav > .nav-people a,
 body.about .navbar-nav > .nav-about a {
@@ -460,7 +461,10 @@ body.about .navbar-nav > .nav-about a {
 }
 
 .leaflet-control-container {
-	position: relative;
+}
+
+div.leaflet-top {
+	top: 50px;
 }
 
 #map.minimize {
