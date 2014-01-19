@@ -15,12 +15,8 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from braces.views import LoginRequiredMixin
 
 from ..models import Idea, IdeaVisual
-<<<<<<< HEAD
 from ..forms import IdeaForm, IdeaVisualForm
-=======
-from ..forms import IdeaForm, IdeaVisualForm, SimpleIdeaForm
 from ..signals import idea_created, idea_updated
->>>>>>> master
 
 class IdeaCreateView(LoginRequiredMixin, CreateView):
     form_class = IdeaForm

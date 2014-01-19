@@ -42,9 +42,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
 
-.yourlabs-autocomplete .choice, 
-.yourlabs-autocomplete [data-value], 
-.yourlabs-autocomplete em
+.yourlabs-autocomplete .choice, .yourlabs-autocomplete [data-value], .yourlabs-autocomplete em
 {
     display: block;
     padding: 3px 20px;
@@ -57,47 +55,42 @@
     cursor: pointer;
 }
 
-/* 
- * You should use the "block" class because the "div" class is deprecated since
- * 2.0. However, the "div" class is still supported for backward compatibility.
- */
-.block,
 .div
 {
-    display: block;
+    display: inline-block;
 }
 
-/* admin specific 
+/* admin specific */
 body.change-form .autocomplete-light-widget
 {
     float: left;
 }
-*/
 
 .autocomplete-light-widget {
-    /*border: 1px solid lightgrey;*/
+    /* "Position" the widget */
+    position: relative;
     display: block;
-    padding: 4px 4px 3px 4px;
-    /* for the add-another image */
-    vertical-align: middle;
 }
 
-.autocomplete-light-widget input,
-.autocomplete-light-widget input:focus {
-   
+input.autocomplete {
+    position: relative;
+    vertical-align: top;
 }
 
-.autocomplete-light-widget .deck [data-value],
-.autocomplete-light-widget .deck .choice
+.autocomplete-light-widget.yourlabs-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+}
+
+.autocomplete-light-widget .deck [data-value]
 {
     list-style-type: none;
-    display: inline-block;
+    padding: 8px;
+    margin-bottom: 5px;
     border: 1px solid lightgrey;
     border-radius: 4px;
-    padding: 8px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    line-height: 16px;
 }
 
 .autocomplete-light-widget .deck [data-value] .remove
@@ -105,12 +98,11 @@ body.change-form .autocomplete-light-widget
     background-image: url('../admin/img/inline-delete.png');
     color: #fff;
     cursor: pointer;
+    float: left;
+    height: 15px;
+    margin-right: 8px;
     text-indent: -999px;
-    height: 16px;
-    width: 16px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    margin-right: 4px;
+    width: 15px;
 }
 
 .autocomplete-light-widget .deck [data-value] .remove:hover
@@ -118,8 +110,8 @@ body.change-form .autocomplete-light-widget
     background-position: -15px 0;
 }
 
-.yourlabs-autocomplete .choice-detail, 
-.yourlabs-autocomplete .choice-update 
+.yourlabs-autocomplete .choiceDetail, 
+.yourlabs-autocomplete .choiceUpdate 
 {
     display: none;
 }
