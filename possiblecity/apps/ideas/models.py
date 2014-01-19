@@ -12,6 +12,8 @@ from django.db.models.signals import post_save
 from django.utils.text import slugify
 
 from actstream import action
+from actstream.models import followers
+from notification import models as notification
 from positions.fields import PositionField
 from taggit.managers import TaggableManager
 
@@ -206,6 +208,9 @@ def idea_created_action(sender, idea=None, target=None, **kwargs):
 
 def idea_updated_action(sender, idea=None, target=None, **kwargs):
     action.send(idea.user, verb=u'updated the project', target=idea)
+    notify = followers(idea)
+    notify.append(idea.user)
+    notification.send(notify, "project_update")
 
 idea_created.connect(idea_created_action)
 idea_updated.connect(idea_updated_action)
