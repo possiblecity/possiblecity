@@ -6,8 +6,10 @@ if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 
     def create_notice_types(app, created_models, verbosity, **kwargs):
-        notification.create_notice_type("new_favorite", _("New Favorite"), _("You have a new favorite"))
-        notification.create_notice_type("new_follower", _("New Follower"), _("You have a new follower"))
+        notification.create_notice_type("new_favorite", _("New Favorite"), 
+        	_("Your project or comment has been favorited."))
+        notification.create_notice_type("new_follower", _("New Follower"), 
+        	_("You or your project has a new follower."))
     signals.post_syncdb.connect(create_notice_types, sender=notification)
 else:
     print "Skipping creation of NoticeTypes as notification app not found"

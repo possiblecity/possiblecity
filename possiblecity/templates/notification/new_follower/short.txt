@@ -1,0 +1,1 @@
+{{ follower.profile.full_name }} is now following {% if target.user %} {{ target }} {% else %}you{% endif %} on Possible City!

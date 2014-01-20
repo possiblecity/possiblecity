@@ -6,7 +6,8 @@ if "notification" in settings.INSTALLED_APPS:
     from notification import models as notification
 
     def create_notice_types(app, created_models, verbosity, **kwargs):
-        notification.create_notice_type("comment_added", _("Comment added"), _("a comment has been added to"))
+        notification.create_notice_type("comment_added", _("Comment added"), 
+        	_("A comment has been added to a project or lot you follow or a project you created."))
 
     signals.post_syncdb.connect(create_notice_types, sender=notification)
 else:

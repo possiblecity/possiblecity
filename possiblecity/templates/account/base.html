@@ -21,6 +21,7 @@
                 <nav class="panel ideas-page-neighborhoods-panel-xs-lg-devices">
 	                <ul class="nav nav-pills nav-stacked">
 						<li {% block settings_class %}class="active"{% endblock %}><a href="{% url "account_settings" %}">{% trans "Email" %}</a></li>
+						<li {% block notification_class %}{% endblock %}><a href="{% url "notification_notice_settings" %}">{% trans "Notifications" %}</a></li>
 						<li {% block social_class %}{% endblock %}><a href="{% url "account_social_connections" %}">{% trans "Social Connections" %}</a></li>
 						{% if user.password %}
 						<li {% block password_class %}{% endblock %}><a href="{% url "account_password" %}">{% trans "Change Password" %}</a></li>
