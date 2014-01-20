@@ -1,0 +1,2 @@
+{{ sender.profile.full_name }} favorited your {% if target.tagline %}project "{{ target }}"
+{% elif target.text %}comment{% endif %} on Possible City!

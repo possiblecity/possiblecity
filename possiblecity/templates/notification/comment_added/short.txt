@@ -1,3 +1,1 @@
-# comment_added/short.txt
-
-{{ commenter }} commented on {{ target }}
+{{ commenter.profile.full_name }} commented on {{ target }}

@@ -1,0 +1,1 @@
+{{ initiator.first_name }} updated the project {{ target }}

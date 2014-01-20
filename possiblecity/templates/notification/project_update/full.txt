@@ -1,0 +1,5 @@
+{{ initiator.profile.full_name }} updated the project {{ target }}.
+
+View the update and comment here: {{ default_http_protocol }}://{{ current_site }}{{ target.get_absolute_url }}
+
+You are receiving this message because you are following {{ target }} on Possible City

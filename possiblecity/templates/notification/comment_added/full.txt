@@ -1,14 +1,7 @@
-# comment_added/full.txt
+{{ commenter.profile.full_name }} commented on {{ target }}:
 
-{{ commenter }} commented on {{ target }}:
+"{{ comment }}"
 
-{{ comment.text }}
-
-{{ target.get_absolute_url }}
+You can view the comment and respond here: {{ default_http_protocol }}://{{ current_site }}{{ target.get_absolute_url }}
 
 You are receiving this message because you are following {{ target }} on Possible City
-
-{% url "notification_notices" as notices_url %}
-
-You have received the following notice from {{ current_site }}
-To see other notices or change how you receive notifications, please go to {{ default_http_protocol }}://{{ current_site }}{{ notices_url }}
