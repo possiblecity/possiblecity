@@ -43,7 +43,7 @@ EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = 'admin@possiblecity.co'
 
-DEFAULT_FROM_EMAIL = 'info@possiblecity.co'
+DEFAULT_FROM_EMAIL = 'Possible City <info@possiblecity.co>'
 
 
 #==============================================================================
