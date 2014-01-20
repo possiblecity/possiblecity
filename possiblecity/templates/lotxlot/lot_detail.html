@@ -20,7 +20,6 @@
 
  {% block body %}
  {% get_follows lot as follows %}
- {% who_likes lot as lot_likes %}
   <div class="container lot-detail">
     <div class="panel">
       <header class="lot-header row">
@@ -47,20 +46,6 @@
                             </span>
                     {% endif %}
                     </a>
-             {% if request.user.is_authenticated %}
-                      {% phileo_widget_brief request.user lot %}
-                      {% else %}
-                      <span class="phileo active">
-                          <a data-toggle="modal" data-target="#login-modal" href="#login-modal" class="btn btn-info">
-                              <i class="{% if idea|likes_count > 0 %}icon-star{% else %}icon-star-empty{% endif %}">&nbsp;&nbsp;</i>Favorite&nbsp;&nbsp;
-                              {% if lot_likes.count %}
-                              <span class="count badge">
-                              {{ lot_likes.count }}
-                          </span>
-                          {% endif %}
-                          </a>
-                      </span>                    
-                      {% endif %}
               </span>
           </div>
           <div>
@@ -209,14 +194,12 @@
                   {% endfor %}        
                 </ul>
             </div>
-            {% who_likes lot as lot_likes %}
-            {% if lot_likes or follows %}
+            {% if follows %}
             <div class="people">
               <ul class="list-group">
                 <li class="list-group-item">
                   <h2>People</h2>
                 </li>
-                {% if follows %}
                 <li class="list-group-item">
                   <h5>Following <small>{{ follows.count }}</small></h5>
                   <div class="row">
@@ -241,33 +224,6 @@
                 {% endfor %}
                 </div>
               </li>
-              {% endif %}
-                {% if lot_likes %}
-                <li class="list-group-item">
-                  <h5>Favorited <small>{{ lot|likes_count }}</small></h5>
-                  <div class="row">
-                  {% for like in lot_likes %}
-                    <div class="col-md-2 col-xs-4 col-sm-2">
-                        {% if like.sender.profile.is_public %}
-                        <a href="{% url 'profiles_profile_detail' like.sender.username %}">
-                        {% endif %}
-                        <img class="profile-pic"
-                        {% if like.sender.profile.photo %}
-                            src="{% thumbnail like.sender.profile.photo '200x200' crop upscale %}"
-                        {% else %}
-                            src="{% static 'img/profile.png' %}"
-                        {% endif %}
-                            alt="{{ like.sender.profile.full_name }}"
-                            title="{{ like.sender.profile.full_name }}"
-                        >
-                        {% if like.sender.profile.is_public %}
-                        </a>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-                </div>
-              </li>
-              {% endif %}
             </ul>
         </div>
         {% endif %}
