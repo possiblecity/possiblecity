@@ -68,10 +68,10 @@ def comment_action(sender, comment=None, target=None, **kwargs):
     action.send(comment.user, verb=u'commented', action_object=comment, 
             target=comment.content_object)
     target = comment.content_object
-    notify = followers(target)
+    notify_list = followers(target)
     if hasattr(target, 'user'):
-       notify.append(target.user)
-    notification.send(notify, "comment_added", 
+       notify_list.append(target.user)
+    notification.send(notify_list, "comment_added", 
         { "comment": comment.text, "commenter": comment.user, "target": target })
 
 commented.connect(comment_action)

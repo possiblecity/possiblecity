@@ -208,9 +208,9 @@ def idea_created_action(sender, idea=None, target=None, **kwargs):
 
 def idea_updated_action(sender, idea=None, target=None, **kwargs):
     action.send(idea.user, verb=u'updated the project', target=idea)
-    notify = followers(idea)
-    notify.append(idea.user)
-    notification.send(notify, "project_update", { "target": idea, "initiator": idea.user })
+    notify_list = followers(idea)
+    notify_list.append(idea.user)
+    notification.send(notify_list, "project_update", { "target": idea, "initiator": idea.user })
 
 idea_created.connect(idea_created_action)
 idea_updated.connect(idea_updated_action)
