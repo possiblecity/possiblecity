@@ -19,10 +19,13 @@ def notify_following(sender, instance, **kwargs):
 	follower = instance.user
 	target = instance.follow_object
 	if hasattr(target, 'user'):
-		notify_list = [ target.user, ]
-	else:
-		notify_list = [ target, ]
-	notification.send( notify_list, "new_follower", 
+            notify_list = [ target.user,]
+        elif hasattr(target, 'first_name'):
+            notify_list = [ target ]
+        else:
+            return
+     
+        notification.send( notify_list, "new_follower", 
            { "follower": follower, "target": target })	
 
 object_liked.connect(liked_action)
