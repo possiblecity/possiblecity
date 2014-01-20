@@ -10,7 +10,7 @@
 {% block notification_class %}class="active"{% endblock %}
 
 {% block account_content %}
-    <h2>{% trans "Notification Settings" %}</h2>
+    <legend>{% trans "Notification Settings" %}</legend>
 
     {% url "account_settings" as email_url %}
     {% if not request.user.email %}
