@@ -1,3 +1,5 @@
-{{ sender.profile.full_name }} favorited your {% if target.tagline %}project {{ target }}!
-{% elif target.text %}comment: "{{ target.text }}"{% endif %}
+{{ sender.profile.full_name }} favorited your {% if target.tagline %}project {{ target }}!{% elif target.text %}comment: 
+
+"{{ target.text }}"{% endif %}
+
 Learn more about {{ sender.profile.full_name }} at {{ default_http_protocol }}://{{ current_site }}{{ sender.profile.get_absolute_url }}
