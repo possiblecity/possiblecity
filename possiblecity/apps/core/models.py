@@ -1,7 +1,7 @@
 # core/models.py
 from django.db.models.signals import post_save
 
-from actstream import action
+from actstream.signals import action
 from actstream.models import Follow
 from phileo.signals import object_liked, object_unliked
 from notification import models as notification
