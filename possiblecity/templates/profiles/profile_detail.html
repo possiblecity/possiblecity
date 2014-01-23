@@ -60,11 +60,11 @@ Profile for {{ profile.user.username }}
                             <br>
                             {% endif %}
                             {% if profile.user.email %}
-                               <a href="mailto:{{ profile.user.email }}" >{{ profile.user.email }}</a>
+                               {{ profile.user.email|urlizetrunc:30 }}</a>
                             <br>
                             {% endif %}
                             {% if profile.website %}
-                                {{ profile.website|urlize }}<br/>
+                                {{ profile.website|urlizetrunc:30 }}<br/>
                             {% endif %}
                            </p>
                         {% else %}

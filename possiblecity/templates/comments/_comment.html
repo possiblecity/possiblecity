@@ -30,7 +30,7 @@
         {% if comment.image %}
         <img src="{% thumbnail comment.image '300x150' crop %}" alt="{{ comment.text }}" />
         {% endif %}
-        <p>{{ comment.text }}</p>
+        <p>{{ comment.text|urlizetrunc:30 }}</p>
         <h6>Via {{ comment.get_via_display }}
             {% if comment.get_via_display == "Twitter" %}
             <i class="icon-twitter"></i>
