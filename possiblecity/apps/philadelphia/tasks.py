@@ -76,7 +76,8 @@ def check_public():
     from apps.lotxlot.models import Lot
 
     t = datetime.datetime.now() - datetime.timedelta(days=1)
-    queryset = queryset_iterator(Lot.objects.filter(created__gt=t))
+    queryset = queryset_iterator(Lot.objects.vacant())
+    #queryset = queryset_iterator(Lot.objects.filter(created__gt=t))
     for lot in queryset:
         lon = lot.coord.x
         lat = lot.coord.y
@@ -130,7 +131,7 @@ def get_basereg():
                         print("updated lot %s") % lot_profile.address
 
 @task 
-def update_vacancy():
+def update_vacancy(public=False):
      """
      Check vacancy indicators and mark is_vacant 
      appropriately
@@ -138,7 +139,10 @@ def update_vacancy():
      from apps.lotxlot.models import Lot
 
      t = datetime.datetime.now() - datetime.timedelta(days=14) 
-     queryset = queryset_iterator(Lot.objects.filter(is_vacant=False, updated__lt=t))
+     if public:
+         queryset = queryset_iterator(Lot.objects.public())
+     else:
+         queryset = queryset_iterator(Lot.objects.filter(is_vacant=False, updated__lt=t))
      for lot in queryset:
          vacant = lot.is_vacant
          if lot.profile.is_bldg_desc_vacant:
