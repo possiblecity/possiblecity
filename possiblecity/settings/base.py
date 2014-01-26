@@ -339,6 +339,7 @@ LOCAL_APPS = (
     'apps.ideas', # user uploaded ideas
     'apps.lotxlot', # lots
     'apps.philadelphia', # philly data
+    'apps.sms', # texting functionality
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -475,6 +476,11 @@ ACTSTREAM_SETTINGS = {
     'USE_PREFETCH': True,
 }
 
+NOTIFICATION_BACKENDS = [
+    ("email", "notification.backends.email.EmailBackend"),
+    ("sms", "apps.sms.backends.sms.SMSBackend")
+]
+
 
 #==============================================================================
 # API keys 
@@ -482,6 +488,10 @@ ACTSTREAM_SETTINGS = {
 
 
 GOOGLE_MAPS_API_KEY = "AIzaSyAhBMUYbgpbsTpH8AnAfQwPQfqxhCoD5rM"
+
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
+TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
 
 
 #==============================================================================

@@ -1,0 +1,7 @@
+{{ commenter.profile.full_name }} commented on {{ target }}:
+
+"{{ comment }}"
+
+You can view the comment and respond here: {{ default_http_protocol }}://{{ current_site }}{{ target.get_absolute_url }}
+
+You are receiving this message because you are following {{ target }} on Possible City

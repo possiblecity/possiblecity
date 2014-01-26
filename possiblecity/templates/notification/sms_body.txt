@@ -1,0 +1,3 @@
+{{ message }}
+
+To change how you receive notifications, please go to {{ default_http_protocol }}://{{ current_site }}{% url "notification_notice_settings" %}

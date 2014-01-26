@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table lot-data-table">
   <tbody>
     <tr>
       <th>Ownership:</th>
@@ -7,6 +7,19 @@
     <tr>
       <th>Owner:</th>
       <td>{{ lot.profile.owner }}</td>
+    </tr>
+    <tr>
+      <th>Mailing Address:</th>
+      <td>{{ lot.profile.account_mailing_address.street.0 }}<br>
+        {{ lot.profile.account_mailing_address.street.1 }}<br>
+        {{ lot.profile.account_mailing_address.city }}, {{ lot.profile.account_mailing_address.state }}
+        {{ lot.profile.account_mailing_address.zip }}
+      </td>
+    </tr>
+    <tr>
+      <th>Owner Since:</th>
+      <td>{{ lot.profile.account_details.sale_date }}
+      </td>
     </tr>
   </tbody>
 </table>
