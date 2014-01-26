@@ -8,6 +8,7 @@ geopy #geo tools
 simplejson #json tools
 markdown #plain text to html
 twitter #twitter api
+twilio # twilio api
 
 Django==1.6.1 #Django!
 
