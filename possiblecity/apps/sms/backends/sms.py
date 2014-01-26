@@ -40,7 +40,7 @@ class SMSBackend(backends.BaseBackend):
             "message": messages["sms.txt"],
         }, context)
 
-        sms = client.sms.messages.create(
+        sms = client.messages.create(
             to=recipient.profile.phone,
             from_=TWILIO_FROM_NUMBER,
             body=message

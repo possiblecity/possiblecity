@@ -1,0 +1,3 @@
+{{ follower.profile.full_name }} is now following {% if target.user %}{{ target }}{% else %}you{% endif %} on Possible City!
+
+Learn more about {{ follower.profile.full_name }} at {{ default_http_protocol }}://{{ current_site }}{{ follower.profile.get_absolute_url }}
