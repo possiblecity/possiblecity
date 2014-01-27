@@ -16,6 +16,7 @@ from actstream.models import followers
 from notification import models as notification
 from positions.fields import PositionField
 from taggit.managers import TaggableManager
+from model_utils.managers import PassThroughManager
 
 from apps.lotxlot.models import Lot
 
@@ -31,6 +32,8 @@ class Idea(models.Model):
        Users upload ideas which can then be networked with
        other users, other ideas, or locations within the city.
     """
+
+    objects = PassThroughManager.for_queryset_class(IdeaQuerySet)()
 
     STATUS_PENDING = 1
     STATUS_PUBLISHED = 2
