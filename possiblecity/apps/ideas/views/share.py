@@ -33,7 +33,7 @@ class IdeaCreateView(LoginRequiredMixin, CreateView):
         self.object.featured = False
         self.object.enable_comments = True
         self.object.moderate_comments = False
-        self.object.status = Idea.STATUS_PUBLISHED
+        self.object.status = Idea.STATUS_PENDING
         self.object.save()
 
         form.save_m2m()
