@@ -1,4 +1,4 @@
-# text/admin.py
+# blog/admin.py
 
 from django.db import models
 from django.contrib import admin

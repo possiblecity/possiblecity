@@ -1,4 +1,4 @@
-# text/urls.py
+# blog/urls.py
 
 from django.conf.urls import include, patterns, url
 from django.views.generic import YearArchiveView, MonthArchiveView,\

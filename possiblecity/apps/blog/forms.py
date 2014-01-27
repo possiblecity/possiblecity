@@ -1,4 +1,5 @@
-# text/forms.py
+# blog/forms.py
+
 import floppyforms as forms
 
 from .models import Entry

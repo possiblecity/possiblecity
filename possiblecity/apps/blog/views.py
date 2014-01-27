@@ -1,4 +1,4 @@
-# text/views.py
+# blog/views.py
 
 import json
 

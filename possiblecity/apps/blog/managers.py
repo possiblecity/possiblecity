@@ -1,4 +1,4 @@
-# text/managers.py
+# blog/managers.py
 
 import datetime
 

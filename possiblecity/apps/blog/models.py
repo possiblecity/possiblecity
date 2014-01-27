@@ -1,4 +1,5 @@
-# text/models.py
+# blog/models.py
+
 import datetime
 
 from markdown import markdown
@@ -106,7 +107,7 @@ class EntryBase(ArticleBase, StatusMixin, PostMixin):
 
 class Entry(EntryBase):
     """
-        A blog entry. Inherits basic fields from text.models.EntryBase.
+        A blog entry. Inherits basic fields from EntryBase.
     """
     objects = EntryManager()
 
