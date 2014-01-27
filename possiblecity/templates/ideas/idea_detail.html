@@ -175,13 +175,18 @@
                      </p>
                    {% else %}
                       <p>{{ idea.user.profile.full_name}}</p>
-                      <p><a href="mailto:{{idea.user.email}}">{{ idea.user.email }}</a>
-                      {% if idea.user.profile.website %}
-                      <br>{{ idea.user.profile.website|urlize }}
-                      {% endif %}
-                      {% if idea.user.profile.twitter %}
-                        <br>{{ idea.user.profile.twitter }}
-                      {% endif %}
+                      {% if request.user.is_authenticated %}
+                          <p><a href="mailto:{{idea.user.email}}">{{ idea.user.email }}</a>
+                          {% if idea.user.profile.website %}
+                          <br>{{ idea.user.profile.website|urlize }}
+                          {% endif %}
+                          {% if idea.user.profile.twitter %}
+                            <br><a href="https://twitter.com/{{ idea.user.profile.twitter }}">
+                                @{{ idea.user.profile.twitter }}</a>
+                          {% endif %}
+                       {% else %}
+                          <p><a href="{% url "account_login" %}?next={{ request.path }}">Log in</a> to view this agent's contact information</p>
+                       {% endif %}
                    {% endif %}
                 </div>
                 <div class="col-md-4">

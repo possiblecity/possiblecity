@@ -216,5 +216,5 @@ def idea_updated_action(sender, idea=None, target=None, **kwargs):
     notification.send(notify_list, "project_update", { "target": idea, "initiator": idea.user })
 
 idea_created.connect(idea_created_action)
-idea_updated.connect(idea_updated_action)
+#idea_updated.connect(idea_updated_action)
 
