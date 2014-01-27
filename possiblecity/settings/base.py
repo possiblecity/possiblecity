@@ -256,11 +256,6 @@ SOCIAL_AUTH_PIPELINE = [
     "libs.pipeline.update_user_profile"
 ]
 
-TWITTER_CONSUMER_KEY = os.environ.get("TWITTER_CONSUMER_KEY", "")
-TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET", "")
-
-FACEBOOK_APP_ID = os.environ.get("FACEBOOK_APP_ID", "")
-FACEBOOK_API_SECRET = os.environ.get("FACEBOOK_API_SECRET", "")
 FACEBOOK_EXTENDED_PERMISSIONS = [
     "email",
 ]
@@ -274,6 +269,23 @@ TWITTER_EXTRA_DATA = [
     ("name", "name"),
     ("screen_name", "screen_name"),
 ]
+
+#==============================================================================
+# API keys 
+#==============================================================================
+
+
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
+
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
+TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
+
+TWITTER_CONSUMER_KEY = os.environ.get("TWITTER_CONSUMER_KEY", "")
+TWITTER_CONSUMER_SECRET = os.environ.get("TWITTER_CONSUMER_SECRET", "")
+
+FACEBOOK_APP_ID = os.environ.get("FACEBOOK_APP_ID", "")
+FACEBOOK_API_SECRET = os.environ.get("FACEBOOK_API_SECRET", "")
 
 
 #==============================================================================
@@ -480,18 +492,6 @@ NOTIFICATION_BACKENDS = [
     ("email", "notification.backends.email.EmailBackend"),
     ("sms", "apps.sms.backends.sms.SMSBackend")
 ]
-
-
-#==============================================================================
-# API keys 
-#==============================================================================
-
-
-GOOGLE_MAPS_API_KEY = "AIzaSyAhBMUYbgpbsTpH8AnAfQwPQfqxhCoD5rM"
-
-TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
-TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
-TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
 
 
 #==============================================================================
