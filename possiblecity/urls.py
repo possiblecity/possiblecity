@@ -77,10 +77,11 @@ urlpatterns = patterns("",
 
     url(r"^activity/", include("actstream.urls")),
 
-
     # autocomplete forms
     url(r'^autocomplete/', include('autocomplete_light.urls')),
     url(r"^notifications/", include("notification.urls")),
+
+    url(r"^sms/", include("apps.sms.urls")),
 
 )
 

@@ -11,4 +11,7 @@ def get_or_none(model, **kwargs):
         return None
 
 def phone_format(n):
-	return format(int(n[:-1]), ",").replace(",", "-") + n[-1]
+	try:
+		return format(int(n[:-1]), ",").replace(",", "-") + n[-1]
+	except ValueError:
+		return None

@@ -22,6 +22,8 @@ class Profile(models.Model):
     def full_name(self):
         if self.user.first_name:
             return u'%s %s' % (self.user.first_name, self.user.last_name)
+        elif self.user.username == self.user.profile.phone:
+            return self.user.username[:-4] + '++++'
         else:
             return self.user.username
         
