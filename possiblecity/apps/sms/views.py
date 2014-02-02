@@ -5,11 +5,12 @@ import simplejson as json
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 
 
@@ -24,14 +25,10 @@ from libs.utils import extract_hashtags, get_or_none, phone_format
 
 
 @csrf_exempt
+@require_POST
 def process_sms(request):
-    if request.method == 'POST':
-        params = request.POST
-    else:
-        params = request.GET 
-
+    params = request.POST
     phone = phone_format(re.sub('\+1','',params['From']))
-
     message = params['Body']
     hashtags = extract_hashtags(message)
 
@@ -113,5 +110,4 @@ def process_sms(request):
                 "status": status,
                 }
             ), mimetype="application/json")
-
 
