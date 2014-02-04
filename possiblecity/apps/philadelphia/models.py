@@ -271,12 +271,20 @@ class LotProfile(models.Model):
 
     @property
     def land_use(self):
-        if self.get_landuse_data()["C_DIG3DESC"]: 
+        try: 
             return self.get_landuse_data()["C_DIG3DESC"]
-        elif self.get_landuse_data()["C_DIG2DESC"]:
+        except KeyError:
+            pass
+
+        try:
             return self.get_landuse_data()["C_DIG2DESC"]
-        else:
+        except KeyError:
+            pass
+            
+        try:
             return self.get_landuse_data()["C_DIG1DESC"]
+        except KeyError:
+            return None
 
     @property
     def zoning_base(self):
