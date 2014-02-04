@@ -1,0 +1,6 @@
+{% if target %}
+Thank your for adding your feedback on {{ target }} to Possible City!
+You can view your feedback online at http://possiblecity.co{{ target.get_absolute_url }}.
+{% else %}
+Thank you for contacting Possible City, but we could not understand your message. Please include the hashtag of the Lot or Project (ex: #12345 or #project).
+{% endif %}

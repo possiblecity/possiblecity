@@ -60,9 +60,10 @@ def process_sms(request):
                               text=message,
 	    		              content_type=ContentType.objects.get_for_model(target), 
                               object_id=target.id)
-            follow(user, target, actor_only=False)
-
+            
             comment.save()
+
+            follow(user, target, actor_only=False)
 
             status = "OK"
 

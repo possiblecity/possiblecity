@@ -1,0 +1,4 @@
+{% if new_user %}
+You are now a part of the Possible City network! Log in at
+http://possiblecity.co/account/login with username {{ user.username }} and password {{ password }}.
+{% endif %}
