@@ -31,24 +31,15 @@
                     <div class="profile-pic profile-popover"
                          data-toggle="tooltip"
                          {% if profile.about %}
-                         data-content="{% if profile.user.first_name %}{{ profile.user.first_name }} 
-                                       {% else %}{{ profile.user.username }}{% endif %}
-                                       wants to {{ profile.about }}"
+                         data-content="{{ profile.about }}"
                          {% else %}
-                         data-content="{% if profile.user.first_name %}
-                                       {{ profile.full_name }}
-                                       {% else %}
-                                       {{ profile.user.username }}
+                         data-content="{{ profile.full_name }}
                                        {% endif %} is still working on it."
                          {% endif %}
                          data-animation="true"
                          data-placement="auto top"
                          data-trigger="hover"
-                         title="{% if profile.user.first_name %}
-                                       {{ profile.full_name }}
-                                       {% else %}
-                                       {{ profile.user.username }}
-                                       {% endif %}">
+                         title="{{ profile.full_name }}">
                         <a href="{% url 'profiles_profile_detail' profile.user.username %}">
                         {% if profile.photo %}
                             <img src="{% thumbnail profile.photo '400x400' crop upscale %}" />
