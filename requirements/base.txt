@@ -8,7 +8,6 @@ geopy #geo tools
 simplejson #json tools
 markdown #plain text to html
 twitter #twitter api
-twilio # twilio api
 
 Django==1.6.1 #Django!
 
@@ -34,6 +33,7 @@ metron==1.1 #analytics tools
 phileo==1.1 #liking app
 south==0.8.4 #database migrations
 django-notification
+django-twilio-sms
 
 # stuff thats not on PyPi
 -e git://github.com/carljm/django-model-utils.git#egg=django-model-utils #model utilities & helpers

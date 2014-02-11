@@ -1,7 +1,7 @@
 # core/models.py
 from django.db.models.signals import post_save
 
-from actstream.models import Follow
+#from actstream.models import Follow
 from actstream import action
 from phileo.signals import object_liked, object_unliked
 from notification import models as notification
@@ -29,4 +29,4 @@ def notify_following(sender, instance, **kwargs):
 
 object_liked.connect(liked_action)
 
-post_save.connect(notify_following, sender=Follow, dispatch_uid="notify_following")
+#post_save.connect(notify_following, sender=Follow, dispatch_uid="notify_following")
