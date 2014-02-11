@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from actstream import action
-#from actstream.models import followers
 from notification import models as notification
 
 from .signals import commented
@@ -67,11 +66,14 @@ class Comment(models.Model):
 def comment_action(sender, comment=None, target=None, **kwargs):
     action.send(comment.user, verb=u'commented', action_object=comment, 
             target=comment.content_object)
-    #target = comment.content_object
-    #notify_list = followers(target)
-    #if hasattr(target, 'user'):
-    #   notify_list.append(target.user)
-    #notification.send(notify_list, "comment_added", 
-    #    { "comment": comment.text, "commenter": comment.user, "target": target })
+    target = comment.content_object
+    
+    from actstream.models import followers
+
+    notify_list = followers(target)
+    if hasattr(target, 'user'):
+       notify_list.append(target.user)
+    notification.send(notify_list, "comment_added", 
+        { "comment": comment.text, "commenter": comment.user, "target": target })
 
 commented.connect(comment_action)
