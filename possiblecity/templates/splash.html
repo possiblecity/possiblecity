@@ -3,7 +3,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8" />
-        <title>{% block head_title_base %}Possible City | {% block head_title %}{% endblock %}{% endblock %}</title>
+        <title>{% block head_title_base %}Possible City{% block head_title %}{% endblock %}{% endblock %}</title>
         {% block viewport %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock %}
@@ -30,17 +30,17 @@
     </head>
     <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
        <section>
-                <div class="content">
-                    <img src="{% static "img/logo_large.png" %}">
-                     <p>The #possiblecity is an alternative to the #smartcity</p>
+                <div class="content container" style="text-align: center">
+                    <img width="67%" style="padding: 40px 0" src="{% static "img/logo_large.png" %}">
+                     <h4>The #possiblecity is an alternative to the #smartcity.</h4>
                      <p>The #smartcity wants to create you, the #possiblecity 
                         wants you to create it.</p>
                      <p>In the #smartcity, the individual units are sensors. 
                         In the #possiblecity, the individual units are people.</p>
                      <p>The #smartcity is a technocratic taskmaster. 
                         The #possiblecity is a loving guide.</p>
-                     <p><a href="https://twitter.com/possiblecity">@possiblecity</p>
-                     <p>View the <a href="{% url "home" %}">original project</a></p>
+                     <h4><a href="https://twitter.com/possiblecity">@possiblecity</a></h4>
+                     <p>View the <a href="{% url "home" %}">original project.</a></p>
                 </div>
        </section>
         <script type="text/javascript">
