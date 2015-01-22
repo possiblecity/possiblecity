@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block head_title_base %}Possible City | {% block head_title %}{% endblock %}{% endblock %}</title>
+        {% block viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+
+        {% block style_base %}
+            <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+            <link href="{% static "fonts/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
+            <link href="{% static "css/animation.css" %}" rel="stylesheet">
+            <link href="{% static "css/custom.css" %}" rel="stylesheet">
+            <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
+      {% block extra_style %}{% endblock %}
+        {% endblock style_base %}
+
+        {% block script_head %}
+            <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+            <!--[if lt IE 9]>
+                <script src="{% static "js/vendor/html5shiv.js" %}"></script>
+            <![endif]-->
+        {% endblock script_head %}
+
+        {% block extra_head_base %}
+            {% block extra_head %}{% endblock extra_head %}
+        {% endblock extra_head_base %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
+       <section>
+                <div class="content">
+                    <img src="{% static "img/logo_large.png" %}">
+                     <p>The #possiblecity is an alternative to the #smartcity</p>
+                     <p>The #smartcity wants to create you, the #possiblecity 
+                        wants you to create it.</p>
+                     <p>In the #smartcity, the individual units are sensors. 
+                        In the #possiblecity, the individual units are people.</p>
+                     <p>The #smartcity is a technocratic taskmaster. 
+                        The #possiblecity is a loving guide.</p>
+                     <p><a href="https://twitter.com/possiblecity">@possiblecity</p>
+                     <p>View the <a href="{% url "home" %}">original project</a></p>
+                </div>
+       </section>
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-28417563-1']);
+          _gaq.push(['_setDomainName', 'possiblecity.co']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+    </body>
+</html>

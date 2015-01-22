@@ -36,7 +36,8 @@ urlpatterns = patterns("",
 
     # homepage
 
-    url(r"^$", HomepageView.as_view(), name="home"),
+    url(r"^$", TemplateView.as_view(template_name="splash.html")),
+    url(r"^v1/", HomepageView.as_view(), name="home"),
 
     # api
     url(r"^api/", include(router.urls)),

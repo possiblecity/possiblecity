@@ -267,7 +267,10 @@ class LotProfile(models.Model):
 
     @property
     def impervious_area(self):
-        return "%s sq ft" % (self.get_address_data()["IMPERV_AREA"])
+        try:
+            return "%s sq ft" % (self.get_address_data()["IMPERV_AREA"])
+        except KeyError:
+            pass
 
     @property
     def land_use(self):
